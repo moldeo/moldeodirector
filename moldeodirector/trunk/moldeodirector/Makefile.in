@@ -50,16 +50,13 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_moldeodirector_OBJECTS = moldeodirector-HtmlPanel.$(OBJEXT) \
+am_moldeodirector_OBJECTS = moldeodirector-moldeodirector.$(OBJEXT) \
+	moldeodirector-HtmlPanel.$(OBJEXT) \
 	moldeodirector-moIDirectorActions.$(OBJEXT) \
 	moldeodirector-mo3dModelPanel.$(OBJEXT) \
-	moldeodirector-moldeodirectorApp.$(OBJEXT) \
-	moldeodirector-moColorMotion.$(OBJEXT) \
-	moldeodirector-moldeodirector.$(OBJEXT) \
 	moldeodirector-moConfigurationAdvancedOutput.$(OBJEXT) \
 	moldeodirector-moldeodirectorMain.$(OBJEXT) \
 	moldeodirector-moConfigurationDialog.$(OBJEXT) \
-	moldeodirector-moMobConfig.$(OBJEXT) \
 	moldeodirector-moConfigurationGeneral.$(OBJEXT) \
 	moldeodirector-moNewEffectDialog.$(OBJEXT) \
 	moldeodirector-moConfigurationOutput.$(OBJEXT) \
@@ -80,7 +77,7 @@ am_moldeodirector_OBJECTS = moldeodirector-HtmlPanel.$(OBJEXT) \
 	moldeodirector-moScriptPanel.$(OBJEXT) \
 	moldeodirector-moDirectorStartFrame.$(OBJEXT) \
 	moldeodirector-moSessionProject.$(OBJEXT) \
-	moldeodirector-moEffectConfig.$(OBJEXT) \
+	moldeodirector-moColorMotion.$(OBJEXT) \
 	moldeodirector-moShaderCtrl.$(OBJEXT) \
 	moldeodirector-moEffectLayerCtrl.$(OBJEXT) \
 	moldeodirector-moShadersPanel.$(OBJEXT) \
@@ -91,9 +88,33 @@ am_moldeodirector_OBJECTS = moldeodirector-HtmlPanel.$(OBJEXT) \
 	moldeodirector-moFunctionPanel.$(OBJEXT) \
 	moldeodirector-moTreeObjectsLayerCtrl.$(OBJEXT) \
 	moldeodirector-moGLCanvas.$(OBJEXT) \
-	moldeodirector-moValueCtrl.$(OBJEXT)
+	moldeodirector-moValueCtrl.$(OBJEXT) \
+	moldeodirector-wxMoldeoLineCtrl.$(OBJEXT) \
+	moldeodirector-wxMoldeoPinCtrl.$(OBJEXT) \
+	moldeodirector-wxMoTimelineBandCtrl.$(OBJEXT) \
+	moldeodirector-wxMoldeoObjectCanvas.$(OBJEXT) \
+	moldeodirector-wxMoLevelCtrl.$(OBJEXT) \
+	moldeodirector-wxMoTimelineRulerCtrl.$(OBJEXT) \
+	moldeodirector-wxMoldeoObjectCtrl.$(OBJEXT) \
+	moldeodirector-wxMoRotaryCtrl.$(OBJEXT) \
+	moldeodirector-TreeMultiItemBase.$(OBJEXT) \
+	moldeodirector-TreeMultiItemWindow.$(OBJEXT) \
+	moldeodirector-TreeMultiItemNode.$(OBJEXT) \
+	moldeodirector-wxTreeMultiCtrl.$(OBJEXT) \
+	moldeodirector-TreeMultiItemRoot.$(OBJEXT) \
+	moldeodirector-virtualdirtreectrl.$(OBJEXT)
 moldeodirector_OBJECTS = $(am_moldeodirector_OBJECTS)
-moldeodirector_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+moldeodirector_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -119,6 +140,11 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+BOOST_ASIO_LIB = @BOOST_ASIO_LIB@
+BOOST_CPPFLAGS = @BOOST_CPPFLAGS@
+BOOST_FILESYSTEM_LIB = @BOOST_FILESYSTEM_LIB@
+BOOST_LDFLAGS = @BOOST_LDFLAGS@
+BOOST_THREAD_LIB = @BOOST_THREAD_LIB@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -149,6 +175,8 @@ FREEIMAGE_LIBS = @FREEIMAGE_LIBS@
 FT2_CFLAGS = @FT2_CFLAGS@
 FT2_CONFIG = @FT2_CONFIG@
 FT2_LIBS = @FT2_LIBS@
+FTGL_CFLAGS = @FTGL_CFLAGS@
+FTGL_LIBS = @FTGL_LIBS@
 GLEW_LIBS = @GLEW_LIBS@
 GLE_LIBS = @GLE_LIBS@
 GLUT_LIBS = @GLUT_LIBS@
@@ -204,6 +232,8 @@ SETFILE = @SETFILE@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+TINYXML_CFLAGS = @TINYXML_CFLAGS@
+TINYXML_LIBS = @TINYXML_LIBS@
 VERSION = @VERSION@
 WX_CFLAGS = @WX_CFLAGS@
 WX_CFLAGS_ONLY = @WX_CFLAGS_ONLY@
@@ -273,11 +303,12 @@ top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
 AM_CPPFLAGS = $(all_includes)
 moldeodirector_SOURCES = \
-	HtmlPanel.cpp			   moIDirectorActions.cpp \
-	mo3dModelPanel.cpp		   moldeodirectorApp.cpp \
-	moColorMotion.cpp		   moldeodirector.cpp \
+	moldeodirector.cpp \
+	HtmlPanel.cpp \
+	moIDirectorActions.cpp \
+	mo3dModelPanel.cpp \
 	moConfigurationAdvancedOutput.cpp  moldeodirectorMain.cpp \
-	moConfigurationDialog.cpp	   moMobConfig.cpp \
+	moConfigurationDialog.cpp	   \
 	moConfigurationGeneral.cpp	   moNewEffectDialog.cpp \
 	moConfigurationOutput.cpp	   moNewProject.cpp \
 	moConnectionsWindow.cpp		   moObjectMotion.cpp \
@@ -288,20 +319,56 @@ moldeodirector_SOURCES = \
 	moDirectorFrame.cpp		   moResourcesTreeCtrl.cpp \
 	moDirectorIODeviceManager.cpp	   moScriptPanel.cpp \
 	moDirectorStartFrame.cpp	   moSessionProject.cpp \
-	moEffectConfig.cpp		   moShaderCtrl.cpp \
+	moColorMotion.cpp                  moShaderCtrl.cpp \
 	moEffectLayerCtrl.cpp		   moShadersPanel.cpp \
 	moFilesbook.cpp			   moTextureItemCtrl.cpp \
 	moFontPanel.cpp			   moTimelineRuler.cpp \
 	moFunctionPanel.cpp		   moTreeObjectsLayerCtrl.cpp \
-	moGLCanvas.cpp			   moValueCtrl.cpp
+	moGLCanvas.cpp			   moValueCtrl.cpp \
+	wxMoldeoLineCtrl.cpp               wxMoldeoPinCtrl.cpp \
+	wxMoTimelineBandCtrl.cpp           wxMoldeoObjectCanvas.cpp \
+	wxMoLevelCtrl.cpp                  wxMoTimelineRulerCtrl.cpp \
+	wxMoldeoObjectCtrl.cpp             wxMoRotaryCtrl.cpp \
+	treemultictrl/TreeMultiItemBase.cpp  treemultictrl/TreeMultiItemWindow.cpp \
+	treemultictrl/TreeMultiItemNode.cpp  treemultictrl/wxTreeMultiCtrl.cpp \
+	treemultictrl/TreeMultiItemRoot.cpp  vdtc/virtualdirtreectrl.cpp
 
-moldeodirector_CPPFLAGS = -I /usr/local/include/libmoldeo \
+
+# moldeodirectorApp.cpp
+# moldeodirector.cpp
+moldeodirector_CPPFLAGS = \
+	-I /usr/local/include/libmoldeo \
+	-I ./treemultictrl \
+	-I ./vdtc \
+	-I ./wxsmith \
 	${WX_CFLAGS} \
 	${LUA51_CFLAGS} \
 	${FT2_CFLAGS} \
 	${GST_CFLAGS}
 
-moldeodirector_LIBS = ${WX_LIBS}
+moldeodirector_LDADD = \
+	-lmoldeo \
+	-lwx_gtk2u_gl-2.8 \
+	${FREEIMAGE_LIBS} \
+	${FREEALUT_LIBS} \
+	${GST_LIBS} \
+	${GL_LIBS} \
+	${GLEW_LIBS} \
+	${GLUT_LIBS} \
+	${GLE_LIBS} \
+	${CG_LIBS} \
+	${CGGL_LIBS} \
+	${FT2_LIBS} \
+	${FTGL_LIBS} \
+	${MUPARSER_LIBS} \
+	${TINYXML_LIBS} \
+	${LUA51_LIBS} \
+	${SDL_LIBS} \
+	${BOOST_ASIO_LIB} \
+	${BOOST_THREAD_LIB} \
+	${BOOST_FILESYSTEM_LIB} \
+	${WX_LIBS}
+
 all: all-am
 
 .SUFFIXES:
@@ -390,6 +457,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-HtmlPanel.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-TreeMultiItemBase.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-TreeMultiItemNode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-TreeMultiItemRoot.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-TreeMultiItemWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-mo3dModelPanel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moColorMotion.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moConfigurationAdvancedOutput.Po@am__quote@
@@ -404,14 +475,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moDirectorFrame.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moDirectorIODeviceManager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moDirectorStartFrame.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moEffectConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moEffectLayerCtrl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moFilesbook.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moFontPanel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moFunctionPanel.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moGLCanvas.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moIDirectorActions.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moMobConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moNewEffectDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moNewProject.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moObjectMotion.Po@am__quote@
@@ -429,8 +498,17 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moTreeObjectsLayerCtrl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moValueCtrl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moldeodirector.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moldeodirectorApp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-moldeodirectorMain.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-virtualdirtreectrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoLevelCtrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoRotaryCtrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoTimelineBandCtrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoTimelineRulerCtrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoldeoLineCtrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoldeoObjectCanvas.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoldeoObjectCtrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxMoldeoPinCtrl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moldeodirector-wxTreeMultiCtrl.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -452,6 +530,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+moldeodirector-moldeodirector.o: moldeodirector.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moldeodirector.o -MD -MP -MF $(DEPDIR)/moldeodirector-moldeodirector.Tpo -c -o moldeodirector-moldeodirector.o `test -f 'moldeodirector.cpp' || echo '$(srcdir)/'`moldeodirector.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moldeodirector.Tpo $(DEPDIR)/moldeodirector-moldeodirector.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moldeodirector.cpp' object='moldeodirector-moldeodirector.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moldeodirector.o `test -f 'moldeodirector.cpp' || echo '$(srcdir)/'`moldeodirector.cpp
+
+moldeodirector-moldeodirector.obj: moldeodirector.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moldeodirector.obj -MD -MP -MF $(DEPDIR)/moldeodirector-moldeodirector.Tpo -c -o moldeodirector-moldeodirector.obj `if test -f 'moldeodirector.cpp'; then $(CYGPATH_W) 'moldeodirector.cpp'; else $(CYGPATH_W) '$(srcdir)/moldeodirector.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moldeodirector.Tpo $(DEPDIR)/moldeodirector-moldeodirector.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moldeodirector.cpp' object='moldeodirector-moldeodirector.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moldeodirector.obj `if test -f 'moldeodirector.cpp'; then $(CYGPATH_W) 'moldeodirector.cpp'; else $(CYGPATH_W) '$(srcdir)/moldeodirector.cpp'; fi`
 
 moldeodirector-HtmlPanel.o: HtmlPanel.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-HtmlPanel.o -MD -MP -MF $(DEPDIR)/moldeodirector-HtmlPanel.Tpo -c -o moldeodirector-HtmlPanel.o `test -f 'HtmlPanel.cpp' || echo '$(srcdir)/'`HtmlPanel.cpp
@@ -495,48 +587,6 @@ moldeodirector-mo3dModelPanel.obj: mo3dModelPanel.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-mo3dModelPanel.obj `if test -f 'mo3dModelPanel.cpp'; then $(CYGPATH_W) 'mo3dModelPanel.cpp'; else $(CYGPATH_W) '$(srcdir)/mo3dModelPanel.cpp'; fi`
 
-moldeodirector-moldeodirectorApp.o: moldeodirectorApp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moldeodirectorApp.o -MD -MP -MF $(DEPDIR)/moldeodirector-moldeodirectorApp.Tpo -c -o moldeodirector-moldeodirectorApp.o `test -f 'moldeodirectorApp.cpp' || echo '$(srcdir)/'`moldeodirectorApp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moldeodirectorApp.Tpo $(DEPDIR)/moldeodirector-moldeodirectorApp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moldeodirectorApp.cpp' object='moldeodirector-moldeodirectorApp.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moldeodirectorApp.o `test -f 'moldeodirectorApp.cpp' || echo '$(srcdir)/'`moldeodirectorApp.cpp
-
-moldeodirector-moldeodirectorApp.obj: moldeodirectorApp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moldeodirectorApp.obj -MD -MP -MF $(DEPDIR)/moldeodirector-moldeodirectorApp.Tpo -c -o moldeodirector-moldeodirectorApp.obj `if test -f 'moldeodirectorApp.cpp'; then $(CYGPATH_W) 'moldeodirectorApp.cpp'; else $(CYGPATH_W) '$(srcdir)/moldeodirectorApp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moldeodirectorApp.Tpo $(DEPDIR)/moldeodirector-moldeodirectorApp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moldeodirectorApp.cpp' object='moldeodirector-moldeodirectorApp.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moldeodirectorApp.obj `if test -f 'moldeodirectorApp.cpp'; then $(CYGPATH_W) 'moldeodirectorApp.cpp'; else $(CYGPATH_W) '$(srcdir)/moldeodirectorApp.cpp'; fi`
-
-moldeodirector-moColorMotion.o: moColorMotion.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moColorMotion.o -MD -MP -MF $(DEPDIR)/moldeodirector-moColorMotion.Tpo -c -o moldeodirector-moColorMotion.o `test -f 'moColorMotion.cpp' || echo '$(srcdir)/'`moColorMotion.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moColorMotion.Tpo $(DEPDIR)/moldeodirector-moColorMotion.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moColorMotion.cpp' object='moldeodirector-moColorMotion.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moColorMotion.o `test -f 'moColorMotion.cpp' || echo '$(srcdir)/'`moColorMotion.cpp
-
-moldeodirector-moColorMotion.obj: moColorMotion.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moColorMotion.obj -MD -MP -MF $(DEPDIR)/moldeodirector-moColorMotion.Tpo -c -o moldeodirector-moColorMotion.obj `if test -f 'moColorMotion.cpp'; then $(CYGPATH_W) 'moColorMotion.cpp'; else $(CYGPATH_W) '$(srcdir)/moColorMotion.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moColorMotion.Tpo $(DEPDIR)/moldeodirector-moColorMotion.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moColorMotion.cpp' object='moldeodirector-moColorMotion.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moColorMotion.obj `if test -f 'moColorMotion.cpp'; then $(CYGPATH_W) 'moColorMotion.cpp'; else $(CYGPATH_W) '$(srcdir)/moColorMotion.cpp'; fi`
-
-moldeodirector-moldeodirector.o: moldeodirector.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moldeodirector.o -MD -MP -MF $(DEPDIR)/moldeodirector-moldeodirector.Tpo -c -o moldeodirector-moldeodirector.o `test -f 'moldeodirector.cpp' || echo '$(srcdir)/'`moldeodirector.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moldeodirector.Tpo $(DEPDIR)/moldeodirector-moldeodirector.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moldeodirector.cpp' object='moldeodirector-moldeodirector.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moldeodirector.o `test -f 'moldeodirector.cpp' || echo '$(srcdir)/'`moldeodirector.cpp
-
-moldeodirector-moldeodirector.obj: moldeodirector.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moldeodirector.obj -MD -MP -MF $(DEPDIR)/moldeodirector-moldeodirector.Tpo -c -o moldeodirector-moldeodirector.obj `if test -f 'moldeodirector.cpp'; then $(CYGPATH_W) 'moldeodirector.cpp'; else $(CYGPATH_W) '$(srcdir)/moldeodirector.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moldeodirector.Tpo $(DEPDIR)/moldeodirector-moldeodirector.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moldeodirector.cpp' object='moldeodirector-moldeodirector.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moldeodirector.obj `if test -f 'moldeodirector.cpp'; then $(CYGPATH_W) 'moldeodirector.cpp'; else $(CYGPATH_W) '$(srcdir)/moldeodirector.cpp'; fi`
-
 moldeodirector-moConfigurationAdvancedOutput.o: moConfigurationAdvancedOutput.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moConfigurationAdvancedOutput.o -MD -MP -MF $(DEPDIR)/moldeodirector-moConfigurationAdvancedOutput.Tpo -c -o moldeodirector-moConfigurationAdvancedOutput.o `test -f 'moConfigurationAdvancedOutput.cpp' || echo '$(srcdir)/'`moConfigurationAdvancedOutput.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moConfigurationAdvancedOutput.Tpo $(DEPDIR)/moldeodirector-moConfigurationAdvancedOutput.Po
@@ -578,20 +628,6 @@ moldeodirector-moConfigurationDialog.obj: moConfigurationDialog.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moConfigurationDialog.cpp' object='moldeodirector-moConfigurationDialog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moConfigurationDialog.obj `if test -f 'moConfigurationDialog.cpp'; then $(CYGPATH_W) 'moConfigurationDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/moConfigurationDialog.cpp'; fi`
-
-moldeodirector-moMobConfig.o: moMobConfig.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moMobConfig.o -MD -MP -MF $(DEPDIR)/moldeodirector-moMobConfig.Tpo -c -o moldeodirector-moMobConfig.o `test -f 'moMobConfig.cpp' || echo '$(srcdir)/'`moMobConfig.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moMobConfig.Tpo $(DEPDIR)/moldeodirector-moMobConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moMobConfig.cpp' object='moldeodirector-moMobConfig.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moMobConfig.o `test -f 'moMobConfig.cpp' || echo '$(srcdir)/'`moMobConfig.cpp
-
-moldeodirector-moMobConfig.obj: moMobConfig.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moMobConfig.obj -MD -MP -MF $(DEPDIR)/moldeodirector-moMobConfig.Tpo -c -o moldeodirector-moMobConfig.obj `if test -f 'moMobConfig.cpp'; then $(CYGPATH_W) 'moMobConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/moMobConfig.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moMobConfig.Tpo $(DEPDIR)/moldeodirector-moMobConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moMobConfig.cpp' object='moldeodirector-moMobConfig.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moMobConfig.obj `if test -f 'moMobConfig.cpp'; then $(CYGPATH_W) 'moMobConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/moMobConfig.cpp'; fi`
 
 moldeodirector-moConfigurationGeneral.o: moConfigurationGeneral.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moConfigurationGeneral.o -MD -MP -MF $(DEPDIR)/moldeodirector-moConfigurationGeneral.Tpo -c -o moldeodirector-moConfigurationGeneral.o `test -f 'moConfigurationGeneral.cpp' || echo '$(srcdir)/'`moConfigurationGeneral.cpp
@@ -873,19 +909,19 @@ moldeodirector-moSessionProject.obj: moSessionProject.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moSessionProject.obj `if test -f 'moSessionProject.cpp'; then $(CYGPATH_W) 'moSessionProject.cpp'; else $(CYGPATH_W) '$(srcdir)/moSessionProject.cpp'; fi`
 
-moldeodirector-moEffectConfig.o: moEffectConfig.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moEffectConfig.o -MD -MP -MF $(DEPDIR)/moldeodirector-moEffectConfig.Tpo -c -o moldeodirector-moEffectConfig.o `test -f 'moEffectConfig.cpp' || echo '$(srcdir)/'`moEffectConfig.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moEffectConfig.Tpo $(DEPDIR)/moldeodirector-moEffectConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moEffectConfig.cpp' object='moldeodirector-moEffectConfig.o' libtool=no @AMDEPBACKSLASH@
+moldeodirector-moColorMotion.o: moColorMotion.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moColorMotion.o -MD -MP -MF $(DEPDIR)/moldeodirector-moColorMotion.Tpo -c -o moldeodirector-moColorMotion.o `test -f 'moColorMotion.cpp' || echo '$(srcdir)/'`moColorMotion.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moColorMotion.Tpo $(DEPDIR)/moldeodirector-moColorMotion.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moColorMotion.cpp' object='moldeodirector-moColorMotion.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moEffectConfig.o `test -f 'moEffectConfig.cpp' || echo '$(srcdir)/'`moEffectConfig.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moColorMotion.o `test -f 'moColorMotion.cpp' || echo '$(srcdir)/'`moColorMotion.cpp
 
-moldeodirector-moEffectConfig.obj: moEffectConfig.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moEffectConfig.obj -MD -MP -MF $(DEPDIR)/moldeodirector-moEffectConfig.Tpo -c -o moldeodirector-moEffectConfig.obj `if test -f 'moEffectConfig.cpp'; then $(CYGPATH_W) 'moEffectConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/moEffectConfig.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moEffectConfig.Tpo $(DEPDIR)/moldeodirector-moEffectConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moEffectConfig.cpp' object='moldeodirector-moEffectConfig.obj' libtool=no @AMDEPBACKSLASH@
+moldeodirector-moColorMotion.obj: moColorMotion.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moColorMotion.obj -MD -MP -MF $(DEPDIR)/moldeodirector-moColorMotion.Tpo -c -o moldeodirector-moColorMotion.obj `if test -f 'moColorMotion.cpp'; then $(CYGPATH_W) 'moColorMotion.cpp'; else $(CYGPATH_W) '$(srcdir)/moColorMotion.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-moColorMotion.Tpo $(DEPDIR)/moldeodirector-moColorMotion.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moColorMotion.cpp' object='moldeodirector-moColorMotion.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moEffectConfig.obj `if test -f 'moEffectConfig.cpp'; then $(CYGPATH_W) 'moEffectConfig.cpp'; else $(CYGPATH_W) '$(srcdir)/moEffectConfig.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moColorMotion.obj `if test -f 'moColorMotion.cpp'; then $(CYGPATH_W) 'moColorMotion.cpp'; else $(CYGPATH_W) '$(srcdir)/moColorMotion.cpp'; fi`
 
 moldeodirector-moShaderCtrl.o: moShaderCtrl.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-moShaderCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-moShaderCtrl.Tpo -c -o moldeodirector-moShaderCtrl.o `test -f 'moShaderCtrl.cpp' || echo '$(srcdir)/'`moShaderCtrl.cpp
@@ -1040,6 +1076,202 @@ moldeodirector-moValueCtrl.obj: moValueCtrl.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='moValueCtrl.cpp' object='moldeodirector-moValueCtrl.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-moValueCtrl.obj `if test -f 'moValueCtrl.cpp'; then $(CYGPATH_W) 'moValueCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/moValueCtrl.cpp'; fi`
+
+moldeodirector-wxMoldeoLineCtrl.o: wxMoldeoLineCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoLineCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoLineCtrl.Tpo -c -o moldeodirector-wxMoldeoLineCtrl.o `test -f 'wxMoldeoLineCtrl.cpp' || echo '$(srcdir)/'`wxMoldeoLineCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoLineCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoldeoLineCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoLineCtrl.cpp' object='moldeodirector-wxMoldeoLineCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoLineCtrl.o `test -f 'wxMoldeoLineCtrl.cpp' || echo '$(srcdir)/'`wxMoldeoLineCtrl.cpp
+
+moldeodirector-wxMoldeoLineCtrl.obj: wxMoldeoLineCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoLineCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoLineCtrl.Tpo -c -o moldeodirector-wxMoldeoLineCtrl.obj `if test -f 'wxMoldeoLineCtrl.cpp'; then $(CYGPATH_W) 'wxMoldeoLineCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoLineCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoLineCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoldeoLineCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoLineCtrl.cpp' object='moldeodirector-wxMoldeoLineCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoLineCtrl.obj `if test -f 'wxMoldeoLineCtrl.cpp'; then $(CYGPATH_W) 'wxMoldeoLineCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoLineCtrl.cpp'; fi`
+
+moldeodirector-wxMoldeoPinCtrl.o: wxMoldeoPinCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoPinCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoPinCtrl.Tpo -c -o moldeodirector-wxMoldeoPinCtrl.o `test -f 'wxMoldeoPinCtrl.cpp' || echo '$(srcdir)/'`wxMoldeoPinCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoPinCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoldeoPinCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoPinCtrl.cpp' object='moldeodirector-wxMoldeoPinCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoPinCtrl.o `test -f 'wxMoldeoPinCtrl.cpp' || echo '$(srcdir)/'`wxMoldeoPinCtrl.cpp
+
+moldeodirector-wxMoldeoPinCtrl.obj: wxMoldeoPinCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoPinCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoPinCtrl.Tpo -c -o moldeodirector-wxMoldeoPinCtrl.obj `if test -f 'wxMoldeoPinCtrl.cpp'; then $(CYGPATH_W) 'wxMoldeoPinCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoPinCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoPinCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoldeoPinCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoPinCtrl.cpp' object='moldeodirector-wxMoldeoPinCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoPinCtrl.obj `if test -f 'wxMoldeoPinCtrl.cpp'; then $(CYGPATH_W) 'wxMoldeoPinCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoPinCtrl.cpp'; fi`
+
+moldeodirector-wxMoTimelineBandCtrl.o: wxMoTimelineBandCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoTimelineBandCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoTimelineBandCtrl.Tpo -c -o moldeodirector-wxMoTimelineBandCtrl.o `test -f 'wxMoTimelineBandCtrl.cpp' || echo '$(srcdir)/'`wxMoTimelineBandCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoTimelineBandCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoTimelineBandCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoTimelineBandCtrl.cpp' object='moldeodirector-wxMoTimelineBandCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoTimelineBandCtrl.o `test -f 'wxMoTimelineBandCtrl.cpp' || echo '$(srcdir)/'`wxMoTimelineBandCtrl.cpp
+
+moldeodirector-wxMoTimelineBandCtrl.obj: wxMoTimelineBandCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoTimelineBandCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoTimelineBandCtrl.Tpo -c -o moldeodirector-wxMoTimelineBandCtrl.obj `if test -f 'wxMoTimelineBandCtrl.cpp'; then $(CYGPATH_W) 'wxMoTimelineBandCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoTimelineBandCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoTimelineBandCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoTimelineBandCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoTimelineBandCtrl.cpp' object='moldeodirector-wxMoTimelineBandCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoTimelineBandCtrl.obj `if test -f 'wxMoTimelineBandCtrl.cpp'; then $(CYGPATH_W) 'wxMoTimelineBandCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoTimelineBandCtrl.cpp'; fi`
+
+moldeodirector-wxMoldeoObjectCanvas.o: wxMoldeoObjectCanvas.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoObjectCanvas.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoObjectCanvas.Tpo -c -o moldeodirector-wxMoldeoObjectCanvas.o `test -f 'wxMoldeoObjectCanvas.cpp' || echo '$(srcdir)/'`wxMoldeoObjectCanvas.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoObjectCanvas.Tpo $(DEPDIR)/moldeodirector-wxMoldeoObjectCanvas.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoObjectCanvas.cpp' object='moldeodirector-wxMoldeoObjectCanvas.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoObjectCanvas.o `test -f 'wxMoldeoObjectCanvas.cpp' || echo '$(srcdir)/'`wxMoldeoObjectCanvas.cpp
+
+moldeodirector-wxMoldeoObjectCanvas.obj: wxMoldeoObjectCanvas.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoObjectCanvas.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoObjectCanvas.Tpo -c -o moldeodirector-wxMoldeoObjectCanvas.obj `if test -f 'wxMoldeoObjectCanvas.cpp'; then $(CYGPATH_W) 'wxMoldeoObjectCanvas.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoObjectCanvas.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoObjectCanvas.Tpo $(DEPDIR)/moldeodirector-wxMoldeoObjectCanvas.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoObjectCanvas.cpp' object='moldeodirector-wxMoldeoObjectCanvas.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoObjectCanvas.obj `if test -f 'wxMoldeoObjectCanvas.cpp'; then $(CYGPATH_W) 'wxMoldeoObjectCanvas.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoObjectCanvas.cpp'; fi`
+
+moldeodirector-wxMoLevelCtrl.o: wxMoLevelCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoLevelCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoLevelCtrl.Tpo -c -o moldeodirector-wxMoLevelCtrl.o `test -f 'wxMoLevelCtrl.cpp' || echo '$(srcdir)/'`wxMoLevelCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoLevelCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoLevelCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoLevelCtrl.cpp' object='moldeodirector-wxMoLevelCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoLevelCtrl.o `test -f 'wxMoLevelCtrl.cpp' || echo '$(srcdir)/'`wxMoLevelCtrl.cpp
+
+moldeodirector-wxMoLevelCtrl.obj: wxMoLevelCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoLevelCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoLevelCtrl.Tpo -c -o moldeodirector-wxMoLevelCtrl.obj `if test -f 'wxMoLevelCtrl.cpp'; then $(CYGPATH_W) 'wxMoLevelCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoLevelCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoLevelCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoLevelCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoLevelCtrl.cpp' object='moldeodirector-wxMoLevelCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoLevelCtrl.obj `if test -f 'wxMoLevelCtrl.cpp'; then $(CYGPATH_W) 'wxMoLevelCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoLevelCtrl.cpp'; fi`
+
+moldeodirector-wxMoTimelineRulerCtrl.o: wxMoTimelineRulerCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoTimelineRulerCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoTimelineRulerCtrl.Tpo -c -o moldeodirector-wxMoTimelineRulerCtrl.o `test -f 'wxMoTimelineRulerCtrl.cpp' || echo '$(srcdir)/'`wxMoTimelineRulerCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoTimelineRulerCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoTimelineRulerCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoTimelineRulerCtrl.cpp' object='moldeodirector-wxMoTimelineRulerCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoTimelineRulerCtrl.o `test -f 'wxMoTimelineRulerCtrl.cpp' || echo '$(srcdir)/'`wxMoTimelineRulerCtrl.cpp
+
+moldeodirector-wxMoTimelineRulerCtrl.obj: wxMoTimelineRulerCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoTimelineRulerCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoTimelineRulerCtrl.Tpo -c -o moldeodirector-wxMoTimelineRulerCtrl.obj `if test -f 'wxMoTimelineRulerCtrl.cpp'; then $(CYGPATH_W) 'wxMoTimelineRulerCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoTimelineRulerCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoTimelineRulerCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoTimelineRulerCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoTimelineRulerCtrl.cpp' object='moldeodirector-wxMoTimelineRulerCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoTimelineRulerCtrl.obj `if test -f 'wxMoTimelineRulerCtrl.cpp'; then $(CYGPATH_W) 'wxMoTimelineRulerCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoTimelineRulerCtrl.cpp'; fi`
+
+moldeodirector-wxMoldeoObjectCtrl.o: wxMoldeoObjectCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoObjectCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoObjectCtrl.Tpo -c -o moldeodirector-wxMoldeoObjectCtrl.o `test -f 'wxMoldeoObjectCtrl.cpp' || echo '$(srcdir)/'`wxMoldeoObjectCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoObjectCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoldeoObjectCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoObjectCtrl.cpp' object='moldeodirector-wxMoldeoObjectCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoObjectCtrl.o `test -f 'wxMoldeoObjectCtrl.cpp' || echo '$(srcdir)/'`wxMoldeoObjectCtrl.cpp
+
+moldeodirector-wxMoldeoObjectCtrl.obj: wxMoldeoObjectCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoldeoObjectCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoldeoObjectCtrl.Tpo -c -o moldeodirector-wxMoldeoObjectCtrl.obj `if test -f 'wxMoldeoObjectCtrl.cpp'; then $(CYGPATH_W) 'wxMoldeoObjectCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoObjectCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoldeoObjectCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoldeoObjectCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoldeoObjectCtrl.cpp' object='moldeodirector-wxMoldeoObjectCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoldeoObjectCtrl.obj `if test -f 'wxMoldeoObjectCtrl.cpp'; then $(CYGPATH_W) 'wxMoldeoObjectCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoldeoObjectCtrl.cpp'; fi`
+
+moldeodirector-wxMoRotaryCtrl.o: wxMoRotaryCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoRotaryCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoRotaryCtrl.Tpo -c -o moldeodirector-wxMoRotaryCtrl.o `test -f 'wxMoRotaryCtrl.cpp' || echo '$(srcdir)/'`wxMoRotaryCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoRotaryCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoRotaryCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoRotaryCtrl.cpp' object='moldeodirector-wxMoRotaryCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoRotaryCtrl.o `test -f 'wxMoRotaryCtrl.cpp' || echo '$(srcdir)/'`wxMoRotaryCtrl.cpp
+
+moldeodirector-wxMoRotaryCtrl.obj: wxMoRotaryCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxMoRotaryCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxMoRotaryCtrl.Tpo -c -o moldeodirector-wxMoRotaryCtrl.obj `if test -f 'wxMoRotaryCtrl.cpp'; then $(CYGPATH_W) 'wxMoRotaryCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoRotaryCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxMoRotaryCtrl.Tpo $(DEPDIR)/moldeodirector-wxMoRotaryCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wxMoRotaryCtrl.cpp' object='moldeodirector-wxMoRotaryCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxMoRotaryCtrl.obj `if test -f 'wxMoRotaryCtrl.cpp'; then $(CYGPATH_W) 'wxMoRotaryCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/wxMoRotaryCtrl.cpp'; fi`
+
+moldeodirector-TreeMultiItemBase.o: treemultictrl/TreeMultiItemBase.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemBase.o -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemBase.Tpo -c -o moldeodirector-TreeMultiItemBase.o `test -f 'treemultictrl/TreeMultiItemBase.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemBase.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemBase.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemBase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemBase.cpp' object='moldeodirector-TreeMultiItemBase.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemBase.o `test -f 'treemultictrl/TreeMultiItemBase.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemBase.cpp
+
+moldeodirector-TreeMultiItemBase.obj: treemultictrl/TreeMultiItemBase.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemBase.obj -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemBase.Tpo -c -o moldeodirector-TreeMultiItemBase.obj `if test -f 'treemultictrl/TreeMultiItemBase.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemBase.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemBase.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemBase.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemBase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemBase.cpp' object='moldeodirector-TreeMultiItemBase.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemBase.obj `if test -f 'treemultictrl/TreeMultiItemBase.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemBase.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemBase.cpp'; fi`
+
+moldeodirector-TreeMultiItemWindow.o: treemultictrl/TreeMultiItemWindow.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemWindow.o -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemWindow.Tpo -c -o moldeodirector-TreeMultiItemWindow.o `test -f 'treemultictrl/TreeMultiItemWindow.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemWindow.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemWindow.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemWindow.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemWindow.cpp' object='moldeodirector-TreeMultiItemWindow.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemWindow.o `test -f 'treemultictrl/TreeMultiItemWindow.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemWindow.cpp
+
+moldeodirector-TreeMultiItemWindow.obj: treemultictrl/TreeMultiItemWindow.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemWindow.obj -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemWindow.Tpo -c -o moldeodirector-TreeMultiItemWindow.obj `if test -f 'treemultictrl/TreeMultiItemWindow.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemWindow.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemWindow.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemWindow.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemWindow.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemWindow.cpp' object='moldeodirector-TreeMultiItemWindow.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemWindow.obj `if test -f 'treemultictrl/TreeMultiItemWindow.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemWindow.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemWindow.cpp'; fi`
+
+moldeodirector-TreeMultiItemNode.o: treemultictrl/TreeMultiItemNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemNode.o -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemNode.Tpo -c -o moldeodirector-TreeMultiItemNode.o `test -f 'treemultictrl/TreeMultiItemNode.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemNode.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemNode.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemNode.cpp' object='moldeodirector-TreeMultiItemNode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemNode.o `test -f 'treemultictrl/TreeMultiItemNode.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemNode.cpp
+
+moldeodirector-TreeMultiItemNode.obj: treemultictrl/TreeMultiItemNode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemNode.obj -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemNode.Tpo -c -o moldeodirector-TreeMultiItemNode.obj `if test -f 'treemultictrl/TreeMultiItemNode.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemNode.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemNode.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemNode.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemNode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemNode.cpp' object='moldeodirector-TreeMultiItemNode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemNode.obj `if test -f 'treemultictrl/TreeMultiItemNode.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemNode.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemNode.cpp'; fi`
+
+moldeodirector-wxTreeMultiCtrl.o: treemultictrl/wxTreeMultiCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxTreeMultiCtrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-wxTreeMultiCtrl.Tpo -c -o moldeodirector-wxTreeMultiCtrl.o `test -f 'treemultictrl/wxTreeMultiCtrl.cpp' || echo '$(srcdir)/'`treemultictrl/wxTreeMultiCtrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxTreeMultiCtrl.Tpo $(DEPDIR)/moldeodirector-wxTreeMultiCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/wxTreeMultiCtrl.cpp' object='moldeodirector-wxTreeMultiCtrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxTreeMultiCtrl.o `test -f 'treemultictrl/wxTreeMultiCtrl.cpp' || echo '$(srcdir)/'`treemultictrl/wxTreeMultiCtrl.cpp
+
+moldeodirector-wxTreeMultiCtrl.obj: treemultictrl/wxTreeMultiCtrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-wxTreeMultiCtrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-wxTreeMultiCtrl.Tpo -c -o moldeodirector-wxTreeMultiCtrl.obj `if test -f 'treemultictrl/wxTreeMultiCtrl.cpp'; then $(CYGPATH_W) 'treemultictrl/wxTreeMultiCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/wxTreeMultiCtrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-wxTreeMultiCtrl.Tpo $(DEPDIR)/moldeodirector-wxTreeMultiCtrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/wxTreeMultiCtrl.cpp' object='moldeodirector-wxTreeMultiCtrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-wxTreeMultiCtrl.obj `if test -f 'treemultictrl/wxTreeMultiCtrl.cpp'; then $(CYGPATH_W) 'treemultictrl/wxTreeMultiCtrl.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/wxTreeMultiCtrl.cpp'; fi`
+
+moldeodirector-TreeMultiItemRoot.o: treemultictrl/TreeMultiItemRoot.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemRoot.o -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemRoot.Tpo -c -o moldeodirector-TreeMultiItemRoot.o `test -f 'treemultictrl/TreeMultiItemRoot.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemRoot.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemRoot.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemRoot.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemRoot.cpp' object='moldeodirector-TreeMultiItemRoot.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemRoot.o `test -f 'treemultictrl/TreeMultiItemRoot.cpp' || echo '$(srcdir)/'`treemultictrl/TreeMultiItemRoot.cpp
+
+moldeodirector-TreeMultiItemRoot.obj: treemultictrl/TreeMultiItemRoot.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-TreeMultiItemRoot.obj -MD -MP -MF $(DEPDIR)/moldeodirector-TreeMultiItemRoot.Tpo -c -o moldeodirector-TreeMultiItemRoot.obj `if test -f 'treemultictrl/TreeMultiItemRoot.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemRoot.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemRoot.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-TreeMultiItemRoot.Tpo $(DEPDIR)/moldeodirector-TreeMultiItemRoot.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='treemultictrl/TreeMultiItemRoot.cpp' object='moldeodirector-TreeMultiItemRoot.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-TreeMultiItemRoot.obj `if test -f 'treemultictrl/TreeMultiItemRoot.cpp'; then $(CYGPATH_W) 'treemultictrl/TreeMultiItemRoot.cpp'; else $(CYGPATH_W) '$(srcdir)/treemultictrl/TreeMultiItemRoot.cpp'; fi`
+
+moldeodirector-virtualdirtreectrl.o: vdtc/virtualdirtreectrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-virtualdirtreectrl.o -MD -MP -MF $(DEPDIR)/moldeodirector-virtualdirtreectrl.Tpo -c -o moldeodirector-virtualdirtreectrl.o `test -f 'vdtc/virtualdirtreectrl.cpp' || echo '$(srcdir)/'`vdtc/virtualdirtreectrl.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-virtualdirtreectrl.Tpo $(DEPDIR)/moldeodirector-virtualdirtreectrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='vdtc/virtualdirtreectrl.cpp' object='moldeodirector-virtualdirtreectrl.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-virtualdirtreectrl.o `test -f 'vdtc/virtualdirtreectrl.cpp' || echo '$(srcdir)/'`vdtc/virtualdirtreectrl.cpp
+
+moldeodirector-virtualdirtreectrl.obj: vdtc/virtualdirtreectrl.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT moldeodirector-virtualdirtreectrl.obj -MD -MP -MF $(DEPDIR)/moldeodirector-virtualdirtreectrl.Tpo -c -o moldeodirector-virtualdirtreectrl.obj `if test -f 'vdtc/virtualdirtreectrl.cpp'; then $(CYGPATH_W) 'vdtc/virtualdirtreectrl.cpp'; else $(CYGPATH_W) '$(srcdir)/vdtc/virtualdirtreectrl.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/moldeodirector-virtualdirtreectrl.Tpo $(DEPDIR)/moldeodirector-virtualdirtreectrl.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='vdtc/virtualdirtreectrl.cpp' object='moldeodirector-virtualdirtreectrl.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(moldeodirector_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o moldeodirector-virtualdirtreectrl.obj `if test -f 'vdtc/virtualdirtreectrl.cpp'; then $(CYGPATH_W) 'vdtc/virtualdirtreectrl.cpp'; else $(CYGPATH_W) '$(srcdir)/vdtc/virtualdirtreectrl.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

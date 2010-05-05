@@ -40,6 +40,7 @@
 #include "moIDirectorActions.h"
 #include "moDirectorIODeviceManager.h"
 #include "moDirectorCore.h"
+#include <moPreConfig.h>
 
 #define TICKS_ID 333
 

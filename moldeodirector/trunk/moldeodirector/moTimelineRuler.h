@@ -6,6 +6,9 @@
 #define MO_EVT_DIRECTOR_TIMELINERULER 5971
 #define TIMELINETICKS_ID 334
 
+#include <wx/control.h>
+#include <wx/timer.h>
+
 
 class moTimelineRuler : public wxControl {
 

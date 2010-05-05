@@ -546,17 +546,6 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
 	moDirectorStatus
 	moDirectorConsole::CloseMob( moMobDescriptor p_MobDesc ) {
-		/*
-		if ( 0<=p_MobDesc.GetIndex() && p_MobDesc.GetIndex()< m_ProjectDescriptor.GetMobsCount(p_MobDesc.GetType())) {
-
-			if( m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].IsConfigLoaded() ) {
-				m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].UnloadConfig();
-				return MO_DIRECTOR_STATUS_OK;
-			} else {
-				return MO_DIRECTOR_STATUS_ERROR;
-			}
-		} else
-		*/
 		return MO_DIRECTOR_STATUS_ERROR;
 	}
 

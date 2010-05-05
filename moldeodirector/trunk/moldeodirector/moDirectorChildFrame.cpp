@@ -1,7 +1,6 @@
 #include "moDirectorChildFrame.h"
 #include "moValueCtrl.h"
-
-#include "moArray.cpp"
+#include "moArray.h"
 
 moDefineDynamicArray( moValueTreeItemList )
 moDefineDynamicArray( moParamTreeItemList )

@@ -38,9 +38,10 @@
 #include "moIDirectorActions.h"
 #include "moDirectorFrame.h"
 
-#include "wxTreeMultiCtrl.h"
+#include "treemultictrl/wxTreeMultiCtrl.h"
 #include "wx/sizer.h"
 #include <wx/tglbtn.h>
+#include <wx/aui/auibook.h>
 
 class moConfigNotebook : public wxAuiNotebook {
 	public:

@@ -212,7 +212,7 @@ moPanelTexture::Inspect( moValueDescriptor p_ValueDescriptor ) {
                         if (pTextureDescriptor.IsBuildedFromFile() )
                             texttype+= moText(" loaded from file");
                         else
-                            texttype+= " (internal)";
+                            texttype+= moText(" (internal)");
 
                         break;
                     case MO_TYPE_MOVIE:
@@ -244,7 +244,7 @@ void moPanelTexture::OnButtonImportClick(wxCommandEvent& event)
     ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
     //making absolute path is mandatory (in linux) for passing directory to the open file dialog
-    wxString relativepath = (wxChar*)(char*)ProjectDescriptor.GetConfigPath();
+    wxString relativepath = (wxChar*)(const char*)ProjectDescriptor.GetConfigPath();
     wxFileName absname = wxFileName::DirName( relativepath );
     absname.MakeAbsolute();
     wxString absolutepath = absname.GetPath();

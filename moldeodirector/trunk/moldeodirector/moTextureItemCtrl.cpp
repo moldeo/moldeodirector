@@ -6,6 +6,7 @@
 #include <wx/intl.h>
 #include <wx/image.h>
 #include <wx/string.h>
+#include <wx/msgdlg.h>
 //*)
 
 //(*IdInit(moTextureItemCtrl)

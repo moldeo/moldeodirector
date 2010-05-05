@@ -5,6 +5,7 @@
 #include <wx/intl.h>
 #include <wx/image.h>
 #include <wx/string.h>
+#include <wx/filedlg.h>
 //*)
 
 //(*IdInit(moShaderCtrl)
@@ -130,7 +131,7 @@ void moShaderCtrl::OnBitmapButtonShaderImportClick(wxCommandEvent& event)
 			moProjectDescriptor ProjectDescriptor;
 			ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
-			wxString relativepath = (wxChar*)(char*)ProjectDescriptor.GetConfigPath();
+			wxString relativepath = (wxChar*)(const char*)ProjectDescriptor.GetConfigPath();
 
 			FileName.MakeRelativeTo( relativepath );
 

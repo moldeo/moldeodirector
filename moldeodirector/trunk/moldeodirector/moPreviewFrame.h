@@ -8,6 +8,7 @@
 //(*Headers(moPreviewFrame)
 #include <wx/toolbar.h>
 #include <wx/frame.h>
+#include <wx/glcanvas.h>
 //*)
 
 class moGLCanvas;

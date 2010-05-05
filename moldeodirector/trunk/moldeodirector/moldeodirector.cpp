@@ -25,6 +25,7 @@
 //(*AppHeaders
 #include <wx/image.h>
 #include <wx/config.h>
+#include <wx/stdpaths.h>
 
 //*)
 
@@ -67,7 +68,7 @@ bool moDirectorApp::OnInit()
 	moDirectorCore*			m_pDirectorCore = NULL;
 	moDirectorFrame*		m_pDirectorFrame = NULL;
 
-	SetAppName("Moldeo Director");
+	SetAppName(wxT("Moldeo Director"));
 
 // Check only one instance running
 
@@ -156,18 +157,18 @@ bool moDirectorApp::OnInit()
 
    	while( argc > 1 ) {
 		--argc;
-		if( argv[argc-1] &&(strcmp(argv[argc-1], "-mol") == 0) ) {
-			config = argv[argc];
+		if( argv[argc-1] &&(strcmp((const char *)argv[argc-1], "-mol") == 0) ) {
+			config = (const char*)argv[argc];
 			--argc;
 		} else {
 			printf( "Usage: %s [-mol]\n", argv[0]);
 
-			wxMessageBox(   wxString("Error opening:") +
-                            wxString(" argc:") + wxString(IntToStr(argc)) +
-                            wxString(" argv[argc-1]:") + argv[argc-1] +
-                            wxString(" argv[0]:") + wxString(argv[0]) +
-                            wxString(" argv[1]:") + wxString(argv[1]) +
-                            wxString(" argv[2]:") + wxString(argv[2]) );
+			wxMessageBox(   wxString(wxT("Error opening:")) +
+                            wxString(wxT(" argc:")) + // wxString(IntToStr(argc)) +
+                            wxString(wxT(" argv[argc-1]:")) + argv[argc-1] +
+                            wxString(wxT(" argv[0]:")) + wxString(argv[0]) +
+                            wxString(wxT(" argv[1]:")) + wxString(argv[1]) +
+                            wxString(wxT(" argv[2]:")) + wxString(argv[2]) );
 
 
 			exit(0);

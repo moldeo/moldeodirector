@@ -9,6 +9,9 @@
 #include <wx/slider.h>
 #include <wx/panel.h>
 #include <wx/bmpbuttn.h>
+#include <wx/splitter.h>
+#include <wx/timer.h>
+#include <wx/image.h>
 //*)
 
 #include "moIDirectorActions.h"

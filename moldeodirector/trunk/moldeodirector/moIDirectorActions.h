@@ -34,10 +34,12 @@
 #ifndef _MO_DIRECTORACTIONS_
 #define _MO_DIRECTORACTIONS_
 
-#include <moPreConfig.h>
-#include <moDirectorTypes.h>
-//#include <wx/snglinst.h>
-#include<wx/app.h>
+#include "moDirectorTypes.h"
+#include <wx/platform.h>
+#include <wx/string.h>
+#include <wx/snglinst.h>
+#include <wx/filename.h>
+#include <wx/app.h>
 
 // ----------------------------------------------------------------------------
 // private classes
@@ -174,9 +176,11 @@ public:
 		m_fullconfigname = (moText)p_configpath + (moText)p_configname;
 	}
 
-	moText GetConfigName() { return m_configname; }
-	moText GetConfigPath() { return m_configpath; }
-	moText GetFullConfigName() { return m_fullconfigname; }
+	const moText& GetConfigName() const { return m_configname; }
+	const moText& GetConfigPath() const { return m_configpath; }
+	const moText& GetFullConfigName() const { return m_fullconfigname; }
+
+	MOint GetMobsCount(moResourceType) { return 0; }; // TODO: Que debe devolver?
 
 //REQUIRED MEMBERS TO GetProject
 public:
@@ -452,7 +456,7 @@ class moTextureDescriptor : public moResourceDescriptor {
         MOuint GetComponents();
         MOint GetIndex();
         MOuint GetGLIndex();
-        moTexParam& GetTexParam();
+        moTexParam GetTexParam();
         bool    IsBuildedFromFile();
 
         moTextureType   GetType() {
@@ -490,7 +494,7 @@ class mo3dModelDescriptor : public moResourceDescriptor {
         MOfloat GetSizeY();
         MOfloat GetSizeZ();
         MOint   GetIndex();
-        mo3dModelParam&  Get3dModelParam();
+        mo3dModelParam Get3dModelParam();
 };
 
 class moShaderDescriptor : public moResourceDescriptor {
@@ -524,61 +528,58 @@ public:
 
 	moMobDescriptor() {}
 	moMobDescriptor( const moMobDescriptor &pMobDescriptor ) {
-        (*this) = pMobDescriptor;
-    }
+		(*this) = pMobDescriptor;
+	}
 	moMobDescriptor( const moMobDefinition &p_mobdefinition ) {
-	    m_MobDefinition = p_mobdefinition;
-    }
+		m_MobDefinition = p_mobdefinition;
+	}
 	moMobDescriptor( moProjectDescriptor p_ProjectDescriptor, const moMobDefinition &p_mobdefinition) {
-        m_MobDefinition = p_mobdefinition;
-	    m_ProjectDescriptor = p_ProjectDescriptor;
-    }
+		m_MobDefinition = p_mobdefinition;
+		m_ProjectDescriptor = p_ProjectDescriptor;
+	}
+	moMobDescriptor& operator = ( const moMobDescriptor& mbd) {
+		m_MobDefinition = mbd.m_MobDefinition;
+		m_ProjectDescriptor = mbd.m_ProjectDescriptor;
+		m_MobState = mbd.m_MobState;
+		return(*this);
+	}
+	void SetProjectDescriptor( moProjectDescriptor p_ProjectDescriptor ) {
+		m_ProjectDescriptor = p_ProjectDescriptor;
+	}
+	void SetState( moMobState p_MobState ) {
+		m_MobState = p_MobState;
+	}
+	moMobState GetState( ) { return m_MobState; }
 
-    moMobDescriptor& operator = ( const moMobDescriptor& mbd) {
+	const moProjectDescriptor& GetProjectDescriptor() const {
+		return m_ProjectDescriptor;
+	}
 
-        m_MobDefinition = mbd.m_MobDefinition;
-        m_ProjectDescriptor = mbd.m_ProjectDescriptor;
-        m_MobState = mbd.m_MobState;
-
-        return(*this);
-    }
-
-    void SetProjectDescriptor( moProjectDescriptor p_ProjectDescriptor ) {
-        m_ProjectDescriptor = p_ProjectDescriptor;
-    }
-    void SetState( moMobState p_MobState ) {
-        m_MobState = p_MobState;
-    }
-    moMobState GetState( ) {
-        return m_MobState;
-    }
-
-    moProjectDescriptor GetProjectDescriptor() {
-        return m_ProjectDescriptor;
-    }
+	const moMobDefinition& GetMobDefinition() const {
+		return m_MobDefinition;
+	}
 
 	moMobDefinition& GetMobDefinition() {
-	    return m_MobDefinition;
-    }
+		return m_MobDefinition;
+	}
 
 	void Set( const moMobDefinition& p_mobdefinition ) {
 		m_MobDefinition = p_mobdefinition;
 	}
 
 	void Set( moProjectDescriptor p_ProjectDescriptor, const moMobDefinition &p_mobdefinition ) {
-	    m_ProjectDescriptor = p_ProjectDescriptor;
+		m_ProjectDescriptor = p_ProjectDescriptor;
 		m_MobDefinition = p_mobdefinition;
 	}
 
-
+	MOint GetIndex() { return 0; } // TODO: Que debería devolver?
+	moResourceType GetType() { return moResourceType(); } // TODO: Que debería devolver?
+	const char *GetFullConfigName() const { return ""; } // TODO: Que debería devolver?
+	void SetFullText(const moText &) { } // TODO: que devería hacer?
 private:
-
-    moMobDefinition m_MobDefinition;
-
+	moMobDefinition m_MobDefinition;
 	moProjectDescriptor m_ProjectDescriptor;
-
 	moMobState  m_MobState;
-
 };
 
 moDeclareDynamicArray( moMobDescriptor, moMobDescriptors )

@@ -1,5 +1,6 @@
 #include "moIDirectorActions.h"
-#include "moArray.h"
+#include <wx/platform.h>
+#include <moArray.h>
 
 moDefineDynamicArray( moResourceDescriptors )
 moDefineDynamicArray( moMobDescriptors )
@@ -34,7 +35,7 @@ void moTextureDescriptor::SetSpecificParameters( MOint p_Width,
 
 }
 
-moTexParam& moTextureDescriptor::GetTexParam() {
+moTexParam moTextureDescriptor::GetTexParam() {
 
     moDatas& m_Datas(GetResourceDefinition().GetDatas());
 
@@ -123,7 +124,7 @@ MOint mo3dModelDescriptor::GetIndex() {
     return m_Datas[3].Float();
 }
 
-mo3dModelParam& mo3dModelDescriptor::Get3dModelParam() {
+mo3dModelParam mo3dModelDescriptor::Get3dModelParam() {
 
     moDatas& m_Datas(GetResourceDefinition().GetDatas());
 

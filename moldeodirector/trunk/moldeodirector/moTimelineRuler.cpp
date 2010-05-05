@@ -1,5 +1,6 @@
 #include "moTimelineRuler.h"
 #include <wx/dcbuffer.h>
+#include <wx/msgdlg.h>
 
 BEGIN_EVENT_TABLE( moTimelineRuler, wxControl )
     EVT_TIMER( TIMELINETICKS_ID, moTimelineRuler::OnTimer)

@@ -81,19 +81,24 @@ AUTOCONF = ${SHELL} /home/crocha/Projects/Moldeo/moldeodirector/trunk/missing --
 AUTOHEADER = ${SHELL} /home/crocha/Projects/Moldeo/moldeodirector/trunk/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/crocha/Projects/Moldeo/moldeodirector/trunk/missing --run automake-1.11
 AWK = gawk
+BOOST_ASIO_LIB = -lboost_system
+BOOST_CPPFLAGS = -pthread -I/usr/include
+BOOST_FILESYSTEM_LIB = -lboost_filesystem-mt
+BOOST_LDFLAGS = -L/usr/lib
+BOOST_THREAD_LIB = -lboost_thread-mt
 CC = gcc -std=gnu99
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2
+CFLAGS = -g -O2 -pthread
 CGGL_LIBS = -lCgGL -lGL
 CG_LIBS = -lCg
 CHECK_CFLAGS =  
 CHECK_LIBS = -lcheck  
 CPP = gcc -std=gnu99 -E
-CPPFLAGS = 
+CPPFLAGS =  -I/usr/lib/wx/include/gtk2-unicode-release-2.8 -I/usr/include/wx-2.8 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -D__WXGTK__
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2
+CXXFLAGS = -g -O2 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -111,6 +116,8 @@ FREEIMAGE_LIBS = -lfreeimage
 FT2_CFLAGS = -I/usr/include/freetype2
 FT2_CONFIG = /usr/bin/freetype-config
 FT2_LIBS = -lfreetype -lz
+FTGL_CFLAGS = -I/usr/include/FTGL -I/usr/include/freetype2  
+FTGL_LIBS = -lftgl  
 GLEW_LIBS = -lGLEW
 GLE_LIBS = -lgle
 GLUT_LIBS = -lglut
@@ -126,7 +133,7 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
 LIBOBJS = 
-LIBS =  -lpthread
+LIBS =  -lpthread -pthread   -lwx_gtk2u_richtext-2.8 -lwx_gtk2u_aui-2.8 -lwx_gtk2u_xrc-2.8 -lwx_gtk2u_qa-2.8 -lwx_gtk2u_html-2.8 -lwx_gtk2u_adv-2.8 -lwx_gtk2u_core-2.8 -lwx_baseu_xml-2.8 -lwx_baseu_net-2.8 -lwx_baseu-2.8 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
@@ -166,6 +173,8 @@ SETFILE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
+TINYXML_CFLAGS =  
+TINYXML_LIBS = -ltinyxml  
 VERSION = 0
 WX_CFLAGS = -I/usr/lib/wx/include/gtk2-unicode-release-2.8 -I/usr/include/wx-2.8 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -D__WXGTK__ -pthread
 WX_CFLAGS_ONLY = -pthread

@@ -6,9 +6,11 @@
 #include <wx/intl.h>
 #include <wx/image.h>
 #include <wx/string.h>
+#include <wx/sizer.h>
 //*)
 
 #include <wx/dcbuffer.h>
+#include <wx/msgdlg.h>
 
 //(*IdInit(moEffectLayerCtrl)
 const long moEffectLayerCtrl::ID_TEXTCTRL1 = wxNewId();

@@ -37,6 +37,7 @@
 #include "moDirectorTypes.h"
 #include "moDirectorFrame.h"
 #include "moIDirectorActions.h"
+#include <wx/treectrl.h>
 
 class moMobItemData : public wxTreeItemData {
 

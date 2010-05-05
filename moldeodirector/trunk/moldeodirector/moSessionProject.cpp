@@ -15,11 +15,6 @@ void moSessionProject::Init() {
 
 	m_pDirectorCore = NULL;
 
-	for( i=0; i<MO_OBJECT_TYPES; i++) {
-		m_pMobs[i]=NULL;
-	}
-
-
 	return;
 }
 
@@ -189,22 +184,6 @@ moSessionProject::CloseConfig( moText p_configname ) {
 
 	moDirectorStatus
 	moSessionProject::CloseMob( moMobDescriptor p_MobDesc ) {
-
-        //Aqui hay que ver si vale la pena descargar el config.
-        //En definitiva si solo cargamos los configs de aquellos objetos que visualizamos, o que esten activos
-        //en principio es mejor que sea todo en tiempo real, pero esta seria una opcion para cargar más rapidamente el proyecto
-        //algo asi como cargar el proyecto offline... u online...
-        /*
-		if ( 0<=p_MobDesc.GetIndex() && p_MobDesc.GetIndex()< m_ProjectDescriptor.GetMobsCount(p_MobDesc.GetType())) {
-
-			if( m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].IsConfigLoaded() ) {
-				m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].UnloadConfig();
-				return MO_DIRECTOR_STATUS_OK;
-			} else {
-				return MO_DIRECTOR_STATUS_ERROR;
-			}
-		} else return MO_DIRECTOR_STATUS_ERROR;
-		*/
 		return MO_DIRECTOR_STATUS_OK;
 	}
 
@@ -220,28 +199,7 @@ moSessionProject::CloseConfig( moText p_configname ) {
 
 	moDirectorStatus
 	moSessionProject::EditMob( moMobDescriptor p_MobDesc ) {
-
-		MOint verif;
-
-		if ( 0<=p_MobDesc.GetIndex() && p_MobDesc.GetIndex()< m_ProjectDescriptor.GetMobsCount(p_MobDesc.GetType())) {
-
-			if( m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].IsConfigLoaded() ) {
-				return MO_DIRECTOR_STATUS_CONFIG_ALREADY_LOADED;
-			} else {
-				m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].LoadConfig();
-			}
-
-			verif = m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].IsConfigLoaded();
-
-			if(!verif) {
-				moText errmsg = "Couldn´t load effect's config:";
-				errmsg+= p_MobDesc.GetFullConfigName();
-				ShowMessage( errmsg );
-				return MO_DIRECTOR_STATUS_CONFIG_ERROR;
-			}
-			return MO_DIRECTOR_STATUS_OK;
-		} else return MO_DIRECTOR_STATUS_ERROR;
-
+		return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus
@@ -256,9 +214,7 @@ moSessionProject::CloseConfig( moText p_configname ) {
 
 	moMobDescriptor
 	moSessionProject::GetMob( moMobDescriptor p_MobDesc ) {
-		if ( 0<=p_MobDesc.GetIndex() && p_MobDesc.GetIndex()< m_ProjectDescriptor.GetMobsCount(p_MobDesc.GetType())) {
-			return m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].GetMobDescriptor();
-		} else return moMobDescriptor();
+		return moMobDescriptor();
 	}
 
 	moDirectorStatus
@@ -302,80 +258,11 @@ moSessionProject::LoadMobs() {
 		efx[3] = m_ConsoleConfig.GetParamIndex("posteffect");
 		efx[4] = m_ConsoleConfig.GetParamIndex("mastereffect");
 
-		/*m_ProjectDescriptor.SetMobsCount( m_ConsoleConfig.GetValuesCount(efx[0]),
-			m_ConsoleConfig.GetValuesCount(efx[1]),
-			m_ConsoleConfig.GetValuesCount(efx[2]),
-			m_ConsoleConfig.GetValuesCount(efx[3]),
-			m_ConsoleConfig.GetValuesCount(efx[4]) );
-
-		for( i=0; i<MO_OBJECT_TYPES; i++) {
-
-			if ( m_pMobs[i]!=NULL ) {
-				delete [] m_pMobs[i];
-				m_pMobs[i] = NULL;
-			}
-
-			if ( m_pMobs[i]==NULL ) {
-				int count = m_ProjectDescriptor.GetMobsCount((enumMobType)(i));
-
-				if (count>0) {
-					m_pMobs[i] = new moMobConfig [ count ];
-
-					m_ConsoleConfig.SetCurrentParamIndex( efx[i] );
-
-					m_ConsoleConfig.FirstValue();
-
-					for( m=0; m < count; m++) {
-
-						name = m_ConsoleConfig.GetParam().GetValue().GetSubValue(MO_CFG_EFFECT).Text();
-
-						if ( name == moText("nil") ) {
-
-							name = "nil";
-							namefull = "nil";
-							namecfg = "nil";
-
-						} else {
-
-							namecfg = m_ConsoleConfig.GetParam().GetValue().GetSubValue(MO_CFG_EFFECT_CONFIG).Text();
-							namecfg+= ".cfg";
-							namefull = m_ProjectDescriptor.GetConfigPath() + (moText)namecfg;
-
-						}
-
-						moMobDescriptor MOB((enumMobType)(i),m);
-
-						MOB.Set( name, moText(""), namecfg, namefull );
-
-						m_pMobs[i][m].Init( MOB );
-
-						m_ConsoleConfig.NextValue();
-					}
-				}
-			}
-		}*/
-
 }
 
 void
 moSessionProject::UnloadMobs() {
 
 	MOint i,m;
-
-/*	for( i=0; i<MO_MOB_TYPES ; i++) {
-		for( m=0; m < m_ProjectDescriptor.GetMobsCount(((enumMobType)i)); m++) {
-			m_pMobs[i][m].UnloadConfig();
-		}
-
-		if ( m_pMobs[i]!=NULL ) {
-			delete [] m_pMobs[i];
-			m_pMobs[i] = NULL;
-		}
-	}
-
-	m_ProjectDescriptor.Set( moText(""),moText(""));
-
-	m_ProjectDescriptor.SetMobsCount(0,0,0,0,0);
-	*/
 
 }

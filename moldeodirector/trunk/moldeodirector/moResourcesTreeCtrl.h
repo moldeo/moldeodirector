@@ -7,6 +7,7 @@
 #include "wxTreeMultiCtrl.h"
 #include "moShaderCtrl.h"
 #include "moTextureItemCtrl.h"
+#include <wx/imaglist.h>
 
 
 class moResourcesTreeCtrl : public wxTreeMultiCtrl, public moIDirectorActions {

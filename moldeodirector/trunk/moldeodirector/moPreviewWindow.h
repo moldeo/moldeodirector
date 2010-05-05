@@ -7,6 +7,7 @@
 //(*Headers(moPreviewWindow)
 #include <wx/panel.h>
 #include <wx/bmpbuttn.h>
+#include <wx/glcanvas.h>
 //*)
 
 class moGLCanvas;

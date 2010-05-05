@@ -1,4 +1,5 @@
 #include "moProjectTreeCtrl.h"
+#include <wx/artprov.h>
 
 BEGIN_EVENT_TABLE(moProjectTreeCtrl, wxTreeCtrl)
 	EVT_TREE_ITEM_ACTIVATED( -1, moProjectTreeCtrl::OnActivate )

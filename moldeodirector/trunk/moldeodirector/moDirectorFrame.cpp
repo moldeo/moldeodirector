@@ -1353,8 +1353,8 @@ moDirectorFrame::ProjectUpdated( moProjectDescriptor p_ProjectDescriptor ) {
 	m_pDataNotebook->m_pIODevicesTreeCtrl->DeleteAllItems();
 	m_pDataNotebook->m_pResourcesTreeCtrl->DeleteAllItems();
 
-	cPath = (wxChar*)(char*)p_ProjectDescriptor.GetConfigPath();
-	cMol = (wxChar*)(char*) p_ProjectDescriptor.GetConfigName();
+	cPath = (wxChar*)(const char*)p_ProjectDescriptor.GetConfigPath();
+	cMol = (wxChar*)(const char*) p_ProjectDescriptor.GetConfigName();
 
 	if(m_pDataNotebook->m_pVirtualDirTreeCtrl)
 		m_pDataNotebook->m_pVirtualDirTreeCtrl->SetRootPath( cPath, wxVDTC_DEFAULT);

@@ -36,6 +36,8 @@
 
 #include "moDirectorTypes.h"
 #include "moDirectorChildFrame.h"
+#include <wx/notebook.h>
+#include <wx/aui/auibook.h>
 
 class moFilesbookPage : public wxNotebookPage {
 	public:

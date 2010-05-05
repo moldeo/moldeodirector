@@ -2,8 +2,8 @@
 
 moDirectorChildConsole::moDirectorChildConsole() : moDirectorConsole() {
 
-	m_EffectConfigName = "";
-	m_EffectName = "";
+	m_EffectConfigName = moText();
+	m_EffectName = moText();
 }
 
 moDirectorChildConsole::~moDirectorChildConsole() {

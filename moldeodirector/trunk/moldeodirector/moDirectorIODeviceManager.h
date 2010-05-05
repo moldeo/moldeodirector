@@ -35,6 +35,7 @@
 #define _MO_DIRECTORIODEVICEMANAGER_
 
 #include "moDirectorTypes.h"
+#include <wx/event.h>
 
 class moDirectorIODeviceManager : public wxEvtHandler, public moIODeviceManager {
 

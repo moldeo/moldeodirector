@@ -4,7 +4,7 @@
 #include "moDirectorTypes.h"
 #include "moIDirectorActions.h"
 
-#include "wxTreeMultiCtrl.h"
+#include "treemultictrl/wxTreeMultiCtrl.h"
 #include "moShaderCtrl.h"
 #include "moTextureItemCtrl.h"
 
@@ -18,6 +18,7 @@
 #include <wx/bmpbuttn.h>
 #include <wx/statbmp.h>
 #include <wx/button.h>
+#include <wx/notebook.h>
 //*)
 
 class moPanelTexture: public wxPanel, public moIDirectorActions

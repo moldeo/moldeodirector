@@ -37,6 +37,8 @@
 #include "moDirectorTypes.h"
 #include "moIDirectorActions.h"
 #include "moDirectorConsole.h"
+#include <wx/glcanvas.h>
+#include <wx/timer.h>
 
 
 class moGLCanvas: public wxGLCanvas, public moIDirectorActions

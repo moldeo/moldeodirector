@@ -38,7 +38,6 @@
 #include "moDirectorTypes.h"
 #include "moIDirectorActions.h"
 #include "moDirectorCore.h"
-#include "moMobConfig.h"
 
 class moSessionProject : public moIDirectorActions {
 
@@ -101,8 +100,6 @@ private:
 	moDirectorCore*		m_pDirectorCore;
 
 	moConfig			m_ConsoleConfig;
-
-	moMobConfig*		m_pMobs[ MO_OBJECT_TYPES ];
 
 	//PATHS
 	moProjectDescriptor	m_ProjectDescriptor;

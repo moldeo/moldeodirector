@@ -42,7 +42,7 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
 	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
 	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/configure.in
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -91,8 +91,6 @@ CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2 -pthread
 CGGL_LIBS = -lCgGL -lGL
 CG_LIBS = -lCg
-CHECK_CFLAGS =  
-CHECK_LIBS = -lcheck  
 CPP = gcc -std=gnu99 -E
 CPPFLAGS =  -I/usr/lib/wx/include/gtk2-unicode-release-2.8 -I/usr/include/wx-2.8 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -D__WXGTK__
 CXX = g++
@@ -110,8 +108,6 @@ ECHO_T =
 EGREP = /bin/grep -E
 EXEEXT = 
 FGREP = /bin/grep -F
-FREEALUT_CFLAGS =  
-FREEALUT_LIBS = -lalut -lopenal  
 FREEIMAGE_LIBS = -lfreeimage
 FT2_CFLAGS = -I/usr/include/freetype2
 FT2_CONFIG = /usr/bin/freetype-config
@@ -121,10 +117,7 @@ FTGL_LIBS = -lftgl
 GLEW_LIBS = -lGLEW
 GLE_LIBS = -lgle
 GLUT_LIBS = -lglut
-GL_LIBS = -lGL
 GREP = /bin/grep
-GST_CFLAGS = -pthread -I/usr/include/gstreamer-0.10 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/libxml2  
-GST_LIBS = -pthread -lgstreamer-0.10 -lgobject-2.0 -lgmodule-2.0 -lxml2 -lgthread-2.0 -lrt -lglib-2.0  
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -132,19 +125,17 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
+LIBMOLDEO_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -pthread -I/usr/local//include/libmoldeo -I/usr/include/muParser -I/usr/include/lua5.1 -I/usr/include/SDL -I/usr/include/FTGL -I/usr/include/gstreamer-0.10 -I/usr/include/freetype2 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/libxml2  
+LIBMOLDEO_LIBS = -pthread -L/usr/local//lib -lmoldeo -ltinyxml -lmuparser -llua5.1 -lSDL_image -lftgl -lalut -lgstreamer-0.10 -lfreetype -lcheck -lGL -lSDL -lopenal -lgobject-2.0 -lgmodule-2.0 -lxml2 -lgthread-2.0 -lrt -lglib-2.0  
 LIBOBJS = 
 LIBS =  -lpthread -pthread   -lwx_gtk2u_richtext-2.8 -lwx_gtk2u_aui-2.8 -lwx_gtk2u_xrc-2.8 -lwx_gtk2u_qa-2.8 -lwx_gtk2u_html-2.8 -lwx_gtk2u_adv-2.8 -lwx_gtk2u_core-2.8 -lwx_baseu_xml-2.8 -lwx_baseu_net-2.8 -lwx_baseu-2.8 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-LUA51_CFLAGS = -I/usr/include/lua5.1  
-LUA51_LIBS = -llua5.1  
 MACSETFILE = @true
 MAKEINFO = ${SHELL} /home/crocha/Projects/Moldeo/moldeodirector/trunk/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
-MUPARSER_CFLAGS = -I/usr/include/muParser  
-MUPARSER_LIBS = -lmuparser  
 NM = /usr/bin/nm -B
 NMEDIT = 
 OBJDUMP = objdump
@@ -152,30 +143,25 @@ OBJEXT = o
 OTOOL = 
 OTOOL64 = 
 PACKAGE = moldeodirector
-PACKAGE_BUGREPORT = 7
-PACKAGE_NAME = moldeodirector
-PACKAGE_STRING = moldeodirector 0
+PACKAGE_BUGREPORT = info@moldeointeractive.com.ar
+PACKAGE_NAME = Moldeo Director
+PACKAGE_STRING = Moldeo Director 0.7
 PACKAGE_TARNAME = moldeodirector
 PACKAGE_URL = 
-PACKAGE_VERSION = 0
+PACKAGE_VERSION = 0.7
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 PLUGIN_WX_LIBS = 
 POSTLINK_COMMAND = @true
 RANLIB = ranlib
 REZ = 
-SDL_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL  
-SDL_IMAGE_LIBS = -lSDL_image
-SDL_LIBS = -lSDL  
 SDL_NET_LIBS = -lSDL_net
 SED = /bin/sed
 SETFILE = 
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-TINYXML_CFLAGS =  
-TINYXML_LIBS = -ltinyxml  
-VERSION = 0
+VERSION = 0.7
 WX_CFLAGS = -I/usr/lib/wx/include/gtk2-unicode-release-2.8 -I/usr/include/wx-2.8 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -D__WXGTK__ -pthread
 WX_CFLAGS_ONLY = -pthread
 WX_CONFIG_PATH = /usr/bin/wx-config
@@ -241,20 +227,20 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-INCLUDES =  
+INCLUDES = @CHECK_CFLAGS@
 check_moldeodirector_SOURCES = check_moldeodirector.cpp
-check_moldeodirector_LDADD = -lcheck   \
+check_moldeodirector_LDADD = @CHECK_LIBS@ \
 	-lmoldeo \
-	-lmuparser   \
-	-lSDL   \
+	@MUPARSER_LIBS@ \
+	@SDL_LIBS@ \
 	-lgle \
 	-lfreeimage \
-	-lalut -lopenal   \
+	@FREEALUT_LIBS@ \
 	-lGLEW \
 	-lCg \
 	-lCgGL -lGL \
-	-llua5.1   \
-	-pthread -lgstreamer-0.10 -lgobject-2.0 -lgmodule-2.0 -lxml2 -lgthread-2.0 -lrt -lglib-2.0   \
+	@LUA51_LIBS@ \
+	@GST_LIBS@ \
 	-lfreetype -lz
 
 CLEANFILES = check_moldeodirector.log

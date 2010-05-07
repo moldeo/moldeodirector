@@ -1,4 +1,4 @@
-AC_INIT(moldeodirector,0,7)
+AC_INIT([Moldeo Director], [0.7], [info@moldeointeractive.com.ar], [moldeodirector])
 
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
@@ -15,65 +15,45 @@ AC_PROG_CXX
 AC_PROG_CXXCPP
 AC_PROG_CXX_C_O
 
-dnl check for TinyXml
-PKG_CHECK_MODULES([TINYXML], [tinyxml] ,has_tinyxml=yes)
+#dnl check for libmoldeo
+PKG_CHECK_MODULES([LIBMOLDEO], [libmoldeo] ,has_libmoldeo=yes)
 
-dnl check for muParser
-PKG_CHECK_MODULES([MUPARSER], [muparser] ,has_muparser=yes)
-
-dnl check for lua51
-PKG_CHECK_MODULES([LUA51], [lua5.1] ,has_lua51=yes)
-
-dnl check for sdl
-PKG_CHECK_MODULES([SDL], [sdl] ,has_sdl=yes)
-
-dnl check for sdl-net
+#dnl check for sdl-net
 AC_CHECK_HEADER(SDL/SDL_net.h, , AC_MSG_ERROR([SDL_net header not found.]))
 AC_CHECK_LIB(SDL_net, SDLNet_Init, AC_SUBST([SDL_NET_LIBS], [-lSDL_net]), AC_MSG_ERROR([SDL_net not found.]), [${SDL_LIBS} ${WIN32_LIBS}])
 
-dnl check for sdl-image
-AC_CHECK_HEADER(SDL/SDL_image.h, , AC_MSG_ERROR([SDL_image header not found.]))
-AC_CHECK_LIB(SDL_image, IMG_Linked_Version, AC_SUBST([SDL_IMAGE_LIBS], [-lSDL_image]), AC_MSG_ERROR([SDL_image not found.]), [${SDL_LIBS} ${WIN32_LIBS}])
-
-dnl check for opengl
-AC_CHECK_HEADER(GL/gl.h, , AC_MSG_ERROR([opengl header not found.]))
-AC_CHECK_LIB(GL, glEnd, AC_SUBST([GL_LIBS], [-lGL]), AC_MSG_ERROR([opengl not found.]), )
-
-dnl check for glew
+#dnl check for glew
 AC_CHECK_HEADER(GL/glew.h, , AC_MSG_ERROR([glew header not found.]))
 AC_CHECK_LIB(GLEW, glEnd, AC_SUBST([GLEW_LIBS], [-lGLEW]), AC_MSG_ERROR([glew not found.]), )
 
-dnl check for glut
+#dnl check for glut
 AC_CHECK_HEADER(GL/glut.h, , AC_MSG_ERROR([glut header not found.]))
 AC_CHECK_LIB(glut, glutMainLoop, AC_SUBST([GLUT_LIBS], [-lglut]), AC_MSG_ERROR([glut not found.]), )
 
-dnl check for gle
+#dnl check for gle
 AC_CHECK_HEADER(GL/gle.h, , AC_MSG_ERROR([gle header not found.]))
 AC_CHECK_LIB(gle, gleDestroyGC, AC_SUBST([GLE_LIBS], [-lgle]), AC_MSG_ERROR([gle not found.]), )
 
-dnl check for ftgl
+#dnl check for ftgl
 PKG_CHECK_MODULES([FTGL], [ftgl] ,has_ftgl=yes)
 
 dnl check for freeimage
 AC_CHECK_HEADER(FreeImage.h, , AC_MSG_ERROR([FreeImage header not found.]))
 AC_CHECK_LIB(freeimage, FreeImage_GetVersion, AC_SUBST([FREEIMAGE_LIBS], [-lfreeimage]), AC_MSG_ERROR([FreeImage not found.]), )
 
-dnl check for freetype2
+#dnl check for freetype2
 AC_CHECK_FT2()
 
-dnl check for alut
-PKG_CHECK_MODULES([FREEALUT], [freealut] ,has_freealut=yes)
-
-dnl check boost libraries
+#dnl check boost libraries
 AX_BOOST_BASE
 AX_BOOST_ASIO
 AX_BOOST_THREAD
 AX_BOOST_FILESYSTEM
 
-dnl nvidia-cG-toolkit requires pthread
+#dnl nvidia-cG-toolkit requires pthread
 AC_CHECK_LIB(pthread, pthread_attr_init, LIBS="$LIBS -lpthread")
 
-dnl check for cg
+#dnl check for cg
 AC_LANG_PUSH(C++)dnl
 AC_CHECK_LIB(Cg, cgCreateContext,
 [
@@ -121,26 +101,6 @@ AC_CHECK_LIB(CgGL, cgGLBindProgram,
 [ -lGL ]
 )
 AC_LANG_POP(C++)
-
-dnl check for gstreamer
-GST_VERSION_MAJOR=0
-GST_VERSION_MINOR=10
-GST_VERSION_RELEASE=19
-GSTPLUG_VERSION_RELEASE=7
-GSTREAMER_REQ=$GST_VERSION_MAJOR.$GST_VERSION_MINOR.$GST_VERSION_RELEASE
-GSTPLUGINS_REQ=$GST_VERSION_MAJOR.$GST_VERSION_MINOR.$GSTPLUG_VERSION_RELEASE
-GST_MAJORMINOR=$GST_VERSION_MAJOR.$GST_VERSION_MINOR
-
-PKG_CHECK_MODULES(GST, gstreamer-$GST_MAJORMINOR >= $GSTREAMER_REQ,
-  HAVE_GSTREAMER=yes)
-AC_SUBST(GST_CFLAGS)
-AC_SUBST(GST_LIBS)
-
-dnl check for truetype
-AC_CHECK_FT2
-
-dnl check for check test suite
-PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
 
 dnl Check wx-Widgets
 AM_OPTIONS_WXCONFIG

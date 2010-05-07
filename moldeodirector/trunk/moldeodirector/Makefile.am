@@ -39,33 +39,19 @@ moldeodirector_SOURCES = \
 # moldeodirector.cpp
 
 moldeodirector_CPPFLAGS = \
-	-I /usr/local/include/libmoldeo \
 	-I ./treemultictrl \
 	-I ./vdtc \
-	-I ./wxsmith \
-	${WX_CFLAGS} \
-	${LUA51_CFLAGS} \
-	${FT2_CFLAGS} \
-	${GST_CFLAGS}
+	${LIBMOLDEO_CFLAGS} \
+	${WX_CFLAGS} 
 
 moldeodirector_LDADD = \
-	-lmoldeo \
 	-lwx_gtk2u_gl-2.8 \
+	${LIBMOLDEO_LIBS} \
 	${FREEIMAGE_LIBS} \
-	${FREEALUT_LIBS} \
-	${GST_LIBS} \
-	${GL_LIBS} \
 	${GLEW_LIBS} \
 	${GLUT_LIBS} \
 	${GLE_LIBS} \
-	${CG_LIBS} \
 	${CGGL_LIBS} \
-	${FT2_LIBS} \
-	${FTGL_LIBS} \
-	${MUPARSER_LIBS} \
-	${TINYXML_LIBS} \
-	${LUA51_LIBS} \
-	${SDL_LIBS} \
 	${BOOST_ASIO_LIB} \
 	${BOOST_THREAD_LIB} \
 	${BOOST_FILESYSTEM_LIB} \

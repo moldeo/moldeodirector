@@ -1236,8 +1236,8 @@ moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wx
         a2dDocviewGlobals->GetDocviewCommandProcessor()->AssociateDocTemplate(doctemplatenew);
 
         //THE DOCUMENT where objets are located
-        a2dGlobals->GetFontPathList().Add( wxT("../../art/fonts") );
-        a2dGlobals->GetImagePathList().Add( wxT("../../art/images") );
+        a2dGlobals->GetFontPathList().Add( wxT(DATADIR "/fonts") );
+        a2dGlobals->GetImagePathList().Add( wxT(DATADIR "/images") );
         a2dGlobals->GetImagePathList().Add( wxT("./") );
         a2dGlobals->GetImagePathList().Add( wxT("../") );
         a2dGlobals->GetFontPathList().Add( wxT(".") );
@@ -1246,11 +1246,14 @@ moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wx
         a2dGlobals->GetImagePathList().Add( wxT("..") );
         a2dGlobals->GetIconPathList().Add( wxT("..") );
         a2dGlobals->GetIconPathList().Add( wxT(".") );
-        a2dGlobals->GetIconPathList().Add( wxT("../../art/images") );
-        a2dGlobals->GetIconPathList().Add( wxT("../../art/icons") );
+        a2dGlobals->GetIconPathList().Add( wxT(DATADIR "/images") );
+        a2dGlobals->GetIconPathList().Add( wxT(DATADIR "/icons") );
+
+	// DEBUG: Cristian
+	printf("Font Path: %s\n", a2dGlobals->GetFontPathList().GetAsString().mb_str());
 
         a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D" ), wxT("../../") );
-        a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT("../../art") );
+        a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT(DATADIR "") );
 
         /*
         wxString* artdir = a2dGeneralGlobals->GetVariablesHash().GetVariableString(  wxT( "WXART2D_ART" ) );
@@ -1261,15 +1264,15 @@ moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wx
                 wxGetEnv(_T("WXART2D"), &artroot );
                 if( artroot.IsEmpty() )
                 {
-                    a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT("../../art") );
-                    //a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D" ), wxT("../../art") );
+                    a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT(DATADIR "") );
+                    //a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D" ), wxT(DATADIR "") );
                     wxMessageBox( "NO WXART2D DIRECTORY" );
                 } else wxMessageBox( "WXART2D" + artroot );
             }
         }
 
         if (artdir!=NULL) {
-            wxString t( artdir->c_str() );
+            wxString t( artdir->c_str() ); // Cambiar a mb_str()
 
             wxMessageBox( t );
         }

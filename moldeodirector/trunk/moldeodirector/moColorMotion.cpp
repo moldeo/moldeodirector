@@ -54,17 +54,17 @@ moColorMotion::moColorMotion(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	Panel2 = new wxPanel(this, ID_PANEL2, wxPoint(192,8), wxSize(184,272), wxNO_BORDER|wxTAB_TRAVERSAL, _T("ID_PANEL2"));
 	Panel2->SetBackgroundColour(wxColour(0,0,0));
 	PanelTranslateCoords = new wxPanel(Panel2, ID_PANEL5, wxPoint(8,8), wxSize(44,62), wxTAB_TRAVERSAL, _T("ID_PANEL5"));
-	StaticBitmap1 = new wxStaticBitmap(PanelTranslateCoords, ID_STATICBITMAP1, wxBitmap(wxImage(_T("../../doc/icons/colors.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(PanelTranslateCoords, ID_STATICBITMAP1, wxBitmap(wxImage(_T(DATADIR "/icons/colors.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
 	SliderRed = new wxSlider(Panel2, ID_SLIDERRED, 0, 0, 255, wxPoint(56,8), wxSize(56,16), 0, wxDefaultValidator, _T("ID_SLIDERRED"));
 	SliderGreen = new wxSlider(Panel2, ID_SLIDERGREEN, 0, 0, 255, wxPoint(56,24), wxSize(56,16), 0, wxDefaultValidator, _T("ID_SLIDERGREEN"));
 	SliderBlue = new wxSlider(Panel2, ID_SLIDERBLUE, 0, 0, 255, wxPoint(56,40), wxSize(56,16), 0, wxDefaultValidator, _T("ID_SLIDERBLUE"));
 	SliderAlpha = new wxSlider(Panel2, ID_SLIDERALPHA, 0, 0, 255, wxPoint(56,56), wxSize(56,16), 0, wxDefaultValidator, _T("ID_SLIDERALPHA"));
-	BitmapButton1 = new wxBitmapButton(Panel2, ID_BITMAPBUTTON1, wxBitmap(wxImage(_T("../../doc/icons/pickcolor.png"))), wxPoint(128,8), wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
+	BitmapButton1 = new wxBitmapButton(Panel2, ID_BITMAPBUTTON1, wxBitmap(wxImage(_T(DATADIR "/icons/pickcolor.png"))), wxPoint(128,8), wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
 	BitmapButton1->SetDefault();
 	PanelColor = new wxPanel(Panel2, ID_PANELCOLOR, wxPoint(128,40), wxSize(32,32), wxTAB_TRAVERSAL, _T("ID_PANELCOLOR"));
 	PanelColor->SetBackgroundColour(wxColour(255,255,255));
 	Panel3 = new wxPanel(Panel2, ID_PANEL3, wxPoint(8,96), wxSize(38,62), wxTAB_TRAVERSAL, _T("ID_PANEL3"));
-	StaticBitmap2 = new wxStaticBitmap(Panel3, ID_STATICBITMAP2, wxBitmap(wxImage(_T("../../doc/icons/colors.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP2"));
+	StaticBitmap2 = new wxStaticBitmap(Panel3, ID_STATICBITMAP2, wxBitmap(wxImage(_T(DATADIR "/icons/colors.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP2"));
 	TextCtrlRed = new wxTextCtrl(Panel2, ID_TEXTCTRLRED, wxEmptyString, wxPoint(56,96), wxSize(88,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLRED"));
 	TextCtrlGreen = new wxTextCtrl(Panel2, ID_TEXTCTRLGREEN, wxEmptyString, wxPoint(56,112), wxSize(88,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLGREEN"));
 	TextCtrlBlue = new wxTextCtrl(Panel2, ID_TEXTCTRLBLUE, wxEmptyString, wxPoint(56,128), wxSize(88,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLBLUE"));
@@ -143,10 +143,10 @@ void moColorMotion::Inspect( moValueDescriptor p_ValueDescriptor ) {
     if (m_ValueDescriptor.GetValue().GetSubValueCount()==4) {
 
         //tiene un shader aplicado????
-        TextCtrlRed->SetValue( (wxChar*)(char*)m_ValueDescriptor.GetValue().GetSubValue(0).Text());
-        TextCtrlGreen->SetValue( (wxChar*)(char*)m_ValueDescriptor.GetValue().GetSubValue(1).Text());
-        TextCtrlBlue->SetValue( (wxChar*)(char*)m_ValueDescriptor.GetValue().GetSubValue(2).Text());
-        TextCtrlAlpha->SetValue( (wxChar*)(char*)m_ValueDescriptor.GetValue().GetSubValue(3).Text());
+        TextCtrlRed->SetValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(0).Text(), wxConvUTF8));
+        TextCtrlGreen->SetValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(1).Text(), wxConvUTF8));
+        TextCtrlBlue->SetValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(2).Text(), wxConvUTF8));
+        TextCtrlAlpha->SetValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(3).Text(), wxConvUTF8));
 
         moValue& pValue( m_ValueDescriptor.GetValue() );
 
@@ -154,40 +154,35 @@ void moColorMotion::Inspect( moValueDescriptor p_ValueDescriptor ) {
         m_pLevelGreenCtrl->ChangeValue( atoi( pValue[1].Text() )  );
         m_pLevelBlueCtrl->ChangeValue( atoi( pValue[2].Text() )  );
         m_pLevelAlphaCtrl->ChangeValue( atoi( pValue[3].Text() )  );
-
     }
-
 }
 
 void moColorMotion::OnLevelRed(wxCommandEvent& event) {
-    Log(  FloatToStr( (float) event.GetInt() / 100.0 ) );
-    TextCtrlRed->SetValue( (wxChar*)(char*) FloatToStr( (float) event.GetInt() / 100.0 ) );
+    Log(  FloatToStr((float) event.GetInt() / 100.0 ));
+    TextCtrlRed->SetValue(wxString(FloatToStr((float) event.GetInt() / 100.0), wxConvUTF8));
 
 }
 
 void moColorMotion::OnLevelGreen(wxCommandEvent& event) {
-    Log(  FloatToStr( (float) event.GetInt() / 100.0 ) );
-    TextCtrlGreen->SetValue( (wxChar*)(char*) FloatToStr( (float) event.GetInt() / 100.0 ) );
-
+    Log(  FloatToStr((float) event.GetInt() / 100.0 ));
+    TextCtrlGreen->SetValue(wxString( FloatToStr( (float) event.GetInt() / 100.0 ), wxConvUTF8));
 }
 
 void moColorMotion::OnLevelBlue(wxCommandEvent& event) {
-    Log(  FloatToStr( (float) event.GetInt() / 100.0 ) );
-    TextCtrlBlue->SetValue( (wxChar*)(char*) FloatToStr( (float) event.GetInt() / 100.0 ) );
-
+    Log(  FloatToStr((float) event.GetInt() / 100.0 ));
+    TextCtrlBlue->SetValue(wxString( FloatToStr( (float) event.GetInt() / 100.0 ), wxConvUTF8));
 }
 
 void moColorMotion::OnLevelAlpha(wxCommandEvent& event) {
-    Log(  FloatToStr( (float) event.GetInt() / 100.0 ) );
-    TextCtrlAlpha->SetValue( (wxChar*)(char*) FloatToStr( (float) event.GetInt() / 100.0 ) );
-
+    Log(  FloatToStr((float) event.GetInt() / 100.0 ));
+    TextCtrlAlpha->SetValue(wxString( FloatToStr( (float) event.GetInt() / 100.0 ), wxConvUTF8));
 }
 
 void moColorMotion::OnTextCtrlRedText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlRed->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moText(TextCtrlRed->GetValue().mb_str() ) );
 
     SetValue( m_ValueDescriptor );
 }
@@ -196,7 +191,7 @@ void moColorMotion::OnTextCtrlGreenText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
-    rValue.GetSubValue(1).SetText( moText((char*)(wxChar*)TextCtrlGreen->GetValue().c_str() ) );
+    rValue.GetSubValue(1).SetText( moText(TextCtrlGreen->GetValue().mb_str() ) );
 
     SetValue( m_ValueDescriptor );
 }
@@ -205,7 +200,7 @@ void moColorMotion::OnTextCtrlBlueText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
-    rValue.GetSubValue(2).SetText( moText((char*)(wxChar*)TextCtrlBlue->GetValue().c_str() ) );
+    rValue.GetSubValue(2).SetText( moText(TextCtrlBlue->GetValue().mb_str() ) );
 
     SetValue( m_ValueDescriptor );
 }
@@ -214,29 +209,29 @@ void moColorMotion::OnTextCtrlAlphaText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
-    rValue.GetSubValue(3).SetText( moText((char*)(wxChar*)TextCtrlAlpha->GetValue().c_str() ) );
+    rValue.GetSubValue(3).SetText( moText(TextCtrlAlpha->GetValue().mb_str() ) );
 
     SetValue( m_ValueDescriptor );
 }
 
 void moColorMotion::OnSliderRedCmdScroll(wxScrollEvent& event)
 {
-    TextCtrlRed->SetValue( (wxChar*)(char*) FloatToStr( (float)SliderRed->GetValue() / 255.0 ) );
+    TextCtrlRed->SetValue(wxString(FloatToStr((float)SliderRed->GetValue() / 255.0), wxConvUTF8));
 }
 
 void moColorMotion::OnSliderGreenCmdScroll(wxScrollEvent& event)
 {
-    TextCtrlGreen->SetValue( (wxChar*)(char*) FloatToStr( (float)SliderGreen->GetValue() / 255.0 ) );
+    TextCtrlGreen->SetValue(wxString(FloatToStr( (float)SliderGreen->GetValue() / 255.0 ), wxConvUTF8));
 }
 
 void moColorMotion::OnSliderBlueCmdScroll(wxScrollEvent& event)
 {
-    TextCtrlBlue->SetValue( (wxChar*)(char*) FloatToStr( (float)SliderBlue->GetValue() / 255.0 ) );
+    TextCtrlBlue->SetValue(wxString(FloatToStr( (float)SliderBlue->GetValue() / 255.0 ), wxConvUTF8));
 }
 
 void moColorMotion::OnSliderAlphaCmdScroll(wxScrollEvent& event)
 {
-    TextCtrlAlpha->SetValue( (wxChar*)(char*) FloatToStr( (float)SliderAlpha->GetValue() / 255.0 ) );
+    TextCtrlAlpha->SetValue(wxString(FloatToStr( (float)SliderAlpha->GetValue() / 255.0 ), wxConvUTF8));
 }
 
 
@@ -247,10 +242,10 @@ void moColorMotion::OnButtonPickColorClick(wxCommandEvent& event)
     if ( pColourDlg->ShowModal()==wxID_OK ) {
         wxColour pColour = pColourDlg->GetColourData().GetColour();
 
-        TextCtrlRed->SetValue( (wxChar*)(char*) FloatToStr( (float)pColour.Red()/255.0) );
-        TextCtrlGreen->SetValue( (wxChar*)(char*) FloatToStr( (float)pColour.Green()/255.0) );
-        TextCtrlBlue->SetValue( (wxChar*)(char*) FloatToStr( (float)pColour.Blue()/255.0) );
-        TextCtrlAlpha->SetValue( (wxChar*)(char*) FloatToStr( (float)pColour.Alpha()/255.0) );
+        TextCtrlRed->SetValue(wxString(FloatToStr( (float)pColour.Red()/255.0), wxConvUTF8));
+        TextCtrlGreen->SetValue(wxString(FloatToStr( (float)pColour.Green()/255.0), wxConvUTF8));
+        TextCtrlBlue->SetValue(wxString(FloatToStr( (float)pColour.Blue()/255.0), wxConvUTF8));
+        TextCtrlAlpha->SetValue(wxString(FloatToStr( (float)pColour.Alpha()/255.0), wxConvUTF8));
 
         PanelColor->SetBackgroundColour( pColour );
         PanelColor->Refresh();

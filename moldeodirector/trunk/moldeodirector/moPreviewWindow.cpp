@@ -29,18 +29,18 @@ moPreviewWindow::moPreviewWindow(wxWindow* parent,wxWindowID id,const wxPoint& p
 	Create(parent, wxID_ANY, wxDefaultPosition, wxSize(401,336), wxTAB_TRAVERSAL, _T("wxID_ANY"));
 	SetForegroundColour(wxColour(255,255,255));
 	SetBackgroundColour(wxColour(0,0,0));
-	BitmapButtonPlay = new wxBitmapButton(this, ID_BITMAPBUTTONPLAY, wxBitmap(wxImage(_T("../../art/icons/play32.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPLAY"));
+	BitmapButtonPlay = new wxBitmapButton(this, ID_BITMAPBUTTONPLAY, wxBitmap(wxImage(_T(DATADIR "/icons/play32.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPLAY"));
 	BitmapButtonPlay->SetDefault();
-	BitmapButtonPause = new wxBitmapButton(this, ID_BITMAPBUTTONPAUSE, wxBitmap(wxImage(_T("../../art/icons/pause32.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPAUSE"));
+	BitmapButtonPause = new wxBitmapButton(this, ID_BITMAPBUTTONPAUSE, wxBitmap(wxImage(_T(DATADIR "/icons/pause32.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPAUSE"));
 	BitmapButtonPause->SetDefault();
-	ButtonFullSCreen = new wxBitmapButton(this, ID_BITMAPBUTTONFULLSCREEN, wxBitmap(wxImage(_T("../../art/icons/fullscreen32.png"))), wxPoint(272,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONFULLSCREEN"));
+	ButtonFullSCreen = new wxBitmapButton(this, ID_BITMAPBUTTONFULLSCREEN, wxBitmap(wxImage(_T(DATADIR "/icons/fullscreen32.png"))), wxPoint(272,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONFULLSCREEN"));
 	ButtonFullSCreen->SetDefault();
-	BitmapButtonScreenshot = new wxBitmapButton(this, ID_BITMAPBUTTONSCREENSHOT, wxBitmap(wxImage(_T("../../art/icons/screenshot32.png"))), wxPoint(312,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCREENSHOT"));
+	BitmapButtonScreenshot = new wxBitmapButton(this, ID_BITMAPBUTTONSCREENSHOT, wxBitmap(wxImage(_T(DATADIR "/icons/screenshot32.png"))), wxPoint(312,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCREENSHOT"));
 	BitmapButtonScreenshot->SetDefault();
-	BitmapButtonSaveVideo = new wxBitmapButton(this, ID_BITMAPBUTTONSAVEVIDEO, wxBitmap(wxImage(_T("../../art/icons/savevideo32.png"))), wxPoint(344,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVEVIDEO"));
+	BitmapButtonSaveVideo = new wxBitmapButton(this, ID_BITMAPBUTTONSAVEVIDEO, wxBitmap(wxImage(_T(DATADIR "/icons/savevideo32.png"))), wxPoint(344,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVEVIDEO"));
 	BitmapButtonSaveVideo->SetDefault();
-	BitmapButtonSaveSession = new wxBitmapButton(this, ID_BITMAPBUTTONSAVESESSION, wxBitmap(wxImage(_T("../../doc/icons/savesession32.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVESESSION"));
-	BitmapButtonStop = new wxBitmapButton(this, ID_BITMAPBUTTONSTOP, wxBitmap(wxImage(_T("../../art/icons/stop32.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSTOP"));
+	BitmapButtonSaveSession = new wxBitmapButton(this, ID_BITMAPBUTTONSAVESESSION, wxBitmap(wxImage(_T(DATADIR "/icons/savesession32.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVESESSION"));
+	BitmapButtonStop = new wxBitmapButton(this, ID_BITMAPBUTTONSTOP, wxBitmap(wxImage(_T(DATADIR "/icons/stop32.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSTOP"));
 	BitmapButtonStop->SetDefault();
 
 	Connect(ID_BITMAPBUTTONPLAY,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPreviewWindow::OnBitmapButtonPlayClick);

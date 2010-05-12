@@ -41,7 +41,7 @@ moFunctionPanel::moFunctionPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	FunctionTextCtrl = new wxTextCtrl(this, ID_FUNCTIONTEXTCTRL, wxEmptyString, wxPoint(8,56), wxSize(144,32), 0, wxDefaultValidator, _T("ID_FUNCTIONTEXTCTRL"));
 	PanelPlot2d = new wxPanel(this, ID_PANELPLOT2D, wxPoint(8,120), wxSize(144,144), wxTAB_TRAVERSAL, _T("ID_PANELPLOT2D"));
 	PanelPlot2d->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_SCROLLBAR));
-	StaticBitmap1 = new wxStaticBitmap(PanelPlot2d, ID_STATICBITMAP1, wxBitmap(wxImage(_T("../../art/icons/functiontest.png")).Rescale(wxSize(136,72).GetWidth(),wxSize(136,72).GetHeight())), wxPoint(0,8), wxSize(136,72), 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(PanelPlot2d, ID_STATICBITMAP1, wxBitmap(wxImage(_T(DATADIR "/icons/functiontest.png")).Rescale(wxSize(136,72).GetWidth(),wxSize(136,72).GetHeight())), wxPoint(0,8), wxSize(136,72), 0, _T("ID_STATICBITMAP1"));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Type: Function"), wxPoint(8,8), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxColour(255,255,255));
 	SliderNumber = new wxSlider(this, ID_SLIDERNUMBER, 0, 0, 100, wxPoint(0,24), wxSize(152,24), 0, wxDefaultValidator, _T("ID_SLIDERNUMBER"));
@@ -106,7 +106,7 @@ void moFunctionPanel::OnFunctionTextCtrlText(wxCommandEvent& event)
     switch(m_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetType()) {
 
         case MO_PARAM_NUMERIC:
-            ii = atoi( (const char*)FunctionTextCtrl->GetValue().c_str() );
+            ii = atoi(FunctionTextCtrl->GetValue().mb_str() );
             m_ValueDescriptor.GetValue().GetSubValue(0).SetInt(ii);
             break;
 
@@ -114,7 +114,7 @@ void moFunctionPanel::OnFunctionTextCtrlText(wxCommandEvent& event)
         case MO_PARAM_SYNC:
         case MO_PARAM_PHASE:
         case MO_PARAM_FUNCTION:
-            m_ValueDescriptor.GetValue().GetSubValue(0).SetText( (char*)(wxChar*) FunctionTextCtrl->GetValue().c_str() );
+            m_ValueDescriptor.GetValue().GetSubValue(0).SetText(moText(FunctionTextCtrl->GetValue().mb_str()));
             break;
         default:
             return;

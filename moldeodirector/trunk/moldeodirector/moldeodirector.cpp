@@ -74,7 +74,7 @@ bool moDirectorApp::OnInit()
 
 /*
 	const wxString name = wxString::Format(wxT("MoldeoDirector-%s"),
-            wxGetUserId().c_str());
+            wxGetUserId().c_str()); // Use mb_str()
     m_checker = new wxSingleInstanceChecker(name);
     if (m_checker->IsAnotherRunning())
         {
@@ -119,7 +119,7 @@ bool moDirectorApp::OnInit()
 
     cout << "Director Frame..." << endl;
     m_pDirectorFrame = new moDirectorFrame(_T("Moldeo Director"));
-    m_pDirectorFrame->SetIcon( wxIcon( wxIconLocation(wxT("../../art/icons/Moldeo32.ico")) ) );
+    m_pDirectorFrame->SetIcon( wxIcon( wxIconLocation(wxT(DATADIR "/icons/Moldeo32.ico")) ) );
     m_pDirectorFrame->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_CAPTIONTEXT));
     m_pDirectorFrame->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_APPWORKSPACE));
     cout << "m_pDirectorFrame:" << (m_pDirectorFrame!=NULL) << endl;
@@ -178,9 +178,7 @@ bool moDirectorApp::OnInit()
 
     if (config!=moText("")) {
         moProjectDescriptor ProjectDescriptor;
-
         wxFileName	FileName( moText2Wx(config) );
-
         wxString path = FileName.GetPath();
         #ifdef MO_WIN32
             path+= "\\";
@@ -188,14 +186,8 @@ bool moDirectorApp::OnInit()
             path+= _T("/");
         #endif
         wxString name = FileName.GetFullName();
-        const char *cfilepath = (char*)path.c_str();
-        const char *cfilename = (char*)name.c_str();
-
-        ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
-
+        ProjectDescriptor.Set( moText(path.mb_str()), moText(name.mb_str()) );
         moDirectorStatus mStatus = m_pDirectorFrame->OpenProject( ProjectDescriptor );
-
-
     }
 
 

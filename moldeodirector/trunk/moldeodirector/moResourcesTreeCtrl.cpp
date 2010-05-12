@@ -11,7 +11,7 @@ moResourcesTreeCtrl::moResourcesTreeCtrl( wxWindow* window, wxWindowID id) :
 wxTreeMultiCtrl( window, id ) {
     SetSpacingY(0);
 
-    EmptyBitmap = wxBitmap(wxImage(_T("../../doc/icons/imageempty.png")).Rescale(64,64) );
+    EmptyBitmap = wxBitmap(wxImage(_T(DATADIR "/icons/imageempty.png")).Rescale(64,64) );
     SetForegroundColour( wxColour(255,255,255) );
     SetBackgroundColour( wxColour(0,0,0) );
 }

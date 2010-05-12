@@ -28,9 +28,8 @@ MOboolean moDirectorChildConsole::Init( moText p_effectname,
 	wxFileName xfname( wxString((wxChar*)(char*) p_effectconfigname ) );
 	wxString xstring;
 	xstring = xfname.GetName();
-	const char *cfilename =(const char *) xstring.c_str();
 
-	m_EffectConfigName =(char*)cfilename;
+	m_EffectConfigName = moText(xstring.mb_str());
 	m_EffectName = p_effectname;
 
 	return Init( p_datapath,

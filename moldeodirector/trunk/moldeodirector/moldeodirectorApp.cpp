@@ -34,7 +34,7 @@ bool moldeodirectorApp::OnInit()
 	moDirectorFrame*		m_pDirectorFrame = NULL;
 
     m_pDirectorFrame = new moDirectorFrame(_T("Moldeo Director"));
-    m_pDirectorFrame->SetIcon( wxIcon( wxIconLocation(wxT("../../art/icons/Moldeo32.ico")) ) );
+    m_pDirectorFrame->SetIcon( wxIcon( wxIconLocation(wxT(DATADIR "/icons/Moldeo32.ico")) ) );
     m_pDirectorFrame->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_CAPTIONTEXT));
     m_pDirectorFrame->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_APPWORKSPACE));
 

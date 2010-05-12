@@ -98,6 +98,6 @@ class moSessionProject;
 #include "moConsole.h"
 
 #define moText2Wx(X) (wxChar*)(const char*)X
-#define moWx2Text(X) moText((const char*)(wxChar*)X.c_str())
+#define moWx2Text(X) moText(X.mb_str())
 
 #endif

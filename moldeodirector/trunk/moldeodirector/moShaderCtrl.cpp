@@ -34,9 +34,9 @@ moShaderCtrl::moShaderCtrl(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	TextCtrlDestination = new wxTextCtrl(this, ID_TEXTCTRLDESTINATION, wxEmptyString, wxPoint(208,0), wxSize(80,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLDESTINATION"));
 	CheckBoxOnOff = new wxCheckBox(this, ID_CHECKBOXSHADERONOFF, wxEmptyString, wxPoint(0,0), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOXSHADERONOFF"));
 	CheckBoxOnOff->SetValue(false);
-	BitmapButtonShaderSelect = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERSELECT, wxBitmap(wxImage(_T("../../doc/icons/select.png"))), wxPoint(120,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERSELECT"));
+	BitmapButtonShaderSelect = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERSELECT, wxBitmap(wxImage(_T(DATADIR "/icons/select.png"))), wxPoint(120,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERSELECT"));
 	BitmapButtonShaderSelect->SetDefault();
-	BitmapButtonShaderImport = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERIMPORT, wxBitmap(wxImage(_T("../../doc/icons/import.png"))), wxPoint(104,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERIMPORT"));
+	BitmapButtonShaderImport = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERIMPORT, wxBitmap(wxImage(_T(DATADIR "/icons/import.png"))), wxPoint(104,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERIMPORT"));
 	BitmapButtonShaderImport->SetDefault();
 	SliderShaderAlpha = new wxSlider(this, ID_SLIDERSHADERALPHA, 0, 0, 100, wxPoint(136,0), wxSize(64,13), 0, wxDefaultValidator, _T("ID_SLIDERSHADERALPHA"));
 	
@@ -137,7 +137,6 @@ void moShaderCtrl::OnBitmapButtonShaderImportClick(wxCommandEvent& event)
 
 
 			wxString path = FileName.GetFullPath();
-			const char *cnamerelative = (char*)path.c_str();
 
 			TextCtrlShaderCfg->SetValue( path );
 

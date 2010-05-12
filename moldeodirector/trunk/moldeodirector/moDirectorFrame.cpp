@@ -33,11 +33,12 @@ BEGIN_EVENT_TABLE(moDirectorFrame, wxFrame)
 	EVT_MENU( MODIRECTOR_NEWIODEVICE, moDirectorFrame::OnNewEffect )
 	EVT_MENU( MODIRECTOR_NEWRESOURCE, moDirectorFrame::OnNewEffect )
 
-    EVT_MENU( MODIRECTOR_NEWPROJECT, moDirectorFrame::OnNewProject )
-    EVT_MENU( MODIRECTOR_OPENPROJECT, moDirectorFrame::OnOpenProject )
+	EVT_MENU( MODIRECTOR_NEWPROJECT, moDirectorFrame::OnNewProject )
+	EVT_MENU( MODIRECTOR_OPENPROJECT, moDirectorFrame::OnOpenProject )
 	EVT_MENU( MODIRECTOR_CLOSEPROJECT, moDirectorFrame::OnCloseProject )
 	EVT_MENU( MODIRECTOR_SAVEPROJECT, moDirectorFrame::OnSaveProject )
 
+#ifdef WITH_EXAMPLES
 // Examples Submenu
 	EVT_MENU( MODIRECTOR_EXAMPLE_SIMPLE, moDirectorFrame::OnExampleSimple )
 	EVT_MENU( MODIRECTOR_EXAMPLE_CAMERA, moDirectorFrame::OnExampleCamera )
@@ -45,8 +46,9 @@ BEGIN_EVENT_TABLE(moDirectorFrame, wxFrame)
 	EVT_MENU( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU, moDirectorFrame::OnExampleInteractiveCameraGPU )
 	EVT_MENU( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU_KLT2, moDirectorFrame::OnExampleInteractiveCameraGPUKLT2 )
 	EVT_MENU( MODIRECTOR_EXAMPLE_CAMERA_CIRCULAR_BUFFER, moDirectorFrame::OnExampleCameraCircularBuffer )
-
 // End Examples Submenu
+#endif
+
 
 
 	EVT_MENU( MODIRECTOR_SAVEMOB, moDirectorFrame::OnSaveMob )
@@ -58,9 +60,9 @@ BEGIN_EVENT_TABLE(moDirectorFrame, wxFrame)
 	EVT_MENU( MODIRECTOR_CLOSEALL, moDirectorFrame::OnCloseAll )
 
 	EVT_MENU( MODIRECTOR_QUIT,  moDirectorFrame::OnQuit )
-    EVT_MENU( MODIRECTOR_ABOUT, moDirectorFrame::OnAbout )
+	EVT_MENU( MODIRECTOR_ABOUT, moDirectorFrame::OnAbout )
 
-    EVT_MENU( MODIRECTOR_PREFERENCES, moDirectorFrame::OnEditPreferences )
+	EVT_MENU( MODIRECTOR_PREFERENCES, moDirectorFrame::OnEditPreferences )
 
 	EVT_MENU( MODIRECTOR_PROJECT_PREVIEW, moDirectorFrame::OnProjectPreview )
 	EVT_MENU( MODIRECTOR_PROJECT_PREVIEW_FULLSCREEN, moDirectorFrame::OnProjectPreviewFullscreen )
@@ -281,8 +283,9 @@ moDirectorFrame::CreateGUINotebook() {
 
     CreateGLWindows();
 
-    //m_pConnectionsWindow = new moConnectionsWindow(m_pGUINotebook,wxID_ANY, wxPoint(0,0), wxSize(300,200));
-    //m_pConnectionsWindow->Init(this);
+    // DEBUG: Voy a reactivar esto!
+    // m_pConnectionsWindow = new moConnectionsWindow(m_pGUINotebook,wxID_ANY, wxPoint(0,0), wxSize(300,200));
+    // m_pConnectionsWindow->Init(this);
 
     m_pGUINotebook->AddPage( m_pPreviewWindow, wxT("Preview"));
     //m_pGUINotebook->AddPage( m_pConnectionsWindow, wxT("Connections"));
@@ -706,60 +709,37 @@ moDirectorFrame::OnOpenProject(wxCommandEvent& event) {
 
 	//open browser window
 	if ( event.GetString()==_T("") ) {
-
-        pFileDialog = new wxFileDialog( this );
-
-        if(pFileDialog) {
-
-            pFileDialog->SetWildcard(wxT("MOL files (*.mol)|*.mol|All files (*.*)|*.*"));
-
-            if( pFileDialog->ShowModal() == wxID_OK ) {
-
-                wxFileName	FileName( pFileDialog->GetPath() );
-
-                wxString path = FileName.GetPath();
-                #ifdef MO_WIN32
-                    path+= "\\";
-                #else
-                    path+= _T("/");
-                #endif
-                wxString name = FileName.GetFullName();
-                const char *cfilepath = (char*)path.c_str();
-                const char *cfilename = (char*)name.c_str();
-
-                ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
-
-                mStatus = OpenProject( ProjectDescriptor );
-                SetTitle(wxString(name)+wxString(_(" - Moldeo Director")));
-
-            }
-
-        }
-
+		pFileDialog = new wxFileDialog( this );
+		if(pFileDialog) {
+			pFileDialog->SetWildcard(wxT("MOL files (*.mol)|*.mol|All files (*.*)|*.*"));
+			if( pFileDialog->ShowModal() == wxID_OK ) {
+				wxFileName	FileName( pFileDialog->GetPath() );
+				wxString path = FileName.GetPath();
+#ifdef MO_WIN32
+				path+= "\\";
+#else
+				path+= _T("/");
+#endif
+				wxString name = FileName.GetFullName();
+				ProjectDescriptor.Set( moText(path.mb_str()), moText(name.mb_str()) );
+				mStatus = OpenProject( ProjectDescriptor );
+				SetTitle(wxString(name)+wxString(_(" - Moldeo Director")));
+			}
+		}
 	} else {
-
-	    Log( moText("Direct opening..") + moWx2Text(event.GetString()));
-
-        wxFileName	FileName( event.GetString() );
-
-        wxString path = FileName.GetPath();
-        #ifdef MO_WIN32
-            path+= "\\";
-        #else
-            path+= _T("/");
-        #endif
-        wxString name = FileName.GetFullName();
-        const char *cfilepath = (char*)path.c_str();
-        const char *cfilename = (char*)name.c_str();
-
-        ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
-
-        mStatus = OpenProject( ProjectDescriptor );
-        SetTitle(wxString(name)+wxString(_(" - Moldeo Director")));
-
-
+		Log( moText("Direct opening..") + moWx2Text(event.GetString()));
+		wxFileName	FileName( event.GetString() );
+		wxString path = FileName.GetPath();
+#ifdef MO_WIN32
+		path+= "\\";
+#else
+		path+= _T("/");
+#endif
+		wxString name = FileName.GetFullName();
+		ProjectDescriptor.Set( moText(path.mb_str()), moText(name.mb_str()) );
+		mStatus = OpenProject( ProjectDescriptor );
+		SetTitle(wxString(name)+wxString(_(" - Moldeo Director")));
     }
-
 }
 
 void
@@ -1656,6 +1636,7 @@ void moDirectorFrame::OnEditPreferences(wxCommandEvent& event) {
     wxMessageBox(wxT("On Edit Preferences - Functionality to be implemented"),wxT("Moldeo Director"));
 }
 
+#ifdef WITH_EXAMPLES
 void moDirectorFrame::OnExampleSimple(wxCommandEvent& event) {
 	moProjectDescriptor ProjectDescriptor;
 	moDirectorStatus	mStatus;
@@ -1727,4 +1708,5 @@ void moDirectorFrame::OnExampleCameraCircularBuffer(wxCommandEvent& event) {
     SetTitle(wxT("camarascircular.mol - Moldeo Director"));
 
 }
+#endif /* WITH_EXAMPLES */
 

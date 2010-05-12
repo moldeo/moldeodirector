@@ -148,10 +148,8 @@ public:
 		wxFileName FileName(fcname);
 		wxString name = FileName.GetFullName();
 		wxString path = FileName.GetPath() + wxT("\\");
-		const char *cfilepath = (char*)path.c_str();
-		const char *cfilename = (char*)name.c_str();
-		m_configname = moText((char*)cfilename);
-		m_configpath = moText((char*)cfilepath);
+		m_configname = moText(path.mb_str());
+		m_configpath = moText(name.mb_str());
 		m_fullconfigname = p_fullconfigname;
 	}
 

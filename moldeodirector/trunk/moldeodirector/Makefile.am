@@ -1,5 +1,14 @@
 ACLOCAL_AMFLAGS=-I m4
-AM_CPPFLAGS = $(all_includes)
+
+datadir = ${prefix}/share/moldeodirector
+modulesdir = ${libdir}/moldeo
+docdir = ${prefix}/share/doc/moldeodirector
+cursorsdir = ${datadir}/cursors
+fontsdir = ${datadir}/fonts
+iconsdir = ${datadir}/icons
+
+AM_CPPFLAGS = $(all_includes) -DDATADIR=\"$(datadir)\" -DMODULESDIR=\"$(modulesdir)\"
+AM_CXXFLAGS = $(all_includes) -DDATADIR=\"$(datadir)\" -DMODULESDIR=\"$(modulesdir)\"
 
 bin_PROGRAMS = moldeodirector
 

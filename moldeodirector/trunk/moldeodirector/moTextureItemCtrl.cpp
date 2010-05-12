@@ -30,7 +30,7 @@ moTextureItemCtrl::moTextureItemCtrl(wxWindow* parent,wxWindowID id,const wxPoin
 	SetBackgroundColour(wxColour(0,0,0));
 	PanelItem = new wxPanel(this, ID_PANELITEM, wxPoint(0,0), wxSize(64,64), wxTAB_TRAVERSAL, _T("ID_PANELITEM"));
 	PanelItem->SetBackgroundColour(wxColour(0,0,0));
-	StaticBitmapThumb = new wxStaticBitmap(PanelItem, ID_STATICBITMAPTHUMB, wxBitmap(wxImage(_T("../../art/icons/imageempty.png")).Rescale(wxSize(64,44).GetWidth(),wxSize(64,44).GetHeight())), wxPoint(0,0), wxSize(64,44), 0, _T("ID_STATICBITMAPTHUMB"));
+	StaticBitmapThumb = new wxStaticBitmap(PanelItem, ID_STATICBITMAPTHUMB, wxBitmap(wxImage(_T(DATADIR "/icons/imageempty.png")).Rescale(wxSize(64,44).GetWidth(),wxSize(64,44).GetHeight())), wxPoint(0,0), wxSize(64,44), 0, _T("ID_STATICBITMAPTHUMB"));
 	StaticTextName = new wxStaticText(this, ID_STATICTEXTNAME, _("Name:"), wxPoint(72,0), wxDefaultSize, 0, _T("ID_STATICTEXTNAME"));
 	StaticTextName->SetForegroundColour(wxColour(255,255,0));
 	wxFont StaticTextNameFont(8,wxSWISS,wxFONTSTYLE_NORMAL,wxBOLD,false,_T("Arial"),wxFONTENCODING_DEFAULT);

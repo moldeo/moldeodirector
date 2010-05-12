@@ -151,7 +151,7 @@ void MyHtmlWindow::OnClipboardEvent(wxClipboardTextEvent& WXUNUSED(event))
             const size_t maxTextLength = 100;
 
             wxLogStatus(wxString::Format(_T("Clipboard: '%s%s'"),
-                        wxString(text, maxTextLength).c_str(),
+                        wxString(text, maxTextLength).c_str(), // Use mb_str()
                         (text.length() > maxTextLength) ? _T("...")
                                                         : _T("")));
             return;

@@ -241,7 +241,7 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 	moApplicationDescriptor moDirectorCore::GetApplicationDescriptor() {
 
         //actualizar lista de plugins:
-        moText pluginsfullpath = m_ApplicationDescriptor.GetPluginsFullPath();
+        moText pluginsfullpath("MODULESDIR"); // = m_ApplicationDescriptor.GetPluginsFullPath();
 
         moPluginDefinitions& rPluginDefs( m_ApplicationDescriptor.GetPluginDefinitions());
 
@@ -593,7 +593,7 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 	}
 	void moDirectorCore::ShowMessage( moText p_message ) {
 
-		wxString msg =(wxChar*)(char*)p_message;
+		wxString msg =wxString(p_message, wxConvUTF8);
 
 		wxMessageBox( msg );
 
@@ -601,7 +601,7 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 	bool moDirectorCore::ConfirmMessage( moText p_message ) {
 
-		wxString msg =(wxChar*)(char*)p_message;
+		wxString msg =wxString(p_message, wxConvUTF8);
 
 		int answer = wxMessageBox( msg, wxT("Confirm"),
                             wxYES_NO | wxCANCEL | wxICON_QUESTION );
@@ -616,7 +616,7 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 	void moDirectorCore::AlertMessage( moText p_message ) {
 
-		wxString msg =(wxChar*)(char*)p_message;
+		wxString msg =wxString(p_message, wxConvUTF8);
 
 		int answer = wxMessageBox( msg, wxT("Alert!"),
                             wxOK | wxICON_EXCLAMATION );
@@ -625,7 +625,7 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 	void moDirectorCore::ErrorMessage( moText p_message ) {
 
-		wxString msg =(wxChar*)(char*)p_message;
+		wxString msg =wxString(p_message, wxConvUTF8);
 
 		int answer = wxMessageBox( msg, wxT("Error!"),
                             wxOK | wxICON_ERROR );

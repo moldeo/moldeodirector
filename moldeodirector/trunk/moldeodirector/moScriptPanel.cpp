@@ -71,7 +71,7 @@ void moScriptPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
     ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
     //making absolute path is mandatory (in linux) for passing directory to the open file dialog
-    wxString relativepath = (wxChar*)(const char*)ProjectDescriptor.GetConfigPath();
+    wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
     wxFileName absname = wxFileName::DirName( relativepath );
     absname.MakeAbsolute();
     wxString absolutepath = absname.GetPath();
@@ -115,7 +115,7 @@ void moScriptPanel::OnSaveButtonClick(wxCommandEvent& event)
     ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
     //making absolute path is mandatory (in linux) for passing directory to the open file dialog
-    wxString relativepath = (wxChar*)(const char*)ProjectDescriptor.GetConfigPath();
+    wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
     wxFileName absname = wxFileName::DirName( relativepath );
     absname.MakeAbsolute();
     wxString absolutepath = absname.GetPath();

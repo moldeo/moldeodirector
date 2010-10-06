@@ -72,8 +72,8 @@ moShaderCtrl::Inspect( moValueDescriptor p_ValueDescriptor ) {
 
     } else if (m_ValueDescriptor.GetValue().GetSubValueCount()>1) {
 
-        TextCtrlShaderCfg->ChangeValue( (wxChar*)(char*)m_ValueDescriptor.GetValue().GetSubValue(1).Text());
-        TextCtrlDestination->ChangeValue( (wxChar*)(char*)m_ValueDescriptor.GetValue().GetSubValue(2).Text());
+        TextCtrlShaderCfg->ChangeValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(1).Text(), wxConvUTF8));
+        TextCtrlDestination->ChangeValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(2).Text(), wxConvUTF8));
 
         if (m_ValueDescriptor.GetValue().GetSubValueCount()==4) {
 
@@ -131,7 +131,7 @@ void moShaderCtrl::OnBitmapButtonShaderImportClick(wxCommandEvent& event)
 			moProjectDescriptor ProjectDescriptor;
 			ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
-			wxString relativepath = (wxChar*)(const char*)ProjectDescriptor.GetConfigPath();
+			wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
 
 			FileName.MakeRelativeTo( relativepath );
 

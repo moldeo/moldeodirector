@@ -213,7 +213,7 @@ moDirectorChildFrame::DeleteValue( moValueDescriptor p_ValueDesc ) {
 moDirectorStatus
 moDirectorChildFrame::EditParameter( moParameterDescriptor p_ParameterDesc ) {
 
-    wxString ParamStr = (wxChar*)(char*)p_ParameterDesc.GetParamDefinition().GetName();
+    wxString ParamStr =wxString(p_ParameterDesc.GetParamDefinition().GetName(), wxConvUTF8);
 
 
     //chequear que no exista el item, en otro caso no hacer nada

@@ -215,6 +215,6 @@ dnl Makefile outputs
 AC_OUTPUT([
 Makefile
 moldeodirector/Makefile
-test-suite/Makefile
+data/Makefile
 ])
 

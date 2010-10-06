@@ -25,7 +25,7 @@ MOboolean moDirectorChildConsole::Init( moText p_effectname,
 		MOint p_screen_width, MOint p_screen_height,
 		MOint p_render_width, MOint p_render_height ) {
 
-	wxFileName xfname( wxString((wxChar*)(char*) p_effectconfigname ) );
+	wxFileName xfname(wxString(p_effectconfigname, wxConvUTF8));
 	wxString xstring;
 	xstring = xfname.GetName();
 

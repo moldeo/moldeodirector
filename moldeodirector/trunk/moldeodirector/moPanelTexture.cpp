@@ -191,7 +191,7 @@ moPanelTexture::Inspect( moValueDescriptor p_ValueDescriptor ) {
 
         m_ValueDescriptor = p_ValueDescriptor;
 
-        TextCtrlMedia->ChangeValue( (wxChar*)(char*)m_ValueDescriptor.GetValue().GetSubValue(0).Text() );
+        TextCtrlMedia->ChangeValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(0).Text(), wxConvUTF8));
 
         m_pShaderCtrl->Inspect( m_ValueDescriptor );
 
@@ -244,7 +244,7 @@ void moPanelTexture::OnButtonImportClick(wxCommandEvent& event)
     ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
     //making absolute path is mandatory (in linux) for passing directory to the open file dialog
-    wxString relativepath = (wxChar*)(const char*)ProjectDescriptor.GetConfigPath();
+    wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
     wxFileName absname = wxFileName::DirName( relativepath );
     absname.MakeAbsolute();
     wxString absolutepath = absname.GetPath();

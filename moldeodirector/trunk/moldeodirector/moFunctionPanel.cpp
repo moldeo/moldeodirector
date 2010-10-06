@@ -78,7 +78,7 @@ moFunctionPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
     switch(p_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetType()) {
 
         case MO_PARAM_NUMERIC:
-            FunctionTextCtrl->ChangeValue( (wxChar*)(char*)p_ValueDescriptor.GetValue().GetSubValue(0).ToText() );
+            FunctionTextCtrl->ChangeValue(wxString(p_ValueDescriptor.GetValue().GetSubValue(0).ToText(), wxConvUTF8));
             break;
 
         case MO_PARAM_ALPHA:
@@ -86,7 +86,7 @@ moFunctionPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
         case MO_PARAM_PHASE:
         case MO_PARAM_FUNCTION:
             // Linea gustavo
-            FunctionTextCtrl->ChangeValue( (wxChar*)(char*)p_ValueDescriptor.GetValue().GetSubValue(0).Text() );
+            FunctionTextCtrl->ChangeValue(wxString(p_ValueDescriptor.GetValue().GetSubValue(0).Text(), wxConvUTF8));
             break;
         default:
             return;

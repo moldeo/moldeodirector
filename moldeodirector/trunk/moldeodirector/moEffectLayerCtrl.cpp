@@ -90,7 +90,7 @@ void moEffectLayerCtrl::Set( moMobDescriptor p_MobDesc ) {
     TextCtrlName->SetEditable(false);
 */
 
-    TextCtrlLabel->SetLabel((wxChar*)(char*) m_MobDescriptor.GetMobDefinition().GetLabelName());
+    TextCtrlLabel->SetLabel(wxString(m_MobDescriptor.GetMobDefinition().GetLabelName(), wxConvUTF8));
     //TextCtrlLabel->SetEditable(false);
     //TextCtrlLabel->SetForegroundColour( wxColour(255,255,255) );
 	//TextCtrlLabel->SetBackgroundColour( wxColour(0,0,0) );

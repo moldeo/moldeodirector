@@ -89,7 +89,7 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 		case MO_PARAM_TEXT:
 		case MO_PARAM_OBJECT:
 		case MO_PARAM_3DMODEL:
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+			ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(20,0),wxSize(150,20));
 			xpos+=m_pTextCtrl->GetSize().x;
 			//Connect(
@@ -118,7 +118,7 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
             xpos+=m_pPolygonModeCtrl->GetSize().x;
             break;
         case MO_PARAM_FONT:
-            ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+            ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
             m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
             xpos+=m_pTextCtrl->GetSize().x;
 
@@ -126,7 +126,7 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
             m_pFontTypeCtrl = new wxComboBox( this, -1, fonttypes[ValueInt], wxPoint(xpos,0), wxSize(80,20), MO_FONT_TYPES, fonttypes, wxCB_READONLY);
             xpos+=m_pFontTypeCtrl->GetSize().x;
 
-            ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).ToText();
+            ValueStr =wxString( pValue.GetSubValue(2).ToText(), wxConvUTF8);
             m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
             xpos+=m_pTextCtrlR->GetSize().x;
             break;
@@ -134,65 +134,65 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 		case MO_PARAM_VIDEO:
             if (pValue.GetSubValueCount()==1) {
                 ///NO FILTERS
-                ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+                ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
                 m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(150,20));
                 xpos+=m_pTextCtrl->GetSize().x;
             } else if (pValue.GetSubValueCount()>1) {
                 /// SHADER FILTER
-                ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+                ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
                 m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                 xpos+=m_pTextCtrl->GetSize().x;
 
-                ValueStr =(wxChar*)(char*) pValue.GetSubValue(1).Text();
+                ValueStr =wxString( pValue.GetSubValue(1).Text(), wxConvUTF8);
                 m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                 xpos+=m_pTextCtrlR->GetSize().x;
 
-                ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+                ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
                 m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                 xpos+=m_pTextCtrlG->GetSize().x;
 
-                ValueStr =(wxChar*)(char*) pValue.GetSubValue(3).Text();
+                ValueStr =wxString( pValue.GetSubValue(3).Text(), wxConvUTF8);
                 m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                 xpos+=m_pTextCtrlB->GetSize().x;
             }
 			//Connect(
 			break;
         case MO_PARAM_FILTER:
-            ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+            ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
             xpos+=m_pTextCtrl->GetSize().x;
 
-            ValueStr =(wxChar*)(char*) pValue.GetSubValue(1).Text();
+            ValueStr =wxString( pValue.GetSubValue(1).Text(), wxConvUTF8);
 			m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
             xpos+=m_pTextCtrlR->GetSize().x;
 
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+			ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
 			m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
             xpos+=m_pTextCtrlG->GetSize().x;
 
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(3).Text();
+			ValueStr =wxString( pValue.GetSubValue(3).Text(), wxConvUTF8);
 			m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
 			xpos+=m_pTextCtrlB->GetSize().x;
             break;
 		case MO_PARAM_COLOR:
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+			ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
 			xpos+=m_pTextCtrlR->GetSize().x;
 
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(1).Text();
+			ValueStr =wxString( pValue.GetSubValue(1).Text(), wxConvUTF8);
 			m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
 			xpos+=m_pTextCtrlG->GetSize().x;
 
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+			ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
 			m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
 			xpos+=m_pTextCtrlB->GetSize().x;
 
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(3).Text();
+			ValueStr =wxString( pValue.GetSubValue(3).Text(), wxConvUTF8);
 			m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
 			xpos+=m_pTextCtrl->GetSize().x;
 			break;
 		default:
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+			ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(20,0),wxSize(300,20));
 			xpos+=m_pTextCtrl->GetSize().x;
 			break;
@@ -245,7 +245,7 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
 		case MO_PARAM_ROTATEY:
 		case MO_PARAM_ROTATEZ:
 		case MO_PARAM_TEXT:
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+			ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
 			//Connect(
 			break;
@@ -270,21 +270,21 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
                 m_pPolygonModeCtrl->SetValue( polygonmodes[ValueInt] );
         break;
     case MO_PARAM_FONT:
-        ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+        ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
         if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
 
         ValueInt = pValue.GetSubValue(1).Int();
         if ( 0<=ValueInt && ValueInt<MO_FONT_TYPES && m_pFontTypeCtrl)
           m_pFontTypeCtrl->SetValue( fonttypes[ValueInt] );
 
-        ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+        ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
         if (m_pTextCtrlR) m_pTextCtrlR->ChangeValue( ValueStr );
         break;
     case MO_PARAM_TEXTURE:
     case MO_PARAM_VIDEO:
             if (pValue.GetSubValueCount()==1) {
                 ///NO FILTERS, ONLY VIDEO OR TEXTURE
-                ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+                ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
                 if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
                 if (m_pTextCtrlR) { m_pTextCtrlR->Destroy(); m_pTextCtrlR = NULL; }
                 if (m_pTextCtrlG) { m_pTextCtrlG->Destroy(); m_pTextCtrlG = NULL; }
@@ -295,35 +295,35 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
 
                 if (m_pTextCtrlR) {
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+                    ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
                     if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(1).Text();
+                    ValueStr =wxString( pValue.GetSubValue(1).Text(), wxConvUTF8);
                     if (m_pTextCtrlR) m_pTextCtrlR->ChangeValue( ValueStr );
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+                    ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
                     if (m_pTextCtrlG) m_pTextCtrlG->ChangeValue( ValueStr );
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(3).Text();
+                    ValueStr =wxString( pValue.GetSubValue(3).Text(), wxConvUTF8);
                     if (m_pTextCtrlB) m_pTextCtrlB->ChangeValue( ValueStr );
 
                 } else {
 
                     xpos = m_pParamToggle->GetSize().x;
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+                    ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
                     m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                     xpos+=m_pTextCtrl->GetSize().x;
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(1).Text();
+                    ValueStr =wxString( pValue.GetSubValue(1).Text(), wxConvUTF8);
                     m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                     xpos+=m_pTextCtrlR->GetSize().x;
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+                    ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
                     m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                     xpos+=m_pTextCtrlG->GetSize().x;
 
-                    ValueStr =(wxChar*)(char*) pValue.GetSubValue(3).Text();
+                    ValueStr =wxString( pValue.GetSubValue(3).Text(), wxConvUTF8);
                     m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
                     xpos+=m_pTextCtrlB->GetSize().x;
 
@@ -343,27 +343,27 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
 			//Connect(
 			break;
         case MO_PARAM_FILTER:
-            ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+            ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
-            ValueStr =(wxChar*)(char*) pValue.GetSubValue(1).Text();
+            ValueStr =wxString( pValue.GetSubValue(1).Text(), wxConvUTF8);
 			if (m_pTextCtrlR) m_pTextCtrlR->ChangeValue( ValueStr );
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+			ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
 			if (m_pTextCtrlG) m_pTextCtrlG->ChangeValue( ValueStr );
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(3).Text();
+			ValueStr =wxString( pValue.GetSubValue(3).Text(), wxConvUTF8);
 			if (m_pTextCtrlB) m_pTextCtrlB->ChangeValue( ValueStr );
             break;
 		case MO_PARAM_COLOR:
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+			ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			if (m_pTextCtrlR) m_pTextCtrlR->ChangeValue( ValueStr );
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(1).Text();
+			ValueStr =wxString( pValue.GetSubValue(1).Text(), wxConvUTF8);
 			if (m_pTextCtrlG) m_pTextCtrlG->ChangeValue( ValueStr );
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(2).Text();
+			ValueStr =wxString( pValue.GetSubValue(2).Text(), wxConvUTF8);
 			if (m_pTextCtrlB) m_pTextCtrlB->ChangeValue( ValueStr );
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(3).Text();
+			ValueStr =wxString( pValue.GetSubValue(3).Text(), wxConvUTF8);
 			if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
 			break;
 		default:
-			ValueStr =(wxChar*)(char*) pValue.GetSubValue(0).Text();
+			ValueStr =wxString( pValue.GetSubValue(0).Text(), wxConvUTF8);
 			if (m_pTextCtrl)
                 m_pTextCtrl->ChangeValue( ValueStr );
 			break;

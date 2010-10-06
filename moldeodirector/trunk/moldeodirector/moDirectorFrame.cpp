@@ -1041,7 +1041,7 @@ moDirectorChildFrame* moDirectorFrame::CreateChildFrame( moMobDescriptor p_MobDe
 
     // Make another frame, containing a canvas
 
-	wxString title =(wxChar*)(char*) p_MobDescriptor.GetMobDefinition().GetConfigName();
+	wxString title =wxString( p_MobDescriptor.GetMobDefinition().GetConfigName(), wxConvUTF8);
 
     moDirectorChildFrame* pDirectorChildFrame = new moDirectorChildFrame( m_pFilesBook, title);
 
@@ -1057,10 +1057,10 @@ moDirectorChildFrame* moDirectorFrame::CreateChildFrame( moMobDescriptor p_MobDe
     //pDirectorChildFrame->Show(true);
 
 	//extract filename form config full path name
-	wxFileName xfname( wxString((wxChar*)(char*) p_MobDescriptor.GetMobDefinition().GetName() ) );
+	wxFileName xfname(wxString(p_MobDescriptor.GetMobDefinition().GetName(), wxConvUTF8));
 
 	m_pFilesBook->AddPage( pDirectorChildFrame,
-                            (wxChar*)(char*) p_MobDescriptor.GetMobDefinition().GetLabelName(),
+                            wxString(p_MobDescriptor.GetMobDefinition().GetLabelName(), wxConvUTF8),
                             true);
 
 	return pDirectorChildFrame;
@@ -1333,8 +1333,8 @@ moDirectorFrame::ProjectUpdated( moProjectDescriptor p_ProjectDescriptor ) {
 	m_pDataNotebook->m_pIODevicesTreeCtrl->DeleteAllItems();
 	m_pDataNotebook->m_pResourcesTreeCtrl->DeleteAllItems();
 
-	cPath = (wxChar*)(const char*)p_ProjectDescriptor.GetConfigPath();
-	cMol = (wxChar*)(const char*) p_ProjectDescriptor.GetConfigName();
+	cPath =wxString(p_ProjectDescriptor.GetConfigPath(), wxConvUTF8);
+	cMol =wxString( p_ProjectDescriptor.GetConfigName(), wxConvUTF8);
 
 	if(m_pDataNotebook->m_pVirtualDirTreeCtrl)
 		m_pDataNotebook->m_pVirtualDirTreeCtrl->SetRootPath( cPath, wxVDTC_DEFAULT);
@@ -1349,13 +1349,13 @@ moDirectorFrame::ProjectUpdated( moProjectDescriptor p_ProjectDescriptor ) {
     resourcesid,
     consoleid;
 
-	wxTreeItemId root = m_pDataNotebook->m_pProjectTreeCtrl->AddRoot( (wxChar*)(char*)(moText("Layer effects: ") + p_ProjectDescriptor.GetConfigName()) );
+	wxTreeItemId root = m_pDataNotebook->m_pProjectTreeCtrl->AddRoot(wxString(moText("Layer effects: ") + p_ProjectDescriptor.GetConfigName(), wxConvUTF8) );
 
-	iodevicesid = m_pDataNotebook->m_pIODevicesTreeCtrl->AddRoot( (wxChar*)(char*)(moText("IODevices: ") + p_ProjectDescriptor.GetConfigName()) );
+	iodevicesid = m_pDataNotebook->m_pIODevicesTreeCtrl->AddRoot(wxString(moText("IODevices: ") + p_ProjectDescriptor.GetConfigName(), wxConvUTF8));
 
-	resourcesid = m_pDataNotebook->m_pResourcesTreeCtrl->AddRoot( (wxChar*)(char*)(moText("Resources: ") + p_ProjectDescriptor.GetConfigName()) );
+	resourcesid = m_pDataNotebook->m_pResourcesTreeCtrl->AddRoot(wxString(moText("Resources: ") + p_ProjectDescriptor.GetConfigName(), wxConvUTF8));
 
-    consoleid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("Console"), 0);
+	consoleid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("Console"), 0);
 	preeffectsid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("PreEffects"), 0);
 	effectsid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("Effects"), 0);
 	posteffectsid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("PostEffects"), 0);
@@ -1400,8 +1400,8 @@ moDirectorFrame::ProjectUpdated( moProjectDescriptor p_ProjectDescriptor ) {
 
 	for( i=0;  i < pMobDescriptors.Count(); i++) {
 	    moMobDescriptor pMobDescriptor = pMobDescriptors[i];
-		xitemname = wxString( (wxChar*)(char*) pMobDescriptor.GetMobDefinition().GetName() ) + wxT("::");
-		xitemname+= wxString( (wxChar*)(char*) pMobDescriptor.GetMobDefinition().GetConfigName() );
+		xitemname = wxString(pMobDescriptor.GetMobDefinition().GetName(), wxConvUTF8) + wxT("::");
+		xitemname+= wxString(pMobDescriptor.GetMobDefinition().GetConfigName(), wxConvUTF8);
 
 		switch( pMobDescriptor.GetMobDefinition().GetType() ) {
 
@@ -1592,7 +1592,7 @@ moDirectorFrame::ValueUpdated( moValueDescriptor p_ValueDesc ) {
 void
 moDirectorFrame::Log( moText p_message ) {
 
-	wxString  w =(wxChar*)(char*)p_message;
+	wxString  w =wxString(p_message, wxConvUTF8);
 
     if (m_pDataNotebook->m_pLogTextCtrl->GetNumberOfLines()>10000) {
         m_pDataNotebook->m_pLogTextCtrl->Clear();
@@ -1609,7 +1609,7 @@ void
 moDirectorFrame::LogError( moText p_message ) {
 	//seria bueno en rojo...
 
-	wxString  w =(wxChar*)(char*)p_message;
+	wxString  w =wxString(p_message, wxConvUTF8);
 
     if (m_pDataNotebook->m_pLogTextCtrl->GetNumberOfLines()>10000) {
         m_pDataNotebook->m_pLogTextCtrl->Clear();

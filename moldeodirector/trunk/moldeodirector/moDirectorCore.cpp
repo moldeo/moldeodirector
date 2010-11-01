@@ -119,7 +119,11 @@ moDirectorCore::SetUserInterface( moDirectorFrame* p_pUserInterface ) {
 void
 moDirectorCore::SetPaths( moText p_installationpath ) {
 
+#ifdef MODULESDIR
+    m_ApplicationDescriptor = moApplicationDescriptor( p_installationpath, moText(MODULESDIR) );
+#else
     m_ApplicationDescriptor = moApplicationDescriptor( p_installationpath, p_installationpath + moText("/plugins") );
+#endif
 
 }
 
@@ -205,7 +209,12 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
         moText PluginName;
 
         //PREEFFECTS
+#ifdef MODULESDIR
+	// TODO: Fijarse donde esta el proble
+        DirEffects.Open( plugindir, moText("/*.so") );
+#else
         DirEffects.Open( plugindir, moText("/*.dll") );
+#endif
         if (DirEffects.Exists()) {
 
             moFile* pFile = NULL;
@@ -238,10 +247,10 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 
     }
 
-	moApplicationDescriptor moDirectorCore::GetApplicationDescriptor() {
+    moApplicationDescriptor moDirectorCore::GetApplicationDescriptor() {
 
         //actualizar lista de plugins:
-        moText pluginsfullpath("MODULESDIR"); // = m_ApplicationDescriptor.GetPluginsFullPath();
+        moText pluginsfullpath = m_ApplicationDescriptor.GetPluginsFullPath();
 
         moPluginDefinitions& rPluginDefs( m_ApplicationDescriptor.GetPluginDefinitions());
 

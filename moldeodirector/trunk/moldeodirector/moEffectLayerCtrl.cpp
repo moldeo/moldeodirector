@@ -53,7 +53,7 @@ moEffectLayerCtrl::moEffectLayerCtrl(wxWindow* parent,wxWindowID id,const wxPoin
 	Connect(ID_SLIDERTEMPO, wxEVT_MOLEVELCTRL, (wxObjectEventFunction)&moEffectLayerCtrl::OnLevelSpeed );
 	CheckBoxOnOff = new wxCheckBox(this, ID_CHECKBOXONOFF, wxEmptyString, wxPoint(224,6), wxSize(16,21), 0, wxDefaultValidator, _T("ID_CHECKBOXONOFF"));
 	CheckBoxOnOff->SetValue(false);
-	BitmapButtonDelete = new wxBitmapButton(this, ID_BITMAPBUTTONDELETE, wxBitmap(wxImage(_T("../../doc/icons/delete.png"))), wxPoint(240,12), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONDELETE"));
+	BitmapButtonDelete = new wxBitmapButton(this, ID_BITMAPBUTTONDELETE, wxBitmap(wxImage(_T(DATADIR "/icons/delete.png"))), wxPoint(240,12), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONDELETE"));
 	BitmapButtonDelete->SetDefault();
 
 	Connect(ID_CHECKBOXONOFF,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&moEffectLayerCtrl::OnCheckBoxOnOffClick);

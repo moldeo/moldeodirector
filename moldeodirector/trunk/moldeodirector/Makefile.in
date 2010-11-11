@@ -121,6 +121,15 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 SOURCES = $(moldeodirector_SOURCES)
 DIST_SOURCES = $(moldeodirector_SOURCES)
 ETAGS = etags
@@ -317,7 +326,57 @@ moldeodirector_SOURCES = \
 	wxMoldeoObjectCtrl.cpp             wxMoRotaryCtrl.cpp \
 	treemultictrl/TreeMultiItemBase.cpp  treemultictrl/TreeMultiItemWindow.cpp \
 	treemultictrl/TreeMultiItemNode.cpp  treemultictrl/wxTreeMultiCtrl.cpp \
-	treemultictrl/TreeMultiItemRoot.cpp  vdtc/virtualdirtreectrl.cpp
+	treemultictrl/TreeMultiItemRoot.cpp  vdtc/virtualdirtreectrl.cpp \
+	HtmlPanel.h \
+	mo3dModelPanel.h \
+	moColorMotion.h \
+	moConfigurationAdvancedOutput.h \
+	moConfigurationDialog.h \
+	moConfigurationGeneral.h \
+	moConfigurationOutput.h \
+	moConnectionsWindow.h \
+	moDirectorChildConsole.h \
+	moDirectorChildFrame.h \
+	moDirectorConsole.h \
+	moDirectorCore.h \
+	moDirectorFrame.h \
+	moDirectorIODeviceManager.h \
+	moDirectorStartFrame.h \
+	moDirectorTypes.h \
+	moEffectLayerCtrl.h \
+	moFilesbook.h \
+	moFontPanel.h \
+	moFunctionPanel.h \
+	moGLCanvas.h \
+	moIDirectorActions.h \
+	moldeodirectorApp.h \
+	moldeodirector.h \
+	moldeodirectorMain.h \
+	moNewEffectDialog.h \
+	moNewProject.h \
+	moObjectMotion.h \
+	moPanelTexture.h \
+	moPreviewFrame.h \
+	moPreviewWindow.h \
+	moProjectTreeCtrl.h \
+	moResourcesTreeCtrl.h \
+	moScriptPanel.h \
+	moSessionProject.h \
+	moShaderCtrl.h \
+	moShadersPanel.h \
+	moTextureItemCtrl.h \
+	moTimelineRuler.h \
+	moTreeObjectsLayerCtrl.h \
+	moValueCtrl.h \
+	wxMoldeoControls.h \
+	wxMoldeoLineCtrl.h \
+	wxMoldeoObjectCanvas.h \
+	wxMoldeoObjectCtrl.h \
+	wxMoldeoPinCtrl.h \
+	wxMoLevelCtrl.h \
+	wxMoRotaryCtrl.h \
+	wxMoTimelineBandCtrl.h \
+	wxMoTimelineRulerCtrl.h 
 
 
 # moldeodirectorApp.cpp

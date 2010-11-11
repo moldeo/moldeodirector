@@ -91,7 +91,8 @@ moldeodirector_SOURCES = \
 	wxMoLevelCtrl.h \
 	wxMoRotaryCtrl.h \
 	wxMoTimelineBandCtrl.h \
-	wxMoTimelineRulerCtrl.h 
+	wxMoTimelineRulerCtrl.h \
+	treemultictrl/wxTreeMultiCtrl.h
 
 # moldeodirectorApp.cpp
 # moldeodirector.cpp

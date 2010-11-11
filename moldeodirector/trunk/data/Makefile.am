@@ -4,6 +4,7 @@ fontsdir = ${datadir}/fonts
 cursorsdir = ${datadir}/cursors
 iconsdir = ${datadir}/icons
 testdir = ${datadir}/test
+testsimpledir = ${testdir}
 
 dist_fonts_DATA = fonts/Tuffy.ttf
 dist_cursors_DATA = cursors/copy_cur.cur \
@@ -14,7 +15,7 @@ dist_icons_DATA = icons/add.png \
 		  icons/drag_cur.cur \
 		  icons/import.png \
   		 icons/motiondiagonal.png \
-	      	 icons/on32.bmp \
+	      	 icons/on32.png \
    		 icons/pause32.png \
 	      	 icons/rewind.jpg \
 	 	 icons/set.png \
@@ -31,7 +32,7 @@ dist_icons_DATA = icons/add.png \
                  icons/ff.jpg\
                  icons/inspect.png\
                  icons/motionrandom.png\
-                 icons/onoffall32.bmp\
+                 icons/onoffall32.png\
                  icons/pickcolor.png\
                  icons/savesession32.png\
                  icons/stop32.png\
@@ -40,21 +41,21 @@ dist_icons_DATA = icons/add.png \
                  icons/layercontrols.png\
                  icons/motionvertical.png\
                  icons/onoffall.jpg\
-                 icons/play32.bmp\
+                 icons/play32.png\
                  icons/savevideo32.png\
                  icons/stop.jpg\
                  icons/csvColors32.png\
                  icons/functiontest.png\
                  icons/Moldeo32.ico\
                  icons/move_cur.cur\
-                 icons/onofficon32.bmp\
-                 icons/play32dis.bmp\
+                 icons/onofficon32.png\
+                 icons/play32dis.png\
                  icons/scale.png\
                  icons/translate.png\
                  icons/csvColors64.png\
                  icons/help.jpg\
                  icons/more.png\
-                 icons/off32.bmp\
+                 icons/off32.png\
                  icons/onofficon.jpg\
                  icons/play32.png\
                  icons/screenshot32.png\
@@ -63,11 +64,18 @@ dist_icons_DATA = icons/add.png \
                  icons/imageempty.png\
                  icons/motioncircular.png\
                  icons/off.jpg\
-                 icons/pause32.bmp\
+                 icons/pause32.png\
                  icons/play.jpg\
                  icons/select.png\
                  icons/visibility.png
-dist_test_DATA = \
+
+dist_testsimple_DATA = \
+		test/test.mol \
+		test/erase.cfg \
+		test/debug.cfg \
+		test/icon.cfg
+
+dist_test_DATAx = \
 		test/imagenes/tunel/ilus00.tga \
 		test/imagenes/tunel/ilus01.tga \
 		test/imagenes/tunel/ilus02.tga \
@@ -225,4 +233,5 @@ dist_test_DATA = \
 		test/mirror.cfg \
 		test/tablet.cfg \
 		test/movie.cfg \
-		test/icon3d.cfg \
+		test/icon3d.cfg 
+

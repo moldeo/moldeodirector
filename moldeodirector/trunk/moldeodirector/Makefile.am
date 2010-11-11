@@ -92,6 +92,11 @@ moldeodirector_SOURCES = \
 	wxMoRotaryCtrl.h \
 	wxMoTimelineBandCtrl.h \
 	wxMoTimelineRulerCtrl.h \
+	treemultictrl/tmcimages.h \
+	treemultictrl/TreeMultiItemBase.h \
+	treemultictrl/TreeMultiItemNode.h \
+	treemultictrl/TreeMultiItemRoot.h \
+	treemultictrl/TreeMultiItemWindow.h \
 	treemultictrl/wxTreeMultiCtrl.h
 
 # moldeodirectorApp.cpp
@@ -115,5 +120,6 @@ moldeodirector_LDADD = \
 	${BOOST_THREAD_LIB} \
 	${BOOST_FILESYSTEM_LIB} \
 	${WX_LIBS}
+
 
 

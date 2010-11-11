@@ -98,7 +98,19 @@ moldeodirector_SOURCES = \
 	treemultictrl/TreeMultiItemRoot.h \
 	treemultictrl/TreeMultiItemWindow.h \
 	treemultictrl/wxTreeMultiCtrl.h \
-	vdtc/file.xpm \
+	treemultictrl/default_checked_icon.xpm \
+	treemultictrl/default_collapse.xpm \
+	treemultictrl/default_expand.xpm \
+	treemultictrl/default_tristate_icon.xpm \
+	treemultictrl/default_unchecked_icon.xpm \
+	treemultictrl/linux_collapse.xpm \
+	treemultictrl/linux_expand.xpm \
+	treemultictrl/mac_collapse.xpm \
+	treemultictrl/mac_expand.xpm \
+	treemultictrl/win_checked_icon.xpm \
+	treemultictrl/win_tristate_icon.xpm \
+	treemultictrl/win_unchecked_icon.xpm \
+	vdtc/file.xpm \ \
 	vdtc/folder.xpm \
 	vdtc/root.xpm \
 	vdtc/virtualdirtreectrl.h
@@ -124,6 +136,7 @@ moldeodirector_LDADD = \
 	${BOOST_THREAD_LIB} \
 	${BOOST_FILESYSTEM_LIB} \
 	${WX_LIBS}
+
 
 
 

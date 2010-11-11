@@ -56,13 +56,14 @@
             </VAL>
         </PARAM>
         <PARAM name="mastereffect" type="TEXT">
-<!--            <VAL>
+            <VAL>
                 <D type="TXT">channel</D>
                 <D type="TXT">channel0</D>
                 <D type="TXT">channel0</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
             </VAL>
+<!--		
             <VAL>
                 <D type="TXT">masterchannel</D>
                 <D type="TXT">masterchannel</D>

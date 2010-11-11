@@ -97,7 +97,11 @@ moldeodirector_SOURCES = \
 	treemultictrl/TreeMultiItemNode.h \
 	treemultictrl/TreeMultiItemRoot.h \
 	treemultictrl/TreeMultiItemWindow.h \
-	treemultictrl/wxTreeMultiCtrl.h
+	treemultictrl/wxTreeMultiCtrl.h \
+	vdtc/file.xpm \
+	vdtc/folder.xpm \
+	vdtc/root.xpm \
+	vdtc/virtualdirtreectrl.h
 
 # moldeodirectorApp.cpp
 # moldeodirector.cpp
@@ -120,6 +124,7 @@ moldeodirector_LDADD = \
 	${BOOST_THREAD_LIB} \
 	${BOOST_FILESYSTEM_LIB} \
 	${WX_LIBS}
+
 
 
 

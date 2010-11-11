@@ -41,8 +41,57 @@ moldeodirector_SOURCES = \
 	wxMoldeoObjectCtrl.cpp             wxMoRotaryCtrl.cpp \
 	treemultictrl/TreeMultiItemBase.cpp  treemultictrl/TreeMultiItemWindow.cpp \
 	treemultictrl/TreeMultiItemNode.cpp  treemultictrl/wxTreeMultiCtrl.cpp \
-	treemultictrl/TreeMultiItemRoot.cpp  vdtc/virtualdirtreectrl.cpp
-
+	treemultictrl/TreeMultiItemRoot.cpp  vdtc/virtualdirtreectrl.cpp \
+	HtmlPanel.h \
+	mo3dModelPanel.h \
+	moColorMotion.h \
+	moConfigurationAdvancedOutput.h \
+	moConfigurationDialog.h \
+	moConfigurationGeneral.h \
+	moConfigurationOutput.h \
+	moConnectionsWindow.h \
+	moDirectorChildConsole.h \
+	moDirectorChildFrame.h \
+	moDirectorConsole.h \
+	moDirectorCore.h \
+	moDirectorFrame.h \
+	moDirectorIODeviceManager.h \
+	moDirectorStartFrame.h \
+	moDirectorTypes.h \
+	moEffectLayerCtrl.h \
+	moFilesbook.h \
+	moFontPanel.h \
+	moFunctionPanel.h \
+	moGLCanvas.h \
+	moIDirectorActions.h \
+	moldeodirectorApp.h \
+	moldeodirector.h \
+	moldeodirectorMain.h \
+	moNewEffectDialog.h \
+	moNewProject.h \
+	moObjectMotion.h \
+	moPanelTexture.h \
+	moPreviewFrame.h \
+	moPreviewWindow.h \
+	moProjectTreeCtrl.h \
+	moResourcesTreeCtrl.h \
+	moScriptPanel.h \
+	moSessionProject.h \
+	moShaderCtrl.h \
+	moShadersPanel.h \
+	moTextureItemCtrl.h \
+	moTimelineRuler.h \
+	moTreeObjectsLayerCtrl.h \
+	moValueCtrl.h \
+	wxMoldeoControls.h \
+	wxMoldeoLineCtrl.h \
+	wxMoldeoObjectCanvas.h \
+	wxMoldeoObjectCtrl.h \
+	wxMoldeoPinCtrl.h \
+	wxMoLevelCtrl.h \
+	wxMoRotaryCtrl.h \
+	wxMoTimelineBandCtrl.h \
+	wxMoTimelineRulerCtrl.h 
 
 # moldeodirectorApp.cpp
 # moldeodirector.cpp
@@ -65,4 +114,5 @@ moldeodirector_LDADD = \
 	${BOOST_THREAD_LIB} \
 	${BOOST_FILESYSTEM_LIB} \
 	${WX_LIBS}
+
 

@@ -110,7 +110,7 @@ moldeodirector_SOURCES = \
 	treemultictrl/win_checked_icon.xpm \
 	treemultictrl/win_tristate_icon.xpm \
 	treemultictrl/win_unchecked_icon.xpm \
-	vdtc/file.xpm \ \
+	vdtc/file.xpm \
 	vdtc/folder.xpm \
 	vdtc/root.xpm \
 	vdtc/virtualdirtreectrl.h

@@ -9,16 +9,6 @@
 DEFINE_EVENT_TYPE(wxEVT_MY_EVENT)
 
 
-moDataNotebook::moDataNotebook( wxWindow* parent, wxWindowID id ) :
-		wxAuiNotebook(parent, id, wxPoint(0,0), wxSize(100,100),  wxBORDER_NONE | wxAUI_NB_TAB_SPLIT | wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE ),
-		m_pVirtualDirTreeCtrl(NULL),
-		m_pProjectTreeCtrl(NULL),
-		m_pIODevicesTreeCtrl(NULL),
-		m_pResourcesTreeCtrl(NULL) {
-
-
-}
-
 // ----------------------------------------------------------------------------
 // event tables and other macros for wxWidgets
 // ----------------------------------------------------------------------------
@@ -33,17 +23,18 @@ BEGIN_EVENT_TABLE(moDirectorFrame, wxFrame)
 	EVT_MENU( MODIRECTOR_NEWIODEVICE, moDirectorFrame::OnNewEffect )
 	EVT_MENU( MODIRECTOR_NEWRESOURCE, moDirectorFrame::OnNewEffect )
 
-	EVT_MENU( MODIRECTOR_NEWPROJECT, moDirectorFrame::OnNewProject )
-	EVT_MENU( MODIRECTOR_OPENPROJECT, moDirectorFrame::OnOpenProject )
+    EVT_MENU( MODIRECTOR_NEWPROJECT, moDirectorFrame::OnNewProject )
+    EVT_MENU( MODIRECTOR_OPENPROJECT, moDirectorFrame::OnOpenProject )
 	EVT_MENU( MODIRECTOR_CLOSEPROJECT, moDirectorFrame::OnCloseProject )
 	EVT_MENU( MODIRECTOR_SAVEPROJECT, moDirectorFrame::OnSaveProject )
 
-	EVT_MENU( MODIRECTOR_EXAMPLE_SIMPLE, moDirectorFrame::OnExampleSimple )
-	EVT_MENU( MODIRECTOR_EXAMPLE_CAMERA, moDirectorFrame::OnExampleCamera )
-	EVT_MENU( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA, moDirectorFrame::OnExampleInteractiveCamera )
-	EVT_MENU( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU, moDirectorFrame::OnExampleInteractiveCameraGPU )
-	EVT_MENU( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU_KLT2, moDirectorFrame::OnExampleInteractiveCameraGPUKLT2 )
-	EVT_MENU( MODIRECTOR_EXAMPLE_CAMERA_CIRCULAR_BUFFER, moDirectorFrame::OnExampleCameraCircularBuffer )
+	EVT_MENU_RANGE( MODIRECTOR_EXAMPLE_START, MODIRECTOR_EXAMPLE_END, moDirectorFrame::OnExample )
+	//EVT_MENU( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU, moDirectorFrame::OnExampleInteractiveCameraGPU )
+	//EVT_MENU( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU_KLT2, moDirectorFrame::OnExampleInteractiveCameraGPUKLT2 )
+	//EVT_MENU( MODIRECTOR_EXAMPLE_CAMERA_CIRCULAR_BUFFER, moDirectorFrame::OnExampleCameraCircularBuffer )
+
+// End Examples Submenu
+
 
 	EVT_MENU( MODIRECTOR_SAVEMOB, moDirectorFrame::OnSaveMob )
 	EVT_MENU( MODIRECTOR_CLOSEMOB, moDirectorFrame::OnCloseMob )
@@ -54,9 +45,9 @@ BEGIN_EVENT_TABLE(moDirectorFrame, wxFrame)
 	EVT_MENU( MODIRECTOR_CLOSEALL, moDirectorFrame::OnCloseAll )
 
 	EVT_MENU( MODIRECTOR_QUIT,  moDirectorFrame::OnQuit )
-	EVT_MENU( MODIRECTOR_ABOUT, moDirectorFrame::OnAbout )
+    EVT_MENU( MODIRECTOR_ABOUT, moDirectorFrame::OnAbout )
 
-	EVT_MENU( MODIRECTOR_PREFERENCES, moDirectorFrame::OnEditPreferences )
+  EVT_MENU( MODIRECTOR_PREFERENCES, moDirectorFrame::OnEditPreferences )
 
 	EVT_MENU( MODIRECTOR_PROJECT_PREVIEW, moDirectorFrame::OnProjectPreview )
 	EVT_MENU( MODIRECTOR_PROJECT_PREVIEW_FULLSCREEN, moDirectorFrame::OnProjectPreviewFullscreen )
@@ -95,8 +86,9 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
     clientareastr.Printf(_(" area: %d,%d,%d,%d"), client.GetLeft(), client.GetTop(), client.GetWidth(), client.GetHeight() );
     clientareastr2.Printf(_(" area: %d,%d,%d,%d"), client2.GetLeft(), client2.GetTop(), client2.GetWidth(), client2.GetHeight() );
 
-   //wxMessageBox(thisDisplay.GetName() + clientareastr);
-   //wxMessageBox(theOtherDisplay.GetName() + clientareastr2 );
+    //wxMessageBox(thisDisplay.GetName() + clientareastr);
+    //wxMessageBox(theOtherDisplay.GetName() + clientareastr2 );
+
     wxFrame::Create(NULL, wxID_ANY, title, wxPoint(0,0), wxSize(1024,768));
 
     m_cForeground = wxColour(255,255,255);
@@ -123,14 +115,54 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
 
 	//Examples Menu
 	wxMenu *examplesMenu = new wxMenu;
-	examplesMenu->Append( MODIRECTOR_EXAMPLE_SIMPLE, _T("Simple Project"), _T("Simple Moldeo project"));
-	examplesMenu->Append( MODIRECTOR_EXAMPLE_CAMERA, _T("Cameras"), _T("Simple cameras project"));
-	examplesMenu->Append( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA, _T("Interactive Cameras"), _T("Simple cameras with tracking project"));
-	examplesMenu->Append( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU, _T("Interactive Cameras GPU"), _T("Simple cameras with tracking project"));
-	examplesMenu->Append( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU_KLT2, _T("Interactive Cameras GPU KLT2"), _T("Simple cameras with tracking project"));
-	examplesMenu->Append( MODIRECTOR_EXAMPLE_CAMERA_CIRCULAR_BUFFER, _T("Camera with Circular Buffer"), _T("Simple cameras with tracking project"));
+
+	/*aquí recorremos los directorios de samples en busca de carpetas con .mol */
+  wxDir SampleDir(MOLDEODATADIR "/samples");
+  wxFileName dirname( wxT(MOLDEODATADIR "/samples"), wxEmptyString );
+  if ( !SampleDir.IsOpened() )
+  {
+      wxMessageBox("moDirectorFrame constructor > Warning: samples directory not found! "+dirname.GetFullPath());
+      //exit(0);
+  } else {
+
+		dirname.MakeAbsolute();
+		moText samplefullpath = moWx2Text(dirname.GetFullPath());
+
+		m_SamplesDirectory.Open( samplefullpath );
+		if (m_SamplesDirectory.HasSubdirs()) {
+
+		  for( int s=0; s<m_SamplesDirectory.GetSubDirs().Count(); s++ ) {
+		    moDirectory* pSubDir = m_SamplesDirectory.GetSubDirs().Get( s );
+		    if (pSubDir) {
+		      if (pSubDir->Exists()) {
+		        moFile* pFile = pSubDir->FindFirst();
+		        while( pFile ) {
+		          if (pFile->GetExtension()==".mol") {
+		            m_SampleProjects.Add( pFile );
+		          }
+		          pFile = pSubDir->FindNext();
+		        }
+
+		      }
+		    }
+			}
+		}
+
+
+		for( int m = 0 ; m < m_SampleProjects.Count(); m++ ) {
+			moFile* pFile = m_SampleProjects.Get( m );
+			if (pFile) {
+		    examplesMenu->Append( MODIRECTOR_EXAMPLE_START + m, moText2Wx( pFile->GetFolderName() ) , moText2Wx( pFile->GetFileName()));
+			}
+		}
+}
+	//examplesMenu->Append( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA, _T("Interactive Cameras"), _T("Simple cameras with tracking project"));
+	//examplesMenu->Append( MODIRECTOR_EXAMPLE_CAMERA_CIRCULAR_BUFFER, _T("Camera with Circular Buffer"), _T("Simple cameras with tracking project"));
+  //examplesMenu->Append( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU, _T("Interactive Cameras GPU"), _T("Simple cameras with tracking project"));
+	//examplesMenu->Append( MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU_KLT2, _T("Interactive Cameras GPU KLT2"), _T("Simple cameras with tracking project"));
 
 	//File Menu
+	cout << "DirectorFrame() Appending menus" << endl;
 
 	fileMenu->Append( MODIRECTOR_NEWPROJECT, _T("&New Project\tAlt-N"), _T("Create a new project"));
 	fileMenu->Append( MODIRECTOR_OPENPROJECT, _T("&Open Project\tAlt-O"), _T("Open an existing project"));
@@ -146,10 +178,10 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
     fileMenu->Append( MODIRECTOR_SAVEALL, _T("Save All\tCtrl-A"), _T("Save All"));
 
 	fileMenu->AppendSeparator();
-    fileMenu->Append(MODIRECTOR_NEWPREEFFECT, _T("Add P&reEffect\tAlt-W"), _T("Add a new pre-effect"));
+  //  fileMenu->Append(MODIRECTOR_NEWPREEFFECT, _T("Add P&reEffect\tAlt-W"), _T("Add a new pre-effect"));
 	fileMenu->Append(MODIRECTOR_NEWEFFECT, _T("Add &Effect\tAlt-E"), _T("Add a new effect"));
-	fileMenu->Append(MODIRECTOR_NEWPOSTEFFECT, _T("Add P&ostEffect\tAlt-R"), _T("Add a new post-effect"));
-    fileMenu->Append(MODIRECTOR_IMPORTMOB, _T("Import &Moldeo Object from config file\tAlt-E"), _T("Import Mob"));
+	//fileMenu->Append(MODIRECTOR_NEWPOSTEFFECT, _T("Add P&ostEffect\tAlt-R"), _T("Add a new post-effect"));
+    fileMenu->Append(MODIRECTOR_IMPORTMOB, _T("Import &Moldeo Object from config file\tAlt-I"), _T("Import Mob"));
 
     fileMenu->AppendSeparator();
     fileMenu->Append(MODIRECTOR_NEWIODEVICE, _T("Add IODevice"), _T("Add IODevice"));
@@ -180,10 +212,21 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
 
     // now append the freshly created menu to the menu bar...
     wxMenuBar *menuBar = new wxMenuBar();
+
+    SetBackgroundStyle( wxBG_STYLE_COLOUR );
+    SetForegroundColour( m_cForeground );
+    SetBackgroundColour( m_cBackground );
+
+    menuBar->SetFont( wxFont( 8,  wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL ) );
+    menuBar->SetBackgroundStyle( wxBG_STYLE_COLOUR );
+    menuBar->SetForegroundColour( m_cForeground );
+    menuBar->SetBackgroundColour( m_cBackground );
+
+
     menuBar->Append(fileMenu, _T("&File"));
-	menuBar->Append(editMenu, _T("&Edit"));
-	menuBar->Append(viewMenu, _T("&View"));
-	menuBar->Append(optionsMenu, _T("&Options"));
+    menuBar->Append(editMenu, _T("&Edit"));
+    menuBar->Append(viewMenu, _T("&View"));
+    menuBar->Append(optionsMenu, _T("&Options"));
 
     menuBar->Append(helpMenu, _T("&Help"));
 
@@ -197,60 +240,110 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
     SetStatusText(_T("Welcome to Moldeo Director!"));
 #endif // wxUSE_STATUSBAR
 
-    CreateDataBook();
-    CreateGUINotebook();
+    m_pGUINotebook=NULL;
+    m_pPreviewWindow= NULL;
+    m_pExplorerNotebook = NULL;
+    m_pFilesBook = NULL;
+    m_pInspectorNotebook = NULL;
+    m_pLayersPanelCtrl = NULL;
+    m_pLogBook = NULL;
+    m_pPreviewWindow = NULL;
+
+    cout << "DirectorFrame() Creating GUI notebook" << endl;
+    //CreateGUINotebook();
+    CreateGLWindows(this);
+
+    cout << "DirectorFrame() Creating explorer notebook" << endl;
+    CreateExplorerBook();
+
+    cout << "DirectorFrame() Creating Inspector notebook" << endl;
     CreateInspector();
+
+    cout << "DirectorFrame() Creating Layers control" << endl;
     CreateLayerControls();
-    CreateProjectPanel();
+
+    cout << "DirectorFrame() Creating Files book" << endl;
     CreateFilesBook();
 
+    cout << "DirectorFrame() Creating Log book" << endl;
+    CreateLogBook();
 
-//	m_pLogTextCtrl = CreateTextCtrl();
-//	m_pLogTextCtrl->SetForegroundColour(m_cForeground);
-//    m_pLogTextCtrl->SetBackgroundColour(m_cBackground);
+    cout << "DirectorFrame() Adding panes" << endl;
+
+    cout << "DirectorFrame() Adding EXPLORER" << endl;
+    if (m_pExplorerNotebook) FrameManager.AddPane( m_pExplorerNotebook,      wxAuiPaneInfo().Name(wxT("explorer")).Caption(wxT("EXPLORER")).Left().Hide().CaptionVisible().Floatable().Movable().Dockable());
+
+    cout << "DirectorFrame() Adding PARAMETERS" << endl;
+    if (m_pFilesBook) FrameManager.AddPane( m_pFilesBook,         wxAuiPaneInfo().Name(wxT("filesbook")).Left().Hide().Caption(wxT("PARAMETERS")).CaptionVisible().Floatable().Movable().Dockable());
+
+    cout << "DirectorFrame() Adding INSPECTORS" << endl;
+    if (m_pInspectorNotebook) FrameManager.AddPane( m_pInspectorNotebook, wxAuiPaneInfo().Name(wxT("inspector")).Right().Hide().Caption(wxT("INSPECTORS")).CaptionVisible().Floatable().Movable().Dockable());
+
+    cout << "DirectorFrame() Adding LAYERS" << endl;
+    if (m_pLayersPanelCtrl) FrameManager.AddPane( m_pLayersPanelCtrl,   wxAuiPaneInfo().Name(wxT("layers")).CenterPane().Hide().Caption(wxT("LAYERS")).CaptionVisible().Floatable().Movable().Dockable());
+
+    cout << "DirectorFrame() Adding LOG" << endl;
+    if (m_pLogBook) FrameManager.AddPane( m_pLogBook,       wxAuiPaneInfo().Name(wxT("log")).CenterPane().Hide().Caption(wxT("LOG")).CaptionVisible().Floatable().Movable().Dockable());
 
 
-	FrameManager.AddPane( m_pDataNotebook,      wxAuiPaneInfo().Name(wxT("explorer")).Caption(wxT("Explorer")).CenterPane().Hide().CaptionVisible().Floatable().Movable().Dockable());
-	FrameManager.AddPane( m_pFilesBook,         wxAuiPaneInfo().Name(wxT("filesbook")).CenterPane().Hide().Caption(wxT("Parameters")).CaptionVisible().Floatable().Movable().Dockable());
-	FrameManager.AddPane( m_pInspectorNotebook, wxAuiPaneInfo().Name(wxT("inspector")).CenterPane().Hide().Caption(wxT("Inspector")).CaptionVisible().Floatable().Movable().Dockable());
-	FrameManager.AddPane( m_pLayersPanelCtrl,   wxAuiPaneInfo().Name(wxT("layers")).CenterPane().Hide().Caption(wxT("Layers")).CaptionVisible().Floatable().Movable().Dockable());
-//	FrameManager.AddPane( m_pLogTextCtrl,       wxAuiPaneInfo().Name(wxT("log")).CenterPane().Hide().Caption(wxT("Log")).CaptionVisible().Floatable().Movable().Dockable());
-
-	FrameManager.AddPane( m_pGUINotebook, wxAuiPaneInfo().Name(wxT("preview")).Caption(wxT("Console")).CaptionVisible().Floatable().Movable().Dockable().MaximizeButton().MinimizeButton().Resizable(true));
-
-	//LEFT PANE
-	FrameManager.GetPane(wxT("explorer")).Show().Left().Layer(1).Row(0).Position(0).MinSize(0,370).BestSize(300,370);
+    if (!m_pGUINotebook && m_pPreviewWindow) {
+        cout << "DirectorFrame() Adding OUTPUT WINDOW" << endl;
+        FrameManager.AddPane( m_pPreviewWindow, wxAuiPaneInfo().Name(wxT("preview")).Left().Caption(wxT("OUTPUT")).CaptionVisible().Floatable().Movable().Dockable().MaximizeButton().MinimizeButton().Resizable(true));
+    }
 
 
-	//CENTER PANE
-	FrameManager.GetPane(wxT("preview")).Show().Center().Top().Layer(0).Row(0).Position(0).MinSize(0,370).BestSize(50,370);
-	FrameManager.GetPane(wxT("layers")).Show().Center().Top().Layer(0).Row(1).Position(0).MinSize(300,250);
-//	FrameManager.GetPane(wxT("log")).Show().Center().Layer(0).Row(2).Position(0).MinSize(300,50).BestSize(300,50);
+    if (m_pGUINotebook) {
+        cout << "DirectorFrame() Adding OUTPUT (GUI NOTEBOOK)" << endl;
+        FrameManager.AddPane( m_pGUINotebook, wxAuiPaneInfo().Name(wxT("preview")).Left().Caption(wxT("OUTPUT")).CaptionVisible().Floatable().Movable().Dockable().MaximizeButton().MinimizeButton().Resizable(true));
+    }
 
-	//RIGHT PANE
-	FrameManager.GetPane(wxT("inspector")).Show().Right().Layer(1).Row(0).Position(0);
-	FrameManager.GetPane(wxT("filesbook")).Show().Right().Layer(1).Row(0).Position(1);
+    //LEFT PANE
+    cout << "DirectorFrame() Adjusting left pane" << endl;
+    FrameManager.GetPane(wxT("explorer")).Show().Left().Layer(1).Row(0).Position(0).MinSize(0,170).BestSize(300,370);
+    FrameManager.GetPane(wxT("filesbook")).Show().Left().Layer(1).Row(0).Position(1);
 
+
+    //CENTER PANE
+    cout << "DirectorFrame() Adjusting center pane" << endl;
+    FrameManager.GetPane(wxT("layers")).Show().Center().Top().Layer(0).Row(0).Position(0).MinSize(200,270).BestSize(200,470);;
+    FrameManager.GetPane(wxT("log")).Show().Center().Layer(0).Row(1).Position(0).MinSize(200,20).BestSize(200,100);
+
+    //RIGHT PANE
+    cout << "DirectorFrame() Adjusting right pane" << endl;
+    FrameManager.GetPane(wxT("preview")).Show().Right().Layer(1).Position(0).Row(0).MinSize(400,350);
+    FrameManager.GetPane(wxT("inspector")).Show().Right().Layer(1).Position(1).Row(0).MinSize(0,0);;
+
+
+    cout << "DirectorFrame() Adjusting dock art" << endl;
     wxAuiDockArt* pFrameArt;
 
     pFrameArt = FrameManager.GetArtProvider();
+
+    pFrameArt->SetMetric( wxAUI_DOCKART_SASH_SIZE, 2 );
+    pFrameArt->SetMetric( wxAUI_DOCKART_CAPTION_SIZE, 10 );
+    pFrameArt->SetMetric( wxAUI_DOCKART_PANE_BORDER_SIZE, 0 );
+
+
     pFrameArt->SetColor( wxAUI_DOCKART_SASH_COLOUR, wxColour(80,80,80) );
-    pFrameArt->SetColor( wxAUI_DOCKART_BORDER_COLOUR, wxColour(255,255,255) );
+    pFrameArt->SetColor( wxAUI_DOCKART_BORDER_COLOUR, wxColour(80,80,80) );
     pFrameArt->SetColor( wxAUI_DOCKART_INACTIVE_CAPTION_COLOUR, wxColour(10,40,120) );
     pFrameArt->SetColor( wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR, wxColour(0,0,0) );
-    pFrameArt->SetColor( wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR, wxColour(255,255,255) );
+    pFrameArt->SetColor( wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR, wxColour(175,175,175) );
+
+
     //pFrameArt->SetColor( wxAUI_DOCKART_SASH_COLOUR, wxColour(255*30/100,255*30/100,255*30/100 );
     //pFrameArt->SetColor( wxAUI_DOCKART_SASH_COLOUR, wxColour(255*30/100,255*30/100,255*30/100 );
     //pFrameArt->SetColor( wxAUI_DOCKART_SASH_COLOUR, wxColour(255*30/100,255*30/100,255*30/100 );
-    //moTabArt*   pTabArt = new moTabArt();
+/*
     wxAuiTabArt*    pTabArt = m_pInspectorNotebook->GetArtProvider();
     wxFont* pFont = new wxFont( 7, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
     pTabArt->SetNormalFont(*pFont);
+    */
 
     //m_pInspectorNotebook->SetArtProvider(pTabArt);
 
 
-
+    cout << "DirectorFrame() Framemanager update" << endl;
 	FrameManager.Update();
 /*
     int s_index = rand() % 5;
@@ -269,66 +362,49 @@ moDirectorFrame::~moDirectorFrame() {
 }
 
 void
-moDirectorFrame::CreateGUINotebook() {
+moDirectorFrame::CreateLogBook() {
 
-	m_pGUINotebook = new wxAuiNotebook( this, wxID_ANY, wxPoint(0,0), wxSize(300,200), wxBORDER_NONE | wxAUI_NB_TAB_SPLIT | wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE  );
-	m_pGUINotebook->SetForegroundColour(m_cForeground);
-    m_pGUINotebook->SetBackgroundColour(m_cBackground);
+    m_pLogBook = new moLogNotebook( this, wxID_ANY );
+    wxMoAuiTabArt*  pAuiTabArt = new wxMoAuiTabArt();
+    if (m_pLogBook) {
+      m_pLogBook->SetForegroundColour(m_cForeground);
+      m_pLogBook->SetBackgroundColour(m_cBackground);
+      m_pLogBook->SetNextActionHandler( this );
+      if (pAuiTabArt) m_pLogBook->SetArtProvider( pAuiTabArt );
+    }
 
-    CreateGLWindows();
-
-    // DEBUG: Voy a reactivar esto!
-    // m_pConnectionsWindow = new moConnectionsWindow(m_pGUINotebook,wxID_ANY, wxPoint(0,0), wxSize(300,200));
-    // m_pConnectionsWindow->Init(this);
-
-    m_pGUINotebook->AddPage( m_pPreviewWindow, wxT("Preview"));
-    //m_pGUINotebook->AddPage( m_pConnectionsWindow, wxT("Connections"));
 }
 
 void
-moDirectorFrame::CreateDataBook() {
+moDirectorFrame::CreateGUINotebook() {
 
-	m_pDataNotebook = new moDataNotebook( this, wxID_ANY);
-	if (m_pDataNotebook) {
-		m_pDataNotebook->SetForegroundColour(m_cForeground);
-        m_pDataNotebook->SetBackgroundColour(m_cBackground);
+	m_pGUINotebook = new wxAuiNotebook( this, wxID_ANY, wxPoint(0,0), wxSize(300,200), wxAUI_NB_BOTTOM  | wxBORDER_NONE | wxAUI_NB_TAB_SPLIT | wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE  );
+	if (m_pGUINotebook) {
+    m_pGUINotebook->SetArtProvider( new wxMoAuiTabArt() );
+    m_pGUINotebook->SetForegroundColour(m_cForeground);
+    m_pGUINotebook->SetBackgroundColour(m_cBackground);
+    CreateGLWindows(m_pGUINotebook);
+    //m_pConnectionsWindow = new moConnectionsWindow(m_pGUINotebook,wxID_ANY, wxPoint(0,0), wxSize(300,200));
+    //m_pConnectionsWindow->Init(this);
 
-        m_pDataNotebook->m_pLogTextCtrl = CreateTextCtrl();
-        wxFont* pLogFont = new wxFont( 13, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
-        m_pDataNotebook->m_pLogTextCtrl->SetFont( *pLogFont );
-        //m_pDataNotebook->m_pLogTextCtrl->SetInsertionPoint(0);
+    if (m_pPreviewWindow) m_pGUINotebook->AddPage( m_pPreviewWindow, wxT("Preview"));
 
-		m_pDataNotebook->m_pVirtualDirTreeCtrl = new wxVirtualDirTreeCtrl(m_pDataNotebook, wxID_ANY, wxPoint(0,0), wxSize(300,377),wxTR_DEFAULT_STYLE | wxNO_BORDER | wxBORDER_NONE );
-		m_pDataNotebook->m_pVirtualDirTreeCtrl->SetForegroundColour(m_cForeground);
-        m_pDataNotebook->m_pVirtualDirTreeCtrl->SetBackgroundColour(m_cBackground);
+    if (m_pPreviewWindowSys) m_pGUINotebook->AddPage( m_pPreviewWindowSys, wxT("Preview Sys"));
 
-		m_pDataNotebook->m_pProjectTreeCtrl = new moProjectTreeCtrl(m_pDataNotebook, wxID_ANY, wxPoint(0,0), wxSize(300,377), wxTR_DEFAULT_STYLE | wxNO_BORDER | wxBORDER_NONE);
-		m_pDataNotebook->m_pProjectTreeCtrl->SetForegroundColour(m_cForeground);
-        m_pDataNotebook->m_pProjectTreeCtrl->SetBackgroundColour(m_cBackground);
-		m_pDataNotebook->m_pProjectTreeCtrl->SetDirectorFrame( this );
+    //m_pGUINotebook->AddPage( m_pConnectionsWindow, wxT("Connections"));
+	}
+}
 
-        m_pDataNotebook->m_pIODevicesTreeCtrl = new moProjectTreeCtrl(m_pDataNotebook, wxID_ANY, wxPoint(0,0), wxSize(300,377), wxTR_DEFAULT_STYLE | wxNO_BORDER | wxBORDER_NONE);
-		m_pDataNotebook->m_pIODevicesTreeCtrl->SetForegroundColour(m_cForeground);
-        m_pDataNotebook->m_pIODevicesTreeCtrl->SetBackgroundColour(m_cBackground);
-		m_pDataNotebook->m_pIODevicesTreeCtrl->SetDirectorFrame( this );
+#include "moAuiTabArt.h"
 
-        m_pDataNotebook->m_pResourcesTreeCtrl = new moProjectTreeCtrl(m_pDataNotebook, wxID_ANY, wxPoint(0,0), wxSize(300,377), wxTR_DEFAULT_STYLE | wxNO_BORDER | wxBORDER_NONE);
-		m_pDataNotebook->m_pResourcesTreeCtrl->SetForegroundColour(m_cForeground);
-        m_pDataNotebook->m_pResourcesTreeCtrl->SetBackgroundColour(m_cBackground);
-		m_pDataNotebook->m_pResourcesTreeCtrl->SetDirectorFrame( this );
+void
+moDirectorFrame::CreateExplorerBook() {
 
-		m_pDataNotebook->AddPage( m_pDataNotebook->m_pLogTextCtrl, wxT("Log") );
-		m_pDataNotebook->GetPage(0)->SetBackgroundColour(m_cBackground);
-
-		m_pDataNotebook->AddPage( m_pDataNotebook->m_pProjectTreeCtrl, wxT("Project") );
-		m_pDataNotebook->GetPage(1)->SetBackgroundColour(m_cBackground);
-		m_pDataNotebook->AddPage( m_pDataNotebook->m_pIODevicesTreeCtrl, wxT("IODevices") );
-		m_pDataNotebook->GetPage(2)->SetBackgroundColour(m_cBackground);
-        m_pDataNotebook->AddPage( m_pDataNotebook->m_pResourcesTreeCtrl, wxT("Resources") );
-		m_pDataNotebook->GetPage(3)->SetBackgroundColour(m_cBackground);
-		m_pDataNotebook->AddPage( m_pDataNotebook->m_pVirtualDirTreeCtrl, wxT("Data") );
-		m_pDataNotebook->GetPage(4)->SetBackgroundColour(m_cBackground);
-
+	m_pExplorerNotebook = new moExplorerNotebook( this, wxID_ANY );
+	if (m_pExplorerNotebook) {
+    m_pExplorerNotebook->SetForegroundColour(m_cForeground);
+    m_pExplorerNotebook->SetBackgroundColour(m_cBackground);
+    m_pExplorerNotebook->SetNextActionHandler( this );
 
 	}
 
@@ -340,18 +416,24 @@ moDirectorFrame::CreateFilesBook() {
 
 	m_pFilesBook = NULL;
 	m_pFilesBook = new moFilesbook( this, wxID_ANY );
+	m_pFilesBook->SetNextActionHandler( this );
+	m_pFilesBook->SetTabCtrlHeight( 20 );
+
+	wxMoAuiTabArt*  pAuiTabArt = new wxMoAuiTabArt();
+	m_pFilesBook->SetArtProvider(pAuiTabArt);
+
 
 }
 
 void
-moDirectorFrame::CreateGLWindows() {
+moDirectorFrame::CreateGLWindows( wxWindow* parent) {
 
    int attribList[2];
     attribList[0] = WX_GL_RGBA; //true color
     attribList[1] = 0;
 
     m_pGLContext = NULL;
-    //create base wxGLCanvas to create context...
+    ///create base wxGLCanvas to create context...
     //retreive context...
     //m_pBaseGLCanvas = (wxGLCanvas*)new moGLCanvas( this, wxID_ANY, &attribList[0], wxPoint(0,0), wxSize(800,600) );
     //m_pGLContext = m_pBaseGLCanvas->GetContext();
@@ -360,16 +442,70 @@ moDirectorFrame::CreateGLWindows() {
     //create preview window, dockable...
 
 	m_pPreviewWindow = NULL;
-	m_pPreviewWindow = new moPreviewWindow( m_pGUINotebook, wxID_ANY );
+	m_pPreviewWindow = new moPreviewWindow( parent, wxID_ANY );
 
+
+///codigo para copiar la textura de opengl a u canvas via copia de buffer (util unicamente para captura)
+///memory system preview... sujeto a cambios
+
+	//m_pPreviewWindowSys = NULL;
+	//m_pPreviewWindowSys = new PreviewWindowSystemMem( parent, wxID_ANY );
+
+  ///PreviewBits  -  gl to system memory
+	//PreviewBits = new MOuchar [2048*2048*3];
+	/*
+	PreviewBitsW = 1920;
+	PreviewBitsH = 1080;
+
+	PreviewBits = (MOuchar*)malloc( PreviewBitsW*PreviewBitsH*3);
+
+	pImgPreviewBits =  new wxImage( PreviewBitsW, PreviewBitsH, false );
+	pImgPreviewBits->SetData(PreviewBits);
+
+	if (m_pPreviewWindowSys)
+    m_pPreviewWindowSys->pImage = pImgPreviewBits;
+*/
 	if (m_pPreviewWindow) {
 
+        cout << "CreateGLWindows() > creating GL Canvas..." << endl;
         m_pPreviewWindow->Init( this, m_pGLContext );
+
         m_pGLCanvas = m_pPreviewWindow->m_pGLCanvas;
+
         if (m_pGLCanvas) {
-            m_pGLContext = m_pGLCanvas->GetContext();
-            m_pGLCanvas->SetCurrent();
+            cout << "CreateGLWindows() > showing frame..." << endl;
+            //m_pPreviewWindow->Show();
+            Show();
+            cout << "CreateGLWindows() > getting implicit GL Context..." << endl;
+						m_pGLContext = m_pGLCanvas->GetContext();
+
+            /**
+                Trying to create explicit GLContext
+            */
+
+            if (m_pGLContext==NULL) {
+                cout << "CreateGLWindows() > Trying to create explicit GLContext..." << endl;
+                m_pGLContext = new wxGLContext(m_pGLCanvas);
+            }
+
+            if (m_pGLContext==NULL) {
+                    ErrorMessage(moText("CreateGLWindows() > Fatal Error: Couldn't create GL Context!"));
+                    cout << "CreateGLWindows() > Fatal Error: Couldn't create GL Context!" << endl;
+                    exit(1);
+            }
+
+            //m_pGLCanvas->SetCurrent();
+            m_pGLContext->SetCurrent(*m_pGLCanvas);
+            //Show();
+
         }
+
+        /*
+        m_pPreviewWindow->m_pGLCanvas->Finish();//agregado...al sacarse arriba
+        m_pPreviewWindow->Init( this, m_pGLContext );
+        m_pPreviewWindow->m_pGLCanvas->SetCurrent();
+        m_pPreviewWindow->Refresh();
+        */
 
 	}
 
@@ -378,38 +514,11 @@ moDirectorFrame::CreateGLWindows() {
 }
 
 void
-moDirectorFrame::CreateProjectPanel() {
-
-
-}
-
-void
 moDirectorFrame::CreateLayerControls() {
 
-	m_pLayers2 = m_pLayers = NULL;
-	m_pLayersPanelCtrl = new moLayersPanelCtrl(this, wxID_ANY, wxPoint(0,0), wxSize(440,220), wxSP_NOBORDER | wxNO_BORDER );
+	m_pLayersPanelCtrl = new moLayersPanelCtrl(this, wxID_ANY, wxPoint(0,0), wxSize(440,1220), wxSP_NOBORDER | wxNO_BORDER );
 	if (m_pLayersPanelCtrl) {
-	    m_pLayers = m_pLayersPanelCtrl->m_pLayersTreeCtrl;
-	    m_pLayers2 = NULL;
-/*
-        m_pLayers = new moTreeObjectsLayerCtrl( m_pLayersPanelCtrl, wxID_ANY, wxPoint(0,0), wxSize(150,220) );
-        m_pLayers->SetForegroundColour(m_cForeground);
-        m_pLayers->SetBackgroundColour( wxColour(0,0,0) );
-        m_pLayers->ShowScrollBars( true, false);
-
-        m_pLayers2 = new moTreeObjectsLayerCtrl( m_pLayersPanelCtrl, wxID_ANY );
-        m_pLayers2->SetForegroundColour(m_cForeground);
-        m_pLayers2->SetBackgroundColour( wxColour(52,52,52) );
-        m_pLayers2->ShowScrollBars( true, true);
-        m_pLayers2->SetSecondTargetWindow( m_pLayers );
-        m_pLayers->SetSecondTargetWindow( m_pLayers2 );
-*/
-        /*
-        m_pLayersPanelCtrl->SplitVertically( m_pLayers, m_pLayers2 );
-        m_pLayersPanelCtrl->SetSashPosition( 220, true );
-        m_pLayersPanelCtrl->SetForegroundColour(m_cForeground);
-        m_pLayersPanelCtrl->SetBackgroundColour( wxColour(52,52,52) );
-        */
+      m_pLayersPanelCtrl->SetNextActionHandler( this );
 	}
 
 }
@@ -418,7 +527,8 @@ moDirectorFrame::CreateLayerControls() {
 void
 moDirectorFrame::CreateInspector() {
 
-	m_pInspectorNotebook = new wxAuiNotebook( this, wxID_ANY, wxPoint(0,0), wxSize(400,300), wxBORDER_NONE | wxAUI_NB_TAB_SPLIT | wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE  );
+	m_pInspectorNotebook = new wxAuiNotebook( this, wxID_ANY, wxPoint(0,0), wxSize(400,100), wxSP_NOBORDER | wxNO_BORDER | wxAUI_NB_TAB_SPLIT | wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE  );
+	m_pInspectorNotebook->SetArtProvider( new wxMoAuiTabArt() );
 	m_pInspectorNotebook->SetForegroundColour(m_cForeground);
     m_pInspectorNotebook->SetBackgroundColour(m_cBackground);
 
@@ -473,7 +583,7 @@ moDirectorFrame::Inspect( moValueDescriptor  p_ValueDescriptor, bool setselectio
             case MO_PARAM_NUMERIC:
                 // to the function inspector....
                 m_pFunctionPanel->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(0);
+                if (setselection) m_pInspectorNotebook->SetSelection(3);
                 break;
             case MO_PARAM_ROTATEX:
             case MO_PARAM_ROTATEY:
@@ -485,12 +595,12 @@ moDirectorFrame::Inspect( moValueDescriptor  p_ValueDescriptor, bool setselectio
             case MO_PARAM_SCALEY:
             case MO_PARAM_SCALEZ:
                 m_pObjectMotion->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(0);
+                if (setselection) m_pInspectorNotebook->SetSelection(2);
                 break;
 
             case MO_PARAM_COLOR:
                 m_pColorMotion->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(0);
+                if (setselection) m_pInspectorNotebook->SetSelection(1);
                 break;
 
             case MO_PARAM_TEXTURE:
@@ -501,16 +611,34 @@ moDirectorFrame::Inspect( moValueDescriptor  p_ValueDescriptor, bool setselectio
             case MO_PARAM_OBJECT:
             case MO_PARAM_3DMODEL:
                 m_p3dModelPanel->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(0);
+                if (setselection) m_pInspectorNotebook->SetSelection(4);
                 break;
             case MO_PARAM_FILTER:
                 m_pShadersPanel->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(0);
+                if (setselection) {
+                  m_pInspectorNotebook->SetSelection(5);
+                }
                 break;
             case MO_PARAM_SCRIPT:
                 m_pScriptPanel->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(0);
+                if (setselection) m_pInspectorNotebook->SetSelection(8);
                 break;
+            case MO_PARAM_FONT:
+                ///m_p->Inspect( p_ValueDescriptor );
+                if (setselection) m_pInspectorNotebook->SetSelection(7);
+                break;
+            case MO_PARAM_TEXT:
+                ///m_p->Inspect( p_ValueDescriptor );
+                if (setselection) m_pInspectorNotebook->SetSelection(9);
+                break;
+            case MO_PARAM_SOUND:
+                ///m_p->Inspect( p_ValueDescriptor );
+                if (setselection) m_pInspectorNotebook->SetSelection(6);
+                break;
+            case MO_PARAM_UNDEFINED:
+              break;
+            default:
+              break;
 
         }
 
@@ -536,7 +664,8 @@ moDirectorFrame::Inspect( moMobDescriptor  p_MobDescriptor ) {
 
             p_ValueDescriptor = GetValue( moValueDescriptor( mParams[i], valindex ) );
 
-            Inspect( p_ValueDescriptor );
+            /// No seleccionar el inspector correspondiente
+            Inspect( p_ValueDescriptor, false );
 
         }
 
@@ -584,11 +713,14 @@ moGLCanvas*  moDirectorFrame::GetGLCanvas() {
 MOboolean
 moDirectorFrame::Init() {
 
-    m_pStartFrame = new moDirectorStartFrame( m_pFilesBook );
+    if (m_pFilesBook)
+      m_pStartFrame = new moDirectorStartFrame( m_pFilesBook );
+    else return false;
 
     if (m_pStartFrame) {
         //m_pStartFrame->Activate();
-        m_pFilesBook->AddPage( (wxWindow*) m_pStartFrame, _T("Welcome to Moldeo Director"));
+
+          m_pFilesBook->AddPage( (wxWindow*) m_pStartFrame, _T("Welcome to Moldeo Director"));
 
         //m_pFilesBook->AddPage( (wxWindow*) new wxScrolledWindow( this, wxID_ANY), "Welcome to Moldeo Director Dialog");
         //m_pFilesBook->AddPage((wxWindow*)new wxDialog(this,wxID_ANY,"Dialog"), "Welcome to Moldeo Director Dialog");
@@ -618,22 +750,6 @@ void moDirectorFrame::OnEraseBackground(wxEraseEvent& event)
 void moDirectorFrame::OnSize(wxSizeEvent& event)
 {
     event.Skip();
-}
-
-wxPanel* moDirectorFrame::CreatePanel() {
-
-	return new wxPanel(this, -1,
-		wxPoint(0,0), wxSize(160,250),wxTAB_TRAVERSAL, _T("panel"));
-
-}
-
-
-wxTextCtrl* moDirectorFrame::CreateTextCtrl()
-{
-
-    return new wxTextCtrl(this,-1, wxT(""),
-                          wxPoint(0,0), wxSize(500,90),
-                          wxNO_BORDER | wxTE_MULTILINE | wxTE_RICH);
 }
 
 
@@ -673,7 +789,9 @@ void moDirectorFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxString msg;
     msg.Printf( _T("This is the About dialog of Moldeo Director.\n")
-                _T("Welcome to %s"), wxVERSION_STRING);
+                _T("\n\nWelcome to %s \n\nMoldeo Director Version: %s \n\nMoldeo Core Version: %s"),
+                wxVERSION_STRING, _T(MOLDEO_DIRECTOR_VERSION),
+                moText2Wx(moGetVersionStr()) );
 
     wxMessageBox(msg, _T("About Moldeo Director"), wxOK | wxICON_INFORMATION, this);
 }
@@ -703,37 +821,59 @@ moDirectorFrame::OnOpenProject(wxCommandEvent& event) {
 
 	//open browser window
 	if ( event.GetString()==_T("") ) {
-		pFileDialog = new wxFileDialog( this );
-		if(pFileDialog) {
-			pFileDialog->SetWildcard(wxT("MOL files (*.mol)|*.mol|All files (*.*)|*.*"));
-			if( pFileDialog->ShowModal() == wxID_OK ) {
-				wxFileName	FileName( pFileDialog->GetPath() );
-				wxString path = FileName.GetPath();
-#ifdef MO_WIN32
-				path+= "\\";
-#else
-				path+= _T("/");
-#endif
-				wxString name = FileName.GetFullName();
-				ProjectDescriptor.Set( moText(path.mb_str()), moText(name.mb_str()) );
-				mStatus = OpenProject( ProjectDescriptor );
-				SetTitle(wxString(name)+wxString(_(" - Moldeo Director")));
-			}
-		}
+
+        pFileDialog = new wxFileDialog( this );
+
+        if(pFileDialog) {
+
+            pFileDialog->SetWildcard(wxT("MOL files (*.mol)|*.mol|All files (*.*)|*.*"));
+
+            if( pFileDialog->ShowModal() == wxID_OK ) {
+
+                wxFileName	FileName( pFileDialog->GetPath() );
+
+                wxString path = FileName.GetPath();
+                #ifdef MO_WIN32
+                    path+= "\\";
+                #else
+                    path+= _T("/");
+                #endif
+                wxString name = FileName.GetFullName();
+                const char *cfilepath = (char*)path.c_str();
+                const char *cfilename = (char*)name.c_str();
+
+                ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
+
+                mStatus = OpenProject( ProjectDescriptor );
+
+            }
+
+        }
+
 	} else {
-		Log( moText("Direct opening..") + moWx2Text(event.GetString()));
-		wxFileName	FileName( event.GetString() );
-		wxString path = FileName.GetPath();
-#ifdef MO_WIN32
-		path+= "\\";
-#else
-		path+= _T("/");
-#endif
-		wxString name = FileName.GetFullName();
-		ProjectDescriptor.Set( moText(path.mb_str()), moText(name.mb_str()) );
-		mStatus = OpenProject( ProjectDescriptor );
-		SetTitle(wxString(name)+wxString(_(" - Moldeo Director")));
+
+	    Log( moText("Direct opening..") + moWx2Text(event.GetString()));
+
+        wxFileName	FileName( event.GetString() );
+
+        wxString path = FileName.GetPath();
+        #ifdef MO_WIN32
+            path+= "\\";
+        #else
+            path+= _T("/");
+        #endif
+        wxString name = FileName.GetFullName();
+        const char *cfilepath = (char*)path.c_str();
+        const char *cfilename = (char*)name.c_str();
+
+        ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
+
+        mStatus = OpenProject( ProjectDescriptor );
+        SetTitle(wxString(name)+wxString(_(" - Moldeo Director")));
+
+
     }
+
 }
 
 void
@@ -845,30 +985,30 @@ moDirectorFrame::OpenMob( moMobDescriptor p_MobDescriptor ) {
 
     moDirectorChildFrame* pChild = NULL;
 
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-        if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-            pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+            pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
             if (pChild) {
                 if( pChild->IsMob( p_MobDescriptor ) ) {
 
-                    //to avoid innecesary inspections:
-                    //check the actual selection
-                    //focus and return
+                    /// para evitar llamadas innecesearias al inspector:
+                      /// verificar la selección actual
+                      /// seleccionar la pagina correcta y volver
 
                     if (m_pFilesBook->GetSelection()!=i) {
                         m_pFilesBook->SetSelection(i);
                     }
 
-                    //now that we founded it run the iterative Inspector...
-                    this->Inspect( p_MobDescriptor );
+                    /// ahora que lo encontramos , corremos el inspector
+                    Inspect( p_MobDescriptor );
 
                     return MO_DIRECTOR_STATUS_CONFIG_ALREADY_OPENED;
                 }
             }
-        }
+      }
     }
 
-    // Never get here if filesbook has the page opened...
+    /// Nunca llega aquí si el FilesBook ya tiene este objeto abierto
     m_pDirectorCore->OpenMob( p_MobDescriptor );
 }
 
@@ -886,14 +1026,13 @@ moDirectorFrame::OnSaveMob( wxCommandEvent& event ) {
     //guardar el MOB correspondiente al MOB elegido
     moDirectorChildFrame* pChild = NULL;
 
-    int i = m_pFilesBook->GetSelection();
-    if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-        pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-        if (pChild) {
-            pChild->Save();
-        }
+    if (m_pFilesBook) {
+      int i = m_pFilesBook->GetSelection();
+      pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+      if (pChild) {
+          pChild->Save();
+      }
     }
-
 }
 
 void
@@ -901,15 +1040,17 @@ moDirectorFrame::OnCloseMob( wxCommandEvent& event ) {
 
     moDirectorChildFrame* pChild = NULL;
 
-    int i = m_pFilesBook->GetSelection();
-    if (m_pFilesBook->GetPage(i)->GetName() == _T("child frame") ) {
-        pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-        if (pChild) {
-            if ( pChild->Close() ) {
-                pChild->Destroy();
-                m_pFilesBook->RemovePage(i);
-            }
-        }
+    if (m_pFilesBook) {
+
+      int i = m_pFilesBook->GetSelection();
+      pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+      if (pChild) {
+          if ( pChild->Close() ) {
+              pChild->Destroy();
+              m_pFilesBook->RemovePage(i);
+          }
+      }
+
     }
 
 }
@@ -934,18 +1075,18 @@ moDirectorFrame::CloseAll() {
 
     moDirectorChildFrame* pChild = NULL;
 
-    //int i = m_pFilesBook->GetSelection();
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-        if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-            pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-            if (pChild) {
-                if (pChild->Close()) {
-                    pChild->Destroy();
-                    m_pFilesBook->RemovePage(i);
-                    i--;
-                } else return MO_DIRECTOR_STATUS_ERROR;
-            }
-        }
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+          pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+          if (pChild) {
+              if (pChild->Close()) {
+                  pChild->Destroy();
+                  m_pFilesBook->RemovePage(i);
+                  i--;
+                  Show();
+              } else return MO_DIRECTOR_STATUS_ERROR;
+          }
+      }
     }
     return MO_DIRECTOR_STATUS_OK;
 
@@ -957,13 +1098,13 @@ moDirectorFrame::SaveAll() {
     moDirectorChildFrame* pChild = NULL;
 
     //int i = m_pFilesBook->GetSelection();
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-        if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-            pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-            if (pChild) {
-                pChild->Save();
-            }
-        }
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+          pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+          if (pChild) {
+              pChild->Save();
+          }
+      }
     }
     return MO_DIRECTOR_STATUS_OK;
 
@@ -979,13 +1120,12 @@ moDirectorFrame::CloseProject() {
 
         if ( m_pDirectorCore->CloseProject() == MO_DIRECTOR_STATUS_OK ) {
 
-            if(m_pDataNotebook)
-                if (m_pDataNotebook->m_pProjectTreeCtrl)
-                    m_pDataNotebook->m_pProjectTreeCtrl->DeleteAllItems();
-            if (m_pLayers)
-                m_pLayers->DeleteAllItems();
-            if (m_pLayers2)
-                m_pLayers2->DeleteAllItems();
+            //if(m_pExplorerNotebook)
+            if (m_pPreviewFrame)
+                if (m_pPreviewFrame->IsShown()) {
+                    ProjectPreview();
+                }
+
             //if(m_pConnectionsWindow)
                 //m_pConnectionsWindow->DeleteAll();
 
@@ -1035,7 +1175,7 @@ moDirectorChildFrame* moDirectorFrame::CreateChildFrame( moMobDescriptor p_MobDe
 
     // Make another frame, containing a canvas
 
-	wxString title =wxString( p_MobDescriptor.GetMobDefinition().GetConfigName(), wxConvUTF8);
+	wxString title =moText2Wx( p_MobDescriptor.GetMobDefinition().GetConfigName() );
 
     moDirectorChildFrame* pDirectorChildFrame = new moDirectorChildFrame( m_pFilesBook, title);
 
@@ -1051,10 +1191,10 @@ moDirectorChildFrame* moDirectorFrame::CreateChildFrame( moMobDescriptor p_MobDe
     //pDirectorChildFrame->Show(true);
 
 	//extract filename form config full path name
-	wxFileName xfname(wxString(p_MobDescriptor.GetMobDefinition().GetName(), wxConvUTF8));
+	wxFileName xfname( wxString(moText2Wx( p_MobDescriptor.GetMobDefinition().GetName() ) ) );
 
 	m_pFilesBook->AddPage( pDirectorChildFrame,
-                            wxString(p_MobDescriptor.GetMobDefinition().GetLabelName(), wxConvUTF8),
+                            moText2Wx( p_MobDescriptor.GetMobDefinition().GetLabelName()),
                             true);
 
 	return pDirectorChildFrame;
@@ -1107,10 +1247,14 @@ moDirectorFrame::FocusOutput() {
 
        } else {
 
-            outputwidth = m_pDirectorCore->GetResourceManager()->GetRenderMan()->GetOutputConfiguration().m_OutputResolution.width;
-            outputheight = m_pDirectorCore->GetResourceManager()->GetRenderMan()->GetOutputConfiguration().m_OutputResolution.height;
+         if (m_pDirectorCore->GetResourceManager() &&
+             m_pDirectorCore->GetResourceManager()->GetRenderMan()) {
+
+            outputwidth = max(0 , min( 6144, m_pDirectorCore->GetResourceManager()->GetRenderMan()->GetOutputConfiguration().m_OutputResolution.width ));
+            outputheight = max(0 , min( 6144, m_pDirectorCore->GetResourceManager()->GetRenderMan()->GetOutputConfiguration().m_OutputResolution.height));
             outputleft = 0;
             outputtop = 0;
+         }
 
        }
 
@@ -1121,10 +1265,18 @@ moDirectorFrame::FocusOutput() {
     if(m_pGLCanvas) {
         if (m_pPreviewFrame) {
             if (m_pPreviewFrame->GetSize().GetWidth()!=outputwidth) m_pPreviewFrame->SetClientSize(wxSize(outputwidth,outputheight));
-            else m_pPreviewFrame->Move(outputleft,outputtop);
+            else {
+              PreviewBitsW = outputwidth;
+              PreviewBitsH = outputheight;
+              //PreviewBits = (MOuchar*)malloc( PreviewBitsW*PreviewBitsH*3);
+              m_pPreviewFrame->Move(outputleft,outputtop);
+            }
+
+
         }
         m_pGLCanvas->Activate( m_pDirectorCore->GetDirectorIODeviceManager() );
     }
+
 
 }
 
@@ -1193,18 +1345,35 @@ void
 moDirectorFrame::ViewSwapBuffers() {
     if (m_pGLCanvas!=NULL) {
 
+        ///esto es completamente ineficiente!! buscamos a cada vez la textura :  preview_texture
+
         int ttid = m_pDirectorCore->GetResourceManager()->GetTextureMan()->GetTextureMOId( moText("preview_texture"), false);
         moTexture* ptex = m_pDirectorCore->GetResourceManager()->GetTextureMan()->GetTexture(ttid);
         int glid = 0;
         if (ptex) {
+            ///devuelve el gl if
             glid = ptex->GetGLId();
+
         }
 
 
+
+        /**
+        *     El contexto lo tiene el m_pGLCanvas....
+        */
+
         if (m_pPreviewFrame && m_pGLCanvas==m_pPreviewFrame->m_pGLCanvas) {
 
+            ///asignamos el contexto a nuestra vista de preview
+            // esto no funciona: m_pPreviewWindow->m_pGLCanvas->SetCurrent( *m_pGLContext );
             m_pPreviewWindow->m_pGLCanvas->SetCurrent();
+
+            ///cambiamos la vista a ortografica
             m_pDirectorCore->GetResourceManager()->GetGLMan()->SetOrthographicView(400, 300);
+
+            ///y pegamos nuestra ultima vista tomada de la vista principal
+
+            //comentado para el CCEBA
 
             glBindTexture(GL_TEXTURE_2D, glid );
             glColor4f(1.0,1.0,1.0,1.0);
@@ -1223,13 +1392,49 @@ moDirectorFrame::ViewSwapBuffers() {
             glEnd();
             glBindTexture(GL_TEXTURE_2D, 0);
 
+
+
+
+            //comentado para el CCEBA
             m_pPreviewWindow->m_pGLCanvas->SwapBuffers();
-            //m_pPreviewWindow->m_pGLCanvas->Refresh();
+
+            // no es necesario ???  m_pPreviewWindow->m_pGLCanvas->Refresh();
+            ///swapea y copia el render de la ventana a la glid de textura OpenGL
+            m_pGLCanvas->ViewSwapBuffers( glid );
+
+            ///version de copiar en bitmap en memoria
+            /// ver ...   moTexture::GetBuffer()
+/*
+            PreviewBits = (MOuchar*)malloc( PreviewBitsW*PreviewBitsH*3);
+            */
+            //if (PreviewBits ) {
+
+              //glBindTexture( GL_TEXTURE_2D, glid );
+              //glGetTexImage( GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, (void*)PreviewBits);
+              //glGetTexImage( GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+              //glBindTexture( GL_TEXTURE_2D, 0);
+
+/*
+              if (pImgPreviewBits) {
+                wxSize sz( PreviewBitsW, PreviewBitsH );
+                pImgPreviewBits->Resize( sz, wxPoint(0,0) );
+                pImgPreviewBits->Destroy();
+                pImgPreviewBits->SetData( PreviewBits, PreviewBitsW, PreviewBitsH );
+              }
+
+              m_pPreviewWindowSys->Refresh();
+              */
+            //}
+
 
         }
+        else {
+            if (m_pGLCanvas)
+                m_pGLCanvas->SwapBuffers();
+        }
 
-        //m_pGLCanvas->SwapBuffers();
-        m_pGLCanvas->ViewSwapBuffers( glid );
+
+
     }
 }
 
@@ -1238,6 +1443,16 @@ moDirectorFrame::GetHandle() {
     if (m_pGLCanvas)
         return m_pGLCanvas->GetHandle();
     return NULL;
+
+}
+
+moDirectorStatus
+moDirectorFrame::SetMob( moMobDescriptor p_MobDesc ) {
+
+  if (m_pDirectorCore)
+    return m_pDirectorCore->SetMob( p_MobDesc );
+  else
+    return MO_DIRECTOR_STATUS_NO_HANDLER;
 
 }
 
@@ -1252,22 +1467,26 @@ moDirectorFrame::EditMob( moMobDescriptor p_MobDescriptor ) {
     moDirectorChildFrame* pChild = NULL;
     moDirectorChildConsole* pDirectorChildConsole = NULL;
 
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-        if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-            pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-            if (pChild) {
-                if( pChild->IsMob( p_MobDescriptor ) ) {
-                    return MO_DIRECTOR_STATUS_CONFIG_ALREADY_OPENED;
-                }
-            }
-        }
+    if (m_pFilesBook) {
+      ///vemos si el child frame del objeto no fue creado ya en el moFilesbook
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+          pChild =dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+          if (pChild) {
+              if( pChild->IsMob( p_MobDescriptor ) ) {
+                  return MO_DIRECTOR_STATUS_CONFIG_ALREADY_OPENED;
+              }
+          }
+      }
     }
 
-    //si el archivo todavia no fue abierto...
+    ///Si aun no se creo la instancia del child frame para editar el objeto
+    /// lo creamos y lo inicializamos
+
     pChild = NULL;
     pChild = CreateChildFrame( p_MobDescriptor );
 
     if(pChild!=NULL) {
+
 
         //m_pChildFrameList.Append( pChild );
         pChild->Init( this, p_MobDescriptor);
@@ -1308,201 +1527,68 @@ moDirectorFrame::SaveMob( moMobDescriptor p_MobDescriptor ) {
 }
 
 moDirectorStatus
-moDirectorFrame::ProjectUpdated( moProjectDescriptor p_ProjectDescriptor ) {
+moDirectorFrame::ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor ) {
 
-	MOuint i;
-	wxTreeItemId exid;
-	wxString cPath;
-	wxString cMol;
-	wxString xitemname;
-	moMobDescriptor MobDesc;
+  moDirectorStatus status;
 
+  status = MO_DIRECTOR_STATUS_OK;
+
+/**
     if (m_pPanelTexture)
         m_pPanelTexture->InitTexturesTree();
+*/
 
-	if (!m_pDataNotebook) return MO_DIRECTOR_STATUS_ERROR;
-	if (!m_pDataNotebook->m_pProjectTreeCtrl) return MO_DIRECTOR_STATUS_ERROR;
+  ///actualiza el nombre del proyecto
+  /**if (p_ProjectDescriptor.IsValid())*/
 
-	m_pDataNotebook->m_pProjectTreeCtrl->DeleteAllItems();
-	m_pDataNotebook->m_pIODevicesTreeCtrl->DeleteAllItems();
-	m_pDataNotebook->m_pResourcesTreeCtrl->DeleteAllItems();
+  wxString ProjectName = wxString( moText2Wx( p_ProjectDescriptor.GetConfigName() ) );
+  FrameManager.GetPane( wxT("explorer")).Caption(wxT("Explorer : ") + ProjectName );
 
-	cPath =wxString(p_ProjectDescriptor.GetConfigPath(), wxConvUTF8);
-	cMol =wxString( p_ProjectDescriptor.GetConfigName(), wxConvUTF8);
+  if (m_pExplorerNotebook) {
+    status = CHECK_DIRECTOR_STATUS_ERROR( status, m_pExplorerNotebook->ProjectUpdated( p_ProjectDescriptor ) );
+  }
 
-	if(m_pDataNotebook->m_pVirtualDirTreeCtrl)
-		m_pDataNotebook->m_pVirtualDirTreeCtrl->SetRootPath( cPath, wxVDTC_DEFAULT);
+  if ( m_pLayersPanelCtrl ) {
+    status = CHECK_DIRECTOR_STATUS_ERROR( status, m_pLayersPanelCtrl->ProjectUpdated( p_ProjectDescriptor ) );
+  }
 
-	FrameManager.GetPane(wxT("manager")).Caption(wxT("Project manager: ")+cMol);
+  if (status==MO_DIRECTOR_STATUS_OK)
+    SetTitle(wxString(ProjectName) + wxString(_(" - Moldeo Director ")) + moText2Wx(moGetVersionStr()) );
 
-    wxTreeItemId preeffectsid,
-    effectsid,
-    posteffectsid,
-    mastereffectsid,
-    iodevicesid,
-    resourcesid,
-    consoleid;
 
-	wxTreeItemId root = m_pDataNotebook->m_pProjectTreeCtrl->AddRoot(wxString(moText("Layer effects: ") + p_ProjectDescriptor.GetConfigName(), wxConvUTF8) );
+  FrameManager.Update();
 
-	iodevicesid = m_pDataNotebook->m_pIODevicesTreeCtrl->AddRoot(wxString(moText("IODevices: ") + p_ProjectDescriptor.GetConfigName(), wxConvUTF8));
+  ///no existe mais... ya lo rehabilitaremos
+	///m_pConnectionsWindow->ProjectUpdated( p_ProjectDescriptor );
 
-	resourcesid = m_pDataNotebook->m_pResourcesTreeCtrl->AddRoot(wxString(moText("Resources: ") + p_ProjectDescriptor.GetConfigName(), wxConvUTF8));
+	return status;
 
-	consoleid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("Console"), 0);
-	preeffectsid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("PreEffects"), 0);
-	effectsid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("Effects"), 0);
-	posteffectsid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("PostEffects"), 0);
-	mastereffectsid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem(root, wxT("MasterEffects"), 0);
-
-	//moMoldeoObjects	*pMOBS = p_ProjectDescriptor.m_pMOBS;
-	moMobDescriptors pMobDescriptors = GetMobDescriptors();
-
-	moItemLayerWindow* pobject = NULL;
-	moEffectLayerTimelineCtrl* pobject2 = NULL;
-
-	if (m_pLayers) {
-		m_pLayers->DeleteAllItems();
-
-		m_preeffectsid = m_pLayers->AddRoot( wxT("0"), wxT("pre-effects"), NULL );
-		m_effectsid = m_pLayers->AddRoot( wxT("1"), wxT("effects"), NULL );
-		m_posteffectsid = m_pLayers->AddRoot( wxT("2"), wxT("post-effects"), NULL );
-	}
-
-	if (m_pLayers2) {
-		m_pLayers2->DeleteAllItems();
-
-		m_preeffectsid2 = m_pLayers2->AddRoot( wxT("timeline"), wxT("pre-effects"),  NULL );
-		m_effectsid2 = m_pLayers2->AddRoot( wxT("timeline"), wxT("effects"), NULL );
-		m_posteffectsid2 = m_pLayers2->AddRoot( wxT("timeline"), wxT("post-effects"),  NULL );
-	}
-
-	//intento de borrar unicamente los layers correspondientes...al final resolvimos borrar todo...mejor..
-	//esto lo usaremos para actualizar lo que querramos de cada layer
-	//TreeMultiItemNode *preeffectslayers = (TreeMultiItemNode *)m_preeffectsid.GetItem();
-	//if (preeffectslayers)
-		//preeffectslayers->
-
-    wxTreeMultiWindowInfo wndinfo( wxTMC_SPAN_WIDTH, 0, 0, false);
-    wndinfo.SetTopSpacing(0);
-    wndinfo.SetFrontSpacing(0);
-    wndinfo.Indent(0);
-    //m_pLayers->SetCheckboxView();
-
-    if (m_pLayers) m_pLayers->SetSpacingY(0);
-    if (m_pLayers2) m_pLayers2->SetSpacingY(0);
-
-	for( i=0;  i < pMobDescriptors.Count(); i++) {
-	    moMobDescriptor pMobDescriptor = pMobDescriptors[i];
-		xitemname = wxString(pMobDescriptor.GetMobDefinition().GetName(), wxConvUTF8) + wxT("::");
-		xitemname+= wxString(pMobDescriptor.GetMobDefinition().GetConfigName(), wxConvUTF8);
-
-		switch( pMobDescriptor.GetMobDefinition().GetType() ) {
-
-		    case MO_OBJECT_CONSOLE:
-                exid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem( consoleid, xitemname , 1 );
-                if (exid.IsOk()) m_pDataNotebook->m_pProjectTreeCtrl->SetItemData( exid, new moMobItemData( pMobDescriptor ));
-                break;
-
-			case MO_OBJECT_PREEFFECT:
-				exid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem( preeffectsid, xitemname , 1 );
-				if (exid.IsOk()) m_pDataNotebook->m_pProjectTreeCtrl->SetItemData( exid, new moMobItemData( pMobDescriptor ));
-				pobject = new moItemLayerWindow( m_pLayers , wxID_ANY, wxPoint(0,0), wxSize(m_pLayersPanelCtrl->GetSize().GetWidth(),40) );
-				//pobject2 = new moEffectLayerTimelineCtrl(m_pLayers2);
-				if (pobject) {
-				    pobject->SetNextActionHandler(this);
-					pobject->Set( pMobDescriptor );
-				    //pobject2->SetNextActionHandler(this);
-					//pobject2->Set( pMobDescriptor );
-					m_pLayers->AppendWindow( m_preeffectsid, pobject, _(""), wndinfo);
-					//m_pLayers2->AppendWindow( m_preeffectsid2, pobject2, _(""), wndinfo);
-				}
-				break;
-
-			case MO_OBJECT_EFFECT:
-				//tree
-				exid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem( effectsid, xitemname , 1);
-				if (exid.IsOk()) m_pDataNotebook->m_pProjectTreeCtrl->SetItemData( exid, new moMobItemData( pMobDescriptor ));
-
-				//timelinetree
-				pobject = new moItemLayerWindow( m_pLayers , wxID_ANY, wxPoint(0,0), wxSize(m_pLayersPanelCtrl->GetSize().GetWidth(),40) );
-				//pobject2 = new moEffectLayerTimelineCtrl(m_pLayers2);
-				if (pobject) {
-				    pobject->SetNextActionHandler(this);
-					pobject->Set( pMobDescriptor );
-				    //pobject2->SetNextActionHandler(this);
-					//pobject2->Set( pMobDescriptor );
-					//tree
-					m_pLayers->AppendWindow( m_effectsid, pobject, _(""), wndinfo);
-					//and timeline
-					//m_pLayers2->AppendWindow( m_effectsid2, pobject2, _(""), wndinfo);
-				}
-				break;
-			case MO_OBJECT_POSTEFFECT:
-				exid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem( posteffectsid, xitemname , 1);
-				if (exid.IsOk()) m_pDataNotebook->m_pProjectTreeCtrl->SetItemData( exid, new moMobItemData( pMobDescriptor ));
-				pobject = new moItemLayerWindow( m_pLayers , wxID_ANY, wxPoint(0,0), wxSize(m_pLayersPanelCtrl->GetSize().GetWidth(),40) );
-				//pobject2 = new moEffectLayerTimelineCtrl(m_pLayers2);
-				if (pobject) {
-				    pobject->SetNextActionHandler(this);
-					pobject->Set( pMobDescriptor );
-				    //pobject2->SetNextActionHandler(this);
-					//pobject2->Set( pMobDescriptor );
-					m_pLayers->AppendWindow( m_posteffectsid, pobject, _(""), wndinfo);
-					//m_pLayers2->AppendWindow( m_posteffectsid2, pobject2, _(""), wndinfo);
-				}
-				break;
-			case MO_OBJECT_MASTEREFFECT:
-				exid = m_pDataNotebook->m_pProjectTreeCtrl->AppendItem( mastereffectsid, xitemname , 1);
-				if (exid.IsOk()) m_pDataNotebook->m_pProjectTreeCtrl->SetItemData( exid, new moMobItemData( pMobDescriptor ));
-				break;
-			case MO_OBJECT_IODEVICE:
-				exid = m_pDataNotebook->m_pIODevicesTreeCtrl->AppendItem( iodevicesid, xitemname , 1);
-				if (exid.IsOk()) m_pDataNotebook->m_pIODevicesTreeCtrl->SetItemData( exid, new moMobItemData( pMobDescriptor ));
-				break;
-			case MO_OBJECT_RESOURCE:
-				exid = m_pDataNotebook->m_pResourcesTreeCtrl->AppendItem( resourcesid, xitemname , 1);
-				if (exid.IsOk()) m_pDataNotebook->m_pResourcesTreeCtrl->SetItemData( exid, new moMobItemData( pMobDescriptor ));
-				break;
-
-			default:
-				exid.Unset();
-				break;
-		}
-
-	}
-
-	m_pDataNotebook->m_pProjectTreeCtrl->Expand(root);
-	m_pDataNotebook->m_pIODevicesTreeCtrl->Expand(iodevicesid);
-	m_pDataNotebook->m_pResourcesTreeCtrl->Expand(resourcesid);
-
-	FrameManager.Update();
-
-	//m_pConnectionsWindow->ProjectUpdated( p_ProjectDescriptor );
-
-	return MO_DIRECTOR_STATUS_OK;
 }
 
 
 moDirectorStatus
 moDirectorFrame::ParameterUpdated( moParameterDescriptor p_ParameterDesc ) {
 
-	moDirectorChildFrame* pChild;
+    moDirectorStatus Dstatus = MO_DIRECTOR_STATUS_OK;
+
+    moDirectorChildFrame* pChild;
 
     moMobDescriptor MobDesc = p_ParameterDesc.GetMobDescriptor();
 
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-            if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-                pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-                if (pChild) {
-                    if( pChild->IsMob( MobDesc ) ) {
-                        return pChild->ParameterUpdated( p_ParameterDesc );
-                    }
-                }
-            }
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+          pChild =dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+          if (pChild) {
+              if( pChild->IsMob( MobDesc ) ) {
+                  Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, pChild->ParameterUpdated( p_ParameterDesc ) );
+              }
+          }
+      }
     }
 
-    return MO_DIRECTOR_STATUS_MOB_NOT_FOUND;
+    if (m_pLayersPanelCtrl) Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, m_pLayersPanelCtrl->ParameterUpdated( p_ParameterDesc )  );
+
+    return Dstatus;
 
 }
 
@@ -1510,21 +1596,20 @@ moDirectorFrame::ParameterUpdated( moParameterDescriptor p_ParameterDesc ) {
 moDirectorStatus
 moDirectorFrame::EditParameter( moParameterDescriptor p_ParameterDesc ) {
 
-	moDirectorChildFrame* pChild;
+    moDirectorChildFrame* pChild = NULL;
 
     moMobDescriptor MobDesc = p_ParameterDesc.GetMobDescriptor();
 
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-			if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-                pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-                if (pChild) {
-                    if( pChild->IsMob( MobDesc ) ) {
-                        return pChild->EditParameter( p_ParameterDesc );
-                    }
-                }
-			}
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+        pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+        if (pChild) {
+            if( pChild->IsMob( MobDesc ) ) {
+                return pChild->EditParameter( p_ParameterDesc );
+            }
+        }
+      }
     }
-
     return MO_DIRECTOR_STATUS_MOB_NOT_FOUND;
 
 }
@@ -1532,20 +1617,20 @@ moDirectorFrame::EditParameter( moParameterDescriptor p_ParameterDesc ) {
 moDirectorStatus
 moDirectorFrame::EditValue( moValueDescriptor p_ValueDesc ) {
 
-	moDirectorChildFrame* pChild;
+    moDirectorChildFrame* pChild;
 
     moParameterDescriptor ParamDesc = p_ValueDesc.GetParamDescriptor();
     moMobDescriptor MobDesc = ParamDesc.GetMobDescriptor();
 
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-        if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-			pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-			if (pChild) {
-                if( pChild->IsMob( MobDesc ) ) {
-                    return pChild->EditValue( p_ValueDesc );
-                }
-			}
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+        pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+        if (pChild) {
+            if( pChild->IsMob( MobDesc ) ) {
+                return pChild->EditValue( p_ValueDesc );
+            }
         }
+      }
     }
 
     return MO_DIRECTOR_STATUS_MOB_NOT_FOUND;
@@ -1557,63 +1642,68 @@ moDirectorFrame::ValueUpdated( moValueDescriptor p_ValueDesc ) {
 
     moDirectorStatus Dstatus = MO_DIRECTOR_STATUS_OK;
 
-	moDirectorChildFrame* pChild;
+    moDirectorChildFrame* pChild;
 
     moParameterDescriptor ParamDesc = p_ValueDesc.GetParamDescriptor();
     moMobDescriptor MobDesc = ParamDesc.GetMobDescriptor();
 
-    for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-        if (m_pFilesBook->GetPage(i)->GetName()==_T("child frame") ) {
-			pChild =(moDirectorChildFrame*)m_pFilesBook->GetPage(i);
-			if (pChild) {
-                if( pChild->IsMob( MobDesc ) ) {
-                    Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, pChild->ValueUpdated( p_ValueDesc ));
-                }
-			}
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+        pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+        if (pChild) {
+            if( pChild->IsMob( MobDesc ) ) {
+                Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, pChild->ValueUpdated( p_ValueDesc ));
+            }
         }
+      }
     }
 
-    //aca tenemos que actualizar tambien a los controles
-    //dentro de los effect-layer-control
-
-    //hay que hacerlo bien, a través del LayerControlPanel
-    if (m_pLayers) Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, m_pLayers->ValueUpdated( p_ValueDesc ) );
-    if (m_pLayers2) Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, m_pLayers2->ValueUpdated( p_ValueDesc ) );
+    /// acá tenemos que actualizar tambien a los controles
+    /// dentro de los effect-layer-control
+    if (m_pLayersPanelCtrl) Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, m_pLayersPanelCtrl->ValueUpdated( p_ValueDesc ) );
 
     return Dstatus;
 }
 
+moDirectorStatus
+moDirectorFrame::MobUpdated( moMobDescriptor p_MobDesc ) {
+
+    moDirectorStatus Dstatus = MO_DIRECTOR_STATUS_OK;
+
+    moDirectorChildFrame* pChild;
+
+    if (m_pFilesBook) {
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+        pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+        if (pChild) {
+            if( pChild->IsMob( p_MobDesc ) ) {
+                Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, pChild->MobUpdated( p_MobDesc ));
+            }
+        }
+      }
+    }
+
+    if (m_pLayersPanelCtrl) Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, m_pLayersPanelCtrl->MobUpdated( p_MobDesc ) );
+
+    return Dstatus;
+}
+
+
 void
 moDirectorFrame::Log( moText p_message ) {
 
-	wxString  w =wxString(p_message, wxConvUTF8);
-
-    if (m_pDataNotebook->m_pLogTextCtrl->GetNumberOfLines()>10000) {
-        m_pDataNotebook->m_pLogTextCtrl->Clear();
-    }
-
-	m_pDataNotebook->m_pLogTextCtrl->SetDefaultStyle( wxTextAttr( wxColour( 50, 255, 50 )) );
-	m_pDataNotebook->m_pLogTextCtrl->AppendText(w + wxT("\n"));
-
-	m_pDataNotebook->m_pLogTextCtrl->ShowPosition(m_pDataNotebook->m_pLogTextCtrl->GetLastPosition());
+	if (m_pLogBook) {
+    m_pLogBook->Log( p_message );
+	}
 
 }
 
 void
 moDirectorFrame::LogError( moText p_message ) {
-	//seria bueno en rojo...
 
-	wxString  w =wxString(p_message, wxConvUTF8);
-
-    if (m_pDataNotebook->m_pLogTextCtrl->GetNumberOfLines()>10000) {
-        m_pDataNotebook->m_pLogTextCtrl->Clear();
-    }
-
-	m_pDataNotebook->m_pLogTextCtrl->SetDefaultStyle( wxTextAttr( wxColour(255,0,0) ) );
-	m_pDataNotebook->m_pLogTextCtrl->AppendText(w + wxT("\n"));
-
-    m_pDataNotebook->m_pLogTextCtrl->ShowPosition(m_pDataNotebook->m_pLogTextCtrl->GetLastPosition());
-	//wxMessageBox(w);
+	if (m_pLogBook) {
+    m_pLogBook->LogError( p_message );
+	}
 
 }
 /*
@@ -1630,16 +1720,34 @@ void moDirectorFrame::OnEditPreferences(wxCommandEvent& event) {
     wxMessageBox(wxT("On Edit Preferences - Functionality to be implemented"),wxT("Moldeo Director"));
 }
 
+
+void moDirectorFrame::OnExample( wxCommandEvent& event ) {
+	moProjectDescriptor ProjectDescriptor;
+	moDirectorStatus	mStatus;
+
+
+  //ShowMessage( IntToStr(  event.GetId() ) );
+  int id_file = event.GetId() - MODIRECTOR_EXAMPLE_START;
+  moFile* pFile = m_SampleProjects.Get(id_file);
+
+  if (pFile) {
+    if ( this->CloseProject() == MO_DIRECTOR_STATUS_OK ) {
+      ProjectDescriptor.Set( pFile->GetPath(), pFile->GetFullName() );
+      mStatus = OpenProject( ProjectDescriptor );
+    }
+  }
+}
+
+
 void moDirectorFrame::OnExampleSimple(wxCommandEvent& event) {
 	moProjectDescriptor ProjectDescriptor;
 	moDirectorStatus	mStatus;
 
-	wxString text = _(DATADIR "/test/test.mol");
-
-	wxMessageBox(text);
-    ProjectDescriptor.Set( moText(DATADIR "/test/"), moText("test.mol") );
-    mStatus = OpenProject( ProjectDescriptor );
-    SetTitle(wxT("test.mol - Moldeo Director"));
+  wxString text = _("../../data/samples/simple_project/simple_project.mol");
+  wxMessageBox(text);
+  ProjectDescriptor.Set( moText("../../data/samples/simple_project/"), moText("simple_project.mol") );
+  mStatus = OpenProject( ProjectDescriptor );
+  SetTitle(wxT("simple_project.mol - Moldeo Director"));
 
 }
 
@@ -1647,11 +1755,11 @@ void moDirectorFrame::OnExampleCamera(wxCommandEvent& event) {
 	moProjectDescriptor ProjectDescriptor;
 	moDirectorStatus	mStatus;
 
-	wxString text = _(DATADIR "/test/camaras.mol");
+	wxString text = _("../../data/samples/cameras/cameras.mol");
 	wxMessageBox(text);
-    ProjectDescriptor.Set( moText(DATADIR "/test/"), moText("camaras.mol") );
-    mStatus = OpenProject( ProjectDescriptor );
-    SetTitle(wxT("camaras.mol - Moldeo Director"));
+  ProjectDescriptor.Set( moText("../../data/samples/cameras/"), moText("cameras.mol") );
+  mStatus = OpenProject( ProjectDescriptor );
+  SetTitle(wxT("cameras.mol - Moldeo Director"));
 
 }
 
@@ -1659,11 +1767,11 @@ void moDirectorFrame::OnExampleInteractiveCamera(wxCommandEvent& event) {
 	moProjectDescriptor ProjectDescriptor;
 	moDirectorStatus	mStatus;
 
-	wxString text = _(DATADIR "/test/camarasinteractivas.mol");
+	wxString text = _("../../data/test/camarasinteractivas.mol");
 	wxMessageBox(text);
-    ProjectDescriptor.Set( moText(DATADIR "/test/"), moText("camarasinteractivas.mol") );
-    mStatus = OpenProject( ProjectDescriptor );
-    SetTitle(wxT("camarasinteractivas.mol - Moldeo Director"));
+  ProjectDescriptor.Set( moText("../../data/test/"), moText("camarasinteractivas.mol") );
+  mStatus = OpenProject( ProjectDescriptor );
+  SetTitle(wxT("camarasinteractivas.mol - Moldeo Director"));
 
 }
 
@@ -1671,9 +1779,9 @@ void moDirectorFrame::OnExampleInteractiveCameraGPU(wxCommandEvent& event) {
 	moProjectDescriptor ProjectDescriptor;
 	moDirectorStatus	mStatus;
 
-	wxString text = _(DATADIR "/test/camarasinteractivasgpu.mol");
+	wxString text = _("../../data/test/camarasinteractivasgpu.mol");
 	wxMessageBox(text);
-    ProjectDescriptor.Set( moText(DATADIR "/test/"), moText("camarasinteractivasgpu.mol") );
+    ProjectDescriptor.Set( moText("../../data/test/"), moText("camarasinteractivasgpu.mol") );
     mStatus = OpenProject( ProjectDescriptor );
     SetTitle(wxT("camarasinteractivasgpu.mol - Moldeo Director"));
 
@@ -1683,11 +1791,23 @@ void moDirectorFrame::OnExampleInteractiveCameraGPUKLT2(wxCommandEvent& event) {
 	moProjectDescriptor ProjectDescriptor;
 	moDirectorStatus	mStatus;
 
-	wxString text = _(DATADIR "/test/camarasinteractivasgpuklt2.mol");
+	wxString text = _("../../data/test/camarasinteractivasgpuklt2.mol");
 	wxMessageBox(text);
-    ProjectDescriptor.Set( moText(DATADIR "/test/"), moText("camarasinteractivasgpuklt2.mol") );
+    ProjectDescriptor.Set( moText("../../data/test/"), moText("camarasinteractivasgpuklt2.mol") );
     mStatus = OpenProject( ProjectDescriptor );
     SetTitle(wxT("camarasinteractivasgpuklt2.mol - Moldeo Director"));
+
+}
+
+void moDirectorFrame::OnExampleVideoBuffer(wxCommandEvent& event) {
+	moProjectDescriptor ProjectDescriptor;
+	moDirectorStatus	mStatus;
+
+	wxString text = _("../../data/samples/video_buffers/video_buffers.mol");
+	wxMessageBox(text);
+    ProjectDescriptor.Set( moText("../../data/samples/video_buffers/"), moText("video_buffers.mol") );
+    mStatus = OpenProject( ProjectDescriptor );
+    SetTitle(wxT("video_buffers.mol - Moldeo Director"));
 
 }
 
@@ -1695,11 +1815,48 @@ void moDirectorFrame::OnExampleCameraCircularBuffer(wxCommandEvent& event) {
 	moProjectDescriptor ProjectDescriptor;
 	moDirectorStatus	mStatus;
 
-	wxString text = _(DATADIR "/test/camarascircular.mol");
+	wxString text = _("../../data/samples/cameras_circular/cameras_circular.mol");
 	wxMessageBox(text);
-    ProjectDescriptor.Set( moText(DATADIR "/test/"), moText("camarascircular.mol") );
+    ProjectDescriptor.Set( moText("../../data/samples/cameras_circular/"), moText("cameras_circular.mol") );
     mStatus = OpenProject( ProjectDescriptor );
-    SetTitle(wxT("camarascircular.mol - Moldeo Director"));
+    SetTitle(wxT("cameras_circular.mol - Moldeo Director"));
 
 }
+
+void moDirectorFrame::OnExampleParticles(wxCommandEvent& event) {
+	moProjectDescriptor ProjectDescriptor;
+	moDirectorStatus	mStatus;
+
+	wxString text = _T(MOLDEODATADIR "/samples/particles_simple/particles_simple.mol");
+	wxMessageBox(text);
+    ProjectDescriptor.Set( moText(MOLDEODATADIR "/samples/particles_simple/"), moText("particles_simple.mol") );
+    mStatus = OpenProject( ProjectDescriptor );
+    SetTitle(wxT("particles_simple.mol - Moldeo Director"));
+
+}
+
+void moDirectorFrame::OnExampleParticlesBounce(wxCommandEvent& event) {
+	moProjectDescriptor ProjectDescriptor;
+	moDirectorStatus	mStatus;
+
+	wxString text = _("../../data/samples/particles_bounce/particles_bounce.mol");
+	wxMessageBox(text);
+    ProjectDescriptor.Set( moText("../../data/samples/particles_bounce/"), moText("particles_bounce.mol") );
+    mStatus = OpenProject( ProjectDescriptor );
+    SetTitle(wxT("particles_bounce.mol - Moldeo Director"));
+
+}
+
+void moDirectorFrame::OnExampleParticlesInteractive(wxCommandEvent& event) {
+	moProjectDescriptor ProjectDescriptor;
+	moDirectorStatus	mStatus;
+
+	wxString text = _("../../data/samples/particles_interactive/particles_interactive.mol");
+	wxMessageBox(text);
+    ProjectDescriptor.Set( moText("../../data/samples/particles_interactive/"), moText("particles_interactive.mol") );
+    mStatus = OpenProject( ProjectDescriptor );
+    SetTitle(wxT("particles_interactive.mol - Moldeo Director"));
+
+}
+
 

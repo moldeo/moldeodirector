@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moConnectionsWindow">
+		<size>503,317</size>
+		<bg>#D2FDFF</bg>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<handler function="OnPaint" entry="EVT_PAINT" />
+		<handler function="OnEraseBackground" entry="EVT_ERASE_BACKGROUND" />
+	</object>
+</wxsmith>

@@ -88,16 +88,16 @@ public:
 	moDirectorStatus Seek( MOulong p_timecode );
 	moDirectorStatus SaveSession();
 
-	moDirectorStatus NewProject( moProjectDescriptor p_projectdescriptor );
-	moDirectorStatus OpenProject( moProjectDescriptor p_projectdescriptor );
+	moDirectorStatus NewProject( const moProjectDescriptor& p_ProjectDes );
+	moDirectorStatus OpenProject( const moProjectDescriptor& p_ProjectDes );
 	moDirectorStatus CloseProject();
 	moDirectorStatus SaveProject();
 	moDirectorStatus SaveAsProject( moText p_configname, moText p_configpath );
 
-	moDirectorStatus SetProject( moProjectDescriptor p_projectdescriptor );
-	moProjectDescriptor GetProject();
+	moDirectorStatus SetProject( const moProjectDescriptor& p_ProjectDes );
+	const moProjectDescriptor& GetProject();
 	moDirectorStatus ReloadProject();
-	moMobDescriptors GetMobDescriptors();
+	virtual moMobDescriptors GetMobDescriptors();
 
 //================================================================
 //Resource
@@ -119,12 +119,10 @@ public:
 	moDirectorStatus EditMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus SaveMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus DeleteMob( moMobDescriptor p_MobDesc );
+	moDirectorStatus MoveMob( moMobDescriptor p_MobDesc, int position );
+	moDirectorStatus DuplicateMob( moMobDescriptor p_MobDesc );
 	moMobDescriptor GetMob( moMobDescriptor p_MobDesc );
-	moDirectorStatus SetMob( moMobDescriptor p_MobDesc );
-
-	moDirectorStatus AddMobToProject( moMobDescriptor p_MobDesc );
-	moDirectorStatus RemoveMobToProject( moMobDescriptor p_MobDesc );
-	moDirectorStatus MoveMobInProject( moMobDescriptor p_MobDesc );
+	virtual moDirectorStatus SetMob( moMobDescriptor p_MobDesc );
 
     moParameterDescriptors  GetParameterDescriptors( moMobDescriptor p_MobDesc);
 
@@ -147,6 +145,7 @@ public:
 protected:
 	MOulong GetTicks();
 	void GLSwapBuffers();
+	void GUIYield();
 
     bool previewreset;
     bool previewreset2;

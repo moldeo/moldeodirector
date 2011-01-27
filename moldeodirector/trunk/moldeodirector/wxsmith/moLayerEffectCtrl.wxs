@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moLayerEffectCtrl">
+		<pos>0,0</pos>
+		<size>379,44</size>
+		<fg>#FFFFFF</fg>
+		<minsize>-1,-1</minsize>
+		<maxsize>-1,-1</maxsize>
+		<id_arg>0</id_arg>
+		<style>0</style>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrlLabel" member="yes">
+			<value>Text</value>
+			<pos>0,32</pos>
+			<size>144,12</size>
+			<hidden>1</hidden>
+			<fg>#FFFFFF</fg>
+			<bg>#000000</bg>
+			<font>
+				<size>6</size>
+				<style>normal</style>
+				<weight>bold</weight>
+				<underlined>0</underlined>
+				<family>swiss</family>
+				<face>Terminal</face>
+			</font>
+			<extra_code>TextCtrlLabel-&gt;SetEditable( false );</extra_code>
+			<style>wxNO_BORDER|wxTRANSPARENT_WINDOW</style>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERHUE" subclass="wxMoColourLevelCtrl" variable="SliderHue" member="yes">
+			<pos>176,4</pos>
+			<size>88,8</size>
+			<extra_code>Connect(ID__SLIDERHUE, wxEVT__MOLEVELCTRL, (wxObjectEventFunction)&amp;moLayerEffectCtrl::OnLevelHue );&#x0A;SliderHue-&gt;Init( wxMoColorLevelCtrl::HUE );</extra_code>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERSATURATION" subclass="wxMoColourLevelCtrl" variable="SliderSaturation" member="yes">
+			<pos>176,16</pos>
+			<size>88,8</size>
+			<extra_code>Connect(ID__SLIDERSATURATION, wxEVT__MOLEVELCTRL, (wxObjectEventFunction)&amp;moLayerEffectCtrl::OnLevelSaturation );&#x0A;SliderSaturation-&gt;Init( wxMoColorLevelCtrl::SATURATION );</extra_code>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERALPHA" subclass="wxMoColourLevelCtrl" variable="m_pLevelAlphaCtrl" member="yes">
+			<pos>80,4</pos>
+			<size>88,8</size>
+			<extra_code>Connect(ID__SLIDERALPHA, wxEVT__MOLEVELCTRL, (wxObjectEventFunction)&amp;moLayerEffectCtrl::OnLevelAlpha );&#x0A;m__pLevelAlphaCtrl-&gt;Init( wxMoColorLevelCtrl::ALPHA );</extra_code>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERTINT" subclass="wxMoColourLevelCtrl" variable="m_pLevelTintCtrl" member="yes">
+			<pos>80,16</pos>
+			<size>88,8</size>
+			<extra_code>Connect(ID__SLIDERTINT, wxEVT__MOLEVELCTRL, (wxObjectEventFunction)&amp;moLayerEffectCtrl::OnLevelTint );&#x0A;m__pLevelTintCtrl-&gt;Init( wxMoColorLevelCtrl::VALUE );</extra_code>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERTEMPO" subclass="wxMoRotaryCtrl" variable="m_pLevelSpeedCtrl" member="yes">
+			<pos>280,0</pos>
+			<size>24,24</size>
+			<bg>#000000</bg>
+			<extra_code>Connect(ID__SLIDERTEMPO,wxEVT__MOROTARYCTRL, (wxObjectEventFunction)&amp;moLayerEffectCtrl::OnLevelSpeed );</extra_code>
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOXONOFF" variable="CheckBoxOnOff" member="yes">
+			<pos>336,0</pos>
+			<size>16,21</size>
+			<hidden>1</hidden>
+			<handler function="OnCheckBoxOnOffClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTONVIEW" variable="BitmapButtonView" member="yes">
+			<bitmap>..\..\art\icons\view_16.png</bitmap>
+			<pos>0,2</pos>
+			<size>24,24</size>
+			<bg>#000000</bg>
+			<tooltip>on/off</tooltip>
+			<style>wxNO_BORDER</style>
+			<handler function="OnBitmapButtonVisibilityClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxPanel" name="ID_COLOURPANELFINAL" subclass="wxMoColourPanel" variable="ColourPanelFinal" member="yes">
+			<pos>28,2</pos>
+			<size>24,24</size>
+		</object>
+		<object class="wxPanel" name="ID_COLOURPANEL" subclass="wxMoColourPanel" variable="ColourPanel" member="yes">
+			<pos>56,2</pos>
+			<size>24,24</size>
+		</object>
+	</object>
+</wxsmith>

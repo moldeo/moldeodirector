@@ -2,28 +2,17 @@
 
 //(*InternalHeaders(moPanelTexture)
 #include <wx/bitmap.h>
+#include <wx/settings.h>
 #include <wx/intl.h>
 #include <wx/image.h>
 #include <wx/string.h>
 //*)
 
 //(*IdInit(moPanelTexture)
-const long moPanelTexture::ID_STATICBOX1 = wxNewId();
-const long moPanelTexture::ID_PANELFILTER = wxNewId();
-const long moPanelTexture::ID_STATICTEXT6 = wxNewId();
-const long moPanelTexture::ID_STATICTEXT7 = wxNewId();
-const long moPanelTexture::ID_STATICTEXT1 = wxNewId();
 const long moPanelTexture::ID_TEXTCTRLMEDIA = wxNewId();
 const long moPanelTexture::ID_BUTTONIMPORT = wxNewId();
-const long moPanelTexture::ID_STATICTEXT3 = wxNewId();
-const long moPanelTexture::ID_PANEL4 = wxNewId();
-const long moPanelTexture::ID_STATICBITMAPTHUMB = wxNewId();
-const long moPanelTexture::ID_PANELPreview = wxNewId();
-const long moPanelTexture::ID_STATICTEXT2 = wxNewId();
-const long moPanelTexture::ID_STATICTEXTSIZE = wxNewId();
-const long moPanelTexture::ID_BITMAPBUTTON1 = wxNewId();
-const long moPanelTexture::ID_PANEL5 = wxNewId();
-const long moPanelTexture::ID_TREECTRL1 = wxNewId();
+const long moPanelTexture::ID_IMPORTPANEL = wxNewId();
+const long moPanelTexture::ID_IMAGEPANEL = wxNewId();
 //*)
 const long moPanelTexture::ID_SHADERCTRL = wxNewId();
 const long moPanelTexture::ID_TEXTURESTREECTRL = wxNewId();
@@ -38,67 +27,74 @@ END_EVENT_TABLE()
 moPanelTexture::moPanelTexture(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
 	//(*Initialize(moPanelTexture)
-	wxFlexGridSizer* FlexGridSizer2;
 	wxFlexGridSizer* FlexGridSizer1;
-	
-	Create(parent, wxID_ANY, wxDefaultPosition, wxSize(402,285), wxTAB_TRAVERSAL|wxCLIP_CHILDREN, _T("wxID_ANY"));
+
+	Create(parent, wxID_ANY, wxDefaultPosition, wxSize(378,224), wxTAB_TRAVERSAL|wxCLIP_CHILDREN, _T("wxID_ANY"));
 	SetBackgroundColour(wxColour(0,0,0));
-	FlexGridSizer1 = new wxFlexGridSizer(2, 1, 0, 0);
+	FlexGridSizer1 = new wxFlexGridSizer(3, 1, 1, 1);
 	FlexGridSizer1->AddGrowableCol(0);
 	FlexGridSizer1->AddGrowableRow(1);
-	Panel4 = new wxPanel(this, ID_PANEL4, wxPoint(120,8), wxSize(264,80), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
-	Panel4->SetBackgroundColour(wxColour(0,0,0));
-	StaticBox1 = new wxStaticBox(Panel4, ID_STATICBOX1, _("Description"), wxPoint(8,16), wxSize(352,104), 0, _T("ID_STATICBOX1"));
-	StaticBox1->SetForegroundColour(wxColour(255,255,255));
-	PanelFilter = new wxPanel(Panel4, ID_PANELFILTER, wxPoint(48,48), wxSize(296,24), wxTAB_TRAVERSAL, _T("ID_PANELFILTER"));
-	StaticText2 = new wxStaticText(Panel4, ID_STATICTEXT6, _("Level of filter %"), wxPoint(152,24), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
-	StaticText2->SetForegroundColour(wxColour(255,255,255));
-	StaticText3 = new wxStaticText(Panel4, ID_STATICTEXT7, _("Filter"), wxPoint(16,56), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
-	StaticText3->SetForegroundColour(wxColour(255,255,255));
-	StaticText1 = new wxStaticText(Panel4, ID_STATICTEXT1, _("File"), wxPoint(16,88), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-	StaticText1->SetForegroundColour(wxColour(255,255,255));
-	TextCtrlMedia = new wxTextCtrl(Panel4, ID_TEXTCTRLMEDIA, wxEmptyString, wxPoint(48,88), wxSize(232,21), 0, wxDefaultValidator, _T("ID_TEXTCTRLMEDIA"));
-	ButtonImport = new wxButton(Panel4, ID_BUTTONIMPORT, _("Import"), wxPoint(288,88), wxSize(56,23), wxSIMPLE_BORDER|wxNO_BORDER, wxDefaultValidator, _T("ID_BUTTONIMPORT"));
+	FlexGridSizer1->AddGrowableRow(2);
+	ImportPanel = new wxPanel(this, ID_IMPORTPANEL, wxPoint(120,8), wxSize(264,80), wxTAB_TRAVERSAL, _T("ID_IMPORTPANEL"));
+	ImportPanel->SetBackgroundColour(wxColour(0,0,0));
+	TextCtrlMedia = new wxTextCtrl(ImportPanel, ID_TEXTCTRLMEDIA, wxEmptyString, wxPoint(66,0), wxSize(176,21), 0, wxDefaultValidator, _T("ID_TEXTCTRLMEDIA"));
+	ButtonImport = new wxButton(ImportPanel, ID_BUTTONIMPORT, _("Import"), wxPoint(2,0), wxSize(56,23), wxSIMPLE_BORDER|wxNO_BORDER, wxDefaultValidator, _T("ID_BUTTONIMPORT"));
 	ButtonImport->SetForegroundColour(wxColour(255,255,255));
 	ButtonImport->SetBackgroundColour(wxColour(0,0,0));
-	StaticTextFiltered = new wxStaticText(Panel4, ID_STATICTEXT3, _("Destination texture"), wxPoint(248,24), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-	StaticTextFiltered->SetForegroundColour(wxColour(255,255,255));
-	FlexGridSizer1->Add(Panel4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	FlexGridSizer2 = new wxFlexGridSizer(1, 2, 0, 0);
-	FlexGridSizer2->AddGrowableCol(1);
-	FlexGridSizer2->AddGrowableRow(0);
-	Panel5 = new wxPanel(this, ID_PANEL5, wxPoint(16,144), wxSize(180,208), wxTAB_TRAVERSAL, _T("ID_PANEL5"));
-	Panel5->SetBackgroundColour(wxColour(0,0,0));
-	PanelPreview = new wxPanel(Panel5, ID_PANELPreview, wxPoint(0,0), wxSize(144,96), wxTAB_TRAVERSAL, _T("ID_PANELPreview"));
-	PanelPreview->SetBackgroundColour(wxColour(0,0,0));
-	StaticBitmapThumbnail = new wxStaticBitmap(PanelPreview, ID_STATICBITMAPTHUMB, wxBitmap(wxImage(_T(DATADIR "/icons/imageempty.png")).Rescale(wxSize(128,80).GetWidth(),wxSize(128,80).GetHeight())), wxPoint(0,0), wxSize(128,80), 0, _T("ID_STATICBITMAPTHUMB"));
-	StaticTextType = new wxStaticText(Panel5, ID_STATICTEXT2, _("Type"), wxPoint(0,104), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-	StaticTextType->SetForegroundColour(wxColour(255,255,255));
-	StaticTextSize = new wxStaticText(Panel5, ID_STATICTEXTSIZE, _("Size"), wxPoint(0,128), wxDefaultSize, 0, _T("ID_STATICTEXTSIZE"));
-	StaticTextSize->SetForegroundColour(wxColour(255,255,255));
-	BitmapButton1 = new wxBitmapButton(Panel5, ID_BITMAPBUTTON1, wxNullBitmap, wxPoint(104,176), wxSize(40,23), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
-	FlexGridSizer2->Add(Panel5, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	TreeCtrlImages = new wxTreeCtrl(this, ID_TREECTRL1, wxDefaultPosition, wxSize(224,208), wxTR_DEFAULT_STYLE, wxDefaultValidator, _T("ID_TREECTRL1"));
-	TreeCtrlImages->SetBackgroundColour(wxColour(255,255,255));
-	FlexGridSizer2->Add(TreeCtrlImages, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	FlexGridSizer1->Add(FlexGridSizer2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
+	FlexGridSizer1->Add(ImportPanel, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+	ImagePanel = new wxMoColourPanel(this, ID_IMAGEPANEL, wxDefaultPosition, wxSize(100,50), wxTAB_TRAVERSAL, _T("ID_IMAGEPANEL"));
+	ImagePanel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_APPWORKSPACE));
+	FlexGridSizer1->Add(ImagePanel, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
 	SetSizer(FlexGridSizer1);
 	FlexGridSizer1->SetSizeHints(this);
-	
+
 	Connect(ID_TEXTCTRLMEDIA,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moPanelTexture::OnTextCtrlMediaText);
 	Connect(ID_BUTTONIMPORT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPanelTexture::OnButtonImportClick);
-	Connect(ID_BITMAPBUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPanelTexture::OnBitmapButton1Click);
 	//*)
+
+    m_pTreeMultiCtrl = NULL;
 
     m_pShaderCtrl = NULL;
     //m_pTexturesTreeCtrl = NULL;
 
-    if (PanelFilter) {
-        m_pShaderCtrl = new moShaderCtrl( Panel4, ID_SHADERCTRL, PanelFilter->GetPosition(), PanelFilter->GetSize() );
-        if (m_pShaderCtrl){
-            m_pShaderCtrl->SetNextActionHandler( (moIDirectorActions*) this );
-            PanelFilter->Destroy();
-        }
+
+    ImagePanel->SetColourValue( wxColour(255,255,255,255) );
+
+    wxTreeMultiItem  details_id;
+    wxTreeMultiItem  filters_id;
+    m_pTreeMultiCtrl = new wxTreeMultiCtrl( this, wxID_ANY );
+    m_pTreeMultiCtrl->SetForegroundColour( wxColour( 255, 255, 255) );
+    m_pTreeMultiCtrl->SetBackgroundColour(wxColour(0,0,0));
+
+    FlexGridSizer1->Add( m_pTreeMultiCtrl, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+
+
+    if ( m_pTreeMultiCtrl ) {
+      details_id = m_pTreeMultiCtrl->AddRoot( wxString( "Details" ) );
+      filters_id = m_pTreeMultiCtrl->AddRoot( wxString( "Filters" ) );
+    }
+
+
+    m_pShaderCtrl = new moShaderCtrl( m_pTreeMultiCtrl, ID_SHADERCTRL );
+    m_pTextDetails = new wxStaticText( m_pTreeMultiCtrl, wxID_ANY, "-", wxPoint(0,0), wxSize(300,60), wxBORDER_NONE | wxNO_BORDER );
+
+    if (m_pTextDetails) {
+
+      m_pTextDetails->SetForegroundColour( wxColour( 255, 255, 255) );
+      m_pTextDetails->SetBackgroundColour(wxColour(0,0,0));
+
+      m_pTreeMultiCtrl->AppendWindow( details_id, m_pTextDetails );
+    }
+
+    if (m_pShaderCtrl){
+        m_pShaderCtrl->SetNextActionHandler( (moIDirectorActions*) this );
+    }
+
+    m_pTreeMultiCtrl->AppendWindow( filters_id, m_pShaderCtrl );
+
+    m_pTreeMultiCtrl->Collapse( details_id, true );
+    m_pTreeMultiCtrl->Collapse( filters_id, true );
+
 /*
         if (TreeCtrlImages) {
             m_pTexturesTreeCtrl = new moTexturesTreeCtrl( this, ID_TEXTURESTREECTRL );
@@ -109,9 +105,11 @@ moPanelTexture::moPanelTexture(wxWindow* parent,wxWindowID id,const wxPoint& pos
             FlexGridSizer2->Add(m_pTexturesTreeCtrl, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
         }
         */
-        TextCtrlMedia->Enable(false);
-        m_pShaderCtrl->Enable(false);
-    }
+    //TextCtrlMedia->Enable(false);
+
+
+    m_pShaderCtrl->Enable(false);
+
 
 }
 
@@ -140,6 +138,122 @@ void moPanelTexture::LoadImage() {
 
           moTextureDescriptor pTextDescriptor( tname );
 
+              void* ptr = m_ValueDescriptor.GetValue().GetSubValue(0).Pointer();
+
+              moTexture *pTex = reinterpret_cast<moTexture*>( ptr );
+
+
+              if  (pTex ) {
+
+                Log( pTex->GetName() );
+
+                moText details;
+                moMovie* pMovie = NULL;
+                moVideoBuffer* pVideoBuffer = NULL;
+                moCircularVideoBuffer* pCircularVideoBuffer = NULL;
+                moTextureMultiple* pTextureMultiple = NULL;
+                moTextureBuffer* pTextureBuffer = NULL;
+                moTextureMemory* pTextureMemory = NULL;
+
+
+                details = "Name: " + pTex->GetName();
+
+                details+= "\nWidth: " + IntToStr(pTex->GetWidth());
+                details+= " Height: " + IntToStr(pTex->GetHeight());
+                if (pTex->GetHeight()>0) details+= " Proportion: " + FloatToStr( (float)pTex->GetWidth() / (float)pTex->GetHeight() );
+
+                details+= "\nType: ";
+                switch(pTex->GetType()) {
+                    case MO_TYPE_TEXTURE:
+                      details+= "texture";
+                      break;
+                    case MO_TYPE_TEXTUREBUFFER:
+                      details+= "texture buffer";
+                      pTextureBuffer = reinterpret_cast<moTextureBuffer*>( ptr );
+                      if (pTextureBuffer) {
+                        details+= "\nImages processed: " + IntToStr( pTextureBuffer->GetImagesProcessed() );
+                        details+= " buffer format: " + pTextureBuffer->GetBufferFormat();
+                      }
+                      break;
+                    case MO_TYPE_TEXTUREMEMORY:
+                      details+= "texture memory";
+                      pTextureMemory = reinterpret_cast<moTextureMemory*>( ptr );
+                      break;
+                    case MO_TYPE_TEXTURE_MULTIPLE:
+                      details+= "texture multiple";
+                      pTextureMultiple = reinterpret_cast<moTextureMultiple*>( ptr );
+                      if (pTextureMultiple) {
+                        details+= "\nFrames: " + IntToStr( pTextureMultiple->GetNumberFrames() );
+                      }
+                      break;
+                    case MO_TYPE_CIRCULARVIDEOBUFFER:
+                      details+= "circular video buffer";
+                      pCircularVideoBuffer = reinterpret_cast<moCircularVideoBuffer*>( ptr );
+                      if (pCircularVideoBuffer) {
+                        details+= "\nFrames: " + IntToStr( pCircularVideoBuffer->GetNumberFrames() );
+                      }
+                      break;
+                    case MO_TYPE_VIDEOBUFFER:
+                      details+= "video buffer";
+                      pVideoBuffer = reinterpret_cast<moVideoBuffer*>( ptr );
+                      if (pVideoBuffer) {
+                        details+= "\nFrames: " + IntToStr( pVideoBuffer->GetNumberFrames() );
+                      }
+                      break;
+                    case MO_TYPE_MOVIE:
+                      details+= "movie/video";
+                      pMovie = reinterpret_cast<moMovie*>( ptr );
+                      if (pMovie) {
+                        details+= "\nFrames: " + IntToStr( pMovie->GetNumberFrames() );
+                        details+= " fps: " + IntToStr( pMovie->GetFramesPerSecond() );
+                        details+= "\nDuration: " + FloatToStr( (float)pMovie->GetNumberFrames()*(float)pMovie->GetFramesPerSecond() ) + " s";
+                      }
+                      break;
+                }
+
+                wxString wxdetails;
+                wxdetails = moText2Wx( details );
+
+
+                m_pTextDetails->SetLabel( wxdetails );
+
+                MOuchar *bits;
+
+                bits = new MOuchar[ pTex->GetWidth() * pTex->GetHeight() * 4 ];
+                pTex->GetBuffer( bits );
+
+                wxImage* thumbImg =  new wxImage( pTex->GetWidth(), pTex->GetHeight(), false );
+                if (thumbImg) {
+                  thumbImg->InitAlpha();
+
+                  for(int j=0; j< thumbImg->GetHeight(); j++) {
+                    for(int i=0; i< thumbImg->GetWidth(); i++) {
+                        thumbImg->SetRGB( i, j,
+                                          bits[ (i + j*thumbImg->GetWidth() )*4 ],
+                                          bits[ (i + j*thumbImg->GetWidth() )*4 + 1 ],
+                                          bits[ (i + j*thumbImg->GetWidth() )*4 + 2 ] );
+                        thumbImg->SetAlpha( i, j, bits[ (i + j*thumbImg->GetWidth() )*4 + 3 ] );
+
+                    }
+                  }
+
+
+                  if (thumbImg->IsOk()) {
+                    ImagePanel->SetBitmap( wxBitmap(*thumbImg) );
+
+                  }
+
+                  if (thumbImg)
+                    delete thumbImg;
+
+
+                }
+                if (bits)
+                   delete [] bits;
+              }
+          /*
+
+
           //ask to create thumbnail if necesarry
           pTextDescriptor.CreateThumbnail();
 
@@ -164,16 +278,19 @@ void moPanelTexture::LoadImage() {
                       if (pTextDescriptor.GetType()==MO_TYPE_TEXTURE)
                         NewBitmap = wxBitmap(wxImage( moText2Wx(tname) ).Rescale( 128, 80 ));
                   } else {
-                      NewBitmap = wxBitmap(wxImage(_T(DATADIR "/icons/imageempty.png")).Rescale(128,80) );
+                      NewBitmap = wxBitmap(wxImage(_T("../../art/icons/imageempty.png")).Rescale(128,80) );
                   }
 
                   StaticBitmapThumbnail->SetBitmap( NewBitmap );
+
               }
             }
 
           } else {
             LogError("PanelTexture:: Resource not found ");
           }
+          */
+
         } else {
           LogError("PanelTexture::Empty string");
         }
@@ -191,18 +308,22 @@ moPanelTexture::Inspect( moValueDescriptor p_ValueDescriptor ) {
 
         m_ValueDescriptor = p_ValueDescriptor;
 
-        TextCtrlMedia->ChangeValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(0).Text(), wxConvUTF8));
+        TextCtrlMedia->ChangeValue( moText2Wx(m_ValueDescriptor.GetValue().GetSubValue(0).Text() ) );
 
-        m_pShaderCtrl->Inspect( m_ValueDescriptor );
+        if (m_pShaderCtrl)
+          m_pShaderCtrl->Inspect( m_ValueDescriptor );
 
         TextCtrlMedia->Enable();
-        m_pShaderCtrl->Enable();
+        if (m_pShaderCtrl)
+          m_pShaderCtrl->Enable();
         //m_pTexturesTreeCtrl->UpdateDescriptors();
 
         if (m_ValueDescriptor.GetValue().GetSubValueCount()>=1) {
 
             moTextureDescriptor pTextureDescriptor( m_ValueDescriptor.GetValue().GetSubValue(0).Text() );
             pTextureDescriptor = GetResourceDescriptor( pTextureDescriptor );
+
+            /*
 
             moText texttype = moText("Type ");
 
@@ -212,7 +333,7 @@ moPanelTexture::Inspect( moValueDescriptor p_ValueDescriptor ) {
                         if (pTextureDescriptor.IsBuildedFromFile() )
                             texttype+= moText(" loaded from file");
                         else
-                            texttype+= moText(" (internal)");
+                            texttype+= " (internal)";
 
                         break;
                     case MO_TYPE_MOVIE:
@@ -230,8 +351,10 @@ moPanelTexture::Inspect( moValueDescriptor p_ValueDescriptor ) {
             }
             StaticTextType->SetLabel(  moText2Wx(texttype) );
 
+
             moText textsize = moText("Size ") + IntToStr(pTextureDescriptor.GetWidth()) + moText(" x ") + IntToStr(pTextureDescriptor.GetHeight());
             StaticTextSize->SetLabel( moText2Wx( textsize ) );
+            */
         }
 
         LoadImage();
@@ -244,7 +367,10 @@ void moPanelTexture::OnButtonImportClick(wxCommandEvent& event)
     ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
     //making absolute path is mandatory (in linux) for passing directory to the open file dialog
-    wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
+    wxString relativepath = moText2Wx( ProjectDescriptor.GetConfigPath() );
+
+    wxFileName ConfigPath = wxFileName::DirName( relativepath );
+
     wxFileName absname = wxFileName::DirName( relativepath );
     absname.MakeAbsolute();
     wxString absolutepath = absname.GetPath();
@@ -257,25 +383,61 @@ void moPanelTexture::OnButtonImportClick(wxCommandEvent& event)
 	    pFileDialog->SetDirectory( absolutepath );
 
         //beware, for the extensions capitalized in linux!!
-		pFileDialog->SetWildcard(wxT("Image files (*.jpg;*.tga;*.png;*.avi;*.mov;*.mpg)|*.jpg;*.png;*.tga;*.avi;*.mov;*.mpg;*.JPG;*.PNG;*.TGA;*.AVI;*.MOV;*.MPG|All files (*.*)|*.*"));
+		pFileDialog->SetWildcard(wxT("Image/Video files (*.jpg;*.tga;*.png;*.tif;*.xpm;*.avi;*.mov;*.mp4;*.ogg;*.mkv;*.mpg)|*.jpg;*.png;*.tga;*.tif;*.xpm;*.avi;*.mov;*.mp4;*.ogg;*.mkv;*.mpg;*.JPG;*.PNG;*.TGA;*.TIF;*.XPM;*.AVI;*.MOV;*.MP4;*.OGG;*.MKV;*.MPG|Image files(*.jpg;*.tga;*.png;*.tif;*.xpm;)|*.jpg;*.png;*.tga;*.tif;*.xpm;*.JPG;*.PNG;*.TGA;*.TIF;*.XPM;|Video files (*.avi;*.mov;*.mp4;*.ogg;*.mkv;*.mpg)|*.avi;*.mov;*.mp4;*.ogg;*.mkv;*.mpg;*.AVI;*.MOV;*.MP4;*.OGG;*.MKV;*.MPG|All files (*.*)|*.*"));
 
 		if( pFileDialog->ShowModal() == wxID_OK ) {
 
 			wxFileName	FileName( pFileDialog->GetPath() );
+			wxFileName	FileNameToCopy( pFileDialog->GetPath() );
 
-			if (FileName.MakeRelativeTo( relativepath )) {
+			bool samevolumeasconfig = FileName.MakeRelativeTo( relativepath );
+			bool intoconfigpath = false;
+			FileNameToCopy.MakeAbsolute();
 
-                wxString path = FileName.GetFullPath();
+            wxString path = FileName.GetPath();
+
+            wxArrayString dirsconfig = ConfigPath.GetDirs();
+            wxArrayString dirsfile = FileName.GetDirs();
+
+            if (samevolumeasconfig ) {
+
+                intoconfigpath = true;
+
+                ///check if it is on a branch of the config folder
+                for(int d=0; d<dirsfile.Count(); d++) {
+                    if ( dirsfile[d] == _T("..") ) {
+                        ///it is below our configpath...
+                        intoconfigpath = false;
+                    }
+                    /*if (dirsconfig[d]==dirsfile[d]) {
+                        intoconfigpath = true;
+                    } else {
+                        intoconfigpath = false;
+                        break;
+                    }*/
+                }
+            }
+
+			if ( intoconfigpath ) {
+
+			    ///ok it is on a branch so we just assign the path
+
+                wxString pathrel = FileName.GetFullPath();
+                const char *cnamerelative = (char*)pathrel.c_str();
 
                 //ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
-                TextCtrlMedia->SetValue( path );
-                //m_pShaderCtrl->Inspect(m_ValueDescriptor);
+                TextCtrlMedia->SetValue( pathrel );
+                if(m_pShaderCtrl)
+                  m_pShaderCtrl->Inspect(m_ValueDescriptor);
 
                 //m_pTexturesTreeCtrl->UpdateDescriptors();
 			} else {
+
+			    ///not into a branch of the config folder, so we make a copy by default of the file on the root of the project folder
+                FileName.MakeAbsolute();
                 //ask if you want to import it ( copying it to local folder )
                 moText filename_dest = moWx2Text( absname.GetPath() ) + moSlash + moWx2Text( FileName.GetFullName() );
-                moText filename_src = moWx2Text( FileName.GetFullPath() );
+                moText filename_src = moWx2Text( FileNameToCopy.GetFullPath() );
                 if (moFileManager::CopyFile( filename_src, filename_dest )) {
 
                     wxFileName	FileName2( moText2Wx( filename_dest ) );
@@ -301,12 +463,13 @@ void moPanelTexture::OnTextCtrlMediaText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlMedia->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlMedia->GetValue().c_str() ) );
 
     //fija los nuevos valores en la consola...
     SetValue( m_ValueDescriptor );
 
-    m_pShaderCtrl->Inspect( m_ValueDescriptor );
+    if (m_pShaderCtrl)
+      m_pShaderCtrl->Inspect( m_ValueDescriptor );
 
     LoadImage();
 
@@ -316,4 +479,8 @@ void moPanelTexture::OnTextCtrlMediaText(wxCommandEvent& event)
 void moPanelTexture::OnBitmapButton1Click(wxCommandEvent& event)
 {
     //m_pTexturesTreeCtrl->InitDescriptors();
+}
+
+void moPanelTexture::OnPanelDetailsPaint(wxPaintEvent& event)
+{
 }

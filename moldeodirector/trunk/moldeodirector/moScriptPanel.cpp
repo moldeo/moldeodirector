@@ -50,6 +50,9 @@ void moScriptPanel::OnButton1Click(wxCommandEvent& event)
 void moScriptPanel::OnCompileButtonClick(wxCommandEvent& event)
 {
 
+    if (!Save())
+      return;
+
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
     rValue.GetSubValue(0).SetText( moText("__compiling__.lua")  );
@@ -71,7 +74,7 @@ void moScriptPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
     ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
     //making absolute path is mandatory (in linux) for passing directory to the open file dialog
-    wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
+    wxString relativepath = moText2Wx( ProjectDescriptor.GetConfigPath() );
     wxFileName absname = wxFileName::DirName( relativepath );
     absname.MakeAbsolute();
     wxString absolutepath = absname.GetPath();
@@ -80,13 +83,31 @@ void moScriptPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
 
         wxString scriptname( moText2Wx( m_ValueDescriptor.GetValue().GetSubValue(0).Text() ) );
 
-        ScriptFileTextCtrl->SetValue( scriptname );
+        //ERROR: entra en loop
+        //ScriptFileTextCtrl->SetValue( scriptname );
+        ScriptFileTextCtrl->ChangeValue( scriptname );
+
+        wxString absolutename = absolutepath + moText2Wx(moSlash) + scriptname;
+        wxFileName filename(absolutename);
+
+
+        if (scriptname.IsEmpty()) {
+            Log("script filename is empty");
+            return;
+        }
+
+        if (!filename.FileExists()) {
+            LogError( moWx2Text(absolutename) + moText(" doesn't exists"));
+            return;
+        }
 
         ///load text from file!!!
+        if (!scriptname.IsEmpty()) {
 
-        moValue& pValue( m_ValueDescriptor.GetValue() );
+            moValue& pValue( m_ValueDescriptor.GetValue() );
 
-        ScriptTextCtrl->LoadFile( absolutepath + _("/") + scriptname );
+            ScriptTextCtrl->LoadFile( absolutename );
+        }
 
     }
 
@@ -111,16 +132,41 @@ void moScriptPanel::OnScriptFileTextCtrlText(wxCommandEvent& event)
 
 void moScriptPanel::OnSaveButtonClick(wxCommandEvent& event)
 {
+
+
+}
+
+bool moScriptPanel::Save() {
+
     moProjectDescriptor ProjectDescriptor;
     ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
     //making absolute path is mandatory (in linux) for passing directory to the open file dialog
-    wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
+    wxString relativepath = moText2Wx( ProjectDescriptor.GetConfigPath() );
     wxFileName absname = wxFileName::DirName( relativepath );
     absname.MakeAbsolute();
     wxString absolutepath = absname.GetPath();
 
-    ScriptTextCtrl->SaveFile( absolutepath + _("/") + ScriptFileTextCtrl->GetValue() );
+    wxString absolutename = absolutepath + moText2Wx(moSlash) + ScriptFileTextCtrl->GetValue();
 
+    if ( ScriptFileTextCtrl->GetValue().IsEmpty()) {
+        LogError( moText("no filename is defined") );
+        ShowMessage( moText("no filename is defined") );
+        return false;
+    }
 
+    wxFileName filename(absolutename);
+
+    if ( !filename.FileExists() ) {
+        LogError( moWx2Text(absolutename) + moText(" doesn't exists"));
+        ShowMessage(moWx2Text(absolutename) + moText(" doesn't exists"));
+        return false;
+    }
+
+    if ( ! ScriptFileTextCtrl->GetValue().IsEmpty()) {
+      return ScriptTextCtrl->SaveFile( absolutepath + moText2Wx(moSlash) + ScriptFileTextCtrl->GetValue() );
+    }
+
+    return false;
 }
+

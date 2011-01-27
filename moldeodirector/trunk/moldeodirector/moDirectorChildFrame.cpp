@@ -1,5 +1,6 @@
 #include "moDirectorChildFrame.h"
 #include "moValueCtrl.h"
+
 #include "moArray.h"
 
 moDefineDynamicArray( moValueTreeItemList )
@@ -18,7 +19,7 @@ moDirectorChildFrame::moDirectorChildFrame( wxWindow* parent, const wxString& ti
 {
 
     m_cForeground = wxColour(255,255,255);
-    m_cBackground = wxColour(80,80,80);
+    m_cBackground = wxColour(0,0,0);
 
     //my_children.Append(this);
 
@@ -28,16 +29,18 @@ moDirectorChildFrame::moDirectorChildFrame( wxWindow* parent, const wxString& ti
 	//sizer->AddGrowableCol(1);
 
 	//sizer->Add( new wxStaticText( this, wxID_ANY, title, wxPoint(0,0), wxSize(300,25)), 1, wxEXPAND | wxALL );
-
+	m_pConfigNotebook = NULL;
+/*
 	m_pConfigNotebook = new moConfigNotebook( this , wxID_ANY, wxPoint(0,0),wxSize(300,300), wxNO_BORDER );
 	m_pConfigNotebook->SetForegroundColour(m_cForeground);
     m_pConfigNotebook->SetBackgroundColour(m_cBackground);
-
+*/
 	//m_pConfigParameterFoldbar = new moConfigParameterFoldbar( m_pConfigNotebook , wxID_ANY );
-	m_pParameterTree = new moParametersTree( m_pConfigNotebook, wxID_ANY );
+	m_pParameterTree = new moParametersTree( this, wxID_ANY );
 	m_pParameterTree->SetSpacingY(0);
 	m_pParameterTree->SetForegroundColour(m_cForeground);
-    m_pParameterTree->SetBackgroundColour(m_cBackground);
+  m_pParameterTree->SetBackgroundColour(m_cBackground);
+
 /*
 	//		moConfigTextCodeCtrl(wxWindow* parent, wxWindowID idconst, wxString& value, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = 0 );
 	m_pConfigTextCodeCtrl = new moConfigTextCodeCtrl( (wxWindow*)m_pConfigNotebook , (wxWindowID)wxID_ANY,  _T(""), wxPoint(0,0), wxSize(100,100), (long)(wxTE_MULTILINE | wxTE_DONTWRAP) );
@@ -53,7 +56,7 @@ moDirectorChildFrame::moDirectorChildFrame( wxWindow* parent, const wxString& ti
     m_pPreview->SetBackgroundColour(m_cBackground);
 */
 	//m_pConfigNotebook->AddPage( m_pConfigParameterFoldbar, "Parameters" );
-	m_pConfigNotebook->AddPage( m_pParameterTree, wxT("Params") );
+	if (m_pConfigNotebook) m_pConfigNotebook->AddPage( m_pParameterTree, wxT("Params") );
 	//m_pConfigNotebook->AddPage( m_pConfigTextCodeCtrl, wxT("Code") );
 	//m_pConfigNotebook->AddPage( m_pConnection, wxT("Connections") );
 	//m_pConfigNotebook->AddPage( m_pPreview, wxT("Preview") );
@@ -65,7 +68,7 @@ moDirectorChildFrame::moDirectorChildFrame( wxWindow* parent, const wxString& ti
 	m_ConfigType = MO_OBJECT_UNDEFINED;
 	m_nPosition = 0;
 
-	m_pConfigNotebook->SetSelection(0);
+	if (m_pConfigNotebook) m_pConfigNotebook->SetSelection(0);
 
 	// this should work for MDI frames as well as for normal ones
 	//SetSizeHints( 200, 200);
@@ -80,7 +83,10 @@ void moDirectorChildFrame::OnSize(wxSizeEvent& event) {
     int w,h;
     GetParent()->GetClientSize( &w, &h );
     //wxMessageBox( wxString("parent size:") + moText2Wx(IntToStr(w)) );
-    m_pConfigNotebook->SetSize( w, h );
+    if (m_pConfigNotebook) m_pConfigNotebook->SetSize( w, h );
+
+    ///se agrego -15 para ajustar el tamaño correctamente al notebook
+    if (m_pParameterTree) m_pParameterTree->SetSize( w, h-15 );
     event.Skip();
 
 }
@@ -92,12 +98,31 @@ moDirectorChildFrame::Inspect( moValueDescriptor    p_ValueDescriptor, bool sets
     //check if MOB is OK
     if ( p_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetMobDefinition().GetLabelName() == m_MobDescriptor.GetMobDefinition().GetLabelName() ) {
         //A OK!!!
+        if (setselection) {
+          ///guardamos el ultimo valor que se inspecciono
+          m_ValueDescriptor = p_ValueDescriptor;
+        }
         pDirectorFrame->Inspect( p_ValueDescriptor, setselection );
     } else {
         //Something is wrong
         LogError(moText("Couldn't inspect, MOB doesn't match"));
     }
 
+}
+
+void
+moDirectorChildFrame::InspectAll() {
+
+        moDirectorFrame* pDirectorFrame = (moDirectorFrame*)m_pDirectorFrame;
+
+        for( int i=0; i<(int)m_ParamTreeItemList.Count(); i++) {
+            moParamTreeItem& ParamItem( m_ParamTreeItemList.Get(i) );
+            ParameterUpdated( ParamItem.GetParamDescriptor() );
+        }
+
+        if ( m_ValueDescriptor.GetParamDescriptor().GetParamDefinition().IsValid() ) {
+          pDirectorFrame->Inspect( m_ValueDescriptor, true );
+        }
 }
 
 MOboolean moDirectorChildFrame::Init( moDirectorFrame* pDirectorFrame, moMobDescriptor p_MobDescriptor ) {
@@ -122,9 +147,9 @@ MOboolean moDirectorChildFrame::Finish() {
 void
 moDirectorChildFrame::Save() {
     if (m_pDirectorFrame->SaveMob( m_MobDescriptor ) == MO_DIRECTOR_STATUS_OK) {
-        ShowMessage("Object saved succesfully");
+        ShowMessage( moText("\"") + moText(m_MobDescriptor.GetMobDefinition().GetLabelName()) + moText("\"") + moText(" object saved succesfully") );
     } else {
-        ErrorMessage("Object Not Saved!!");
+        ErrorMessage( moText("\"") + moText(m_MobDescriptor.GetMobDefinition().GetLabelName()) + moText("\"") + moText("Object Not Saved!!"));
     }
 }
 
@@ -141,13 +166,13 @@ moDirectorChildFrame::ParameterUpdated( moParameterDescriptor p_ParameterDesc ) 
 
             ValueTreeItem = ParamItem.GetValueTreeItemList().Get(i);
 
-            moValueCtrl* pValueCtrl = (moValueCtrl*)ValueTreeItem.GetWindow();
+            moValueCtrl* pValueCtrl = dynamic_cast<moValueCtrl*>(ValueTreeItem.GetWindow());
 
             if (pValueCtrl) {
                 if ( p_ParameterDesc.GetIndexValue() == i) {
                     pValueCtrl->ParamToggleOn();
                     ParamItem.GetParamDescriptor().SetIndexValue(i);
-                    Inspect( pValueCtrl->GetValueDescriptor() );
+                    Inspect( pValueCtrl->GetValueDescriptor(), false );
                 } else {
                     pValueCtrl->ParamToggleOff();
                 }
@@ -185,7 +210,7 @@ moDirectorChildFrame::DeleteValue( moValueDescriptor p_ValueDesc ) {
 
         for( int i=p_ValueDesc.GetValueIndex().m_ValueIndex; i<(int)ParamItem.GetValueTreeItemList().Count(); i++) {
             moValueTreeItem ValueTreeItem = ParamItem.GetValueTreeItemList().Get(i);
-            moValueCtrl* pValueCtrl = (moValueCtrl*)ValueTreeItem.GetWindow();
+            moValueCtrl* pValueCtrl = dynamic_cast<moValueCtrl*>(ValueTreeItem.GetWindow());
             if (pValueCtrl) {
                     pValueCtrl->GetValueDescriptor().GetValueIndex().m_ValueIndex = i;
                     pValueCtrl->GetValueDescriptor().GetValueDefinition().SetIndex(i);
@@ -213,26 +238,29 @@ moDirectorChildFrame::DeleteValue( moValueDescriptor p_ValueDesc ) {
 moDirectorStatus
 moDirectorChildFrame::EditParameter( moParameterDescriptor p_ParameterDesc ) {
 
-    wxString ParamStr =wxString(p_ParameterDesc.GetParamDefinition().GetName(), wxConvUTF8);
+    wxString ParamStr = moText2Wx(p_ParameterDesc.GetParamDefinition().GetName());
 
+    if (m_pParameterTree) {
+      //chequear que no exista el item, en otro caso no hacer nada
+      wxTreeMultiItem item = m_pParameterTree->AddRoot( ParamStr );
+      m_pParameterTree->Collapse( item, true );
 
-    //chequear que no exista el item, en otro caso no hacer nada
-    wxTreeMultiItem item = m_pParameterTree->AddRoot( ParamStr );
-    m_pParameterTree->Collapse( item, true );
+      m_ParamTreeItemList.Add( moParamTreeItem( p_ParameterDesc, item ) );
 
-    m_ParamTreeItemList.Add( moParamTreeItem( p_ParameterDesc, item ) );
+      wxWindow* pWindow = m_pParameterTree->GetWindow(item);
 
-    wxWindow* pWindow = m_pParameterTree->GetWindow(item);
+      if (pWindow) {
+          pWindow->SetForegroundColour(wxColour(255,255,255));
+          pWindow->SetBackgroundColour(m_cBackground);
+      } else return MO_DIRECTOR_STATUS_ERROR;
 
-    if (pWindow) {
-        pWindow->SetForegroundColour(wxColour(255,255,255));
-        pWindow->SetBackgroundColour(m_cBackground);
+      this->SetForegroundColour(m_cForeground);
+      this->SetBackgroundColour(m_cBackground);
+
+      return MO_DIRECTOR_STATUS_OK;
     }
 
-	this->SetForegroundColour(m_cForeground);
-    this->SetBackgroundColour(m_cBackground);
-
-    return MO_DIRECTOR_STATUS_OK;
+    return MO_DIRECTOR_STATUS_ERROR;
 }
 
 moDirectorStatus
@@ -277,7 +305,7 @@ moDirectorChildFrame::ValueUpdated( moValueDescriptor p_ValueDesc ) {
 
         moValueTreeItem& mValueTreeItem( ParamItem.GetValueTreeItemList().Get( p_ValueDesc.GetValueIndex().m_ValueIndex ));
 
-        moValueCtrl* pValueCtrl = (moValueCtrl*)mValueTreeItem.GetWindow();
+        moValueCtrl* pValueCtrl = dynamic_cast<moValueCtrl*>( mValueTreeItem.GetWindow() );
         if (pValueCtrl) {
             pValueCtrl->Set( p_ValueDesc );
             return MO_DIRECTOR_STATUS_OK;
@@ -285,6 +313,16 @@ moDirectorChildFrame::ValueUpdated( moValueDescriptor p_ValueDesc ) {
     }
 
     return MO_DIRECTOR_STATUS_ERROR;
+}
+
+
+moDirectorStatus
+moDirectorChildFrame::MobUpdated( moMobDescriptor p_MobDesc ) {
+
+    m_MobDescriptor = p_MobDesc;
+
+    return MO_DIRECTOR_STATUS_OK;
+
 }
 
 
@@ -297,6 +335,12 @@ bool moDirectorChildFrame::IsMob( moMobDescriptor p_MobDescriptor ) {
 		return true;
 	} else return false;
 }
+
+moMobDescriptor moDirectorChildFrame::GetMob() {
+
+        return m_MobDescriptor;
+}
+
 
 void moDirectorChildFrame::OnFocus(wxFocusEvent& event) {
 

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="moldeodirector" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="..\..\..\..\binaries\bin\win\moldeodirectord" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\..\..\binaries\bin\win" />
+				<Option object_output="wobjd\Debug" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="`wx-config --cflags --debug=no`" />
+				</Compiler>
+				<Linker>
+					<Add library="libmoldeod" />
+					<Add library="wxart2d_msw_general-2.8" />
+					<Add library="wxart2d_msw_xmlparse-2.8" />
+					<Add library="wxart2d_msw_curves-2.8" />
+					<Add library="wxart2d_msw_docview-2.8" />
+					<Add library="wxart2d_msw_aggdrawer-2.8" />
+					<Add library="wxart2d_msw_editor-2.8" />
+					<Add library="wxart2d_msw_canvas-2.8" />
+					<Add library="wxart2d_msw_canextobj-2.8" />
+					<Add library="wxart2d_msw_artbase-2.8" />
+					<Add library="wxart2d_msw_gdsio-2.8" />
+					<Add library="wxart2d_msw_svgio-2.8" />
+					<Add library="agg" />
+					<Add library="kbool" />
+					<Add library="freetype" />
+					<Add library="moldeocontrolsd" />
+					<Add directory="..\..\..\..\wxMoldeoControls\trunk\build\win\Debug" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="..\..\..\..\binaries\bin\win\moldeodirector" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\..\..\binaries\bin\win" />
+				<Option object_output="wobj\Release" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="`wx-config --cflags --debug=no`" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libmoldeo" />
+					<Add library="wxart2d_msw_general-2.8" />
+					<Add library="wxart2d_msw_xmlparse-2.8" />
+					<Add library="wxart2d_msw_curves-2.8" />
+					<Add library="wxart2d_msw_docview-2.8" />
+					<Add library="wxart2d_msw_aggdrawer-2.8" />
+					<Add library="wxart2d_msw_editor-2.8" />
+					<Add library="wxart2d_msw_canvas-2.8" />
+					<Add library="wxart2d_msw_canextobj-2.8" />
+					<Add library="wxart2d_msw_artbase-2.8" />
+					<Add library="wxart2d_msw_gdsio-2.8" />
+					<Add library="wxart2d_msw_svgio-2.8" />
+					<Add library="agg" />
+					<Add library="kbool" />
+					<Add library="freetype" />
+					<Add library="moldeocontrols" />
+					<Add directory="..\..\..\..\wxMoldeoControls\trunk\build\win\Release" />
+				</Linker>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Debug;Release;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-W" />
+			<Add option="-D__WXMSW__" />
+			<Add option="-DwxUSE_SYSTEM_OPTIONS" />
+			<Add option="-DWXART2D" />
+			<Add option="-DWIN32" />
+			<Add option="-D_WINDOWS" />
+			<Add option="-DNOPCH" />
+			<Add option="-D_CRT_NONSTDC_NO_DEPRECATE" />
+			<Add option='-DMOLDEODATADIR=\&quot;../../data\&quot;' />
+			<Add option='-DMODULESDIR=\&quot;../../plugins\&quot;' />
+			<Add directory="." />
+			<Add directory=".." />
+			<Add directory=".\vdtc" />
+			<Add directory=".\treemultictrl" />
+			<Add directory="..\..\..\..\binaries\include" />
+			<Add directory="..\..\..\..\wxMoldeoControls\trunk\wxMoldeoControls" />
+			<Add directory="..\..\..\..\externlibs\SDL\include" />
+			<Add directory="..\..\..\..\externlibs\SDL_net\include" />
+			<Add directory="..\..\..\..\externlibs\SDL_image\include" />
+			<Add directory="..\..\..\..\externlibs\opengl\include" />
+			<Add directory="..\..\..\..\externlibs\cg\include" />
+			<Add directory="..\..\..\..\externlibs\lua\include" />
+			<Add directory="..\..\..\..\externlibs\glew\include" />
+			<Add directory="..\..\..\..\externlibs\openal\include" />
+			<Add directory="..\..\..\..\externlibs\freetype\include" />
+			<Add directory="..\..\..\..\externlibs\freeimage\include" />
+			<Add directory="..\..\..\..\externlibs\wxwidgets\include" />
+			<Add directory="..\..\..\..\externlibs\wxwidgets\contrib\include" />
+			<Add directory="..\..\..\..\externlibs\gstreamer\include" />
+			<Add directory="..\..\..\..\externlibs\gstreamer\include\glib-2.0" />
+			<Add directory="..\..\..\..\externlibs\gstreamer\lib\glib-2.0\include" />
+			<Add directory="..\..\..\..\externlibs\wxWidgets\lib\mingw_lib\wx\include\msw-ansi-release-static-2.8" />
+			<Add directory="..\..\..\..\externlibs\wxArt2D\include" />
+			<Add directory="..\..\..\..\externlibs\wxArt2D\include\thirdparty" />
+			<Add directory="..\..\..\..\externlibs\wxArt2D\modules" />
+			<Add directory="..\..\..\..\externlibs\wxWidgets\src\expat\lib" />
+			<Add directory="..\..\..\..\externlibs\wxArt2D\thirdparty\agg2\include" />
+			<Add directory="..\..\..\..\externlibs\wxArt2D\thirdparty\kbool\include" />
+			<Add directory="..\..\moldeodirector\treemultictrl" />
+			<Add directory="..\..\moldeodirector\vdtc" />
+			<Add directory="..\..\moldeodirector" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="..\..\..\..\externlibs\wxWidgets\include" />
+			<Add directory="..\..\data" />
+		</ResourceCompiler>
+		<Linker>
+			<Add library="liblua" />
+			<Add library="cg" />
+			<Add library="cgGL" />
+			<Add library="OpenAL32" />
+			<Add library="EFX-Util" />
+			<Add library="wx_msw-2.8" />
+			<Add library="wx_msw_gl-2.8" />
+			<Add library="wxregex-2.8" />
+			<Add library="wxexpat-2.8" />
+			<Add library="wxtiff-2.8" />
+			<Add library="wxjpeg-2.8" />
+			<Add library="wxpng-2.8" />
+			<Add library="wxzlib-2.8" />
+			<Add library="rpcrt4" />
+			<Add library="oleaut32" />
+			<Add library="ole32" />
+			<Add library="uuid" />
+			<Add library="winspool" />
+			<Add library="winmm" />
+			<Add library="shell32" />
+			<Add library="comctl32" />
+			<Add library="comdlg32" />
+			<Add library="ctl3d32" />
+			<Add library="advapi32" />
+			<Add library="wsock32" />
+			<Add library="opengl32" />
+			<Add library="glut32" />
+			<Add library="glut" />
+			<Add library="glu32" />
+			<Add library="glaux" />
+			<Add library="gdi32" />
+			<Add library="SDL" />
+			<Add directory="..\..\..\..\binaries\lib\win" />
+			<Add directory="..\..\..\..\externlibs\gstreamer\lib\glib-2.0\include" />
+			<Add directory="..\..\..\..\externlibs\tinyxml\lib" />
+			<Add directory="..\..\..\..\externlibs\SDL\lib" />
+			<Add directory="..\..\..\..\externlibs\glew\lib" />
+			<Add directory="..\..\..\..\externlibs\lua\lib" />
+			<Add directory="..\..\..\..\externlibs\muparser\lib" />
+			<Add directory="..\..\..\..\externlibs\freetype\lib" />
+			<Add directory="..\..\..\..\externlibs\cg\lib" />
+			<Add directory="..\..\..\..\externlibs\openal\libs\win32" />
+			<Add directory="..\..\..\..\externlibs\opengl\lib" />
+			<Add directory="..\..\..\..\externlibs\freeimage\lib" />
+			<Add directory="..\..\..\..\externlibs\gstreamer\lib" />
+			<Add directory="..\..\..\..\externlibs\wxwidgets\lib\mingw_lib" />
+			<Add directory="..\..\..\..\externlibs\wxArt2D\lib" />
+		</Linker>
+		<ExtraCommands>
+			<Add after='svn export &quot;../../data&quot; &quot;../../../../binaries/data&quot; --force' />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="..\..\moldeodirector\PreviewWindowSystemMem.cpp" />
+		<Unit filename="..\..\moldeodirector\PreviewWindowSystemMem.h" />
+		<Unit filename="..\..\moldeodirector\mo3dModelPanel.cpp" />
+		<Unit filename="..\..\moldeodirector\mo3dModelPanel.h" />
+		<Unit filename="..\..\moldeodirector\moColorMotion.cpp" />
+		<Unit filename="..\..\moldeodirector\moColorMotion.h" />
+		<Unit filename="..\..\moldeodirector\moConfigurationAdvancedOutput.cpp" />
+		<Unit filename="..\..\moldeodirector\moConfigurationAdvancedOutput.h" />
+		<Unit filename="..\..\moldeodirector\moConfigurationDialog.cpp" />
+		<Unit filename="..\..\moldeodirector\moConfigurationDialog.h" />
+		<Unit filename="..\..\moldeodirector\moConfigurationGeneral.cpp" />
+		<Unit filename="..\..\moldeodirector\moConfigurationGeneral.h" />
+		<Unit filename="..\..\moldeodirector\moConfigurationOutput.cpp" />
+		<Unit filename="..\..\moldeodirector\moConfigurationOutput.h" />
+		<Unit filename="..\..\moldeodirector\moConnectionsWindow.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorChildConsole.cpp" />
+		<Unit filename="..\..\moldeodirector\moDirectorChildConsole.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorChildFrame.cpp" />
+		<Unit filename="..\..\moldeodirector\moDirectorChildFrame.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorConsole.cpp" />
+		<Unit filename="..\..\moldeodirector\moDirectorConsole.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorCore.cpp" />
+		<Unit filename="..\..\moldeodirector\moDirectorCore.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorFrame.cpp" />
+		<Unit filename="..\..\moldeodirector\moDirectorFrame.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorIODeviceManager.cpp" />
+		<Unit filename="..\..\moldeodirector\moDirectorIODeviceManager.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorStartFrame.cpp" />
+		<Unit filename="..\..\moldeodirector\moDirectorStartFrame.h" />
+		<Unit filename="..\..\moldeodirector\moDirectorTypes.h" />
+		<Unit filename="..\..\moldeodirector\moEffectsPaletteCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moEffectsPaletteCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moExplorerNotebook.cpp" />
+		<Unit filename="..\..\moldeodirector\moExplorerNotebook.h" />
+		<Unit filename="..\..\moldeodirector\moFilesbook.cpp" />
+		<Unit filename="..\..\moldeodirector\moFilesbook.h" />
+		<Unit filename="..\..\moldeodirector\moFontPanel.cpp" />
+		<Unit filename="..\..\moldeodirector\moFontPanel.h" />
+		<Unit filename="..\..\moldeodirector\moFunctionPanel.cpp" />
+		<Unit filename="..\..\moldeodirector\moFunctionPanel.h" />
+		<Unit filename="..\..\moldeodirector\moGLCanvas.cpp" />
+		<Unit filename="..\..\moldeodirector\moGLCanvas.h" />
+		<Unit filename="..\..\moldeodirector\moIDirectorActions.cpp" />
+		<Unit filename="..\..\moldeodirector\moIDirectorActions.h" />
+		<Unit filename="..\..\moldeodirector\moLayerEffectCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moLayerEffectCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moLayersPanel.cpp" />
+		<Unit filename="..\..\moldeodirector\moLayersPanel.h" />
+		<Unit filename="..\..\moldeodirector\moLayersTreeCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moLayersTreeCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moLogNotebook.cpp" />
+		<Unit filename="..\..\moldeodirector\moLogNotebook.h" />
+		<Unit filename="..\..\moldeodirector\moMobConfig.cpp" />
+		<Unit filename="..\..\moldeodirector\moMobConfig.h" />
+		<Unit filename="..\..\moldeodirector\moNewEffectDialog.cpp" />
+		<Unit filename="..\..\moldeodirector\moNewEffectDialog.h" />
+		<Unit filename="..\..\moldeodirector\moNewProject.cpp" />
+		<Unit filename="..\..\moldeodirector\moNewProject.h" />
+		<Unit filename="..\..\moldeodirector\moObjectMotion.cpp" />
+		<Unit filename="..\..\moldeodirector\moObjectMotion.h" />
+		<Unit filename="..\..\moldeodirector\moPanelTexture.cpp" />
+		<Unit filename="..\..\moldeodirector\moPanelTexture.h" />
+		<Unit filename="..\..\moldeodirector\moPreviewFrame.cpp" />
+		<Unit filename="..\..\moldeodirector\moPreviewFrame.h" />
+		<Unit filename="..\..\moldeodirector\moPreviewWindow.cpp" />
+		<Unit filename="..\..\moldeodirector\moPreviewWindow.h" />
+		<Unit filename="..\..\moldeodirector\moProjectTreeCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moProjectTreeCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moScriptPanel.cpp" />
+		<Unit filename="..\..\moldeodirector\moScriptPanel.h" />
+		<Unit filename="..\..\moldeodirector\moShaderCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moShaderCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moShadersPanel.cpp" />
+		<Unit filename="..\..\moldeodirector\moShadersPanel.h" />
+		<Unit filename="..\..\moldeodirector\moTextureItemCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moTextureItemCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moTimelineRuler.cpp" />
+		<Unit filename="..\..\moldeodirector\moTimelineRuler.h" />
+		<Unit filename="..\..\moldeodirector\moValueCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moValueCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moVisualsPaletteCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\moVisualsPaletteCtrl.h" />
+		<Unit filename="..\..\moldeodirector\moldeodirector.cpp" />
+		<Unit filename="..\..\moldeodirector\moldeodirector.h" />
+		<Unit filename="..\..\moldeodirector\moldeodirector.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemBase.cpp" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemBase.h" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemNode.cpp" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemNode.h" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemRoot.cpp" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemRoot.h" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemWindow.cpp" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\TreeMultiItemWindow.h" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\tmcimages.h" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\wxTreeMultiCtrl.cpp" />
+		<Unit filename="..\..\moldeodirector\treemultictrl\wxTreeMultiCtrl.h" />
+		<Unit filename="..\..\moldeodirector\vdtc\virtualdirtreectrl.cpp" />
+		<Unit filename="..\..\moldeodirector\vdtc\virtualdirtreectrl.h" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<lib_finder disable_auto="0">
+				<lib name="lua5.1" />
+				<lib name="muparser" />
+				<lib name="gstreamer-base-0.10" />
+				<lib name="freetype2" />
+				<lib name="gstreamer-0.10" />
+				<lib name="sdl" />
+			</lib_finder>
+			<debugger>
+				<search_path add="../../src/libmoldeo" />
+				<search_path add="../../" />
+			</debugger>
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="" main="" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxPanel wxs="../../moldeodirector/wxsmith/moPanelTexture.wxs" src="../../moldeodirector/moPanelTexture.cpp" hdr="../../moldeodirector/moPanelTexture.h" name="moPanelTexture" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moColorMotion.wxs" src="../../moldeodirector/moColorMotion.cpp" hdr="../../moldeodirector/moColorMotion.h" name="moColorMotion" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moObjectMotion.wxs" src="../../moldeodirector/moObjectMotion.cpp" hdr="../../moldeodirector/moObjectMotion.h" name="moObjectMotion" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moFunctionPanel.wxs" src="../../moldeodirector/moFunctionPanel.cpp" hdr="../../moldeodirector/moFunctionPanel.h" name="moFunctionPanel" language="CPP" />
+					<wxDialog wxs="../../moldeodirector/wxsmith/moNewProject.wxs" src="../../moldeodirector/moNewProject.cpp" hdr="../../moldeodirector/moNewProject.h" name="moNewProject" language="CPP" />
+					<wxDialog wxs="../../moldeodirector/wxsmith/moNewEffectDialog.wxs" src="../../moldeodirector/moNewEffectDialog.cpp" hdr="../../moldeodirector/moNewEffectDialog.h" name="moNewEffectDialog" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moLayerEffectCtrl.wxs" src="../../moldeodirector/moLayerEffectCtrl.cpp" hdr="../../moldeodirector/moLayerEffectCtrl.h" name="moLayerEffectCtrl" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moPreviewWindow.wxs" src="../../moldeodirector/moPreviewWindow.cpp" hdr="../../moldeodirector/moPreviewWindow.h" name="moPreviewWindow" language="CPP" />
+					<wxFrame wxs="../../moldeodirector/wxsmith/moPreviewFrame.wxs" src="../../moldeodirector/moPreviewFrame.cpp" hdr="../../moldeodirector/moPreviewFrame.h" name="moPreviewFrame" language="CPP" />
+					<wxDialog wxs="../../moldeodirector/wxsmith/moPreviewDialog.wxs" src="../../moldeodirector/moPreviewDialog.cpp" hdr="../../moldeodirector/moPreviewDialog.h" name="moPreviewDialog" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moShaderCtrl.wxs" src="../../moldeodirector/moShaderCtrl.cpp" hdr="../../moldeodirector/moShaderCtrl.h" name="moShaderCtrl" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moTextureItemCtrl.wxs" src="../../moldeodirector/moTextureItemCtrl.cpp" hdr="../../moldeodirector/moTextureItemCtrl.h" name="moTextureItemCtrl" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moShadersPanel.wxs" src="../../moldeodirector/moShadersPanel.cpp" hdr="../../moldeodirector/moShadersPanel.h" name="moShadersPanel" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/mo3dModelPanel.wxs" src="../../moldeodirector/mo3dModelPanel.cpp" hdr="../../moldeodirector/mo3dModelPanel.h" name="mo3dModelPanel" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moFontPanel.wxs" src="../../moldeodirector/moFontPanel.cpp" hdr="../../moldeodirector/moFontPanel.h" name="moFontPanel" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moConnectionsWindow.wxs" src="../../moldeodirector/moConnectionsWindow.cpp" hdr="../../moldeodirector/moConnectionsWindow.h" name="moConnectionsWindow" language="CPP" />
+					<wxDialog wxs="../../moldeodirector/wxsmith/moConfigurationDialog.wxs" src="../../moldeodirector/moConfigurationDialog.cpp" hdr="../../moldeodirector/moConfigurationDialog.h" name="moConfigurationDialog" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moConfigurationGeneral.wxs" src="../../moldeodirector/moConfigurationGeneral.cpp" hdr="../../moldeodirector/moConfigurationGeneral.h" name="moConfigurationGeneral" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moConfigurationOutput.wxs" src="../../moldeodirector/moConfigurationOutput.cpp" hdr="../../moldeodirector/moConfigurationOutput.h" name="moConfigurationOutput" language="CPP" />
+					<wxFrame wxs="../../moldeodirector/wxsmith/moConfigurationAdvancedOutput.wxs" src="../../moldeodirector/moConfigurationAdvancedOutput.cpp" hdr="../../moldeodirector/moConfigurationAdvancedOutput.h" name="moConfigurationAdvancedOutput" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moScriptPanel.wxs" src="../../moldeodirector/moScriptPanel.cpp" hdr="../../moldeodirector/moScriptPanel.h" name="moScriptPanel" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/PreviewWindowSystemMem.wxs" src="../../moldeodirector/PreviewWindowSystemMem.cpp" hdr="../../moldeodirector/PreviewWindowSystemMem.h" name="PreviewWindowSystemMem" language="CPP" />
+				</resources>
+			</wxsmith>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

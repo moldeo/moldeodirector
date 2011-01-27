@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="moNewProject">
+		<title>New Project</title>
+		<size>364,181</size>
+		<object class="wxTextCtrl" name="ID_DIRTEXTCTRL" variable="DirTextCtrl" member="yes">
+			<pos>8,32</pos>
+			<size>256,21</size>
+			<handler function="OnDirTextCtrlText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Directory</label>
+			<pos>8,8</pos>
+		</object>
+		<object class="wxButton" name="ID_NEWPROJECT_BROWSE" variable="ButtonBrowse" member="yes">
+			<label>Browse...</label>
+			<pos>272,32</pos>
+			<handler function="OnBrowseClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Project Name</label>
+			<pos>8,72</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_NAMETEXTCTRL" variable="ProjectNameTextCtrl" member="yes">
+			<pos>8,96</pos>
+			<size>168,21</size>
+			<handler function="OnProjectNameTextCtrlText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxButton" name="ID_NEWPROJECT_OK" variable="OkButton" member="yes">
+			<label>OK</label>
+			<pos>184,144</pos>
+			<handler function="OnOkClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_NEWPROJECT_CANCEL" variable="CancelButton" member="yes">
+			<label>Cancel</label>
+			<pos>272,144</pos>
+			<handler function="OnCancelClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

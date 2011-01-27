@@ -7,43 +7,15 @@ cursorsdir = ${datadir}/cursors
 fontsdir = ${datadir}/fonts
 iconsdir = ${datadir}/icons
 
-AM_CPPFLAGS = $(all_includes) -DDATADIR=\"$(datadir)\" -DMODULESDIR=\"$(modulesdir)\"
-AM_CXXFLAGS = $(all_includes) -DDATADIR=\"$(datadir)\" -DMODULESDIR=\"$(modulesdir)\"
+AM_CPPFLAGS = $(all_includes) -DMOLDEODATADIR=\"$(datadir)\" -DMODULESDIR=\"$(modulesdir)\"
+AM_CXXFLAGS = $(all_includes) -DMOLDEODATADIR=\"$(datadir)\" -DMODULESDIR=\"$(modulesdir)\"
 
 bin_PROGRAMS = moldeodirector
 
 moldeodirector_SOURCES = \
-	moldeodirector.cpp \
-	HtmlPanel.cpp \
-	moIDirectorActions.cpp \
-	mo3dModelPanel.cpp \
-	moConfigurationAdvancedOutput.cpp  moldeodirectorMain.cpp \
-	moConfigurationDialog.cpp	   \
-	moConfigurationGeneral.cpp	   moNewEffectDialog.cpp \
-	moConfigurationOutput.cpp	   moNewProject.cpp \
-	moConnectionsWindow.cpp		   moObjectMotion.cpp \
-	moDirectorChildConsole.cpp	   moPanelTexture.cpp \
-	moDirectorChildFrame.cpp	   moPreviewFrame.cpp \
-	moDirectorConsole.cpp		   moPreviewWindow.cpp \
-	moDirectorCore.cpp		   moProjectTreeCtrl.cpp \
-	moDirectorFrame.cpp		   moResourcesTreeCtrl.cpp \
-	moDirectorIODeviceManager.cpp	   moScriptPanel.cpp \
-	moDirectorStartFrame.cpp	   moSessionProject.cpp \
-	moColorMotion.cpp                  moShaderCtrl.cpp \
-	moEffectLayerCtrl.cpp		   moShadersPanel.cpp \
-	moFilesbook.cpp			   moTextureItemCtrl.cpp \
-	moFontPanel.cpp			   moTimelineRuler.cpp \
-	moFunctionPanel.cpp		   moTreeObjectsLayerCtrl.cpp \
-	moGLCanvas.cpp			   moValueCtrl.cpp \
-	wxMoldeoLineCtrl.cpp               wxMoldeoPinCtrl.cpp \
-	wxMoTimelineBandCtrl.cpp           wxMoldeoObjectCanvas.cpp \
-	wxMoLevelCtrl.cpp                  wxMoTimelineRulerCtrl.cpp \
-	wxMoldeoObjectCtrl.cpp             wxMoRotaryCtrl.cpp \
-	treemultictrl/TreeMultiItemBase.cpp  treemultictrl/TreeMultiItemWindow.cpp \
-	treemultictrl/TreeMultiItemNode.cpp  treemultictrl/wxTreeMultiCtrl.cpp \
-	treemultictrl/TreeMultiItemRoot.cpp  vdtc/virtualdirtreectrl.cpp \
 	HtmlPanel.h \
 	mo3dModelPanel.h \
+	moAuiTabArt.h \
 	moColorMotion.h \
 	moConfigurationAdvancedOutput.h \
 	moConfigurationDialog.h \
@@ -58,15 +30,18 @@ moldeodirector_SOURCES = \
 	moDirectorIODeviceManager.h \
 	moDirectorStartFrame.h \
 	moDirectorTypes.h \
-	moEffectLayerCtrl.h \
+	moEffectsPaletteCtrl.h \
+	moExplorerNotebook.h \
 	moFilesbook.h \
 	moFontPanel.h \
 	moFunctionPanel.h \
 	moGLCanvas.h \
 	moIDirectorActions.h \
-	moldeodirectorApp.h \
+	moLayerEffectCtrl.h \
+	moLayersPanel.h \
+	moLayersTreeCtrl.h \
 	moldeodirector.h \
-	moldeodirectorMain.h \
+	moLogNotebook.h \
 	moNewEffectDialog.h \
 	moNewProject.h \
 	moObjectMotion.h \
@@ -76,22 +51,56 @@ moldeodirector_SOURCES = \
 	moProjectTreeCtrl.h \
 	moResourcesTreeCtrl.h \
 	moScriptPanel.h \
-	moSessionProject.h \
 	moShaderCtrl.h \
 	moShadersPanel.h \
 	moTextureItemCtrl.h \
 	moTimelineRuler.h \
-	moTreeObjectsLayerCtrl.h \
 	moValueCtrl.h \
-	wxMoldeoControls.h \
-	wxMoldeoLineCtrl.h \
-	wxMoldeoObjectCanvas.h \
-	wxMoldeoObjectCtrl.h \
-	wxMoldeoPinCtrl.h \
-	wxMoLevelCtrl.h \
-	wxMoRotaryCtrl.h \
-	wxMoTimelineBandCtrl.h \
-	wxMoTimelineRulerCtrl.h \
+	moVisualsPaletteCtrl.h \
+	PreviewWindowSystemMem.h \
+	HtmlPanel.cpp \
+	mo3dModelPanel.cpp \
+	moColorMotion.cpp \
+	moConfigurationAdvancedOutput.cpp \
+	moConfigurationDialog.cpp \
+	moConfigurationGeneral.cpp \
+	moConfigurationOutput.cpp \
+	moConnectionsWindow.cpp \
+	moDirectorChildConsole.cpp \
+	moDirectorChildFrame.cpp \
+	moDirectorConsole.cpp \
+	moDirectorCore.cpp \
+	moDirectorFrame.cpp \
+	moDirectorIODeviceManager.cpp \
+	moDirectorStartFrame.cpp \
+	moEffectsPaletteCtrl.cpp \
+	moExplorerNotebook.cpp \
+	moFilesbook.cpp \
+	moFontPanel.cpp \
+	moFunctionPanel.cpp \
+	moGLCanvas.cpp \
+	moIDirectorActions.cpp \
+	moLayerEffectCtrl.cpp \
+	moLayersPanel.cpp \
+	moLayersTreeCtrl.cpp \
+	moldeodirector.cpp \
+	moLogNotebook.cpp \
+	moNewEffectDialog.cpp \
+	moNewProject.cpp \
+	moObjectMotion.cpp \
+	moPanelTexture.cpp \
+	moPreviewFrame.cpp \
+	moPreviewWindow.cpp \
+	moProjectTreeCtrl.cpp \
+	moResourcesTreeCtrl.cpp \
+	moScriptPanel.cpp \
+	moShaderCtrl.cpp \
+	moShadersPanel.cpp \
+	moTextureItemCtrl.cpp \
+	moTimelineRuler.cpp \
+	moValueCtrl.cpp \
+	moVisualsPaletteCtrl.cpp \
+	PreviewWindowSystemMem.cpp \
 	treemultictrl/tmcimages.h \
 	treemultictrl/TreeMultiItemBase.h \
 	treemultictrl/TreeMultiItemNode.h \
@@ -110,10 +119,16 @@ moldeodirector_SOURCES = \
 	treemultictrl/win_checked_icon.xpm \
 	treemultictrl/win_tristate_icon.xpm \
 	treemultictrl/win_unchecked_icon.xpm \
+	treemultictrl/TreeMultiItemBase.cpp \
+	treemultictrl/TreeMultiItemNode.cpp \
+	treemultictrl/TreeMultiItemRoot.cpp \
+	treemultictrl/TreeMultiItemWindow.cpp \
+	treemultictrl/wxTreeMultiCtrl.cpp \
 	vdtc/file.xpm \
 	vdtc/folder.xpm \
 	vdtc/root.xpm \
-	vdtc/virtualdirtreectrl.h
+	vdtc/virtualdirtreectrl.h \
+	vdtc/virtualdirtreectrl.cpp
 
 # moldeodirectorApp.cpp
 # moldeodirector.cpp
@@ -121,11 +136,14 @@ moldeodirector_SOURCES = \
 moldeodirector_CPPFLAGS = \
 	-I ./treemultictrl \
 	-I ./vdtc \
+	`pkg-config --cflags gtk+-2.0` \
+	${MOLDEOCONTROLS_CFLAGS} \
 	${LIBMOLDEO_CFLAGS} \
 	${WX_CFLAGS} 
 
 moldeodirector_LDADD = \
-	-lwx_gtk2u_gl-2.8 \
+	-lwx_gtk2_gl-2.8 \
+	${MOLDEOCONTROLS_LIBS} \
 	${LIBMOLDEO_LIBS} \
 	${FREEIMAGE_LIBS} \
 	${GLEW_LIBS} \

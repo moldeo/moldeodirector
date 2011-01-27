@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moColorMotion">
+		<size>250,199</size>
+		<fg>#FFFFFF</fg>
+		<bg>#000000</bg>
+		<id_arg>0</id_arg>
+		<style>wxTAB_TRAVERSAL|wxCLIP_CHILDREN</style>
+		<object class="wxFlexGridSizer" variable="FlexGridSizer1" member="no">
+			<cols>1</cols>
+			<growablecols>0</growablecols>
+			<growablerows>0</growablerows>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_PANEL2" variable="Panel2" member="yes">
+					<pos>192,8</pos>
+					<size>203,258</size>
+					<bg>#000000</bg>
+					<style>wxNO_BORDER|wxTAB_TRAVERSAL</style>
+					<object class="wxPanel" name="ID_PANEL5" variable="PanelTranslateCoords" member="yes">
+						<pos>8,8</pos>
+						<size>44,62</size>
+						<object class="wxStaticBitmap" name="ID_STATICBITMAP1" variable="StaticBitmap1" member="yes">
+							<bitmap>..\..\..\art\icons\colors.png</bitmap>
+							<pos>0,0</pos>
+						</object>
+					</object>
+					<object class="wxSlider" name="ID_SLIDERRED" subclass="wxMoColorLevelCtrl" variable="SliderRed" member="yes">
+						<max>255</max>
+						<pos>56,8</pos>
+						<size>56,16</size>
+						<handler function="OnSliderRedCmdScroll" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderRedCmdScroll" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERGREEN" subclass="wxMoColorLevelCtrl" variable="SliderGreen" member="yes">
+						<max>255</max>
+						<pos>56,24</pos>
+						<size>56,16</size>
+						<handler function="OnSliderGreenCmdScroll" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderGreenCmdScroll" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERBLUE" subclass="wxMoColorLevelCtrl" variable="SliderBlue" member="yes">
+						<max>255</max>
+						<pos>56,40</pos>
+						<size>56,16</size>
+						<handler function="OnSliderBlueCmdScroll" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderBlueCmdScroll" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERALPHA" subclass="wxMoColorLevelCtrl" variable="SliderAlpha" member="yes">
+						<max>255</max>
+						<pos>56,56</pos>
+						<size>56,16</size>
+						<handler function="OnSliderAlphaCmdScroll" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderAlphaCmdScroll" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxBitmapButton" name="ID_BITMAPBUTTON1" variable="BitmapButton1" member="yes">
+						<bitmap>../../doc/icons/pickcolor.png</bitmap>
+						<default>1</default>
+						<pos>128,8</pos>
+						<handler function="OnButtonPickColorClick" entry="EVT_BUTTON" />
+					</object>
+					<object class="wxPanel" name="ID_PANELCOLOR" variable="PanelColor" member="yes">
+						<pos>128,40</pos>
+						<size>32,32</size>
+						<bg>#FFFFFF</bg>
+					</object>
+					<object class="wxPanel" name="ID_PANEL3" variable="Panel3" member="yes">
+						<pos>8,96</pos>
+						<size>38,62</size>
+						<object class="wxStaticBitmap" name="ID_STATICBITMAP2" variable="StaticBitmap2" member="yes">
+							<bitmap>..\..\..\art\icons\colors.png</bitmap>
+							<pos>0,0</pos>
+						</object>
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLRED" variable="TextCtrlRed" member="yes">
+						<pos>56,96</pos>
+						<size>88,16</size>
+						<handler function="OnTextCtrlRedText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLGREEN" variable="TextCtrlGreen" member="yes">
+						<pos>56,112</pos>
+						<size>88,16</size>
+						<handler function="OnTextCtrlGreenText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLBLUE" variable="TextCtrlBlue" member="yes">
+						<pos>56,128</pos>
+						<size>88,16</size>
+						<handler function="OnTextCtrlBlueText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLALPHA" variable="TextCtrlAlpha" member="yes">
+						<pos>56,144</pos>
+						<size>88,16</size>
+						<handler function="OnTextCtrlAlphaText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxComboBox" name="ID_COMBOBOXCOLORPRESETS" variable="ComboBoxMotionColorPresets" member="yes">
+						<content>
+							<item>Random colors</item>
+							<item>Cyclic conic</item>
+							<item>Cyclic cubic</item>
+							<item>Cyclic Grayscale</item>
+							<item>Cyclic Red</item>
+							<item>Cyclic Green</item>
+							<item>Cyclic Blue</item>
+							<item>Cyclic Yellow</item>
+							<item>Cyclic Cyan</item>
+							<item>Cyclic Magenta</item>
+						</content>
+						<pos>56,168</pos>
+						<size>88,21</size>
+						<handler function="OnComboBoxMotionColorPresetsSelect" entry="EVT_COMBOBOX" />
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<border>5</border>
+				<option>1</option>
+			</object>
+		</object>
+	</object>
+</wxsmith>

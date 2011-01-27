@@ -205,7 +205,7 @@ class moConnectionsWindow: public wxPanel, public moIDirectorActions
 
     public:
         /// reload everything
-        moDirectorStatus ProjectUpdated( moProjectDescriptor p_projectdescriptor );
+        moDirectorStatus ProjectUpdated( const moProjectDescriptor& p_projectdescriptor );
 
         /// only mob updated, search for mob and update it....
         moDirectorStatus MobUpdated( moMobDescriptor p_MobDesc );

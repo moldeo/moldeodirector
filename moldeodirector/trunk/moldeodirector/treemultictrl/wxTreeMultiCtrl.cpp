@@ -46,7 +46,11 @@ bool wxTreeMultiCtrl::Create(wxWindow *parent, wxWindowID id, const wxPoint& pos
                                const wxSize& size, long style, const wxValidator &validator,
                                const wxString& name )
 {
+    m_pSecondTargetWindow = NULL;
+
     wxScrolledWindow::Create( parent, id, pos, size, style | wxTAB_TRAVERSAL);
+
+
 
 	_create_called = true;
 
@@ -75,17 +79,17 @@ void wxTreeMultiCtrl::Init()
 #endif
 
 	_gutterWidth = WXTMC_GUTTER_DEFAULT;
-	_iconWidth = 11;
-	_iconHeight = 11;
+	_iconWidth = 16;
+	_iconHeight = 16;
 	_maxHeight = 1;;
 	_iconDeltaY = 2;
 	_spacingY = WXTMC_YSPACING_DEFAULT;
-	_captionHeight = 13;
+	_captionHeight = 20;
 
 	// create two bitmap nodes for drawing
 
-	_expandBmp = new wxBitmap(expand_xpm);
-	_collBmp = new wxBitmap(collapse_xpm);
+	_expandBmp = new wxBitmap( wxImage(_T(MOLDEODATADIR "/icons/arrow_sans_down_16.png") ) );
+	_collBmp = new wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/arrow_sans_right_16.png") ) ) ;
 
 	// calculate average font height for bitmap centering
 
@@ -700,10 +704,12 @@ void wxTreeMultiCtrl::OnMouseClick( wxMouseEvent &event )
 				// we have a valid item, if it is a node, then fold
 				TreeMultiItemNode *n = id.GetItem()->IsTreeMultiItemNode();
 				if(n) {
+				  /**
 					if (m_pSecondTargetWindow) {
 					    m_pSecondTargetWindow->FoldTo( n, !n->IsExpanded() );
-                    }
-                    Fold(n, !n->IsExpanded());
+          }
+          */
+          Fold(n, !n->IsExpanded());
 				}
 
 			}
@@ -1150,7 +1156,7 @@ void wxTreeMultiCtrl::AdjustScrollbars(int x, int y)
 }
 
 void wxTreeMultiCtrl::OnScroll( wxScrollWinEvent& event ) {
-
+/**
     if (m_pSecondTargetWindow) {
         int x = -1;
         int y = -1;
@@ -1173,13 +1179,16 @@ void wxTreeMultiCtrl::OnScroll( wxScrollWinEvent& event ) {
             //m_pSecondTargetWindow->SetScrollRate( xpu2, ypu );
             //m_pSecondTargetWindow->Scroll( -1, y );
             //m_pSecondTargetWindow->SetScrollRate( xpu2, 0 );
-            m_pSecondTargetWindow->ScrollWindowToPos( -1, y*ypu );
+
+            ///m_pSecondTargetWindow->ScrollWindowToPos( -1, y*ypu );
+
             //m_pSecondTargetWindow->GetClientSize( &vx2, &vy2);
             //wxMessageBox( wxString("scroll position:") + wxString( moText2Wx(IntToStr(m_pSecondTargetWindow->GetScrollPos(wxVERTICAL))) ) );
 
         }
 
     }
+    */
 
     event.Skip();
 }

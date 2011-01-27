@@ -35,7 +35,6 @@
 #define _MO_PROJECT_TREE_CTRL_
 
 #include "moDirectorTypes.h"
-#include "moDirectorFrame.h"
 #include "moIDirectorActions.h"
 #include <wx/treectrl.h>
 
@@ -54,7 +53,7 @@ class moMobItemData : public wxTreeItemData {
         void SetMobDescriptor( const moMobDescriptor& p_MobDescriptor ) {
             m_MobDescriptor = p_MobDescriptor;
         }
-        moMobDescriptor GetMobDescriptor() {
+        moMobDescriptor& GetMobDescriptor() {
             return m_MobDescriptor;
         }
 
@@ -65,20 +64,46 @@ class moMobItemData : public wxTreeItemData {
 
 };
 
-class moProjectTreeCtrl : public wxTreeCtrl {
+class moProjectTreeCtrl : public moIDirectorActions, public wxTreeCtrl {
 
 	public:
 
 		moProjectTreeCtrl( wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style );
-		void OnActivate(wxTreeEvent &event);
+
 
 		bool Init();
 		bool Finish();
 
-		void SetDirectorFrame( moDirectorFrame* p_pDirectorFrame ) { m_pDirectorFrame = p_pDirectorFrame; }
+  public:
 
-	private:
-		moDirectorFrame*		m_pDirectorFrame;
+        //===============================
+        // INTERFACE DIRECTOR ACTIONS
+        //===============================
+
+        virtual moDirectorStatus    ValueUpdated( moValueDescriptor p_ValueDesc );
+        virtual moDirectorStatus    MobUpdated( moMobDescriptor p_MobDesc );
+        virtual moDirectorStatus    ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor );
+
+  protected:
+  		void  OnActivate(wxTreeEvent &event);
+      void  OnPopMenu(wxTreeEvent &event);
+
+      void  OnDeleteMob( wxCommandEvent& event );
+      void  OnDuplicateMob( wxCommandEvent& event );
+      void  OnMoveUpMob( wxCommandEvent& event );
+      void  OnMoveDownMob( wxCommandEvent& event );
+
+  private:
+
+    wxTreeItemId rootid;
+    wxTreeItemId mob_ids[ MO_OBJECT_TYPES ];
+
+    void ResetBaseTree( wxString p_treename );
+
+    wxMenu      m_PopMenu;
+    wxTreeItemId  m_Popped;
+    moMobDescriptor  m_MobSelected;
+
 
 	DECLARE_EVENT_TABLE()
 

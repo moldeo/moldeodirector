@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moPanelTexture">
+		<size>378,224</size>
+		<bg>#000000</bg>
+		<id_arg>0</id_arg>
+		<style>wxTAB_TRAVERSAL|wxCLIP_CHILDREN</style>
+		<object class="wxFlexGridSizer" variable="FlexGridSizer1" member="no">
+			<cols>1</cols>
+			<rows>3</rows>
+			<vgap>1</vgap>
+			<hgap>1</hgap>
+			<growablecols>0</growablecols>
+			<growablerows>1,2</growablerows>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_IMPORTPANEL" variable="ImportPanel" member="yes">
+					<pos>120,8</pos>
+					<size>264,80</size>
+					<bg>#000000</bg>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLMEDIA" variable="TextCtrlMedia" member="yes">
+						<pos>66,0</pos>
+						<size>176,21</size>
+						<handler function="OnTextCtrlMediaText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxButton" name="ID_BUTTONIMPORT" variable="ButtonImport" member="yes">
+						<label>Import</label>
+						<pos>2,0</pos>
+						<size>56,23</size>
+						<fg>#FFFFFF</fg>
+						<bg>#000000</bg>
+						<style>wxSIMPLE_BORDER|wxNO_BORDER</style>
+						<handler function="OnButtonImportClick" entry="EVT_BUTTON" />
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<border>5</border>
+				<option>1</option>
+			</object>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_IMAGEPANEL" subclass="wxMoColourPanel" variable="ImagePanel" member="yes">
+					<size>100,50</size>
+					<bg>wxSYS_COLOUR_APPWORKSPACE</bg>
+				</object>
+				<flag>wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<border>1</border>
+			</object>
+		</object>
+	</object>
+</wxsmith>

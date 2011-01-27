@@ -1,12 +1,146 @@
 #include "moIDirectorActions.h"
 #include <wx/platform.h>
-#include <moArray.h>
+
+#include "moArray.h"
 
 moDefineDynamicArray( moResourceDescriptors )
 moDefineDynamicArray( moMobDescriptors )
 moDefineDynamicArray( moParameterDescriptors )
 moDefineDynamicArray( moValueDescriptors )
 
+/**
+*  VALIDS DESCRIPTORS
+*/
+
+bool
+moApplicationDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = ( m_InstallationFullPath.Length() > 0 ) && ( m_PluginsFullPath.Length() > 0 );
+
+    return bValid;
+}
+
+bool
+moProjectDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = ( m_configname.Length() > 0 ) && ( m_configpath.Length() > 0 ) && (m_fullconfigname.Length() > 0);
+
+    return bValid;
+
+}
+
+bool
+moResourceDescriptor::IsValid() {
+    bool bValid = false;
+
+    bValid = ( m_ResourceDefinition.m_ResourceType != MO_RESOURCETYPE_UNDEFINED ) && ( m_ResourceDefinition.m_ResourceName.Length() > 0 );
+
+    return bValid;
+
+}
+
+bool
+moTextureDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = moResourceDescriptor::IsValid();
+
+    return bValid;
+
+}
+
+bool
+mo3dModelDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = moResourceDescriptor::IsValid();
+
+    return bValid;
+
+}
+
+
+bool
+moShaderDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = moResourceDescriptor::IsValid();
+
+    return bValid;
+
+}
+
+bool
+moMobDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = m_ProjectDescriptor.IsValid() && m_MobDefinition.IsValid();
+
+    return bValid;
+
+}
+
+bool
+moParameterDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = m_MobDescriptor.IsValid() && m_ParamDefinition.IsValid();
+
+    return bValid;
+
+}
+
+
+bool
+moValueDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = m_ParamDescriptor.IsValid() && m_ValueDefinition.IsValid();
+
+    return bValid;
+
+}
+
+bool
+moPresetDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = m_ProjectDescriptor.IsValid();
+
+    return bValid;
+
+}
+
+bool
+moPreconfigDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = m_MobDescriptor.IsValid();
+
+    return bValid;
+
+}
+
+
+void moIDirectorActions::SetNextActionHandler( moIDirectorActions* p_pNextActionHandler )
+ {
+
+   m_pNextActionHandler = dynamic_cast<moIDirectorActions*>(p_pNextActionHandler);
+
+
+ }
 
 void moTextureDescriptor::SetSpecificParameters( MOint p_Width,
                                     MOint p_Height,
@@ -156,3 +290,38 @@ void moShaderDescriptor::SetSpecificParameters( MOint m_Index,
     m_Datas.Add(  moData ( p_FragmentShader ));
 
 }
+
+
+
+moIDirectorActions::moIDirectorActions() {
+      m_pNextActionHandler = NULL;
+      m_ProjectDesDummy.Set( moText("dummy"), moText("dummy") );
+
+      m_MobDefDummy.SetName( moText("dummy") );
+      m_MobDefDummy.SetConfigName( moText("dummy") );
+      m_MobDefDummy.SetLabelName( moText("dummy") );
+      m_MobDefDummy.SetMoldeoId( -1 );
+      m_MobDefDummy.SetType( MO_OBJECT_UNDEFINED ); ///es un dummy!!!
+
+      m_MobDesDummy.Set( m_ProjectDesDummy, m_MobDefDummy );
+
+      m_ParamDefDummy = moParamDefinition( moText("dummy"), MO_PARAM_UNDEFINED );
+      m_ParamDefDummy.SetIndex(-1);
+
+      m_ParamDesDummy.SetParamDefinition( m_ParamDefDummy );
+      m_ParamDesDummy.SetIndex(-1);
+      m_ParamDesDummy.SetIndexValue(-1);
+
+      m_ValueDefDummy.SetCodeName(moText("dummy"));
+      m_ValueDefDummy.SetAttribute(moText("dummy"));
+      m_ValueDefDummy.SetIndex(-1);
+      m_ValueDefDummy.SetRange( 0.0, 0.0);
+      m_ValueDefDummy.SetType( MO_VALUE_UNDEFINED );
+
+
+
+      m_ValueDesDummy.SetValueDefinition( m_ValueDefDummy );
+      m_ValueDesDummy.SetValue( m_ValueDummy );
+
+
+  }

@@ -58,8 +58,8 @@ void moNewProject::OnOkClick(wxCommandEvent& event)
     wxString path = DirTextCtrl->GetValue();
     wxString name = ProjectNameTextCtrl->GetValue();
 
-    moText tbasepath(path.mb_str());
-    moText tprojectname(name.mb_str());
+    moText tbasepath = (char*)path.c_str();
+    moText tprojectname = (char*)name.c_str();
 
     moText datapath = (moText)tbasepath + moSlash + (moText)tprojectname + moSlash;
 

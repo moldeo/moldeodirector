@@ -94,47 +94,47 @@ moObjectMotion::moObjectMotion(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	PanelPosition = new wxPanel(Panel2, ID_PANELPOSITION, wxPoint(8,304), wxSize(104,64), wxTAB_TRAVERSAL, _T("ID_PANELPOSITION"));
 	PanelPosition->SetBackgroundColour(wxColour(255,255,255));
 	PanelTranslateCoords = new wxPanel(Panel2, ID_PANEL5, wxPoint(8,8), wxSize(44,44), wxTAB_TRAVERSAL, _T("ID_PANEL5"));
-	StaticBitmap1 = new wxStaticBitmap(PanelTranslateCoords, ID_STATICBITMAP1, wxBitmap(wxImage(_T( DATADIR "/icons/translate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(PanelTranslateCoords, ID_STATICBITMAP1, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/translate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
 	TextCtrlSz = new wxTextCtrl(Panel2, ID_TEXTCTRLSZ, wxEmptyString, wxPoint(112,164), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLSZ"));
 	PanelScalesTxt = new wxPanel(Panel2, ID_PANEL7, wxPoint(8,256), wxSize(44,44), wxTAB_TRAVERSAL, _T("ID_PANEL7"));
-	StaticBitmap5 = new wxStaticBitmap(PanelScalesTxt, ID_STATICBITMAP5, wxBitmap(wxImage(_T( DATADIR "/icons/rotate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP5"));
+	StaticBitmap5 = new wxStaticBitmap(PanelScalesTxt, ID_STATICBITMAP5, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/rotate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP5"));
 	TextCtrlSy = new wxTextCtrl(Panel2, ID_TEXTCTRLSY, wxEmptyString, wxPoint(112,148), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLSY"));
 	PanelScales = new wxPanel(Panel2, ID_PANEL4, wxPoint(8,132), wxSize(44,44), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
-	StaticBitmap3 = new wxStaticBitmap(PanelScales, ID_STATICBITMAP3, wxBitmap(wxImage(_T( DATADIR "/icons/scale.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP3"));
+	StaticBitmap3 = new wxStaticBitmap(PanelScales, ID_STATICBITMAP3, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/scale.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP3"));
 	TextCtrlSx = new wxTextCtrl(Panel2, ID_TEXTCTRLSX, wxEmptyString, wxPoint(112,132), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLSX"));
 	TextCtrlRz = new wxTextCtrl(Panel2, ID_TEXTCTRLRZ, wxEmptyString, wxPoint(112,288), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLRZ"));
 	Panel1 = new wxPanel(Panel2, ID_PANEL1, wxPoint(112,56), wxSize(144,64), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
-	BitmapButtonPosCircular = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSCIRCULAR, wxBitmap(wxImage(_T( DATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSCIRCULAR"));
+	BitmapButtonPosCircular = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSCIRCULAR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSCIRCULAR"));
 	BitmapButtonPosCircular->SetDefault();
-	BitmapButtonPosHor = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSHOR, wxBitmap(wxImage(_T( DATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSHOR"));
+	BitmapButtonPosHor = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSHOR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSHOR"));
 	BitmapButtonPosHor->SetDefault();
-	BitmapButtonPosVer = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSVERT, wxBitmap(wxImage(_T( DATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSVERT"));
+	BitmapButtonPosVer = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSVERT, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSVERT"));
 	BitmapButtonPosVer->SetDefault();
-	BitmapButton8 = new wxBitmapButton(Panel1, ID_BITMAPBUTTON8, wxBitmap(wxImage(_T( DATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON8"));
+	BitmapButton8 = new wxBitmapButton(Panel1, ID_BITMAPBUTTON8, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON8"));
 	BitmapButton8->SetDefault();
-	BitmapButtonPosRand = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSRAND, wxBitmap(wxImage(_T( DATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSRAND"));
+	BitmapButtonPosRand = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSRAND, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSRAND"));
 	BitmapButtonPosRand->SetDefault();
 	Panel3 = new wxPanel(Panel2, ID_PANEL2, wxPoint(112,304), wxSize(144,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
-	BitmapButtonRotCircular = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTCIRCULAR, wxBitmap(wxImage(_T( DATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTCIRCULAR"));
+	BitmapButtonRotCircular = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTCIRCULAR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTCIRCULAR"));
 	BitmapButtonRotCircular->SetDefault();
-	BitmapButtonRotHor = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTHOR, wxBitmap(wxImage(_T( DATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTHOR"));
+	BitmapButtonRotHor = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTHOR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTHOR"));
 	BitmapButtonRotHor->SetDefault();
-	BitmapButtonRotVer = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTVER, wxBitmap(wxImage(_T( DATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTVER"));
+	BitmapButtonRotVer = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTVER, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTVER"));
 	BitmapButtonRotVer->SetDefault();
-	BitmapButtonRotDiag = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTDIAG, wxBitmap(wxImage(_T( DATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTDIAG"));
+	BitmapButtonRotDiag = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTDIAG, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTDIAG"));
 	BitmapButtonRotDiag->SetDefault();
-	BitmapButtonRotRand = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTRAND, wxBitmap(wxImage(_T( DATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTRAND"));
+	BitmapButtonRotRand = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTRAND, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTRAND"));
 	BitmapButtonRotRand->SetDefault();
 	Panel7 = new wxPanel(Panel2, ID_PANEL10, wxPoint(112,180), wxSize(144,64), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
-	BitmapButtonScaCircular = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCACIRCULAR, wxBitmap(wxImage(_T( DATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCACIRCULAR"));
+	BitmapButtonScaCircular = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCACIRCULAR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCACIRCULAR"));
 	BitmapButtonScaCircular->SetDefault();
-	BitmapButtonScaHor = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAHOR, wxBitmap(wxImage(_T( DATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAHOR"));
+	BitmapButtonScaHor = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAHOR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAHOR"));
 	BitmapButtonScaHor->SetDefault();
-	BitmapButtonScaVer = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAVER, wxBitmap(wxImage(_T( DATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAVER"));
+	BitmapButtonScaVer = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAVER, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAVER"));
 	BitmapButtonScaVer->SetDefault();
-	BitmapButtonScaDiag = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCADIAG, wxBitmap(wxImage(_T( DATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCADIAG"));
+	BitmapButtonScaDiag = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCADIAG, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCADIAG"));
 	BitmapButtonScaDiag->SetDefault();
-	BitmapButtonScaRand = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCARAND, wxBitmap(wxImage(_T( DATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCARAND"));
+	BitmapButtonScaRand = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCARAND, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCARAND"));
 	BitmapButtonScaRand->SetDefault();
 	FlexGridSizer1->Add(Panel2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	SetSizer(FlexGridSizer1);
@@ -213,47 +213,47 @@ void moObjectMotion::Inspect( moValueDescriptor  p_ValueDescriptor) {
 
             case MO_PARAM_TRANSLATEX:
                 m_ValueDescriptorTx = GetValue( mValueDesc );
-                TextCtrlTx->ChangeValue(wxString( m_ValueDescriptorTx.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlTx->ChangeValue( moText2Wx( m_ValueDescriptorTx.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_TRANSLATEY:
                 m_ValueDescriptorTy = GetValue( mValueDesc );
-                TextCtrlTy->ChangeValue(wxString( m_ValueDescriptorTy.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlTy->ChangeValue( moText2Wx( m_ValueDescriptorTy.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_TRANSLATEZ:
                 m_ValueDescriptorTz = GetValue( mValueDesc );
-                TextCtrlTz->ChangeValue(wxString( m_ValueDescriptorTz.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlTz->ChangeValue( moText2Wx( m_ValueDescriptorTz.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_SCALEX:
                 m_ValueDescriptorSx = GetValue( mValueDesc );
-                TextCtrlSx->ChangeValue(wxString( m_ValueDescriptorSx.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlSx->ChangeValue( moText2Wx( m_ValueDescriptorSx.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_SCALEY:
                 m_ValueDescriptorSy = GetValue( mValueDesc );
-                TextCtrlSy->ChangeValue(wxString( m_ValueDescriptorSy.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlSy->ChangeValue( moText2Wx( m_ValueDescriptorSy.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_SCALEZ:
                 m_ValueDescriptorSz = GetValue( mValueDesc );
-                TextCtrlSz->ChangeValue(wxString( m_ValueDescriptorSz.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlSz->ChangeValue( moText2Wx( m_ValueDescriptorSz.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_ROTATEX:
                 m_ValueDescriptorRx = GetValue( mValueDesc );
-                TextCtrlRx->ChangeValue(wxString( m_ValueDescriptorRx.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlRx->ChangeValue( moText2Wx( m_ValueDescriptorRx.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_ROTATEY:
                 m_ValueDescriptorRy = GetValue( mValueDesc );
-                TextCtrlRy->ChangeValue(wxString( m_ValueDescriptorRy.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlRy->ChangeValue( moText2Wx( m_ValueDescriptorRy.GetValue().GetSubValue(0).Text() ) );
                 break;
 
             case MO_PARAM_ROTATEZ:
                 m_ValueDescriptorRz = GetValue( mValueDesc );
-                TextCtrlRz->ChangeValue(wxString( m_ValueDescriptorRz.GetValue().GetSubValue(0).Text() , wxConvUTF8));
+                TextCtrlRz->ChangeValue( moText2Wx( m_ValueDescriptorRz.GetValue().GetSubValue(0).Text() ) );
                 break;
 
         }
@@ -267,7 +267,7 @@ void moObjectMotion::OnTextCtrlTxText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorTx.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlTx->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlTx->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorTx );
 }
@@ -276,7 +276,7 @@ void moObjectMotion::OnTextCtrlTyText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorTy.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlTy->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlTy->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorTy );
 }
@@ -285,7 +285,7 @@ void moObjectMotion::OnTextCtrlTzText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorTz.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlTz->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlTz->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorTz );
 }
@@ -295,7 +295,7 @@ void moObjectMotion::OnTextCtrlSxText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorSx.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlSx->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlSx->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorSx );
 }
@@ -304,7 +304,7 @@ void moObjectMotion::OnTextCtrlSyText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorSy.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlSy->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlSy->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorSy );
 }
@@ -313,7 +313,7 @@ void moObjectMotion::OnTextCtrlSzText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorSz.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlSz->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlSz->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorSz );
 }
@@ -322,7 +322,7 @@ void moObjectMotion::OnTextCtrlRxText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorRx.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlRx->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlRx->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorRx );
 }
@@ -331,7 +331,7 @@ void moObjectMotion::OnTextCtrlRyText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorRy.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlRy->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlRy->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorRy );
 }
@@ -340,54 +340,54 @@ void moObjectMotion::OnTextCtrlRzText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorRz.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText(TextCtrlRz->GetValue().mb_str() ) );
+    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlRz->GetValue().c_str() ) );
 
     SetValue( m_ValueDescriptorRz );
 }
 
 void moObjectMotion::OnSliderTxCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlTx->SetValue(wxString( FloatToStr( (float)SliderTx->GetValue() / 1000.0 ) , wxConvUTF8));
+    TextCtrlTx->SetValue( moText2Wx( FloatToStr( (float)SliderTx->GetValue() / 1000.0 ) ) );
 }
 
 void moObjectMotion::OnSliderTyCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlTy->SetValue(wxString( FloatToStr( (float)SliderTy->GetValue() / 1000.0 ) , wxConvUTF8));
+    TextCtrlTy->SetValue( moText2Wx( FloatToStr( (float)SliderTy->GetValue() / 1000.0 ) ) );
 }
 
 void moObjectMotion::OnSliderTzCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlTz->SetValue(wxString( FloatToStr( (float)SliderTz->GetValue() / 1000.0 ) , wxConvUTF8));
+    TextCtrlTz->SetValue( moText2Wx( FloatToStr( (float)SliderTz->GetValue() / 1000.0 ) ) );
 }
 
 void moObjectMotion::OnSliderSxCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlSx->SetValue(wxString( FloatToStr( (float)SliderSx->GetValue()/ 10.0 ) , wxConvUTF8));
+    TextCtrlSx->SetValue( moText2Wx( FloatToStr( (float)SliderSx->GetValue()/ 10.0 ) ) );
 }
 
 void moObjectMotion::OnSliderSyCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlSy->SetValue(wxString( FloatToStr( (float)SliderSy->GetValue() / 10.0 ) , wxConvUTF8));
+    TextCtrlSy->SetValue( moText2Wx( FloatToStr( (float)SliderSy->GetValue() / 10.0 ) ) );
 }
 
 void moObjectMotion::OnSliderSzCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlSz->SetValue(wxString( FloatToStr( (float)SliderSz->GetValue() / 10.0 ) , wxConvUTF8));
+    TextCtrlSz->SetValue( moText2Wx( FloatToStr( (float)SliderSz->GetValue() / 10.0 ) ) );
 }
 
 void moObjectMotion::OnSliderRxCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlRx->SetValue(wxString( FloatToStr( (float)SliderRx->GetValue() ) , wxConvUTF8));
+    TextCtrlRx->SetValue( moText2Wx( FloatToStr( (float)SliderRx->GetValue() ) ) );
 }
 
 void moObjectMotion::OnSliderRyCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlRy->SetValue(wxString( FloatToStr( (float)SliderRy->GetValue() ) , wxConvUTF8));
+    TextCtrlRy->SetValue( moText2Wx( FloatToStr( (float)SliderRy->GetValue() ) ) );
 }
 
 void moObjectMotion::OnSliderRzCmdScrollThumbTrack(wxScrollEvent& event)
 {
-    TextCtrlRz->SetValue(wxString( FloatToStr( (float)SliderRz->GetValue() ) , wxConvUTF8));
+    TextCtrlRz->SetValue( moText2Wx( FloatToStr( (float)SliderRz->GetValue() ) ) );
 }
 
 void moObjectMotion::OnButton1Click(wxCommandEvent& event)

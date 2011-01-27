@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moShaderCtrl">
+		<focused>1</focused>
+		<bg>#909090</bg>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>wxNO_BORDER</style>
+		<object class="wxTextCtrl" name="ID_TEXTCTRLSHADERCFG" variable="TextCtrlShaderCfg" member="yes">
+			<pos>16,0</pos>
+			<size>80,16</size>
+			<handler function="OnTextCtrlShaderCfgText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRLDESTINATION" variable="TextCtrlDestination" member="yes">
+			<pos>208,0</pos>
+			<size>80,16</size>
+			<handler function="OnTextCtrlDestinationText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOXSHADERONOFF" variable="CheckBoxOnOff" member="yes">
+			<pos>0,0</pos>
+			<handler function="OnCheckBoxOnOffClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTONSHADERSELECT" variable="BitmapButtonShaderSelect" member="yes">
+			<bitmap>../../doc/icons/select.png</bitmap>
+			<default>1</default>
+			<pos>120,0</pos>
+			<size>13,13</size>
+			<handler function="OnBitmapButtonShaderSelectClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTONSHADERIMPORT" variable="BitmapButtonShaderImport" member="yes">
+			<bitmap>../../doc/icons/import.png</bitmap>
+			<default>1</default>
+			<pos>104,0</pos>
+			<size>13,13</size>
+			<handler function="OnBitmapButtonShaderImportClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxSlider" name="ID_SLIDERSHADERALPHA" variable="SliderShaderAlpha" member="yes">
+			<pos>136,0</pos>
+			<size>64,13</size>
+		</object>
+	</object>
+</wxsmith>

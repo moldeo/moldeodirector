@@ -25,7 +25,6 @@
 
   Authors:
   Fabricio Costa
-  Andrés Colubri
 
   Description:
 	general definitions
@@ -43,45 +42,17 @@
 
 // for all others, include the necessary headers(this file is usually all you
 // need because it includes almost all "standard" wxWidgets headers)
-//#ifndef WX_PRECOMP
-//    #include "wx/wx.h"
-//#endif
+#ifndef WX_PRECOMP
+    #include "wx/wx.h"
+#endif
 
 #include "moTypes.h"
+
+#define MOLDEO_DIRECTOR_VERSION "7.8.0.0"
 
 // ----------------------------------------------------------------------------
 // resources
 // ----------------------------------------------------------------------------
-
-//#include "wx/app.h"
-//#include "wx/grid.h"
-//#include "wx/treectrl.h"
-//#include "wx/spinctrl.h"
-//#include "wx/artprov.h"
-//#include "wx/clipbrd.h"
-//#include "wx/image.h"
-//#include "wx/colordlg.h"
-//#include "wx/wxhtml.h"
-//#include "wx/imaglist.h"
-//#include "wx/dataobj.h"
-//#include "wx/dcclient.h"
-//#include "wx/bmpbuttn.h"
-//#include "wx/menu.h"
-//#include "wx/toolbar.h"
-//#include "wx/statusbr.h"
-//#include "wx/msgdlg.h"
-//#include "wx/textdlg.h"
-//#include <wx/stdpaths.h>
-//#include "wx/button.h"
-//#include "wx/image.h"
-//#include "wx/sysopt.h"
-//#include "wx/html/htmlwin.h"
-//#include "wx/html/htmlproc.h"
-//#include "wx/fs_inet.h"
-//#include "wx/filedlg.h"
-//#include "wx/utils.h"
-//#include "wx/aui/aui.h"
-//#include <wx/glcanvas.h>
 
 
 class moGLCanvas;
@@ -97,7 +68,77 @@ class moSessionProject;
 
 #include "moConsole.h"
 
-#define moText2Wx(X) (wxChar*)(const char*)X
-#define moWx2Text(X) moText(X.mb_str())
+#define moText2Wx(X) (wxChar*)(char*)moText(X)
+#define moWx2Text(X) moText((char*)(wxChar*)X.c_str())
+
+
+// IDs for the controls and the menu commands
+enum
+{
+    // menu items
+    MODIRECTOR_QUIT = wxID_EXIT,
+
+    // it is important for the id corresponding to the "About" command to have
+    // this standard value as otherwise it won't be handled properly under Mac
+    //(where it is special and put into the "Apple" menu)
+    MODIRECTOR_ABOUT = wxID_ABOUT,
+	MODIRECTOR_NEWPROJECT = 9913,
+	MODIRECTOR_OPENPROJECT = 9914,
+	MODIRECTOR_CLOSEPROJECT = 9915,
+	MODIRECTOR_SAVEPROJECT = 9916,
+
+    MODIRECTOR_EXAMPLES = 9917,
+
+	MODIRECTOR_NEWPREEFFECT = 9926,
+	MODIRECTOR_NEWEFFECT = 9927,
+	MODIRECTOR_NEWPOSTEFFECT = 9928,
+	MODIRECTOR_NEWIODEVICE = 9929,
+	MODIRECTOR_NEWRESOURCE = 9930,
+
+	MODIRECTOR_SAVEMOB = 9940,
+	MODIRECTOR_SAVEALL = 9941,
+	MODIRECTOR_CLOSEMOB = 9942,
+	MODIRECTOR_CLOSEALL = 9943,
+	MODIRECTOR_OPENMOB = 9944,
+	MODIRECTOR_IMPORTMOB = 9945,
+	MODIRECTOR_DELETEMOB = 9946,
+	MODIRECTOR_DUPLICATEMOB = 9947,
+	MODIRECTOR_RENAMEMOB = 9948,
+	MODIRECTOR_MOVEUPMOB = 9949,
+	MODIRECTOR_MOVEDOWNMOB = 9950,
+
+    MODIRECTOR_PREFERENCES = 9960,
+
+	MODIRECTOR_PROJECT_PREVIEW = 9980,
+	MODIRECTOR_PROJECT_PREVIEW_FULLSCREEN = 9981,
+	MODIRECTOR_FULLSCREEN = 9982,
+	MODIRECTOR_CONFIGURATION = 9983,
+	MODIRECTOR_LOG = 9984,
+	MODIRECTOR_COMMAND = 9990,
+
+  MODIRECTOR_EXAMPLE_START = 10009,
+  MODIRECTOR_EXAMPLE_END = 11009,
+	MODIRECTOR_EXAMPLE_SIMPLE = 11010,
+  MODIRECTOR_EXAMPLE_CAMERA = 11020,
+  MODIRECTOR_EXAMPLE_CAMERA_CIRCULAR_BUFFER = 11021,
+  MODIRECTOR_EXAMPLE_VIDEO_BUFFER = 11022,
+
+  MODIRECTOR_EXAMPLE_PARTICLES_EXAMPLE = 11023,
+  MODIRECTOR_EXAMPLE_PARTICLES_EXAMPLE_BOUNCE = 11024,
+  MODIRECTOR_EXAMPLE_PARTICLES_INTERACTIVE = 11025,
+
+  MODIRECTOR_EXAMPLE_PARTICLES_GRID = 11030,
+  MODIRECTOR_EXAMPLE_PARTICLES_SPHERE = 11031,
+  MODIRECTOR_EXAMPLE_PARTICLES_CYLINDER = 11032,
+  MODIRECTOR_EXAMPLE_PARTICLES_JET = 11033,
+  MODIRECTOR_EXAMPLE_PARTICLES_POINT = 11034,
+  MODIRECTOR_EXAMPLE_PARTICLES_SPIRAL = 11035,
+
+	MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA = 11039,
+	MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU = 11040,
+  MODIRECTOR_EXAMPLE_INTERACTIVE_CAMERA_GPU_KLT2 = 11050
+
+
+};
 
 #endif

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="moNewEffectDialog">
+		<size>360,352</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Effect Label Name (used to reference between objects)</label>
+			<pos>16,16</pos>
+		</object>
+		<object class="wxTextCtrl" name="ID_LABELNAMECTRL" variable="LabelNameCtrl" member="yes">
+			<pos>16,32</pos>
+			<size>264,21</size>
+			<handler function="OnLabelNameCtrlText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxTextCtrl" name="ID_FILENAMECTRL" variable="ConfigFilenameCtrl" member="yes">
+			<pos>16,80</pos>
+			<size>264,21</size>
+			<handler function="OnConfigFilenameCtrlText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Effects Plugins</label>
+			<pos>16,128</pos>
+		</object>
+		<object class="wxButton" name="ID_OKBUTTON" variable="OkButton" member="yes">
+			<label>OK</label>
+			<pos>176,312</pos>
+			<handler function="OnOkButtonClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_CANCELBUTTON" variable="CancelButton" member="yes">
+			<label>Cancel</label>
+			<pos>256,312</pos>
+			<handler function="OnCancelButtonClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxChoice" name="ID_CHOICE1" variable="Choice1" member="yes">
+			<content>
+				<item>Pre-Effects</item>
+				<item>Effects</item>
+				<item>Post-Effects</item>
+			</content>
+			<selection>1</selection>
+			<pos>208,128</pos>
+		</object>
+		<object class="wxTreeCtrl" name="ID_TREECTRL" variable="TreeCtrl" member="yes">
+			<pos>16,152</pos>
+			<size>320,152</size>
+			<handler function="OnTreeCtrlSelectionChanged" entry="EVT_TREE_SEL_CHANGED" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticTextConfigFilename" member="yes">
+			<label>Config file name</label>
+			<pos>16,64</pos>
+		</object>
+	</object>
+</wxsmith>

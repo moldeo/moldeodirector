@@ -101,6 +101,8 @@ private:
 
 	moConfig			m_ConsoleConfig;
 
+	moMobConfig*		m_pMobs[ MO_OBJECT_TYPES ];
+
 	//PATHS
 	moProjectDescriptor	m_ProjectDescriptor;
 

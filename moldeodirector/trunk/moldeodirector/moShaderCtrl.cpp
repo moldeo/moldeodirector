@@ -29,28 +29,36 @@ moShaderCtrl::moShaderCtrl(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	//(*Initialize(moShaderCtrl)
 	Create(parent, id, wxDefaultPosition, wxDefaultSize, wxNO_BORDER, _T("id"));
 	SetFocus();
-	SetBackgroundColour(wxColour(144,144,144));
+	SetForegroundColour(wxColour(0,0,0));
+	SetBackgroundColour(wxColour(255,255,255));
 	TextCtrlShaderCfg = new wxTextCtrl(this, ID_TEXTCTRLSHADERCFG, wxEmptyString, wxPoint(16,0), wxSize(80,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLSHADERCFG"));
 	TextCtrlDestination = new wxTextCtrl(this, ID_TEXTCTRLDESTINATION, wxEmptyString, wxPoint(208,0), wxSize(80,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLDESTINATION"));
 	CheckBoxOnOff = new wxCheckBox(this, ID_CHECKBOXSHADERONOFF, wxEmptyString, wxPoint(0,0), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOXSHADERONOFF"));
 	CheckBoxOnOff->SetValue(false);
-	BitmapButtonShaderSelect = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERSELECT, wxBitmap(wxImage(_T(DATADIR "/icons/select.png"))), wxPoint(120,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERSELECT"));
+	BitmapButtonShaderSelect = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERSELECT, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/select.png"))), wxPoint(120,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERSELECT"));
 	BitmapButtonShaderSelect->SetDefault();
-	BitmapButtonShaderImport = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERIMPORT, wxBitmap(wxImage(_T(DATADIR "/icons/import.png"))), wxPoint(104,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERIMPORT"));
+	BitmapButtonShaderImport = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERIMPORT, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/import.png"))), wxPoint(104,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERIMPORT"));
 	BitmapButtonShaderImport->SetDefault();
 	SliderShaderAlpha = new wxSlider(this, ID_SLIDERSHADERALPHA, 0, 0, 100, wxPoint(136,0), wxSize(64,13), 0, wxDefaultValidator, _T("ID_SLIDERSHADERALPHA"));
-	
+
 	Connect(ID_TEXTCTRLSHADERCFG,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moShaderCtrl::OnTextCtrlShaderCfgText);
 	Connect(ID_TEXTCTRLDESTINATION,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moShaderCtrl::OnTextCtrlDestinationText);
 	Connect(ID_CHECKBOXSHADERONOFF,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&moShaderCtrl::OnCheckBoxOnOffClick);
 	Connect(ID_BITMAPBUTTONSHADERSELECT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moShaderCtrl::OnBitmapButtonShaderSelectClick);
 	Connect(ID_BITMAPBUTTONSHADERIMPORT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moShaderCtrl::OnBitmapButtonShaderImportClick);
+	Connect(wxID_ANY,wxEVT_ERASE_BACKGROUND,(wxObjectEventFunction)&moShaderCtrl::OnEraseBackground);
 	//*)
 	SetSize(pos.x, pos.y, size.x, size.y );
 
 	m_pLevelShaderAlphaCtrl =  new wxMoLevelCtrl(this, ID_LEVELSHADERALPHA, 50, 0, 100, SliderShaderAlpha->GetPosition(), SliderShaderAlpha->GetSize(), 0, wxDefaultValidator, _T("ID_LEVELSHADERALPHA") );
     Connect( ID_LEVELSHADERALPHA, wxEVT_MOLEVELCTRL, (wxObjectEventFunction)&moShaderCtrl::OnLevelShaderAlpha );
 	if (SliderShaderAlpha) SliderShaderAlpha->Destroy();
+
+	TextCtrlShaderCfg->SetBackgroundColour(wxColour(255,255,255));
+	TextCtrlDestination->SetBackgroundColour(wxColour(255,255,255));
+
+	TextCtrlShaderCfg->SetForegroundColour(wxColour(255,255,255));
+	TextCtrlDestination->SetForegroundColour(wxColour(255,255,255));
 
 }
 
@@ -72,8 +80,8 @@ moShaderCtrl::Inspect( moValueDescriptor p_ValueDescriptor ) {
 
     } else if (m_ValueDescriptor.GetValue().GetSubValueCount()>1) {
 
-        TextCtrlShaderCfg->ChangeValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(1).Text(), wxConvUTF8));
-        TextCtrlDestination->ChangeValue(wxString(m_ValueDescriptor.GetValue().GetSubValue(2).Text(), wxConvUTF8));
+        TextCtrlShaderCfg->ChangeValue( moText2Wx( m_ValueDescriptor.GetValue().GetSubValue(1).Text() ) );
+        TextCtrlDestination->ChangeValue( moText2Wx( m_ValueDescriptor.GetValue().GetSubValue(2).Text() ) );
 
         if (m_ValueDescriptor.GetValue().GetSubValueCount()==4) {
 
@@ -120,7 +128,20 @@ void moShaderCtrl::OnBitmapButtonShaderImportClick(wxCommandEvent& event)
 {
     wxFileDialog* pFileDialog = new wxFileDialog( this );
 
+    moProjectDescriptor ProjectDescriptor;
+    ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
+
+    wxString relativepath = moText2Wx( ProjectDescriptor.GetConfigPath() );
+
+    wxFileName ConfigPath = wxFileName::DirName( relativepath );
+
+    wxFileName absname = wxFileName::DirName( relativepath );
+    absname.MakeAbsolute();
+    wxString absolutepath = absname.GetPath();
+
 	if(pFileDialog) {
+
+    pFileDialog->SetDirectory( absolutepath );
 
 		pFileDialog->SetWildcard(wxT("Cfg files (*.cfg)|*.cfg|All files (*.*)|*.*"));
 
@@ -131,12 +152,13 @@ void moShaderCtrl::OnBitmapButtonShaderImportClick(wxCommandEvent& event)
 			moProjectDescriptor ProjectDescriptor;
 			ProjectDescriptor = m_ValueDescriptor.GetParamDescriptor().GetMobDescriptor().GetProjectDescriptor();
 
-			wxString relativepath(ProjectDescriptor.GetConfigPath(), wxConvUTF8);
+			wxString relativepath = moText2Wx( ProjectDescriptor.GetConfigPath() );
 
 			FileName.MakeRelativeTo( relativepath );
 
 
 			wxString path = FileName.GetFullPath();
+			const char *cnamerelative = (char*)path.c_str();
 
 			TextCtrlShaderCfg->SetValue( path );
 
@@ -159,7 +181,9 @@ void moShaderCtrl::ProcessShaderValues() {
     moText shaderdest = moWx2Text( TextCtrlDestination->GetValue() );
     MOfloat alphaval = (float)m_pLevelShaderAlphaCtrl->GetValue() / 100.0;
 
-    if (shaderdest!=moText("") && shaderstr!=moText("")) {
+
+    if (  shaderdest!=moText("") ||
+          shaderstr!=moText("") ) {
         if (rValue.GetSubValueCount()==1) {
 
             rValue.AddSubValue( shaderstr, "TXT" );
@@ -199,4 +223,9 @@ void moShaderCtrl::OnBitmapButtonShaderSelectClick(wxCommandEvent& event)
 
 void moShaderCtrl::OnCheckBoxOnOffClick(wxCommandEvent& event)
 {
+}
+
+void moShaderCtrl::OnEraseBackground(wxEraseEvent& event)
+{
+  //nada
 }

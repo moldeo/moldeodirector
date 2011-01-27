@@ -5,7 +5,7 @@ BEGIN_EVENT_TABLE( moDirectorConsole, wxEvtHandler)
   EVT_TIMER( TICKS_ID, moDirectorConsole::OnTimer)
 END_EVENT_TABLE()
 
-moDirectorConsole::moDirectorConsole() {
+moDirectorConsole::moDirectorConsole() : moConsole() {
 
 	m_pDirectorCore = NULL;
 	m_timerticks = 0;
@@ -32,7 +32,7 @@ moDirectorConsole::SetDirectorCore( moDirectorCore* p_pDirectorCore ) {
 	m_pDirectorCore = p_pDirectorCore;
 	SetNextActionHandler((moIDirectorActions*)m_pDirectorCore);
     m_timer.SetOwner( this, TICKS_ID);
-	m_timer.Start(15);
+	m_timer.Start(16);
 }
 
 moMoldeoObject*
@@ -66,7 +66,7 @@ moDirectorConsole::GetObject( moMobDescriptor p_MobDesc ) {
             }
             break;
         case MO_OBJECT_CONSOLE:
-            pMOB = (moMoldeoObject*) this;
+            pMOB = dynamic_cast<moMoldeoObject*>(this);
             break;
 
     }
@@ -87,14 +87,14 @@ moDirectorConsole::GetObject( moMobDescriptor p_MobDesc ) {
 
 
 moDirectorStatus
-moDirectorConsole::NewProject( moProjectDescriptor p_ProjectDescriptor )  {//create a console.cfg file with their effects.cfg
+moDirectorConsole::NewProject( const moProjectDescriptor& p_ProjectDes )  {//create a console.cfg file with their effects.cfg
 
 	//minimo: crear el archivo de consola .mol
 
 	//crea las definiciones de parámetros
 	GetDefinition();
 
-	if ( m_Config.CreateDefault( p_ProjectDescriptor.GetFullConfigName() ) ) {
+	if ( m_Config.CreateDefault( p_ProjectDes.GetFullConfigName() ) ) {
 	    m_Config.GetParam( "devices" ).DeleteValue(0);
 	    m_Config.GetParam( "resources" ).DeleteValue(0);
 	    m_Config.GetParam( "preeffect" ).DeleteValue(0);
@@ -102,13 +102,15 @@ moDirectorConsole::NewProject( moProjectDescriptor p_ProjectDescriptor )  {//cre
 	    m_Config.GetParam( "posteffect" ).DeleteValue(0);
 	    m_Config.GetParam( "mastereffect" ).DeleteValue(0);
 
-	    if ( m_Config.SaveConfig( p_ProjectDescriptor.GetFullConfigName() ) == MO_CONFIG_OK ) {
+	    if ( m_Config.SaveConfig( p_ProjectDes.GetFullConfigName() ) == MO_CONFIG_OK ) {
 
             m_Config.UnloadConfig();
 
+            ///...
+
             Log( moText(".mol default project file created") );
 
-            return OpenProject( p_ProjectDescriptor );
+            return OpenProject( p_ProjectDes );
 	    } else LogError( moText("Couldn't update mol file") );
     }
 
@@ -120,22 +122,33 @@ moDirectorConsole::NewProject( moProjectDescriptor p_ProjectDescriptor )  {//cre
 
 
 moDirectorStatus
-moDirectorConsole::OpenProject( moProjectDescriptor p_projectdescriptor )  {//load a console.cfg file with their effects.cfg
+moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//load a console.cfg file with their effects.cfg
 	//es importante reinicializar
+    CloseProject();
 
-	m_pResourceManager->Finish();
+	if (m_pResourceManager)
+        m_pResourceManager->Finish();
 
 	if ( Initialized() ) {
-		Finish();
+	  m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_CLOSING );
+		if (Finish()) {
+      m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_CLOSED );
+		}
 	}
 
- 	if( Init( p_projectdescriptor.GetConfigPath(),
-              p_projectdescriptor.GetFullConfigName(),
+  wxString wxAppPath =wxGetCwd();
+
+  m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_OPENING );
+
+ 	if( Init(   moWx2Text(wxAppPath),
+              p_ProjectDes.GetConfigPath(),
+              p_ProjectDes.GetFullConfigName(),
               m_pIODeviceManager,
               m_pResourceManager,
               //RENDERMANAGER_MODE_FRAMEBUFFER,
               //RENDERMANAGER_MODE_FRAMEBUFFER,
-              RENDERMANAGER_MODE_FRAMEBUFFER,//render to texture: MO_RENDER_TO_TEXTURE_FBSCREEN
+              RENDERMANAGER_MODE_NORMAL,
+              //render to texture: MO_RENDER_TO_TEXTURE_FBSCREEN
               //RENDERMANAGER_MODE_NORMAL,
               400,300,400,300,
               /*MO_DEF_SCREEN_WIDTH, MO_DEF_SCREEN_HEIGHT,
@@ -143,15 +156,18 @@ moDirectorConsole::OpenProject( moProjectDescriptor p_projectdescriptor )  {//lo
               GetHandle())) {
 
 
-        m_ProjectDescriptor = this->GetProject();
+        m_ProjectDescriptor.Set(
+            p_ProjectDes.GetConfigPath(),
+            p_ProjectDes.GetConfigName() );
 
-        //ahora actualizarmos el GUI
-		m_pDirectorCore->ProjectUpdated( m_ProjectDescriptor );
+        ///ahora actualizarmos el GUI
+        m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_OPENED );
+        m_pDirectorCore->ProjectUpdated( m_ProjectDescriptor );
 
 
-        //========================================================================
-        //  ACTUALIZAMOS TODOS LOS VALORES: para aquellos objetos que lo necesiten
-        //========================================================================
+        ///========================================================================
+        ///  ACTUALIZAMOS TODOS LOS VALORES: para aquellos objetos que lo necesiten
+        ///========================================================================
 
 
 
@@ -219,15 +235,16 @@ moDirectorStatus
 moDirectorConsole::CloseProject() {
 
 	if ( Initialized() ) {
-		Finish();
+	  m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_CLOSING );
+		if ( Finish() ) {
+		  ///pasamos el estado a cerrado
+		  m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_CLOSED );
+
+		  return m_pDirectorCore->ProjectUpdated( m_ProjectDescriptor );
+
+		} else return MO_DIRECTOR_STATUS_ERROR;
 	}
-
-    //m_timer.Stop();
-	/*
-	m_pDirectorCore->ProjectUpdated( m_ProjectDescriptor );
-	*/
-
-
+  //m_timer.Stop();
 	return MO_DIRECTOR_STATUS_OK;
 }
 
@@ -249,14 +266,16 @@ moDirectorConsole::SaveAsProject( moText p_configname, moText p_configpath ) { /
 	return MO_DIRECTOR_STATUS_OK;
 }
 
+
+///modifica los valores del proyecto
 moDirectorStatus
-moDirectorConsole::SetProject( moProjectDescriptor p_projectdescriptor ) {
+moDirectorConsole::SetProject( const moProjectDescriptor& p_projectdescriptor ) {
 	return MO_DIRECTOR_STATUS_OK;
 }
 
-moProjectDescriptor
+///devuelve el proyecto actual
+const moProjectDescriptor&
 moDirectorConsole::GetProject() {
-    m_ProjectDescriptor = moProjectDescriptor( m_pResourceManager->GetDataMan()->GetConfigName(), m_pResourceManager->GetDataMan()->GetDataPath());
 	return m_ProjectDescriptor;
 }
 
@@ -546,6 +565,17 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
 	moDirectorStatus
 	moDirectorConsole::CloseMob( moMobDescriptor p_MobDesc ) {
+		/*
+		if ( 0<=p_MobDesc.GetIndex() && p_MobDesc.GetIndex()< m_ProjectDescriptor.GetMobsCount(p_MobDesc.GetType())) {
+
+			if( m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].IsConfigLoaded() ) {
+				m_pMobs[p_MobDesc.GetType()][p_MobDesc.GetIndex()].UnloadConfig();
+				return MO_DIRECTOR_STATUS_OK;
+			} else {
+				return MO_DIRECTOR_STATUS_ERROR;
+			}
+		} else
+		*/
 		return MO_DIRECTOR_STATUS_ERROR;
 	}
 
@@ -557,8 +587,10 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 	moDirectorStatus
 	moDirectorConsole::NewMob( moMobDescriptor p_MobDesc ) {
 
-        moText confignamecomplete = "";
-        bool res = false;
+      m_timer.Stop();
+
+      moText confignamecomplete = "";
+      bool res = false;
 
 	    p_MobDesc.SetProjectDescriptor( GetProject() );
 
@@ -591,6 +623,13 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 pMOB = (moMoldeoObject*)m_EffectManager.New( pMobDef );
                 pEffect = (moEffect*) pMOB;
                 if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "posteffect" );
+                break;
+            case MO_OBJECT_MASTEREFFECT:
+                MobIndex.SetParamIndex( m_Config.GetParamIndex("mastereffect") );
+                MobIndex.SetValueIndex( m_EffectManager.MasterEffects().Count() );
+                pMOB = (moMoldeoObject*)m_EffectManager.New( pMobDef );
+                pEffect = (moEffect*) pMOB;
+                if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "mastereffect" );
                 break;
             case MO_OBJECT_IODEVICE:
                 MobIndex.SetParamIndex( m_Config.GetParamIndex("devices") );
@@ -644,12 +683,13 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 ///Creates the config file based on definition plugin
                 moFile pFile(confignamecomplete);
 
+                ///veamos si existe antes...
                 if (!pFile.Exists()) {
-
+                    ///si no existe lo creamos...
                     res = pMOB->GetConfig()->CreateDefault( confignamecomplete );
 
                 } else {
-
+                    ///si existe lo cargamos...
                     res = true;
 
                 }
@@ -681,9 +721,11 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
                     m_Config.GetParam( pMOB->GetMobDefinition().GetMobIndex().GetParamIndex() ).AddValue( effectvalue );
 
-                    //LoadConnections();
+                    LoadConnections();
 
-                    ProjectUpdated( m_ProjectDescriptor );
+                    if (!pMOB->GetMobDefinition().IsValid()) {
+                      LogError( moText("NewMob:: Source > MobDefinition Invalid") );
+                    } else ProjectUpdated( m_ProjectDescriptor );
 
                 } else {
                     LogError( moText("moDirectorConsole::NewMob Couldn't create default configuration") );
@@ -696,8 +738,218 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
             LogError( moText("moDirectorConsole::NewMob Couldn't create effect: " ) + pMobDef.GetName() );
         }
 
+        m_timer.Start(16);
+
         return MO_DIRECTOR_STATUS_ERROR;
 
+	}
+
+
+	moDirectorStatus moDirectorConsole::MoveMob( moMobDescriptor p_MobDesc, int position ) {
+
+    ///chequea el objeto a mover
+
+    moMoldeoObject* pObj = NULL;
+    moMoldeoObject* pObjAux = NULL;
+    int array_count = 0;
+    moMoldeoObjectType MobType = p_MobDesc.GetMobDefinition().GetType();
+    int index_object = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
+
+    pObj = m_MoldeoObjects.Get(
+                              RelativeToGeneralIndex( index_object, MobType )
+                               );
+
+    ///si el valor del indice nuevo es valido (esta en rango)
+    switch( p_MobDesc.GetMobDefinition().GetType() ) {
+
+      case MO_OBJECT_EFFECT:
+        array_count = m_EffectManager.Effects().Count();
+        break;
+      case MO_OBJECT_PREEFFECT:
+        array_count = m_EffectManager.PreEffects().Count();
+        break;
+      case MO_OBJECT_POSTEFFECT:
+        array_count = m_EffectManager.PostEffects().Count();
+        break;
+      case MO_OBJECT_MASTEREFFECT:
+        array_count = m_EffectManager.MasterEffects().Count();
+        break;
+
+      case MO_OBJECT_IODEVICE:
+        array_count = m_pIODeviceManager->IODevices().Count();
+        break;
+      case MO_OBJECT_RESOURCE:
+        //array_count = m_pResourceManager->Resources().Count();
+        array_count = 0;
+        LogError( "Sorry. Changing order of resources is not allowed yet." );
+        return MO_DIRECTOR_STATUS_ERROR;
+        break;
+      default:
+        array_count = 0;
+        break;
+
+    }
+
+
+        if ( position >= 0 && position < array_count ) {
+
+            ///hace un switch entre el objeto q estaba ahi y este...
+            //p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex()
+            //moEffect* pObjFx = m_EffectManager.Effects().Get(index_object);
+            moMobIndex mindex = p_MobDesc.GetMobDefinition().GetMobIndex();
+            int paramindex = mindex.GetParamIndex();
+
+            int preconf1 = m_Config.GetValue( paramindex, mindex.GetValueIndex() ).GetSubValue(3).Int();
+            int active1 = m_Config.GetValue( paramindex, mindex.GetValueIndex() ).GetSubValue(4).Int();
+
+            ///intercambiamos los objetos dentro del array del effectmanager
+
+
+            int diff = position - index_object;
+            if (diff==0) {
+              ///no se hace nada
+            } else if (diff>0) {
+              ///position es mas que index_object, el objeto baja en los indices
+
+              /// se reordenan los objetos entre el position y el index_object....
+              /// arrancando desde el index_object hasta el position
+              for( int o = index_object; o < (position); o++ ) {
+
+                ///intercambiamos los objetos... en el array
+                pObjAux = m_MoldeoObjects.Get( RelativeToGeneralIndex( o+1, MobType ) );
+
+                if ( MO_OBJECT_EFFECT<=MobType && MobType<=MO_OBJECT_PREEFFECT) m_EffectManager.Set( o, pObjAux );
+                else if (MobType==MO_OBJECT_IODEVICE) m_pIODeviceManager->IODevices().Set( o, (moIODevice*)pObjAux );
+
+                m_MoldeoObjects.Set( RelativeToGeneralIndex( o, MobType ) , pObjAux );
+
+                ///intercambiamos los valores en el config y actualizamos los mobindex.... importante!!
+                //moMobIndex mindex2 = pObjFxAux->GetMobDefinition().GetMobIndex();
+                moMobIndex mindex2 = pObjAux->GetMobDefinition().GetMobIndex();
+                int preconf2 = m_Config.GetValue( paramindex, mindex2.GetValueIndex() ).GetSubValue(3).Int();
+                int active2 = m_Config.GetValue( paramindex, mindex2.GetValueIndex() ).GetSubValue(4).Int();
+
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(0).SetText( pObjAux->GetName() );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(1).SetText( pObjAux->GetConfigName() );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(2).SetText( pObjAux->GetLabelName() );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(3).SetInt( preconf2 );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(4).SetInt( active2 );
+                pObjAux->GetMobDefinition().GetMobIndex().SetValueIndex( o );
+
+              }
+              ///al fin...
+              if ( MO_OBJECT_EFFECT<=MobType && MobType<=MO_OBJECT_PREEFFECT) m_EffectManager.Set( position, pObj );
+              else if (MobType==MO_OBJECT_IODEVICE) m_pIODeviceManager->IODevices().Set( position, (moIODevice*)pObj );
+
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(0).SetText( pObj->GetName() );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(1).SetText( pObj->GetConfigName() );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(2).SetText( pObj->GetLabelName() );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(3).SetInt( preconf1 );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(4).SetInt( active1 );
+              pObj->GetMobDefinition().GetMobIndex().SetValueIndex( position );
+              int mobsindx = RelativeToGeneralIndex( position, MobType );
+              m_MoldeoObjects.Set( mobsindx, pObj );
+
+            } else if (diff<0) {
+              ///position es menos que index_object, el objeto sube en los indices
+
+              /// se reordenan los objetos entre el position y el index_object....
+              /// arrancando desde el position hasta el index_object
+              for( int o = index_object ; o >= (position+1)  ; o-- ) {
+
+               pObjAux = m_MoldeoObjects.Get( RelativeToGeneralIndex( o-1, MobType ) );
+
+                if ( MO_OBJECT_EFFECT<=MobType && MobType<=MO_OBJECT_PREEFFECT) m_EffectManager.Set( o, pObjAux );
+                else if (MobType==MO_OBJECT_IODEVICE) m_pIODeviceManager->IODevices().Set( o, (moIODevice*)pObjAux );
+
+                m_MoldeoObjects.Set( RelativeToGeneralIndex( o, MobType ), pObjAux );
+
+                moMobIndex mindex2 = pObjAux->GetMobDefinition().GetMobIndex();
+                int preconf2 = m_Config.GetValue( paramindex, mindex2.GetValueIndex() ).GetSubValue(3).Int();
+                int active2 = m_Config.GetValue( paramindex, mindex2.GetValueIndex() ).GetSubValue(4).Int();
+
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(0).SetText( pObjAux->GetName() );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(1).SetText( pObjAux->GetConfigName() );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(2).SetText( pObjAux->GetLabelName() );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(3).SetInt( preconf2 );
+                m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(4).SetInt( active2 );
+
+                pObjAux->GetMobDefinition().GetMobIndex().SetValueIndex( o );
+
+              }
+              ///al fin...
+              if ( MO_OBJECT_EFFECT<=MobType && MobType<=MO_OBJECT_PREEFFECT) m_EffectManager.Set( position, pObj );
+              else if (MobType==MO_OBJECT_IODEVICE) m_pIODeviceManager->IODevices().Set( position, (moIODevice*)pObj );
+
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(0).SetText( pObj->GetName() );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(1).SetText( pObj->GetConfigName() );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(2).SetText( pObj->GetLabelName() );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(3).SetInt( preconf1 );
+              m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(4).SetInt( active1 );
+              pObj->GetMobDefinition().GetMobIndex().SetValueIndex( position );
+              int mobsindx = RelativeToGeneralIndex( position, MobType );
+              m_MoldeoObjects.Set( mobsindx, pObj );
+            }
+
+        }
+
+    LoadConnections();
+
+    return ProjectUpdated( m_ProjectDescriptor );
+
+    return MO_DIRECTOR_STATUS_ERROR;
+	}
+
+	moDirectorStatus moDirectorConsole::DuplicateMob( moMobDescriptor p_MobDesc ) {
+
+    ///duplicar el archivo de configuracion agregandole un numero al final...
+    moText datapath;
+    moText filenameduplicate;
+    moFile newfile;
+    moText filename = p_MobDesc.GetMobDefinition().GetConfigName();
+    moText labelname = p_MobDesc.GetMobDefinition().GetLabelName();
+    moText labelnameduplicate;
+    moDirectorStatus mStatus = MO_DIRECTOR_STATUS_ERROR;
+
+    if (m_pResourceManager) {
+
+      datapath = moMoldeoObject::m_pResourceManager->GetDataMan()->GetDataPath();
+
+      filename = filename;
+      labelname = labelname;
+
+      filenameduplicate = filename + moText(".cfg");
+
+      newfile.SetCompletePath( datapath + filenameduplicate );
+
+      int count = 1;
+      while( newfile.Exists() ) {
+        filenameduplicate = filename + IntToStr( count );
+        newfile.SetCompletePath( datapath + filenameduplicate + moText(".cfg") );
+        count++;
+      }
+
+      m_pResourceManager->GetFileMan()->CopyFile( datapath + filename + moText(".cfg"), datapath + filenameduplicate + moText(".cfg")  );
+
+
+      labelnameduplicate = labelname;
+
+      ///modificar el labelname agregándole un número al final
+      count = 1;
+      while(LabelNameExists(labelnameduplicate)) {
+        labelnameduplicate = labelname + IntToStr( count );
+        count++;
+      }
+
+      ///importar este nuevo Mob...!!! que facil!!!
+      p_MobDesc.GetMobDefinition().SetConfigName( filenameduplicate );
+      p_MobDesc.GetMobDefinition().SetLabelName( labelnameduplicate );
+
+      mStatus = NewMob( p_MobDesc );
+
+    }
+
+    return mStatus;
 	}
 
 	moDirectorStatus
@@ -705,6 +957,8 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
         moDirectorStatus res;
 
+        ///la orden de Edicion se manda al core: es un comando que implementa la interface
+        /// crea el objeto correspondiente moDirectorFrameChild
         res = m_pDirectorCore->EditMob(p_MobDesc);
 
         if (res!=MO_DIRECTOR_STATUS_OK) {
@@ -712,11 +966,12 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
             return MO_DIRECTOR_STATUS_ERROR;
         }
 
+        ///ahora por cada parametro del objeto debemos notificar la interface para su edicion
 
         moMoldeoObject* pMOB = NULL;
         moConfig* pConfig = NULL;
 
-		pMOB = GetObject( p_MobDesc );
+        pMOB = GetObject( p_MobDesc );
         if (pMOB)
             pConfig = pMOB->GetConfig();
         else
@@ -732,10 +987,11 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
                 moParameterDescriptor ParamDescriptor( p_MobDesc, Param.GetParamDefinition(), i, Param.GetIndexValue() );
 
-                //create control
+                /// notifica a la interface de la edicion del parametro
                 this->EditParameter( ParamDescriptor );
 
 
+                /// recorre los valores de este parámetro
                 for( MOuint j=0; j<pConfig->GetParam(i).GetValuesCount(); j++) {
 
                     moValueIndex Vindex;
@@ -746,6 +1002,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                     moValueDescriptor ValueDescriptor( ParamDescriptor, Vindex );
                     ValueDescriptor.SetValue(pConfig->GetParam(i).GetValue(j));
 
+                    /// notifica a la interface de la edicion este valor
                     this->EditValue( ValueDescriptor );
 
                 }
@@ -772,22 +1029,22 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 		//for ( int idx=0; idx < (int)m_MoldeoObjects.Count(); idx++ ) {
         switch( (int) p_MobDesc.GetMobDefinition().GetType() ) {
             case MO_OBJECT_PREEFFECT:
-                pMOB = (moMoldeoObject*) m_EffectManager.PreEffects().Get(idx);
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.PreEffects().Get(idx) );
                 break;
             case MO_OBJECT_EFFECT:
-                pMOB = (moMoldeoObject*) m_EffectManager.Effects().Get(idx);
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.Effects().Get(idx));
                 break;
             case MO_OBJECT_POSTEFFECT:
-                pMOB = (moMoldeoObject*) m_EffectManager.PostEffects().Get(idx);
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.PostEffects().Get(idx));
                 break;
             case MO_OBJECT_MASTEREFFECT:
-                pMOB = (moMoldeoObject*) m_EffectManager.MasterEffects().Get(idx);
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.MasterEffects().Get(idx));
                 break;
             case MO_OBJECT_IODEVICE:
-                pMOB = (moMoldeoObject*) m_pIODeviceManager->IODevices().Get(idx);
+                pMOB = dynamic_cast<moMoldeoObject*>(m_pIODeviceManager->IODevices().Get(idx));
                 break;
             case MO_OBJECT_RESOURCE:
-                pMOB = (moMoldeoObject*) m_pResourceManager->Resources().Get(idx);
+                pMOB = dynamic_cast<moMoldeoObject*>(m_pResourceManager->Resources().Get(idx));
                 break;
         }
 
@@ -799,7 +1056,10 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 	moDirectorStatus
 	moDirectorConsole::DeleteMob( moMobDescriptor p_MobDesc ) {
 
-	    moMoldeoObject* pMOB;
+    moMoldeoObject* pMOB;
+
+    ///interrumpimos el timer (loop)
+    m_timer.Stop();
 
 		pMOB = GetObject( p_MobDesc );
 
@@ -815,12 +1075,6 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 m_bInitialized = false;
 
 
-                //remove from MoldeoObjects object
-                m_MoldeoObjects.Remove( pMOB->GetId() - MO_MOLDEOOBJECTS_OFFSET_ID );
-
-                //reload connections and id's
-                LoadConnections();
-
                 MOint idx = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
                 moMobIndex mobindex = p_MobDesc.GetMobDefinition().GetMobIndex();
                 if (idx>-1) {
@@ -828,19 +1082,37 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                         case MO_OBJECT_PREEFFECT:
                         case MO_OBJECT_EFFECT:
                         case MO_OBJECT_POSTEFFECT:
+                        case MO_OBJECT_MASTEREFFECT:
                             if (m_EffectManager.RemoveEffect( idx, pMOB->GetType())) {
-                                //remove from config
+                                ///remove from config
+                                m_Config.GetParam( mobindex.GetParamIndex() ).DeleteValue( mobindex.GetValueIndex() );
+                            }
+                            break;
+                        case MO_OBJECT_IODEVICE:
+                            if ( m_pIODeviceManager ) {
+                                m_pIODeviceManager->IODevices().Remove( idx );
+                                ///remove from config
+                                m_Config.GetParam( mobindex.GetParamIndex() ).DeleteValue( mobindex.GetValueIndex() );
+                            }
+                            break;
+                        case MO_OBJECT_RESOURCE:
+                            if (m_pResourceManager && m_pResourceManager->RemoveResource( idx ) ) {
+                                ///remove from config
                                 m_Config.GetParam( mobindex.GetParamIndex() ).DeleteValue( mobindex.GetValueIndex() );
                             }
                             break;
                     }
                 }
 
-                //back to previous state
+                LoadConnections();
+
+                ///back to previous state
                 m_bInitialized = consoleinit;
 
-                //we've finished, update project
+                ///we've finished, update project
                 ProjectUpdated( GetProject() );
+
+                m_timer.Start( 16 );
 
             }
         }
@@ -861,14 +1133,17 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
             switch(pMOB->GetType()) {
                 case MO_OBJECT_IODEVICE:
-                    break;
                 case MO_OBJECT_RESOURCE:
-                    break;
                 case MO_OBJECT_CONSOLE:
                     break;
-                default:
-                    moEffect* pEffect = (moEffect*) pMOB;
-                    p_MobDesc.SetState( moMobState(pEffect->state) );
+                case MO_OBJECT_PREEFFECT:
+                case MO_OBJECT_EFFECT:
+                case MO_OBJECT_POSTEFFECT:
+                case MO_OBJECT_MASTEREFFECT:
+                    moEffect* pEffect = dynamic_cast<moEffect*>(pMOB);
+                    if (pEffect) {
+                      p_MobDesc.SetState( moMobState(pEffect->state) );
+                    }
                     break;
             }
             return p_MobDesc;
@@ -881,37 +1156,49 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 	moDirectorConsole::SetMob( moMobDescriptor p_MobDesc ) {
 
 		moMoldeoObject* pMOB = GetObject( p_MobDesc );
+		moEffect* Effect  = NULL;
 
         if (pMOB) {
 
-            moEffect* Effect = (moEffect*) pMOB;
+            //wxMessageBox( moText2Wx( p_MobDesc.GetMobDefinition().GetLabelName() ) + IntToStr(p_MobDesc.GetState().GetEffectState().on) );
+            switch(pMOB->GetType()) {
 
-            Effect->state.on = p_MobDesc.GetState().GetEffectState().on;
-            Effect->state.alpha = p_MobDesc.GetState().GetEffectState().alpha;
-            Effect->state.tint = p_MobDesc.GetState().GetEffectState().tint;
-            Effect->state.tempo.delta = p_MobDesc.GetState().GetEffectState().tempo.delta;
-            Effect->state.synchronized= p_MobDesc.GetState().GetEffectState().synchronized;
-            Effect->state.CSV2RGB();
+              case MO_OBJECT_PREEFFECT:
+              case MO_OBJECT_EFFECT:
+              case MO_OBJECT_POSTEFFECT:
+              case MO_OBJECT_MASTEREFFECT:
+
+                  Effect = dynamic_cast<moEffect*>( pMOB );
+
+                  if (Effect) {
+                    Effect->state.on = p_MobDesc.GetState().GetEffectState().on;
+                    Effect->state.alpha = p_MobDesc.GetState().GetEffectState().alpha;
+                    Effect->state.tint = p_MobDesc.GetState().GetEffectState().tint;
+                    Effect->state.tintc = p_MobDesc.GetState().GetEffectState().tintc;
+                    Effect->state.tints = p_MobDesc.GetState().GetEffectState().tints;
+                    Effect->state.tempo.delta = p_MobDesc.GetState().GetEffectState().tempo.delta;
+                    Effect->state.synchronized= p_MobDesc.GetState().GetEffectState().synchronized;
+                    Effect->state.CSV2RGB();
+                    p_MobDesc.GetState().GetEffectState().tintr = Effect->state.tintr;
+                    p_MobDesc.GetState().GetEffectState().tintg = Effect->state.tintg;
+                    p_MobDesc.GetState().GetEffectState().tintb = Effect->state.tintb;
+
+
+                    MobUpdated( p_MobDesc );
+                  }
+                  break;
+              case MO_OBJECT_CONSOLE:
+
+                break;
+
+            }
+
             return MO_DIRECTOR_STATUS_OK;
         }
 
 		return MO_DIRECTOR_STATUS_ERROR;
 	}
 
-	moDirectorStatus
-	moDirectorConsole::AddMobToProject( moMobDescriptor p_MobDesc ) {
-		return MO_DIRECTOR_STATUS_OK;
-	}
-
-	moDirectorStatus
-	moDirectorConsole::RemoveMobToProject( moMobDescriptor p_MobDesc ) {
-		return MO_DIRECTOR_STATUS_OK;
-	}
-
-	moDirectorStatus
-	moDirectorConsole::MoveMobInProject( moMobDescriptor p_MobDesc ) {
-		return MO_DIRECTOR_STATUS_OK;
-	}
 
 	moParameterDescriptors  moDirectorConsole::GetParameterDescriptors( moMobDescriptor p_MobDesc) {
 
@@ -1053,12 +1340,12 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
 
     moDirectorStatus moDirectorConsole::SetValue( moValueDescriptor p_ValueDesc ) {
 
-        //aqui hay q tratar correctamente los errores...
+        ///aqui hay q tratar correctamente los errores...
 
         int idx;
         moFont* pFont;
 
-        //fija el valor dentro del config y chequea de actualizar el MOB
+        ///fija el valor dentro del config y chequea de actualizar el MOB
         moConfig* pConfig;
         moMoldeoObject* pObject;
 
@@ -1082,12 +1369,14 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                 moValue& NewValue(p_ValueDesc.GetValue());
 
 
-                //=============================================
-                //COMPARAMOS CON EL ANTERIOR (JUST FOR SHADERS)
-                //=============================================
+                ///=============================================
+                ///COMPARAMOS CON EL ANTERIOR (JUST FOR SHADERS)
+                ///=============================================
 
-                firsthaschange = !( Value.GetSubValue(0).Text() == NewValue.GetSubValue(0).Text() );
+                firsthaschange = !( Value.GetSubValue(0).Text() == NewValue.GetSubValue(0).Text() ) ||
+                                  ( NewValue.GetSubValueCount()!=Value.GetSubValueCount() );
 
+                ///generalmente deberia ser de minimo 4 subvalores
                 if ( NewValue.GetSubValueCount() > 1 ) {
                     if ( NewValue.GetSubValueCount() > Value.GetSubValueCount() && NewValue.GetSubValue(1).Text()!=moText("") ) {
                         secondhaschange = true;
@@ -1105,7 +1394,7 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
 
 
 
-                //ahora segun el tipo de parametro se procesa el valor...
+                ///ahora segun el tipo de parametro se procesa el valor...
                 switch(ParamDef.GetType()) {
                     case MO_PARAM_ALPHA:
                     case MO_PARAM_FUNCTION:
@@ -1120,14 +1409,16 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                     case MO_PARAM_ROTATEZ:
                     case MO_PARAM_SYNC:
                     case MO_PARAM_PHASE:
-                        //asigna el nuevo valor al config
+                        ///asigna el nuevo valor al config
 
-                        idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(0).Text(), (MOboolean)false );
+                        idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(0).Text(), (MOboolean)false, pObject );
 
-                        if (idx>-1)
+                        ///si no puede asignar la función no hace mas nada
+                        if (idx>-1) {
                             NewValue.GetSubValue(0).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
-
-                        Value = NewValue;
+                            Value = NewValue;
+                            ///el problema es que se pierde el foco
+                        } else return MO_DIRECTOR_STATUS_ERROR;
                         break;
 
                     case MO_PARAM_NUMERIC:
@@ -1140,31 +1431,38 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                         break;
 
                     case MO_PARAM_TEXT:
+
+                        ///directo, no chequeamos errores aqui, no sabríamos que chequear... cadena invalida?
+
                         Value = NewValue;
                         break;
                     case MO_PARAM_3DMODEL:
                     case MO_PARAM_OBJECT:
 
-                        pModel = m_pResourceManager->GetModelMan()->Get3dModel( Value.GetSubValue(0).Text() );
+                        pModel = m_pResourceManager->GetModelMan()->Get3dModel( NewValue.GetSubValue(0).Text() );
                         p3DModel = new mo3DModelSceneNode();
                         if (p3DModel) p3DModel->Init(pModel);
 
+                        ///igualmente, si el modelo es nulo entonces no hay modelo
                         if (pModel) {
-                            Value.GetSubValue(0).SetModel( (mo3DModelSceneNode*)pModel );
-                        }
-
+                            NewValue.GetSubValue(0).SetModel( (mo3DModelSceneNode*)pModel );
+                            Value = NewValue;
+                        } else return MO_DIRECTOR_STATUS_ERROR;
                         break;
 
                     case MO_PARAM_FONT:
-
+                        ///la fuente necesita 3 parámetros
                         if ( NewValue.GetSubValueCount() == 3 ) {
-                            pFont = m_pResourceManager->GetFontMan()->GetFont( Value, true );
+                            pFont = m_pResourceManager->GetFontMan()->GetFont( NewValue, true );
+                            ///la fuente es creada o existe
                             if (pFont) {
+                                ///asignamos el puntero de la fuente al valor
                                 NewValue.GetSubValue(0).SetFont( pFont );
                                 //Value.GetSubValue(2).SetInt();
+
+                                ///correcto: asignamos el valor
                                 Value = NewValue;
-                                return MO_DIRECTOR_STATUS_OK;
-                            } else return MO_DIRECTOR_STATUS_ERROR;
+                            }
                         } else return MO_DIRECTOR_STATUS_ERROR;
                         break;
 
@@ -1176,93 +1474,124 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
 
                             moValueBase& valuebase( Value.GetSubValue(0) );
 
-                            //=========================================
-                            // FIRST SUBVALUE CORRESPOND TO FILE IMAGE;
-                            // IF IT CHANGES WE MUST RELOAD ALL....
-                            //=========================================
+                            ///=========================================
+                            /// PRIMER SUBVALOR CORRESPONDE AL ARCHIVO DE LA IMAGEN
+                            /// SI CAMBIA DEBEMOS RECARGARLO TODO
+                            ///=========================================
                             if ( firsthaschange ) {
 
                                 idx = m_pResourceManager->GetTextureMan()->GetTextureMOId( NewValue.GetSubValue(0).Text(), true);
 
+                                ///si la textura nueva se cargo
                                 if (idx>-1) {
+                                    ///asignamos el puntero
                                     moTexture*  pTexture = m_pResourceManager->GetTextureMan()->GetTexture(idx);
-                                    //copiamos los valores de texto correspondientes
+                                    ///copiamos los valores de texto correspondientes
                                     valuebase = NewValue.GetSubValue(0);
                                     valuebase.SetTexture( pTexture );
+
+                                    if ( NewValue.GetSubValueCount()==1 )
+                                      Value.RemoveSubValues(true);///asegurarnos que solo hay un subvalor
+
                                     Log( moText("moDirectorConsole::SetValue() Assigned new texture ") + Param.GetParamDefinition().GetName() );
                                 } else {
                                     LogError( moText("Param ") + Param.GetParamDefinition().GetName() +  moText(" Texture undefined") );
+                                    return MO_DIRECTOR_STATUS_ERROR;
                                 }
 
                             }
 
-                            //=====================================================
-                            // SECOND SUBVALUE CORRESPOND TO SHADER CONFIG
-                            // IF firstchange HAS TRIGGREER THIS STEP IS MANDATORY
-                            //=====================================================
+                            ///=====================================================================
+                            /// SI ELSEGUNDO CAMBIO CORRESPONDE AL NOMBRE DEL CONFIG DEL SHADER
+                            /// SI firsthaschange ESTE PASO ES OBLIGATORIO
+                            ///=====================================================================
                             if  ( NewValue.GetSubValueCount()>1 ) {
 
                                 if ( firsthaschange || secondhaschange || thirdhaschange ) {
-                                    //============================
-                                    //RELOAD TEXTUREFILTER
-                                    //============================
+                                    ///============================
+                                    /// RECARGAMOS EL TEXTUREFILTER
+                                    ///============================
                                     idx = m_pResourceManager->GetShaderMan()->GetTextureFilterIndex()->TextureFilterExists( &NewValue );
 
+                                    ///si el texturefilter no existe...
                                     if (idx==-1) {
+                                        ///entonces tratamos de cargarlo
                                         idx = m_pResourceManager->GetShaderMan()->GetTextureFilterIndex()->LoadFilter( &NewValue );
 
+                                        /// el idx devuelve el n-eavo filtro creado
+                                        /// si se agrego correctamente al TextureFilterIndex del ShaderManager
                                         if ( (idx-1)>=0 && (idx-1) < m_pResourceManager->GetShaderMan()->GetTextureFilterIndex()->Count() ) {
+
+                                            ///entonces lo pedimos para asignarlo a nuestro valor base...
                                             moTextureFilter*  pTextureFilter = m_pResourceManager->GetShaderMan()->GetTextureFilterIndex()->Get(idx-1);
                                             valuebase.SetTextureFilter( pTextureFilter );
+
                                             if (Value.GetSubValueCount()>=2) Value.GetSubValue(1) = NewValue.GetSubValue(1);
                                             else Value.AddSubValue( NewValue.GetSubValue(1) );
+
                                             if (Value.GetSubValueCount()>=3) Value.GetSubValue(2) = NewValue.GetSubValue(2);
                                             else Value.AddSubValue( NewValue.GetSubValue(2) );
+
                                             Log( moText("moDirectorConsole::SetValue() New filter loaded and assigned "));
 
                                         } else {
                                             LogError( moText("Param ") + Param.GetParamDefinition().GetName() +  moText(" Texture filter undefined") );
+                                            return MO_DIRECTOR_STATUS_ERROR;
                                         }
                                     } else {
                                         moText tfname = m_pResourceManager->GetShaderMan()->GetTextureFilterIndex()->MakeTextureFilterLabelName( &NewValue );
                                         LogError( moText("moDirectorConsole::SetValue() Warning Param ") + Param.GetParamDefinition().GetName() +  moText(" Texture filter already defined: ") + (moText)tfname );
+
+                                        ///textura de filtro ya definida!!!
+                                        ///por las dudas volvemos a asignar el puntero y sus valores de config(subvalor 1) y textura de destino (subvalor 2)
                                         moTextureFilter*  pTextureFilter = m_pResourceManager->GetShaderMan()->GetTextureFilterIndex()->Get(idx);
                                         valuebase.SetTextureFilter( pTextureFilter );
                                         if (Value.GetSubValueCount()>=2) Value.GetSubValue(1) = NewValue.GetSubValue(1);
                                         else Value.AddSubValue( NewValue.GetSubValue(1) );
                                         if (Value.GetSubValueCount()>=3) Value.GetSubValue(2) = NewValue.GetSubValue(2);
                                         else Value.AddSubValue( NewValue.GetSubValue(2) );
+                                        return MO_DIRECTOR_STATUS_ERROR;
                                     }
 
 
                                 }
                             }
 
-                            //=====================================================
-                            // NOW TRY TO ADJUST ALPHA FILTER IF PARAMETER EXISTS
-                            //=====================================================
+                            ///====================================================================
+                            /// AHORA TRATEMOS DE AJUSTAR EL ALFA DE FILTRO SI EL PARAMETRO EXISTE
+                            ///====================================================================
 
                             if (NewValue.GetSubValueCount()>=4) {
 
-                                //======================================
-                                //ALPHA FILTER
-                                //======================================
+                                ///======================================
+                                ///         ALPHA FILTER
+                                ///======================================
+
+                                ///es el subvalor 3 (4to)
 
                                 moValueBase& VAlpha( NewValue.GetSubValue(3) );
 
+                                ///deberia tratarse de una función (el dato siempre es un texto en su primera etapa)
+                                if ( VAlpha.GetType()==MO_VALUE_FUNCTION ) {
 
-                                if (VAlpha.GetType()==MO_VALUE_FUNCTION) {
+                                    ///creamos la funcion
+                                    idx = m_pResourceManager->GetMathMan()->AddFunction( VAlpha.Text(), (MOboolean)false, pObject );
 
-                                    idx = m_pResourceManager->GetMathMan()->AddFunction( VAlpha.Text(), (MOboolean)false );
+                                    ///si se creo
                                     if (idx>-1) {
+                                        ///la asignamos
                                         VAlpha.SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
 
                                         ///ATENCION!!!: en moValue::SetTextureFilterAlpha evaluamos en  (T = 0) !!!!
                                         ///la funcion no se evalua!
+
+                                        ///asignamos al valuebase de Value, o sea el subvalor 0
                                         valuebase.SetTextureFilterAlpha( VAlpha.GetData() );
+
+                                        ///actualizamos o creamos el 4to valor....
                                         if (Value.GetSubValueCount()>=4) Value.GetSubValue(3) = NewValue.GetSubValue(3);
                                         else Value.AddSubValue( NewValue.GetSubValue(3) );
-                                    }
+                                    } else return MO_DIRECTOR_STATUS_ERROR;
 
                                 }
 
@@ -1270,9 +1599,13 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                             }
 
 
-                            //======================================
-                            //TEXTURE FILTER PARAMETERS
-                            //======================================
+                            ///======================================
+                            ///     PARAMETROS DE FILTRO:
+                            ///     aqui seguirian todos los parametros complementarios al filtro
+                            ///     a implementar y probar
+                            ///
+                            ///
+                            ///======================================
 
                             /*
                             if (NewValue.GetSubValueCount()>4) {
@@ -1324,70 +1657,112 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                             //NewValue.GetSubValue(0) = Value.GetSubValue(0);
                             //Value.GetSubValue(0) = ;
                             //Value = NewValue;
-
                         }
                         break;
                     case MO_PARAM_FILTER:
+                        ///A implementar...
                         //Value.GetSubValue(0).SetText(  );
+                        //Value = NewValue;
                         break;
 
                     case MO_PARAM_BLENDING:
+                        ///Sin mayores inconvenientes, deberíamos probar q el entero está dentro del rango
+                        if ( 0<=NewValue.GetSubValue(0).Int() && NewValue.GetSubValue(0).Int()< MO_BLENDINGS) {
+                          Value = NewValue;
+                        } else {
+                            LogError( moText("Blending fuera de rango") );
+                        }
+                        break;
                     case MO_PARAM_POLYGONMODE:
-                        Value = NewValue;
+                        ///Sin mayores inconvenientes, deberíamos probar q el entero está dentro del rango
+                        if ( 0<=NewValue.GetSubValue(0).Int() && NewValue.GetSubValue(0).Int()< MO_POLYGONMODES) {
+                          Value = NewValue;
+                        } else {
+                            LogError( moText("PolygonMode fuera de rango") );
+                        }
                         break;
 
                     case MO_PARAM_COLOR:
-                        //RED=============================================================================
-                        idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_RED).Text(), (MOboolean)false );
-                        if (idx>-1)
-                            NewValue.GetSubValue(MO_RED).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
-                        //GREEN=============================================================================
-                        idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_GREEN).Text(), (MOboolean)false );
-                        if (idx>-1)
-                            NewValue.GetSubValue(MO_GREEN).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
-                        //BLUE=============================================================================
-                        idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_BLUE).Text(), (MOboolean)false );
-                        if (idx>-1)
-                            NewValue.GetSubValue(MO_BLUE).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
-                        //ALPHA=============================================================================
-                        idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_ALPHA).Text(), (MOboolean)false );
-                        if (idx>-1)
-                            NewValue.GetSubValue(MO_ALPHA).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
-
-                        Value = NewValue;
+                        ///RED=============================================================================
+                        if ( Value.GetSubValue(MO_RED).Text()!=NewValue.GetSubValue(MO_RED).Text() ) {
+                          idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_RED).Text(), (MOboolean)false, pObject );
+                          if (idx>-1) {
+                              Value.GetSubValue(MO_RED).SetText( NewValue.GetSubValue(MO_RED).Text() );
+                              Value.GetSubValue(MO_RED).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
+                          } else return MO_DIRECTOR_STATUS_ERROR;
+                        }
+                        ///GREEN=============================================================================
+                        if ( Value.GetSubValue(MO_GREEN).Text()!=NewValue.GetSubValue(MO_GREEN).Text() ) {
+                          idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_GREEN).Text(), (MOboolean)false, pObject );
+                          if (idx>-1) {
+                              Value.GetSubValue(MO_GREEN).SetText( NewValue.GetSubValue(MO_GREEN).Text() );
+                              Value.GetSubValue(MO_GREEN).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
+                          } else return MO_DIRECTOR_STATUS_ERROR;
+                        }
+                        ///BLUE=============================================================================
+                        if ( Value.GetSubValue(MO_BLUE).Text()!=NewValue.GetSubValue(MO_BLUE).Text() ) {
+                          idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_BLUE).Text(), (MOboolean)false, pObject );
+                          if (idx>-1) {
+                              Value.GetSubValue(MO_BLUE).SetText( NewValue.GetSubValue(MO_BLUE).Text() );
+                              Value.GetSubValue(MO_BLUE).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
+                          } else return MO_DIRECTOR_STATUS_ERROR;
+                        }
+                        ///ALPHA=============================================================================
+                        if ( Value.GetSubValue(MO_ALPHA).Text()!=NewValue.GetSubValue(MO_ALPHA).Text() ) {
+                          idx = m_pResourceManager->GetMathMan()->AddFunction( NewValue.GetSubValue(MO_ALPHA).Text(), (MOboolean)false, pObject );
+                          if (idx>-1) {
+                              Value.GetSubValue(MO_ALPHA).SetText( NewValue.GetSubValue(MO_ALPHA).Text() );
+                              Value.GetSubValue(MO_ALPHA).SetFun( m_pResourceManager->GetMathMan()->GetFunction(idx) );
+                          } else return MO_DIRECTOR_STATUS_ERROR;
+                        }
                         break;
 
                     case MO_PARAM_SCRIPT:
+                        ///al pasar el valor de texto "__compiling__.lua"
                         if ( NewValue.GetSubValue(0).Text() == moText("__compiling__.lua") ) {
+                            ///la consola interpreta que debe tomar el script del valor ya existente y compilarlo
+
+                            ///tomamos el nombre completo del script
                             moText fullscript = m_pResourceManager->GetDataMan()->GetDataPath()+ moSlash + (moText)Value.GetSubValue(0).Text();
+
+                            ///le pedimos al Moldeo Object que lo compile
                             if ( pObject->CompileFile(fullscript) ) {
 
                                 MODebug2->Message(moText("ParticlesSimple script compiled succesfully ") + (moText)fullscript );
 
+                                ///todo funciono de maravilla, ahora le damos Init otra vez
                                 pObject->SelectScriptFunction( "Init" );
                                 //AddFunctionParam( m_FramesPerSecond );
                                 pObject->RunSelectedFunction();
 
                             } else MODebug2->Error(moText("ParticlesSimple couldnt compile lua script ") + (moText)fullscript );
                         } else {
-                            Value = NewValue;
+                            ///aquí quizás estemos asignando simplemente un nuevo script.
+                            if ( Value.GetSubValue(0).Text() != NewValue.GetSubValue(0).Text() ) {
+                                ///tenemos una nueva cadena, chequeamos si existe como archivo
+                                ///OJO: en caso de cambiar, deberiamos eliminar el script anterior....
+                                ///TODO: completar esto!!!!
+                                Value = NewValue;
+                            }
                         }
                         break;
 
                     default:
+                        ///si no sabemos de que valor se trata
+                        ///probablemente sea de tipo NUMERIC en sus versiones de float, entero o long
                         Value = NewValue;
                         break;
                 };
 
-                //para aquellos datos que implican cambios, lo fijamos de nuevo...
-                    // funciones, texturas filtradas, objetos, fuentes, etc...
+                ///para aquellos datos que implican cambios, lo fijamos de nuevo...
+                    // funciones, colores, texturas filtradas, objetos, fuentes, etc...
                 p_ValueDesc.SetValue( Value );
 
-                //notificamos todos los modulos de la actualizacion de estos datos
-                //esto es importante para actualizar los campos dentro de los layers... (y el childframe)
+                ///notificamos todos los modulos de la actualizacion de estos datos
+                ///esto es importante para actualizar los campos dentro de la interface
                 ValueUpdated( p_ValueDesc );
-            } //config
-        } //object
+            } //fin config
+        } //fin object
 
 	    return MO_DIRECTOR_STATUS_OK;
     }
@@ -1458,6 +1833,12 @@ moDirectorConsole::GetTicks() {
 
 }
 
+/**
+*
+*   Override moConsole::GLSwapBuffers()
+*
+*/
+
 void
 moDirectorConsole::GLSwapBuffers() {
 
@@ -1468,6 +1849,14 @@ moDirectorConsole::GLSwapBuffers() {
 
 }
 
+
+void
+moDirectorConsole::GUIYield() {
+
+  wxTheApp->Yield();
+
+}
+
 moDirectorStatus
 moDirectorConsole::SetView( int x, int y, int w, int h ) {
 
@@ -1475,25 +1864,26 @@ moDirectorConsole::SetView( int x, int y, int w, int h ) {
 
     if (Initialized()) {
         Log( moText("moDirectorConsole::SetView WITH CONSOLE") );
-        if (m_pResourceManager)
+        if (m_pResourceManager) {
             if (m_pResourceManager->Initialized()) {
             		if (m_pResourceManager->GetRenderMan()) {
-						m_pResourceManager->GetRenderMan()->Finish();
-						m_pResourceManager->GetRenderMan()->Init( RENDERMANAGER_MODE_NORMAL, w, h, w, h);
-						Log("moDirectorConsole::SetView Render Manager Resized");
-					}
+                  m_pResourceManager->GetRenderMan()->Finish();
+                  m_pResourceManager->GetRenderMan()->Init( RENDERMANAGER_MODE_NORMAL, w, h, w, h);
+                  Log("moDirectorConsole::SetView Render Manager Resized");
+                }
 
             }
+        }
     } else {
         Log( moText("moDirectorConsole::SetView NO CONSOLE") );
 
         glViewport( 0, 0, w, h );
-		glMatrixMode( GL_PROJECTION );
-		glLoadIdentity();
-		double ratio =(double) w /(double) h;
-		gluPerspective( 60.0,ratio, 0.0, 1024.0 );
-		glMatrixMode( GL_MODELVIEW );
-		glLoadIdentity();
+        glMatrixMode( GL_PROJECTION );
+        glLoadIdentity();
+        double ratio =(double) w /(double) h;
+        gluPerspective( 60.0,ratio, 0.0, 1024.0 );
+        glMatrixMode( GL_MODELVIEW );
+        glLoadIdentity();
 
     }
 
@@ -1574,14 +1964,14 @@ moDirectorStatus moDirectorConsole::ConsoleLoop() {
             }
         }
 
-        if (previewreset2 && ( moGetTicks() % 1000) == 0 ) {
+        if (previewreset2 && ( moGetTicks() / 1000) > 2 ) {
             m_pDirectorCore->ProjectPreview();
             //wxMessageBox("preview reset 2");
             moStopTimer();
             moStartTimer();
             previewreset2 = false;
         }
-		if ( previewreset && ( moGetTicks() % 1000) == 0) {
+		if ( previewreset && ( moGetTicks() / 1000) > 1) {
             m_pDirectorCore->ProjectPreview();
             //wxMessageBox("preview reset 1");
             previewreset = false;
@@ -1595,7 +1985,7 @@ moDirectorStatus moDirectorConsole::ConsoleLoop() {
         moConfig dummy;
         if (m_pResourceManager) {
             if (!m_pResourceManager->Initialized())
-                m_pResourceManager->Init( "../../data/test" , dummy, 0, 800, 600, 800, 600 );
+                m_pResourceManager->Init( moText(""), moText("../../data/test") , dummy, 0, 800, 600, 800, 600 );
 
             if (m_pResourceManager->GetModelMan()) {
                 m_pResourceManager->GetModelMan()->MoldeoLogo(m_timerticks);

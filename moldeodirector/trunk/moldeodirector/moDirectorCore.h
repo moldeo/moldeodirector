@@ -47,22 +47,21 @@ enum moAppParamIndex {
     CORE_LASTPROJECTS,
     CORE_OPENFILES,
     CORE_AUTOSAVE,
-    CORE_EXECUTED,
+    CORE_EXECUTIONS,
     CORE_SPLASHSCREEN,
-    CORE_3DLOGO,
-    CORE_EXECUTIONS
+    CORE_3DLOGO
 };
 
-class moDirectorCore : public moIDirectorActions {
+class moDirectorCore : public moIDirectorActions, public moAbstract {
 
 public:
 
 	moDirectorCore();
 	virtual ~moDirectorCore();
 
-    bool        Init();
+    MOboolean        Init();
 	void		SetUserInterface( moDirectorFrame* p_pUserInterface );
-	void        SetPaths( moText p_installationpath );
+	void        SetPaths( moText p_installationpath, moText p_configurationpath, moText p_pluginspath, moText p_datapath );
     void        LoadPlugins( moPluginDefinitions& rPluginDefs, moText plugindir, moMoldeoObjectType mobjecttype );
 
 
@@ -109,21 +108,21 @@ public:
 //================================================================
 //Project
 //================================================================
-	moDirectorStatus NewProject( moProjectDescriptor p_projectdescriptor );
-	moDirectorStatus OpenProject( moProjectDescriptor p_projectdescriptor );
+	moDirectorStatus NewProject( const moProjectDescriptor& p_projectdescriptor );
+	moDirectorStatus OpenProject( const moProjectDescriptor& p_projectdescriptor );
 	moDirectorStatus CloseProject();
 	moDirectorStatus SaveProject();
 	moDirectorStatus SaveAsProject( moText p_configname, moText p_configpath );
-	moDirectorStatus ProjectUpdated( moProjectDescriptor p_projectdescriptor );
+	moDirectorStatus ProjectUpdated( const moProjectDescriptor& p_projectdescriptor );
 
-	moDirectorStatus SetProject( moProjectDescriptor p_projectdescriptor );
-	moProjectDescriptor GetProject();
+	moDirectorStatus SetProject( const moProjectDescriptor& p_projectdescriptor );
+	const moProjectDescriptor& GetProject();
 	moDirectorStatus ReloadProject();
 
 	moDirectorStatus ProjectPreview( );
 	moDirectorStatus EffectPreview( MOint p_n );
 
-	moMobDescriptors GetMobDescriptors();
+	virtual moMobDescriptors GetMobDescriptors();
 
 //================================================================
 //Resources
@@ -147,11 +146,9 @@ public:
 	moDirectorStatus DeleteMob( moMobDescriptor p_MobDesc );
 	moMobDescriptor GetMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus SetMob( moMobDescriptor p_MobDesc );
-
+	moDirectorStatus DuplicateMob( moMobDescriptor p_MobDesc );
+	moDirectorStatus MoveMob( moMobDescriptor p_MobDesc, int position );
 	moDirectorStatus MobUpdated( moMobDescriptor p_MobDesc );
-	moDirectorStatus AddMobToProject( moMobDescriptor p_MobDesc );
-	moDirectorStatus RemoveMobToProject( moMobDescriptor p_MobDesc );
-	moDirectorStatus MoveMobInProject( moMobDescriptor p_MobDesc );
 
 	moParameterDescriptors  GetParameterDescriptors( moMobDescriptor p_MobDesc );
 

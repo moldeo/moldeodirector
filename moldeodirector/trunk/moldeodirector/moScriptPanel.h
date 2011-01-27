@@ -50,6 +50,8 @@ class moScriptPanel: public wxPanel, public moIDirectorActions
 		void OnSaveButtonClick(wxCommandEvent& event);
 		//*)
 
+    bool Save();
+
 
 		DECLARE_EVENT_TABLE()
 };

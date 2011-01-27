@@ -513,9 +513,9 @@ class wxTreeMultiCtrl: public wxScrolledWindow
 
     /** \todo When tab is pressed, the focus can get out of sight. This should be resolved by
        catching the TAB, see what window is focussed, and scroll the window so it's visible */
+protected:
     TreeMultiItemRoot _root;
 private:
-
     long _style;
     wxBitmap *_expandBmp, *_collBmp;
 
@@ -1114,7 +1114,7 @@ private:
 
     DECLARE_EVENT_TABLE()
 
-    friend class moTreeObjectsLayerCtrl;
+    friend class moLayersTreeCtrl;
 };
 
 #endif

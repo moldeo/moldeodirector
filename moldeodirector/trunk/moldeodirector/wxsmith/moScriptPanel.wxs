@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moScriptPanel">
+		<size>596,258</size>
+		<object class="wxButton" name="ID_COMPILEANDRUN" variable="CompileButton" member="yes">
+			<label>Compile &amp; Run &gt;</label>
+			<pos>104,0</pos>
+			<handler function="OnCompileButtonClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_SCRIPTEXTCTRL" variable="ScriptTextCtrl" member="yes">
+			<value>--here comes the script for LUA</value>
+			<pos>0,24</pos>
+			<size>560,368</size>
+			<style>wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxHSCROLL</style>
+		</object>
+		<object class="wxTextCtrl" name="ID_FILETEXTCTRL" variable="ScriptFileTextCtrl" member="yes">
+			<value>file...</value>
+			<pos>200,0</pos>
+			<size>216,21</size>
+			<handler function="OnScriptFileTextCtrlText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxButton" name="ID_BROWSESCRIPT" variable="BrowseScript" member="yes">
+			<label>...</label>
+			<pos>416,0</pos>
+			<size>24,23</size>
+			<handler function="OnBrowseScriptClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_SAVEBUTTON" variable="SaveButton" member="yes">
+			<label>Save</label>
+			<pos>0,0</pos>
+			<handler function="OnSaveButtonClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

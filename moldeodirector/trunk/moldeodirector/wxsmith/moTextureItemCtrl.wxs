@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moTextureItemCtrl">
+		<pos>0,0</pos>
+		<size>386,64</size>
+		<fg>#FFFF00</fg>
+		<bg>#000000</bg>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<handler function="OnSetFocus" entry="EVT_KILL_FOCUS" />
+		<object class="wxPanel" name="ID_PANELITEM" variable="PanelItem" member="yes">
+			<pos>0,0</pos>
+			<size>64,64</size>
+			<bg>#000000</bg>
+			<handler function="OnMouseEnter" entry="EVT_LEFT_DOWN" />
+			<object class="wxStaticBitmap" name="ID_STATICBITMAPTHUMB" variable="StaticBitmapThumb" member="yes">
+				<bitmap>../../doc/icons/imageempty.png</bitmap>
+				<pos>0,0</pos>
+				<size>64,44</size>
+			</object>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXTNAME" variable="StaticTextName" member="yes">
+			<label>Name:</label>
+			<pos>72,0</pos>
+			<fg>#FFFF00</fg>
+			<font>
+				<size>8</size>
+				<style>normal</style>
+				<weight>bold</weight>
+				<underlined>0</underlined>
+				<family>swiss</family>
+				<face>Arial</face>
+			</font>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXTSIZE" variable="StaticTextSize" member="yes">
+			<label>Size:</label>
+			<pos>72,16</pos>
+			<fg>#FFFF00</fg>
+			<font>
+				<size>8</size>
+				<style>normal</style>
+				<weight>bold</weight>
+				<underlined>0</underlined>
+				<family>swiss</family>
+				<face>Arial</face>
+			</font>
+		</object>
+	</object>
+</wxsmith>

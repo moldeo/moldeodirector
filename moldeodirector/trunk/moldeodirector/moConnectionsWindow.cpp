@@ -1193,9 +1193,9 @@ END_EVENT_TABLE()
 moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size) : m_pCanvas(NULL)
 {
 	//(*Initialize(moConnectionsWindow)
-	Create(parent, id, wxDefaultPosition, wxSize(200,100), wxTAB_TRAVERSAL | wxNO_FULL_REPAINT_ON_RESIZE, _T("id"));
-	SetBackgroundColour(wxColour(255,0,0));
-
+	Create(parent, id, wxDefaultPosition, wxSize(503,317), wxTAB_TRAVERSAL, _T("id"));
+	SetBackgroundColour(wxColour(210,253,255));
+	
 	Connect(wxID_ANY,wxEVT_PAINT,(wxObjectEventFunction)&moConnectionsWindow::OnPaint);
 	Connect(wxID_ANY,wxEVT_ERASE_BACKGROUND,(wxObjectEventFunction)&moConnectionsWindow::OnEraseBackground);
 	//*)
@@ -1236,8 +1236,8 @@ moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wx
         a2dDocviewGlobals->GetDocviewCommandProcessor()->AssociateDocTemplate(doctemplatenew);
 
         //THE DOCUMENT where objets are located
-        a2dGlobals->GetFontPathList().Add( wxT(DATADIR "/fonts") );
-        a2dGlobals->GetImagePathList().Add( wxT(DATADIR "/images") );
+        a2dGlobals->GetFontPathList().Add( wxT(MOLDEODATADIR "/fonts") );
+        a2dGlobals->GetImagePathList().Add( wxT(MOLDEODATADIR "/images") );
         a2dGlobals->GetImagePathList().Add( wxT("./") );
         a2dGlobals->GetImagePathList().Add( wxT("../") );
         a2dGlobals->GetFontPathList().Add( wxT(".") );
@@ -1246,14 +1246,11 @@ moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wx
         a2dGlobals->GetImagePathList().Add( wxT("..") );
         a2dGlobals->GetIconPathList().Add( wxT("..") );
         a2dGlobals->GetIconPathList().Add( wxT(".") );
-        a2dGlobals->GetIconPathList().Add( wxT(DATADIR "/images") );
-        a2dGlobals->GetIconPathList().Add( wxT(DATADIR "/icons") );
-
-	// DEBUG: Cristian
-	printf("Font Path: %s\n", a2dGlobals->GetFontPathList().GetAsString().mb_str());
+        a2dGlobals->GetIconPathList().Add( wxT(MOLDEODATADIR "/images") );
+        a2dGlobals->GetIconPathList().Add( wxT(MOLDEODATADIR "/icons") );
 
         a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D" ), wxT("../../") );
-        a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT(DATADIR "") );
+        a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT(MOLDEODATADIR "") );
 
         /*
         wxString* artdir = a2dGeneralGlobals->GetVariablesHash().GetVariableString(  wxT( "WXART2D_ART" ) );
@@ -1264,15 +1261,15 @@ moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wx
                 wxGetEnv(_T("WXART2D"), &artroot );
                 if( artroot.IsEmpty() )
                 {
-                    a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT(DATADIR "") );
-                    //a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D" ), wxT(DATADIR "") );
+                    a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D_ART" ), wxT(MOLDEODATADIR "") );
+                    //a2dGeneralGlobals->GetVariablesHash().SetVariableString(  wxT( "WXART2D" ), wxT(MOLDEODATADIR "") );
                     wxMessageBox( "NO WXART2D DIRECTORY" );
                 } else wxMessageBox( "WXART2D" + artroot );
             }
         }
 
         if (artdir!=NULL) {
-            wxString t( artdir->c_str() ); // Cambiar a mb_str()
+            wxString t( artdir->c_str() );
 
             wxMessageBox( t );
         }

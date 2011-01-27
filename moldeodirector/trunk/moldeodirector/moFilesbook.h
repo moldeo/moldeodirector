@@ -39,7 +39,7 @@
 #include <wx/notebook.h>
 #include <wx/aui/auibook.h>
 
-class moFilesbookPage : public wxNotebookPage {
+class moFilesbookPage : public wxAuiNotebookPage {
 	public:
 		moFilesbookPage( wxWindow* parent, wxWindowID id, moDirectorChildFrame* childframe );
 		moDirectorChildFrame*		GetChildFrame();
@@ -48,12 +48,15 @@ class moFilesbookPage : public wxNotebookPage {
 		moDirectorChildFrame*		m_pChildFrame;
 };
 
-class moFilesbook : public wxAuiNotebook {
+class moFilesbook : public wxAuiNotebook, public moIDirectorActions {
+
 	public:
 		moFilesbook( wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = 0) :
-		wxAuiNotebook(parent, id, pos, size, wxBORDER_NONE | wxAUI_NB_TAB_SPLIT | wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_WINDOWLIST_BUTTON | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE ) { }
+		wxAuiNotebook(parent, id, pos, size, wxNO_BORDER | wxAUI_NB_TAB_SPLIT | wxAUI_NB_CLOSE_ON_ALL_TABS | wxAUI_NB_WINDOWLIST_BUTTON | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TAB_MOVE ) { }
 
-	void		OnPageChange( wxNotebookEvent &event );
+	void		OnPageChange( wxAuiNotebookEvent &event );
+
+    //void        Inspect( moMobDescriptor  p_MobDescriptor );
 
 	DECLARE_EVENT_TABLE()
 };

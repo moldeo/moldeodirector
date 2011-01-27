@@ -27,17 +27,16 @@ moPreviewFrame::moPreviewFrame(wxWindow* parent,wxWindowID id,const wxPoint& pos
 {
 	//(*Initialize(moPreviewFrame)
 	Create(parent, wxID_ANY, _("Moldeo output"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER, _T("wxID_ANY"));
-	SetClientSize(wxSize(800,600));
+	SetClientSize(wxSize(400,300));
 	SetForegroundColour(wxColour(255,255,255));
 	SetBackgroundColour(wxColour(0,0,0));
 	ToolBar1 = new wxToolBar(this, ID_TOOLBAR1, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL|wxNO_BORDER, _T("ID_TOOLBAR1"));
 	ToolBar1->SetToolBitmapSize(wxSize(32,32));
-	ToolBarItem1 = ToolBar1->AddTool(TOOLPLAY, _("Play"), wxBitmap(wxImage(_T(DATADIR "/icons/play32.png"))), wxBitmap(wxImage(_T(DATADIR "/icons/play32dis.bmp"))), wxITEM_NORMAL, _("Play syncro"), _("Help text"));
-	ToolBarItem2 = ToolBar1->AddTool(TOOLPAUSE, _("Pause"), wxBitmap(wxImage(_T(DATADIR "/icons/pause32.png"))), wxBitmap(wxImage(_T(DATADIR "/icons/pause32.bmp"))), wxITEM_NORMAL, _("Pause"), _("Pause"));
-	ToolBarItem3 = ToolBar1->AddTool(TOOLFULLSCREEN, _("Fullscreen"), wxBitmap(wxImage(_T(DATADIR "/icons/onofficon32.png"))), wxNullBitmap, wxITEM_NORMAL, _("Fullscreen"), _("Fullscreen"));
+	ToolBarItem1 = ToolBar1->AddTool(TOOLPLAY, _("Play"), wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/play32.png"))), wxNullBitmap, wxITEM_NORMAL, _("Play syncro"), _("Help text"));
+	ToolBarItem2 = ToolBar1->AddTool(TOOLPAUSE, _("Pause"), wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/pause32.png"))), wxNullBitmap, wxITEM_NORMAL, _("Pause"), _("Pause"));
+	ToolBarItem3 = ToolBar1->AddTool(TOOLFULLSCREEN, _("Fullscreen"), wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/onofficon32.png"))), wxNullBitmap, wxITEM_NORMAL, _("Fullscreen"), _("Fullscreen"));
 	ToolBar1->Realize();
 	SetToolBar(ToolBar1);
-    //SetCursor(wxCursor(wxCURSOR_BLANK));
 
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&moPreviewFrame::OnClose);
 	//*)
@@ -57,16 +56,21 @@ void moPreviewFrame::Init( moIDirectorActions* pActionsHandler, wxGLContext* p_p
     SetNextActionHandler( pActionsHandler);
 
     if (!m_pGLCanvas) {
-        int attribList[10];
-        int n = 0;
 
-        attribList[n++] = WX_GL_RGBA;
-        attribList[n++] = WX_GL_DOUBLEBUFFER;
-        //attribList[n++] = WX_GL_DEPTH_SIZE;
-        //attribList[n++] = 32;
-        //attribList[n++] = WX_GL_LEVEL;
-        //attribList[n++] = 4;
-        attribList[n] = 0; // terminate the list
+    int attribList[] =
+      {
+        WX_GL_RGBA,
+        WX_GL_DOUBLEBUFFER,
+        WX_GL_MIN_RED, 8,
+        WX_GL_MIN_GREEN, 8,
+        WX_GL_MIN_BLUE, 8,
+        WX_GL_MIN_ALPHA, 8,
+        WX_GL_DEPTH_SIZE, 24,
+        WX_GL_STENCIL_SIZE, 8,
+        /*WX_GL_LEVEL, 0,
+        WX_GL_AUX_BUFFERS, 0*/
+        0
+      };
 
         m_pGLCanvas = new moGLCanvas( this, p_pGLContext, -1, attribList, wxPoint(0,0), wxSize(1024,768), 0, wxT("moGLCanvas"));
         //m_pGLCanvas = new moGLCanvas( this, p_pGLContext, -1, NULL, wxPoint(0,0), wxSize(1024,768), 0, wxT("moGLCanvas"));

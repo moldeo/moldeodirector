@@ -44,24 +44,51 @@ moDirectorCore::~moDirectorCore() {
 	m_pUserInterface = NULL;
 }
 
-bool
+MOboolean
 moDirectorCore::Init() {
 
-    moText workpath = moFileManager::GetWorkPath();
+  moText workpath = moFileManager::GetWorkPath();
 
-	//conffilename.
-	if ( m_Config.LoadConfig( "director.gmo" ) != MO_CONFIG_OK ) {
-	    if ( !moFileManager::FileExists( "director.gmo" ) ) {
-            GetDefinition();
-            if (!m_Config.CreateDefault( "director.gmo" ))
-                return false;
-           	m_Config.GetParam(moText("installationpath")).GetValue(0).GetSubValue(0).SetText( m_ApplicationDescriptor.GetInstallationFullPath() );
-           	if (m_Config.SaveConfig()!=MO_CONFIG_OK)
-                return false;
+  cout << "Getting DirectorCore Definition Config ..." << endl;
+  GetDefinition();
 
-	    } else return false;
-	}
 
+    if ( !moFileManager::FileExists( "director.gmo" ) ) {
+
+        Log("moDirectorCore::Init > Creating default config for director core");
+        cout << "moDirectorCore > director.gmo doesn't exists, creating default config for director core " << endl;
+
+        if (!m_Config.CreateDefault( "director.gmo" )) {
+
+            LogError("moDirectorCore::Init > Error CreateDefault director.gmo");
+            cout << "moDirectorCore > Error CreateDefault director.gmo " << endl;
+            return false;
+
+        }
+        cout << "moDirectorCore > Setting installation path " << endl;
+        m_Config.GetParam(moText("installationpath")).GetValue(0).GetSubValue(0).SetText( m_ApplicationDescriptor.GetInstallationFullPath() );
+        cout << "moDirectorCore > Saving config " << endl;
+        if (m_Config.SaveConfig()!=MO_CONFIG_OK) {
+            return false;
+        }
+
+    } else {
+
+        //conffilename.
+        cout << "moDirectorCore > Loading Config ..." << endl;
+        if ( m_Config.LoadConfig( "director.gmo" ) != MO_CONFIG_OK ) {
+              LogError("moDirectorCore::Init > LoadConfig failed");
+              cout << "moDirectorCore > LoadConfig failed " << endl;
+        } else {
+            Log("moDirectorCore::Init > LoadConfig OK");
+        }
+
+    }
+
+    cout << "moDirectorCore > Loading Definition ... " << endl;
+    LoadDefinition();
+
+    cout << "moDirectorCore > Defining Params ... " << endl;
     moDefineParamIndex( CORE_INSTALLATIONPATH, moText("installationpath") );
     moDefineParamIndex( CORE_CONFIGURATIONPATH, moText("configurationpath") );
     moDefineParamIndex( CORE_PLUGINSPATH, moText("pluginspath") );
@@ -117,13 +144,9 @@ moDirectorCore::SetUserInterface( moDirectorFrame* p_pUserInterface ) {
 }
 
 void
-moDirectorCore::SetPaths( moText p_installationpath ) {
+moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath, moText p_pluginspath, moText p_datapath ) {
 
-#ifdef MODULESDIR
-    m_ApplicationDescriptor = moApplicationDescriptor( p_installationpath, moText(MODULESDIR) );
-#else
-    m_ApplicationDescriptor = moApplicationDescriptor( p_installationpath, p_installationpath + moText("/plugins") );
-#endif
+    m_ApplicationDescriptor = moApplicationDescriptor( p_installationpath, p_configurationpath, p_pluginspath, p_datapath );
 
 }
 
@@ -144,7 +167,9 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 	moDirectorStatus moDirectorCore::Preview() { return MO_DIRECTOR_STATUS_OK; }
 
 	moDirectorStatus moDirectorCore::ConsoleLoop() {
-	    return m_pDirectorConsole->ConsoleLoop();
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->ConsoleLoop();
+	    return MO_DIRECTOR_STATUS_ERROR;
     }
 
 	void moDirectorCore::ViewSwapBuffers() {
@@ -154,47 +179,70 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 
     moDirectorStatus
     moDirectorCore::SetView( int x, int y, int w, int h ) {
-        return m_pDirectorConsole->SetView( x, y, w, h );
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->SetView( x, y, w, h );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 
     MO_HANDLE moDirectorCore::GetHandle() {
-        return m_pUserInterface->GetHandle();
+        if (m_pUserInterface)
+            return m_pUserInterface->GetHandle();
+        return NULL;
     }
 
 
 	moDirectorStatus moDirectorCore::FullScreen( bool force) {
-        return m_pUserInterface->FullScreen(force);
+        if (m_pUserInterface)
+            return m_pUserInterface->FullScreen(force);
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::Play() {
-        return m_pDirectorConsole->Play();
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->Play();
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::Pause() {
-        return m_pDirectorConsole->Pause();
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->Pause();
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::Stop() {
-        return m_pDirectorConsole->Stop();
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->Stop();
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::Seek( MOulong p_timecode ) {
-        return m_pDirectorConsole->Seek(p_timecode);
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->Seek(p_timecode);
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::FocusOutput() {
-        return m_pUserInterface->FocusOutput();
+        if (m_pUserInterface)
+            return m_pUserInterface->FocusOutput();
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::SaveSession() {
-        return m_pDirectorConsole->SaveSession();
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->SaveSession();
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::SaveAll() {
-	    return m_pDirectorConsole->SaveAll();
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->SaveAll();
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 	moDirectorStatus moDirectorCore::CloseAll() {
-        return m_pUserInterface->CloseAll();
+        if (m_pUserInterface)
+            return m_pUserInterface->CloseAll();
+        return MO_DIRECTOR_STATUS_ERROR;
+
     }
 
 	moDirectorStatus moDirectorCore::CloseApp() {
@@ -209,12 +257,7 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
         moText PluginName;
 
         //PREEFFECTS
-#ifdef MODULESDIR
-	// TODO: Fijarse donde esta el proble
-        DirEffects.Open( plugindir, moText("/*.so") );
-#else
         DirEffects.Open( plugindir, moText("/*.dll") );
-#endif
         if (DirEffects.Exists()) {
 
             moFile* pFile = NULL;
@@ -232,7 +275,8 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
                 FileNameEnd.Right(2);
                 bDebug = ( FileNameEnd==moText("_d") );
                 #ifndef MO_WIN32
-                PluginName.Right( PluginName.Length() - 3 );
+                ///extract the "libmod_" part
+                PluginName.Right( PluginName.Length() - 7 );
                 #endif
                 if (bDebug) PluginName.Left( PluginName.Length() - 3 );
 
@@ -247,7 +291,7 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 
     }
 
-    moApplicationDescriptor moDirectorCore::GetApplicationDescriptor() {
+	moApplicationDescriptor moDirectorCore::GetApplicationDescriptor() {
 
         //actualizar lista de plugins:
         moText pluginsfullpath = m_ApplicationDescriptor.GetPluginsFullPath();
@@ -255,6 +299,7 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
         moPluginDefinitions& rPluginDefs( m_ApplicationDescriptor.GetPluginDefinitions());
 
         Log( moText("Checking plugins") );
+        cout << pluginsfullpath << endl;
         //recorrer los plugins en busca de: dll o so
         //lo interesante sería que la definición de los plugins se complete a su vez
         //...
@@ -292,7 +337,7 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 //Project
 //================================================================
 
-	moDirectorStatus moDirectorCore::NewProject( moProjectDescriptor p_projectdescriptor ) {
+	moDirectorStatus moDirectorCore::NewProject( const moProjectDescriptor& p_projectdescriptor ) {
 
         //copiar los archivos a  la carpeta
 
@@ -314,8 +359,9 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
             Log( moText("Creating project:") + p_projectdescriptor.GetFullConfigName() );
 
             //copiar los archivos al nuevo directorio... o crearlos desde cero????
-            return m_pDirectorConsole->NewProject(p_projectdescriptor);
-
+            if (m_pDirectorConsole)
+                return m_pDirectorConsole->NewProject(p_projectdescriptor);
+            return MO_DIRECTOR_STATUS_ERROR;
 
         //}
 
@@ -323,45 +369,55 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 
     }
 
-	moDirectorStatus moDirectorCore::OpenProject( moProjectDescriptor p_projectdescriptor ) {
-		return m_pDirectorConsole->OpenProject( p_projectdescriptor );
+	moDirectorStatus moDirectorCore::OpenProject( const moProjectDescriptor& p_projectdescriptor ) {
+		if (m_pDirectorConsole)
+            return m_pDirectorConsole->OpenProject( p_projectdescriptor );
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::CloseProject() {
-		if(m_pDirectorConsole->CloseProject() == MO_DIRECTOR_STATUS_OK) {
-			return MO_DIRECTOR_STATUS_OK;
-		}
-
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->CloseProject();
 		return MO_DIRECTOR_STATUS_ERROR;
 	}
 
 	moDirectorStatus moDirectorCore::SaveProject() {
-        return m_pDirectorConsole->SaveProject();
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->SaveProject();
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 
 	moDirectorStatus moDirectorCore::SaveAsProject( moText p_configname, moText p_configpath ) { return MO_DIRECTOR_STATUS_OK; }
 
-	moDirectorStatus moDirectorCore::ProjectUpdated( moProjectDescriptor p_projectdescriptor ) {
+	moDirectorStatus moDirectorCore::ProjectUpdated( const moProjectDescriptor& p_projectdescriptor ) {
 
-		return m_pUserInterface->ProjectUpdated( p_projectdescriptor );
+		if (m_pUserInterface)
+            return m_pUserInterface->ProjectUpdated( p_projectdescriptor );
+		return MO_DIRECTOR_STATUS_ERROR;
 
 	}
 
-	moDirectorStatus moDirectorCore::SetProject( moProjectDescriptor p_projectdescriptor ) { return MO_DIRECTOR_STATUS_OK; }
+	moDirectorStatus moDirectorCore::SetProject( const moProjectDescriptor& p_projectdescriptor ) { return MO_DIRECTOR_STATUS_OK; }
 
-	moProjectDescriptor moDirectorCore::GetProject() {
-		return m_pDirectorConsole->GetProject();
+	const moProjectDescriptor& moDirectorCore::GetProject() {
+		if (m_pDirectorConsole)
+            return m_pDirectorConsole->GetProject();
+        return m_ProjectDesDummy;
 	}
 
 	moDirectorStatus moDirectorCore::ReloadProject() { return MO_DIRECTOR_STATUS_OK; }
 
 	moDirectorStatus moDirectorCore::ProjectPreview( ) {
-		return m_pUserInterface->ProjectPreview();
+		if (m_pUserInterface)
+            return m_pUserInterface->ProjectPreview();
+        return MO_DIRECTOR_STATUS_ERROR;
 	}
 	moDirectorStatus moDirectorCore::EffectPreview( MOint p_n ) { return MO_DIRECTOR_STATUS_OK; }
 
     moMobDescriptors moDirectorCore::GetMobDescriptors() {
-            return m_pDirectorConsole->GetMobDescriptors();
+            if (m_pDirectorConsole)
+                return m_pDirectorConsole->GetMobDescriptors();
+            return m_MobsDesDummy;
     }
 
 
@@ -371,11 +427,15 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 
 
     moResourceDescriptor moDirectorCore::GetResourceDescriptor( moResourceDescriptor p_ResourceDescriptor ) {
-        return m_pDirectorConsole->GetResourceDescriptor( p_ResourceDescriptor );
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->GetResourceDescriptor( p_ResourceDescriptor );
+        return m_ResourceDesDummy;
     }
 
     moResourceDescriptors moDirectorCore::GetResourceDescriptors(  moResourceType p_ResourceType  ) {
-        return m_pDirectorConsole->GetResourceDescriptors( p_ResourceType );
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->GetResourceDescriptors( p_ResourceType );
+        return m_ResourcesDesDummy;
     }
 
 
@@ -385,7 +445,25 @@ moDirectorCore::SetPaths( moText p_installationpath ) {
 
 moDirectorStatus moDirectorCore::NewMob( moMobDescriptor p_MobDesc ) {
 
-    return m_pDirectorConsole->NewMob( p_MobDesc );
+    if (m_pDirectorConsole)
+        return m_pDirectorConsole->NewMob( p_MobDesc );
+    return MO_DIRECTOR_STATUS_ERROR;
+
+}
+
+moDirectorStatus moDirectorCore::DuplicateMob( moMobDescriptor p_MobDesc ) {
+
+    if (m_pDirectorConsole)
+        return m_pDirectorConsole->DuplicateMob( p_MobDesc );
+    return MO_DIRECTOR_STATUS_ERROR;
+
+}
+
+moDirectorStatus moDirectorCore::MoveMob( moMobDescriptor p_MobDesc, int position ) {
+
+    if (m_pDirectorConsole)
+        return m_pDirectorConsole->MoveMob( p_MobDesc, position );
+    return MO_DIRECTOR_STATUS_ERROR;
 
 }
 
@@ -400,7 +478,9 @@ moDirectorStatus moDirectorCore::OpenMob( moMobDescriptor p_MobDesc ) {
 
     //si ya se encuentra dentro de nuestro proyecto simplemente lo abrimos
 
-    return m_pDirectorConsole->OpenMob( p_MobDesc );
+    if (m_pDirectorConsole)
+        return m_pDirectorConsole->OpenMob( p_MobDesc );
+    return MO_DIRECTOR_STATUS_ERROR;
 
 }
 
@@ -415,7 +495,9 @@ moDirectorStatus moDirectorCore::ImportMob( moText p_filename ) {
 
     //si ya se encuentra dentro de nuestro proyecto simplemente lo abrimos
 
-    return m_pDirectorConsole->ImportMob( p_filename );
+    if (m_pDirectorConsole)
+        return m_pDirectorConsole->ImportMob( p_filename );
+    return MO_DIRECTOR_STATUS_ERROR;
 
 }
 
@@ -424,7 +506,9 @@ moDirectorStatus moDirectorCore::ImportMob( moText p_filename ) {
 moDirectorStatus
 moDirectorCore::CloseMob( moMobDescriptor p_MobDescriptor ) {
 
-	return m_pDirectorConsole->CloseMob( p_MobDescriptor );
+	if (m_pDirectorConsole)
+        return m_pDirectorConsole->CloseMob( p_MobDescriptor );
+    return MO_DIRECTOR_STATUS_ERROR;
 
 }
 
@@ -435,22 +519,30 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 	Log( moText("Opening MOB object")+(moText)p_MobDescriptor.GetMobDefinition().GetConfigName());
 
-	return m_pUserInterface->EditMob( p_MobDescriptor );
+    if (m_pUserInterface)
+        return m_pUserInterface->EditMob( p_MobDescriptor );
+	return MO_DIRECTOR_STATUS_ERROR;
 }
 
 
 	moDirectorStatus moDirectorCore::SaveMob( moMobDescriptor p_MobDesc ) {
-	    return m_pDirectorConsole->SaveMob( p_MobDesc );
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->SaveMob( p_MobDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 
 	moDirectorStatus moDirectorCore::DeleteMob( moMobDescriptor p_MobDesc ) {
 
-	    return m_pDirectorConsole->DeleteMob( p_MobDesc );
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->DeleteMob( p_MobDesc );
+	    return MO_DIRECTOR_STATUS_ERROR;
 
     }
 
 	moMobDescriptor moDirectorCore::GetMob( moMobDescriptor p_MobDesc ) {
-		return m_pDirectorConsole->GetMob(p_MobDesc);
+		if (m_pDirectorConsole)
+            return m_pDirectorConsole->GetMob(p_MobDesc);
+        return m_MobDesDummy;
 	}
 
 	moDirectorStatus moDirectorCore::SetMob( moMobDescriptor p_MobDesc ) {
@@ -468,13 +560,16 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 		Log( moText("For MOB: ") + (moText)fxname + moText(" setting state ::") + (moText)mobstext );
         #endif
-	    return m_pDirectorConsole->SetMob( p_MobDesc );
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->SetMob( p_MobDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 
-	moDirectorStatus moDirectorCore::MobUpdated( moMobDescriptor p_MobDesc ) { return MO_DIRECTOR_STATUS_OK; }
-	moDirectorStatus moDirectorCore::AddMobToProject( moMobDescriptor p_MobDesc ) { return MO_DIRECTOR_STATUS_OK; }
-	moDirectorStatus moDirectorCore::RemoveMobToProject( moMobDescriptor p_MobDesc ) { return MO_DIRECTOR_STATUS_OK; }
-	moDirectorStatus moDirectorCore::MoveMobInProject( moMobDescriptor p_MobDesc ) { return MO_DIRECTOR_STATUS_OK; }
+	moDirectorStatus moDirectorCore::MobUpdated( moMobDescriptor p_MobDesc ) {
+        if (m_pUserInterface)
+            return m_pUserInterface->MobUpdated( p_MobDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
+    }
 
 //================================================================
 //PARAMETERS
@@ -484,25 +579,33 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 	moDirectorStatus moDirectorCore::InsertParameter( moParameterDescriptor p_ParameterDesc ) { return MO_DIRECTOR_STATUS_OK; }
 	moDirectorStatus moDirectorCore::MoveParameter( moParameterDescriptor p_ParameterDesc ) { return MO_DIRECTOR_STATUS_OK; }
 	moDirectorStatus moDirectorCore::EditParameter( moParameterDescriptor p_ParameterDesc ) {
-	    m_pUserInterface->EditParameter( p_ParameterDesc );
+	     if (m_pUserInterface)
+            m_pUserInterface->EditParameter( p_ParameterDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 	moDirectorStatus moDirectorCore::SaveParameter( moParameterDescriptor p_ParameterDesc ) { return MO_DIRECTOR_STATUS_OK; }
 	moDirectorStatus moDirectorCore::SetParameter( moParameterDescriptor p_ParameterDesc ) {
-	    return m_pDirectorConsole->SetParameter( p_ParameterDesc );
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->SetParameter( p_ParameterDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 	moParameterDescriptor moDirectorCore::GetParameter( moParameterDescriptor p_ParameterDesc ) {
 	    return moParameterDescriptor();
     }
 	moDirectorStatus moDirectorCore::DeleteParameter( moParameterDescriptor p_ParameterDesc ) { return MO_DIRECTOR_STATUS_OK; }
 	moDirectorStatus moDirectorCore::ParameterUpdated( moParameterDescriptor p_ParameterDesc ) {
-	    return m_pUserInterface->ParameterUpdated( p_ParameterDesc );
+	    if (m_pUserInterface)
+            return m_pUserInterface->ParameterUpdated( p_ParameterDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 	moDirectorStatus moDirectorCore::ReloadParameter( moParameterDescriptor p_ParameterDesc ) {
 	    return MO_DIRECTOR_STATUS_OK;
     }
 
 	moParameterDescriptors  moDirectorCore::GetParameterDescriptors( moMobDescriptor p_MobDesc ) {
-	    return m_pDirectorConsole->GetParameterDescriptors(p_MobDesc);
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->GetParameterDescriptors(p_MobDesc);
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 
 
@@ -511,7 +614,9 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 //================================================================
 
 	moValueDescriptors  moDirectorCore::GetValueDescriptors( moParameterDescriptor p_ParamDesc ) {
-	    return m_pDirectorConsole->GetValueDescriptors( p_ParamDesc );
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->GetValueDescriptors( p_ParamDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 
 
@@ -519,21 +624,29 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 	    return MO_DIRECTOR_STATUS_OK;
     }
 	moDirectorStatus moDirectorCore::InsertValue( moValueDescriptor p_ValueDesc ) {
-	    return m_pDirectorConsole->InsertValue( p_ValueDesc );
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->InsertValue( p_ValueDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 	moDirectorStatus moDirectorCore::EditValue( moValueDescriptor p_ValueDesc ) {
-	    return m_pUserInterface->EditValue( p_ValueDesc );
+	    if (m_pUserInterface)
+            return m_pUserInterface->EditValue( p_ValueDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
+
     }
 	moDirectorStatus moDirectorCore::SaveValue( moValueDescriptor p_ValueDesc ) {
 	    //agregar cambios a la lista de UNDO's
 
 	    //
-	    return m_pDirectorConsole->SaveValue( p_ValueDesc );
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->SaveValue( p_ValueDesc );
 
-	    //return MO_DIRECTOR_STATUS_OK;
+	    return MO_DIRECTOR_STATUS_ERROR;
     }
 	moValueDescriptor moDirectorCore::GetValue( moValueDescriptor p_ValueDesc ) {
-	    return m_pDirectorConsole->GetValue( p_ValueDesc );
+	    if (m_pDirectorConsole)
+            return m_pDirectorConsole->GetValue( p_ValueDesc );
+        return m_ValueDesDummy;
     }
 	moDirectorStatus moDirectorCore::SetValue( moValueDescriptor p_ValueDesc ) {
 
@@ -544,13 +657,16 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 		    valuestext+= moText("[")+(moText)+IntToStr(i)+moText("]") + (moText)p_ValueDesc.GetValue().GetSubValue(i).ToText();
         }
 
-		Log( moText("For param: ") + (moText)paramname + moText(" setting value [:") + IntToStr( p_ValueDesc.GetValueIndex().m_ValueIndex ) + moText("] :") + (moText)valuestext );
+		//Log( moText("For param: ") + (moText)paramname + moText(" setting value [:") + IntToStr( p_ValueDesc.GetValueIndex().m_ValueIndex ) + moText("] :") + (moText)valuestext );
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->SetValue( p_ValueDesc );
 
-        return m_pDirectorConsole->SetValue( p_ValueDesc );
-
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 	moDirectorStatus moDirectorCore::DeleteValue( moValueDescriptor p_ValueDesc ) {
-        return m_pDirectorConsole->DeleteValue( p_ValueDesc );
+        if (m_pDirectorConsole)
+            return m_pDirectorConsole->DeleteValue( p_ValueDesc );
+        return MO_DIRECTOR_STATUS_ERROR;
     }
 	moDirectorStatus moDirectorCore::ValueUpdated( moValueDescriptor p_ValueDesc ) {
 
@@ -567,8 +683,10 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
             }
         }
         */
+        moDirectorStatus res = MO_DIRECTOR_STATUS_ERROR;
 
-	    moDirectorStatus res = m_pUserInterface->ValueUpdated( p_ValueDesc );
+        if (m_pUserInterface)
+            res = m_pUserInterface->ValueUpdated( p_ValueDesc );
 	    if (res!=MO_DIRECTOR_STATUS_OK) {
 	        moText moberror = p_ValueDesc.GetParamDescriptor().GetMobDescriptor().GetMobDefinition().GetLabelName();
 	        moText paramerror = p_ValueDesc.GetParamDescriptor().GetParamDefinition().GetName();
@@ -592,27 +710,25 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 	void moDirectorCore::Log( moText p_message ) {
 
-		m_pUserInterface->Log( p_message );
+		if (m_pUserInterface)
+            m_pUserInterface->Log( p_message );
 		//m_pUserInterface->SetStatusText( w );
 	}
 	void moDirectorCore::LogError( moText p_message ) {
 
-		m_pUserInterface->LogError( p_message );
+        if (m_pUserInterface)
+            m_pUserInterface->LogError( p_message );
 
 	}
 	void moDirectorCore::ShowMessage( moText p_message ) {
 
-		wxString msg =wxString(p_message, wxConvUTF8);
-
-		wxMessageBox( msg );
+		wxMessageBox( moText2Wx(p_message) );
 
 	}
 
 	bool moDirectorCore::ConfirmMessage( moText p_message ) {
 
-		wxString msg =wxString(p_message, wxConvUTF8);
-
-		int answer = wxMessageBox( msg, wxT("Confirm"),
+		int answer = wxMessageBox( moText2Wx(p_message), wxT("Confirm"),
                             wxYES_NO | wxCANCEL | wxICON_QUESTION );
 
 		if (answer == wxYES) {
@@ -625,18 +741,14 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 	void moDirectorCore::AlertMessage( moText p_message ) {
 
-		wxString msg =wxString(p_message, wxConvUTF8);
-
-		int answer = wxMessageBox( msg, wxT("Alert!"),
+		int answer = wxMessageBox( moText2Wx(p_message), wxT("Alert!"),
                             wxOK | wxICON_EXCLAMATION );
 
 	}
 
 	void moDirectorCore::ErrorMessage( moText p_message ) {
 
-		wxString msg =wxString(p_message, wxConvUTF8);
-
-		int answer = wxMessageBox( msg, wxT("Error!"),
+		int answer = wxMessageBox( moText2Wx(p_message), wxT("Error!"),
                             wxOK | wxICON_ERROR );
 
 	}
@@ -650,18 +762,18 @@ moDirectorCore::GetDefinition( moConfigDefinition *p_configdefinition ) {
 	if ( p_configdefinition==NULL ) {
 		p_configdefinition = m_Config.GetConfigDefinition();
 	}
-
-    p_configdefinition->Set( "moldeodirector", "moldeoguicore" );
-    p_configdefinition->Add( moText("installationpath"), MO_PARAM_TEXT );
-    p_configdefinition->Add( moText("configurationpath"), MO_PARAM_TEXT );
-    p_configdefinition->Add( moText("pluginspath"), MO_PARAM_TEXT );
-    p_configdefinition->Add( moText("lastprojects"), MO_PARAM_TEXT );
-    p_configdefinition->Add( moText("openfiles"), MO_PARAM_TEXT );
-    p_configdefinition->Add( moText("autosave"), MO_PARAM_TEXT );
-    p_configdefinition->Add( moText("executions"), MO_PARAM_NUMERIC );
-    p_configdefinition->Add( moText("splashscreen"), MO_PARAM_TEXTURE );
-    p_configdefinition->Add( moText("3dlogo"), MO_PARAM_OBJECT );
-
+    if (p_configdefinition) {
+        p_configdefinition->Set( "moldeodirector", "moldeoguicore" );
+        p_configdefinition->Add( moText("installationpath"), MO_PARAM_TEXT );
+        p_configdefinition->Add( moText("configurationpath"), MO_PARAM_TEXT );
+        p_configdefinition->Add( moText("pluginspath"), MO_PARAM_TEXT );
+        p_configdefinition->Add( moText("lastprojects"), MO_PARAM_TEXT );
+        p_configdefinition->Add( moText("openfiles"), MO_PARAM_TEXT );
+        p_configdefinition->Add( moText("autosave"), MO_PARAM_TEXT );
+        p_configdefinition->Add( moText("executions"), MO_PARAM_NUMERIC );
+        p_configdefinition->Add( moText("splashscreen"), MO_PARAM_TEXTURE );
+        p_configdefinition->Add( moText("3dlogo"), MO_PARAM_OBJECT );
+    }
 	//p_configdefinition->Add( moText("inlet"), MO_PARAM_INLET );
 	//p_configdefinition->Add( moText("outlet"), MO_PARAM_OUTLET );
 	return p_configdefinition;
@@ -670,13 +782,14 @@ moDirectorCore::GetDefinition( moConfigDefinition *p_configdefinition ) {
 void
 moDirectorCore::LoadDefinition() {
 
-	GetDefinition();
+	//GetDefinition();
 
 	moParamDefinitions *pdefinitions = m_Config.GetConfigDefinition()->GetParamDefinitions();
 
-	for( MOuint i=0; i < pdefinitions->Count(); i++ ) {
-		pdefinitions->Get(i).SetIndex( m_Config.GetParamIndex( pdefinitions->Get(i).GetName() ));
-	}
+	if  (pdefinitions)
+        for( MOuint i=0; i < pdefinitions->Count(); i++ ) {
+            pdefinitions->Get(i).SetIndex( m_Config.GetParamIndex( pdefinitions->Get(i).GetName() ));
+        }
 
 }
 

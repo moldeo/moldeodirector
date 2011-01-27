@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moEffectLayerCtrl">
+		<pos>0,0</pos>
+		<size>265,40</size>
+		<fg>#FFFFFF</fg>
+		<bg>#323232</bg>
+		<minsize>-1,-1</minsize>
+		<maxsize>-1,-1</maxsize>
+		<id_arg>0</id_arg>
+		<style>0</style>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrlLabel" member="yes">
+			<value>Text</value>
+			<pos>0,7</pos>
+			<size>96,7</size>
+			<fg>#FFFFFF</fg>
+			<bg>#00093C</bg>
+			<font>
+				<size>6</size>
+				<style>normal</style>
+				<weight>bold</weight>
+				<underlined>0</underlined>
+				<family>swiss</family>
+				<face>Terminal</face>
+			</font>
+			<extra_code>TextCtrlLabel-&gt;SetEditable( false );</extra_code>
+			<style>wxNO_BORDER|wxTRANSPARENT_WINDOW</style>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERALPHA" subclass="moWxLevelCtrl" variable="m_pLevelAlphaCtrl" member="yes">
+			<pos>0,24</pos>
+			<size>56,9</size>
+			<extra_code>Connect(ID__SLIDERALPHA, MO__EVT__DIRECTOR__LEVEL, (wxObjectEventFunction)&amp;moEffectLayerCtrl::OnLevelAlpha );</extra_code>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERTINT" subclass="moWxLevelCtrl" variable="m_pLevelTintCtrl" member="yes">
+			<pos>65,24</pos>
+			<size>56,9</size>
+			<extra_code>Connect(ID__SLIDERTINT, MO__EVT__DIRECTOR__LEVEL, (wxObjectEventFunction)&amp;moEffectLayerCtrl::OnLevelTint );</extra_code>
+		</object>
+		<object class="wxSlider" name="ID_SLIDERTEMPO" subclass="moWxLevelCtrl" variable="m_pLevelSpeedCtrl" member="yes">
+			<pos>128,24</pos>
+			<size>56,9</size>
+			<extra_code>Connect(ID__SLIDERTEMPO, MO__EVT__DIRECTOR__LEVEL, (wxObjectEventFunction)&amp;moEffectLayerCtrl::OnLevelSpeed );</extra_code>
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOXONOFF" variable="CheckBoxOnOff" member="yes">
+			<pos>224,6</pos>
+			<size>16,21</size>
+			<handler function="OnCheckBoxOnOffClick" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTONDELETE" variable="BitmapButtonDelete" member="yes">
+			<bitmap>../../doc/icons/delete.png</bitmap>
+			<default>1</default>
+			<pos>240,12</pos>
+			<size>13,13</size>
+			<handler function="OnBitmapButtonDeleteClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="moConfigurationAdvancedOutput">
+		<size>606,373</size>
+		<id_arg>0</id_arg>
+		<object class="wxFlexGridSizer" variable="FlexGridSizer1" member="no">
+			<cols>2</cols>
+			<rows>2</rows>
+			<growablecols>0</growablecols>
+			<growablerows>1</growablerows>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_PANEL1" variable="Panel1" member="yes">
+					<size>490,33</size>
+					<handler function="OnPanel1Paint" entry="EVT_PAINT" />
+					<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
+						<label>Add Clip</label>
+						<pos>8,8</pos>
+					</object>
+					<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
+						<label>Delete Clip</label>
+						<pos>88,8</pos>
+					</object>
+					<object class="wxChoice" name="ID_CHOICE5" variable="Choice4" member="yes">
+						<content>
+							<item>Choose resolution</item>
+							<item>640x480</item>
+							<item>800x600</item>
+							<item>1024x768</item>
+						</content>
+						<selection>0</selection>
+						<pos>176,8</pos>
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<option>1</option>
+			</object>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_PANEL2" variable="Panel2" member="yes">
+					<size>173,32</size>
+					<handler function="OnPanel2Paint" entry="EVT_PAINT" />
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<option>1</option>
+			</object>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_PANEL3" variable="Panel3" member="yes">
+					<size>488,338</size>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<option>1</option>
+			</object>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_PANEL4" variable="Panel4" member="yes">
+					<size>194,107</size>
+					<object class="wxChoice" name="ID_CHOICE1" variable="Display1" member="yes">
+						<content>
+							<item>clip full</item>
+							<item>clip 1</item>
+							<item>clip 2</item>
+							<item>clip 3</item>
+						</content>
+						<selection>0</selection>
+						<pos>64,8</pos>
+					</object>
+					<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+						<label>Display 1</label>
+						<pos>8,8</pos>
+					</object>
+					<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+						<label>Display 2</label>
+						<pos>8,40</pos>
+					</object>
+					<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+						<label>Display 3</label>
+						<pos>8,72</pos>
+					</object>
+					<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+						<label>Display 4</label>
+						<pos>8,104</pos>
+					</object>
+					<object class="wxChoice" name="ID_CHOICE2" variable="Choice1" member="yes">
+						<content>
+							<item>clip 1</item>
+							<item>clip 2</item>
+							<item>clip 3</item>
+							<item>clip 4</item>
+						</content>
+						<selection>0</selection>
+						<pos>64,40</pos>
+						<size>130,21</size>
+					</object>
+					<object class="wxChoice" name="ID_CHOICE4" variable="Choice3" member="yes">
+						<content>
+							<item>clip 1</item>
+							<item>clip 2</item>
+							<item>clip 3</item>
+							<item>clip 4</item>
+						</content>
+						<selection>0</selection>
+						<pos>64,72</pos>
+					</object>
+					<object class="wxChoice" name="ID_CHOICE3" variable="Choice2" member="yes">
+						<content>
+							<item>clip 1</item>
+							<item>clip 2</item>
+							<item>clip 3</item>
+							<item>clip 4</item>
+						</content>
+						<pos>64,104</pos>
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<option>1</option>
+			</object>
+		</object>
+	</object>
+</wxsmith>

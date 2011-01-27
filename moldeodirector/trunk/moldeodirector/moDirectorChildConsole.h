@@ -50,6 +50,7 @@ public:
 	//from moConsole
 	MOboolean Init( moText p_effectname,
 		moText p_effectconfigname,
+		moText p_apppath,
 		moText p_datapath,
 		moText p_consoleconfig,
 		moIODeviceManager* p_pIODeviceManager = NULL,
@@ -57,7 +58,9 @@ public:
 		MOint p_render_to_texture_mode = MO_RENDER_TO_TEXTURE_FBOBJECT,
 		MOint p_screen_width = MO_DEF_SCREEN_WIDTH, MOint p_screen_height = MO_DEF_SCREEN_HEIGHT,
 		MOint p_render_width = MO_DEF_RENDER_WIDTH, MOint p_render_height = MO_DEF_RENDER_HEIGHT);
-	MOboolean Init( moText p_datapath,
+	MOboolean Init(
+                    moText p_apppath,
+                        moText p_datapath,
 						moText p_consoleconfig,
 						moIODeviceManager* p_pIODeviceManager = NULL,
 						moResourceManager *p_pResourceManager = NULL,

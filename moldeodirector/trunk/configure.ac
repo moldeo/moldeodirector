@@ -1,4 +1,4 @@
-AC_INIT([Moldeo Director], [0.7], [info@moldeointeractive.com.ar], [moldeodirector])
+AC_INIT([Moldeo Director], [0.7.9], [info@moldeointeractive.com.ar], [moldeodirector])
 
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
@@ -17,6 +17,9 @@ AC_PROG_CXX_C_O
 
 #dnl check for libmoldeo
 PKG_CHECK_MODULES([LIBMOLDEO], [libmoldeo] ,has_libmoldeo=yes)
+
+#dnl check for moldeocontrols
+PKG_CHECK_MODULES([MOLDEOCONTROLS], [moldeocontrols] ,has_mnoldeocontrols=yes)
 
 #dnl check for sdl-net
 AC_CHECK_HEADER(SDL/SDL_net.h, , AC_MSG_ERROR([SDL_net header not found.]))

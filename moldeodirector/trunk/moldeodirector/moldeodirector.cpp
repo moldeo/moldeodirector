@@ -57,7 +57,7 @@ bool moDirectorApp::OnInit()
 	wxFileName exename(StdPaths.GetExecutablePath());
 	exename.MakeAbsolute();
 
-    wxMessageBox(wxString(exename.GetPath()));
+    wxMessageBox(wxString("appdir:")+wxString(exename.GetPath()));
     wxSetWorkingDirectory( wxString(exename.GetPath()) );
 
     //** EVERYTHING OK!!!**//
@@ -118,10 +118,14 @@ bool moDirectorApp::OnInit()
     // create the main application window
 
     cout << "Director Frame..." << endl;
-    m_pDirectorFrame = new moDirectorFrame(_T("Moldeo Director"));
-    m_pDirectorFrame->SetIcon( wxIcon( wxIconLocation(wxT(DATADIR "/icons/Moldeo32.ico")) ) );
-    m_pDirectorFrame->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_CAPTIONTEXT));
-    m_pDirectorFrame->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_APPWORKSPACE));
+		m_pDirectorFrame = new moDirectorFrame(_T("Moldeo Director"));
+		if (m_pDirectorFrame) {
+			m_pDirectorFrame->SetIcon( wxIcon( wxIconLocation(wxT(MOLDEODATADIR "/icons/Moldeo32.ico")) ) );
+    	m_pDirectorFrame->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_CAPTIONTEXT));
+	    m_pDirectorFrame->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_APPWORKSPACE));
+		} else {
+			exit(1);
+		}
     cout << "m_pDirectorFrame:" << (m_pDirectorFrame!=NULL) << endl;
 
     cout << "Director Core..." << endl;
@@ -132,11 +136,18 @@ bool moDirectorApp::OnInit()
 	m_pDirectorCore->SetUserInterface( m_pDirectorFrame );
 
 
-    //wxMessageBox(StdPaths.GetAppDir());
+    //wxMessageBox("appdir:"+StdPaths.GetAppDir());
+    wxMessageBox("userdir:"+StdPaths.GetUserDataDir() );
+    wxMessageBox( wxString("datadir:") + wxString(wxT(MOLDEODATADIR)) );
+    wxMessageBox( wxString("modulesdir:")+wxString(wxT(MODULESDIR)) );
 
 	//wxFileName userdatadir( StdPaths.GetUserDataDir() );
 
-	m_pDirectorCore->SetPaths( moWx2Text(exename.GetPath()) );
+	m_pDirectorCore->SetPaths(  moWx2Text(exename.GetPath()),
+                                moWx2Text(StdPaths.GetUserDataDir()),
+                                moWx2Text(wxString(wxT(MODULESDIR))),
+                                moWx2Text(wxString(wxT(MOLDEODATADIR)))
+                                );
 	m_pDirectorCore->Init();
 
 

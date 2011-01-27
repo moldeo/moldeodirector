@@ -17,7 +17,7 @@ class moNewProject: public wxDialog
 
 		moNewProject(wxWindow* parent,wxWindowID id=wxID_ANY);
 		virtual ~moNewProject();
-		moProjectDescriptor GetProjectDescriptor() {
+		const moProjectDescriptor& GetProjectDescriptor() {
             return m_ProjectDescriptor;
         }
 

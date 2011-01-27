@@ -9,7 +9,6 @@
 #include <wx/control.h>
 #include <wx/timer.h>
 
-
 class moTimelineRuler : public wxControl {
 
     public:

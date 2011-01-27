@@ -297,6 +297,14 @@ void moGLCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))
         dc.DrawRectangle(0,0,400,300);
         return;
     }*/
+    /**
+    if (block) {
+        wxSize sz( GetClientSize() );
+        wxPaintDC dc(this);
+        dc.SetClippingRegion(0,0,400,300);
+        dc.SetBrush( wxBrush( wxColour(0,200,50), wxSOLID) );
+        dc.DrawRectangle(0,0,400,300);
+    }*/
 }
 
 void moGLCanvas::OnMouse( wxMouseEvent& event )

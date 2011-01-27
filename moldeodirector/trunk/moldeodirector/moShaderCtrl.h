@@ -51,6 +51,7 @@ class moShaderCtrl: public wxPanel, public moIDirectorActions
 		void OnBitmapButtonShaderImportClick(wxCommandEvent& event);
 		void OnBitmapButtonShaderSelectClick(wxCommandEvent& event);
 		void OnCheckBoxOnOffClick(wxCommandEvent& event);
+		void OnEraseBackground(wxEraseEvent& event);
 		//*)
 
 		void OnLevelShaderAlpha( wxCommandEvent& event );

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moConfigurationOutput">
+		<size>432,114</size>
+		<id_arg>0</id_arg>
+		<object class="wxStaticBox" name="ID_STATICBOX1" variable="StaticBox1" member="yes">
+			<label>Render resolution</label>
+			<pos>16,16</pos>
+			<size>416,128</size>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>Width</label>
+			<pos>40,40</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Height</label>
+			<pos>40,72</pos>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX2" variable="StaticBox2" member="yes">
+			<label>Output screen</label>
+			<pos>16,152</pos>
+			<size>416,96</size>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="SpinCtrl1" member="yes">
+			<value>0</value>
+			<pos>80,40</pos>
+			<size>72,21</size>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL2" variable="SpinCtrl2" member="yes">
+			<value>0</value>
+			<pos>80,72</pos>
+			<size>72,21</size>
+		</object>
+		<object class="wxComboBox" name="ID_COMBOBOX1" variable="ComboBox1" member="yes">
+			<content>
+				<item>Choose standard resolution</item>
+				<item>640x480</item>
+				<item>800x600</item>
+				<item>1024x768</item>
+				<item>1280x800</item>
+			</content>
+			<selection>0</selection>
+			<pos>224,40</pos>
+		</object>
+		<object class="wxComboBox" name="ID_COMBOBOX2" variable="ComboBox2" member="yes">
+			<content>
+				<item>Display 1</item>
+				<item>Display 2</item>
+				<item>Display 3</item>
+			</content>
+			<selection>0</selection>
+			<pos>40,176</pos>
+			<size>96,21</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="ButtonAdvancedOutput" member="yes">
+			<label>Advanced Ouput</label>
+			<pos>40,216</pos>
+			<size>112,23</size>
+			<handler function="OnButtonAdvancedOutputClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

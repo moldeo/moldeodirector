@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moFontPanel">
+		<size>246,257</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrlFont" member="yes">
+			<value>sample</value>
+			<pos>8,8</pos>
+			<size>144,21</size>
+			<font>
+				<size>8</size>
+				<style>normal</style>
+				<weight>normal</weight>
+				<underlined>0</underlined>
+				<family>swiss</family>
+				<face></face>
+			</font>
+			<handler function="OnTextCtrlFontText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTONIMPORT" variable="BitmapButtonImport" member="yes">
+			<bitmap>../../doc/icons/import.png</bitmap>
+			<default>1</default>
+			<pos>160,16</pos>
+			<size>13,13</size>
+			<handler function="OnBitmapButton1Click" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

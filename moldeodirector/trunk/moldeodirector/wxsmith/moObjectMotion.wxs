@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moObjectMotion">
+		<size>240,298</size>
+		<bg>#000000</bg>
+		<id_arg>0</id_arg>
+		<object class="wxFlexGridSizer" variable="FlexGridSizer1" member="no">
+			<cols>3</cols>
+			<object class="sizeritem">
+				<object class="wxPanel" name="ID_PANELTRANSLATE" variable="Panel2" member="yes">
+					<size>224,393</size>
+					<fg>#FFFFFF</fg>
+					<bg>#000000</bg>
+					<minsize>-1,-1</minsize>
+					<style>wxNO_BORDER|wxTAB_TRAVERSAL|wxCLIP_CHILDREN</style>
+					<object class="wxSlider" name="ID_SLIDERTX" variable="SliderTx" member="yes">
+						<min>-1000</min>
+						<max>1000</max>
+						<pos>48,8</pos>
+						<size>64,16</size>
+						<handler function="OnSliderTxCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderTxCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERTZ" variable="SliderTz" member="yes">
+						<min>-1000</min>
+						<max>1000</max>
+						<pos>48,40</pos>
+						<size>64,16</size>
+						<handler function="OnSliderTzCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderTzCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERTY" variable="SliderTy" member="yes">
+						<min>-1000</min>
+						<max>1000</max>
+						<pos>48,24</pos>
+						<size>64,16</size>
+						<handler function="OnSliderTyCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderTyCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLTX" variable="TextCtrlTx" member="yes">
+						<pos>112,8</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlTxText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLTY" variable="TextCtrlTy" member="yes">
+						<pos>112,24</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlTyText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERRZ" variable="SliderRz" member="yes">
+						<min>-180</min>
+						<max>180</max>
+						<pos>48,288</pos>
+						<size>64,16</size>
+						<handler function="OnSliderRzCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderRzCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERSZ" variable="SliderSz" member="yes">
+						<min>-100</min>
+						<pos>48,164</pos>
+						<size>64,16</size>
+						<handler function="OnSliderSzCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderSzCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERSY" variable="SliderSy" member="yes">
+						<min>-100</min>
+						<pos>48,148</pos>
+						<size>64,16</size>
+						<handler function="OnSliderSyCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderSyCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLRX" variable="TextCtrlRx" member="yes">
+						<pos>112,256</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlRxText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERRX" variable="SliderRx" member="yes">
+						<min>-180</min>
+						<max>180</max>
+						<pos>48,256</pos>
+						<size>64,16</size>
+						<handler function="OnSliderRxCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderRxCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERRY" variable="SliderRy" member="yes">
+						<min>-180</min>
+						<max>180</max>
+						<pos>48,272</pos>
+						<size>64,16</size>
+						<handler function="OnSliderRyCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderRyCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLRY" variable="TextCtrlRy" member="yes">
+						<pos>112,272</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlRyText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxSlider" name="ID_SLIDERSX" variable="SliderSx" member="yes">
+						<min>-100</min>
+						<pos>48,132</pos>
+						<size>64,16</size>
+						<handler function="OnSliderSxCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
+						<handler function="OnSliderSxCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
+					</object>
+					<object class="wxPanel" name="ID_PANEL6" variable="Panel4" member="yes">
+						<pos>8,56</pos>
+						<size>104,64</size>
+						<bg>#FFFFFF</bg>
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLTZ" variable="TextCtrlTz" member="yes">
+						<pos>112,40</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlTzText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxPanel" name="ID_PANEL9" variable="Panel6" member="yes">
+						<pos>8,180</pos>
+						<size>104,64</size>
+						<bg>#FFFFFF</bg>
+					</object>
+					<object class="wxPanel" name="ID_PANELPOSITION" variable="PanelPosition" member="yes">
+						<pos>8,304</pos>
+						<size>104,64</size>
+						<bg>#FFFFFF</bg>
+					</object>
+					<object class="wxPanel" name="ID_PANEL5" variable="PanelTranslateCoords" member="yes">
+						<pos>8,8</pos>
+						<size>44,44</size>
+						<object class="wxStaticBitmap" name="ID_STATICBITMAP1" variable="StaticBitmap1" member="yes">
+							<bitmap>../../doc/icons/translate.png</bitmap>
+							<pos>0,0</pos>
+						</object>
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLSZ" variable="TextCtrlSz" member="yes">
+						<pos>112,164</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlSzText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxPanel" name="ID_PANEL7" variable="PanelScalesTxt" member="yes">
+						<pos>8,256</pos>
+						<size>44,44</size>
+						<object class="wxStaticBitmap" name="ID_STATICBITMAP5" variable="StaticBitmap5" member="yes">
+							<bitmap>..\..\doc\icons\rotate.png</bitmap>
+							<pos>0,0</pos>
+						</object>
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLSY" variable="TextCtrlSy" member="yes">
+						<pos>112,148</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlSyText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxPanel" name="ID_PANEL4" variable="PanelScales" member="yes">
+						<pos>8,132</pos>
+						<size>44,44</size>
+						<object class="wxStaticBitmap" name="ID_STATICBITMAP3" variable="StaticBitmap3" member="yes">
+							<bitmap>../../doc/icons/scale.png</bitmap>
+							<pos>0,0</pos>
+						</object>
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLSX" variable="TextCtrlSx" member="yes">
+						<pos>112,132</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlSxText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxTextCtrl" name="ID_TEXTCTRLRZ" variable="TextCtrlRz" member="yes">
+						<pos>112,288</pos>
+						<size>144,14</size>
+						<style>wxSIMPLE_BORDER</style>
+						<handler function="OnTextCtrlRzText" entry="EVT_TEXT" />
+					</object>
+					<object class="wxPanel" name="ID_PANEL1" variable="Panel1" member="yes">
+						<pos>112,56</pos>
+						<size>144,64</size>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSCIRCULAR" variable="BitmapButtonPosCircular" member="yes">
+							<bitmap>../../doc/icons/motioncircular.png</bitmap>
+							<default>1</default>
+							<pos>0,0</pos>
+							<size>32,32</size>
+							<handler function="OnButton1Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSHOR" variable="BitmapButtonPosHor" member="yes">
+							<bitmap>../../doc/icons/motionhorizontal.png</bitmap>
+							<default>1</default>
+							<pos>32,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton3Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSVERT" variable="BitmapButtonPosVer" member="yes">
+							<bitmap>../../doc/icons/motionvertical.png</bitmap>
+							<default>1</default>
+							<pos>64,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton4Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTON8" variable="BitmapButton8" member="yes">
+							<bitmap>../../doc/icons/motiondiagonal.png</bitmap>
+							<default>1</default>
+							<pos>96,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton2Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSRAND" variable="BitmapButtonPosRand" member="yes">
+							<bitmap>../../doc/icons/motionrandom.png</bitmap>
+							<default>1</default>
+							<pos>0,32</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButtonMotionCircularClick" entry="EVT_BUTTON" />
+						</object>
+					</object>
+					<object class="wxPanel" name="ID_PANEL2" variable="Panel3" member="yes">
+						<pos>112,304</pos>
+						<size>144,64</size>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTCIRCULAR" variable="BitmapButtonRotCircular" member="yes">
+							<bitmap>../../doc/icons/motioncircular.png</bitmap>
+							<default>1</default>
+							<pos>0,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButtonRotCircularClick" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTHOR" variable="BitmapButtonRotHor" member="yes">
+							<bitmap>../../doc/icons/motionhorizontal.png</bitmap>
+							<default>1</default>
+							<pos>32,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton3Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTVER" variable="BitmapButtonRotVer" member="yes">
+							<bitmap>../../doc/icons/motionvertical.png</bitmap>
+							<default>1</default>
+							<pos>64,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton4Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTDIAG" variable="BitmapButtonRotDiag" member="yes">
+							<bitmap>../../doc/icons/motiondiagonal.png</bitmap>
+							<default>1</default>
+							<pos>96,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton2Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTRAND" variable="BitmapButtonRotRand" member="yes">
+							<bitmap>../../doc/icons/motionrandom.png</bitmap>
+							<default>1</default>
+							<pos>0,32</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButtonMotionCircularClick" entry="EVT_BUTTON" />
+						</object>
+					</object>
+					<object class="wxPanel" name="ID_PANEL10" variable="Panel7" member="yes">
+						<pos>112,180</pos>
+						<size>144,64</size>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCACIRCULAR" variable="BitmapButtonScaCircular" member="yes">
+							<bitmap>../../doc/icons/motioncircular.png</bitmap>
+							<default>1</default>
+							<pos>0,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButtonScaCircularClick" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCAHOR" variable="BitmapButtonScaHor" member="yes">
+							<bitmap>../../doc/icons/motionhorizontal.png</bitmap>
+							<default>1</default>
+							<pos>32,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton3Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCAVER" variable="BitmapButtonScaVer" member="yes">
+							<bitmap>../../doc/icons/motionvertical.png</bitmap>
+							<default>1</default>
+							<pos>64,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton4Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCADIAG" variable="BitmapButtonScaDiag" member="yes">
+							<bitmap>../../doc/icons/motiondiagonal.png</bitmap>
+							<default>1</default>
+							<pos>96,0</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButton2Click" entry="EVT_BUTTON" />
+						</object>
+						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCARAND" variable="BitmapButtonScaRand" member="yes">
+							<bitmap>../../doc/icons/motionrandom.png</bitmap>
+							<default>1</default>
+							<pos>0,32</pos>
+							<size>32,32</size>
+							<handler function="OnBitmapButtonMotionCircularClick" entry="EVT_BUTTON" />
+						</object>
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<border>5</border>
+				<option>1</option>
+			</object>
+		</object>
+	</object>
+</wxsmith>

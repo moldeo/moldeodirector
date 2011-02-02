@@ -25,7 +25,7 @@
 
   Authors:
   Fabricio Costa
-  Andrés Colubri
+
 
   Description:
 	Interface for director actions, Core and Frames will inherit from this class

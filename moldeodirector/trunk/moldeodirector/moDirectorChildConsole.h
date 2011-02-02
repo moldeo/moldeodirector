@@ -25,7 +25,7 @@
 
   Authors:
   Fabricio Costa
-  Andrés Colubri
+
 
   Description:
 	based on moDirectorConsole.h, same but just for one effect preview

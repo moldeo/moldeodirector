@@ -183,30 +183,30 @@ void moPanelTexture::LoadImage() {
                       details+= "texture multiple";
                       pTextureMultiple = reinterpret_cast<moTextureMultiple*>( ptr );
                       if (pTextureMultiple) {
-                        details+= "\nFrames: " + IntToStr( pTextureMultiple->GetNumberFrames() );
+                        details+= "\nFrames: " + IntToStr( pTextureMultiple->GetFrameCount() );
                       }
                       break;
                     case MO_TYPE_CIRCULARVIDEOBUFFER:
                       details+= "circular video buffer";
                       pCircularVideoBuffer = reinterpret_cast<moCircularVideoBuffer*>( ptr );
                       if (pCircularVideoBuffer) {
-                        details+= "\nFrames: " + IntToStr( pCircularVideoBuffer->GetNumberFrames() );
+                        details+= "\nFrames: " + IntToStr( pCircularVideoBuffer->GetFrameCount() );
                       }
                       break;
                     case MO_TYPE_VIDEOBUFFER:
                       details+= "video buffer";
                       pVideoBuffer = reinterpret_cast<moVideoBuffer*>( ptr );
                       if (pVideoBuffer) {
-                        details+= "\nFrames: " + IntToStr( pVideoBuffer->GetNumberFrames() );
+                        details+= "\nFrames: " + IntToStr( pVideoBuffer->GetFrameCount() );
                       }
                       break;
                     case MO_TYPE_MOVIE:
                       details+= "movie/video";
                       pMovie = reinterpret_cast<moMovie*>( ptr );
                       if (pMovie) {
-                        details+= "\nFrames: " + IntToStr( pMovie->GetNumberFrames() );
+                        details+= "\nFrames: " + IntToStr( pMovie->GetFrameCount() );
                         details+= " fps: " + IntToStr( pMovie->GetFramesPerSecond() );
-                        details+= "\nDuration: " + FloatToStr( (float)pMovie->GetNumberFrames()*(float)pMovie->GetFramesPerSecond() ) + " s";
+                        details+= "\nDuration: " + FloatToStr( (float)pMovie->GetFrameCount()*(float)pMovie->GetFramesPerSecond() ) + " s";
                       }
                       break;
                 }

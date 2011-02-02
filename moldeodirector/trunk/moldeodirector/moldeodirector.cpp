@@ -72,6 +72,7 @@ bool moDirectorApp::OnInit()
 
 // Check only one instance running
 
+  m_checker = NULL;
 /*
 	const wxString name = wxString::Format(wxT("MoldeoDirector-%s"),
             wxGetUserId().c_str()); // Use mb_str()
@@ -210,6 +211,9 @@ bool moDirectorApp::OnInit()
 }
 
 int moDirectorApp::OnExit() {
-    delete m_checker;
+    if (m_checker) {
+      delete m_checker;
+      m_checker = NULL;
+    }
     return 0;
 }

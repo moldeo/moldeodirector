@@ -25,7 +25,7 @@
 
   Authors:
   Fabricio Costa
-  Andrés Colubri
+
 
   Description:
 	based on moConsole.h, but using wxGLCanvas context, not SDL context

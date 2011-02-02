@@ -58,12 +58,8 @@ moDirectorConsole::GetObject( moMobDescriptor p_MobDesc ) {
             if (idx>-1) pMOB = (moMoldeoObject*) m_pIODeviceManager->IODevices().Get(idx);
             break;
         case MO_OBJECT_RESOURCE:
-            if (idx>-1) {
-                pMOB = (moMoldeoObject*) m_pResourceManager->GetResource(idx);
-            } else {
-                idx = m_pResourceManager->GetResourceId( p_MobDesc.GetMobDefinition().GetName() );
-                pMOB = (moMoldeoObject*) m_pResourceManager->GetResource(idx);
-            }
+            idx = m_pResourceManager->GetResourceIndex( p_MobDesc.GetMobDefinition().GetLabelName() );
+            pMOB = (moMoldeoObject*) m_pResourceManager->GetResource(idx);
             break;
         case MO_OBJECT_CONSOLE:
             pMOB = dynamic_cast<moMoldeoObject*>(this);
@@ -522,7 +518,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
         } else if ( result == MO_CONFIGFILE_NOT_FOUND ) {
 
-            LogError( p_filename + moText(" not found ") );
+            LogError( moText("Config filename ") + p_filename + moText(" not found ") );
 
             mStatus = MO_DIRECTOR_STATUS_NOT_FOUND;
         }
@@ -640,7 +636,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
             case MO_OBJECT_RESOURCE:
                 MobIndex.SetParamIndex( m_Config.GetParamIndex("resources") );
                 MobIndex.SetValueIndex( m_Config.GetParam("resources").GetValuesCount() );
-                rid = m_pResourceManager->GetResourceId( pMobDef.GetName() );
+                rid = m_pResourceManager->GetResourceIndex( pMobDef.GetLabelName() );
                 if(rid>-1) pResource = m_pResourceManager->GetResource(rid);
 
                 if (pResource ) {
@@ -651,7 +647,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                     } else LogError( moText("Resource already loaded: ") + (moText)pResource->GetLabelName() );
                 } else
                 if (m_pResourceManager->NewResource( pMobDef.GetName() )) {
-                    rid = m_pResourceManager->GetResourceId( pMobDef.GetName() );
+                    rid = m_pResourceManager->GetResourceIndex( pMobDef.GetLabelName() );
                     if (rid>=0) {
                         pResource = m_pResourceManager->GetResource(rid);
                         if (pResource) {
@@ -1021,7 +1017,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 	moDirectorStatus
 	moDirectorConsole::SaveMob( moMobDescriptor p_MobDesc ) {
 
-        moMoldeoObject* pMOB = NULL;
+    moMoldeoObject* pMOB = NULL;
 
 		MOint idx = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
 
@@ -1044,13 +1040,19 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 pMOB = dynamic_cast<moMoldeoObject*>(m_pIODeviceManager->IODevices().Get(idx));
                 break;
             case MO_OBJECT_RESOURCE:
-                pMOB = dynamic_cast<moMoldeoObject*>(m_pResourceManager->Resources().Get(idx));
+                idx = m_pResourceManager->GetResourceIndex( p_MobDesc.GetMobDefinition().GetLabelName());
+                if (idx!=-1)
+                  pMOB = dynamic_cast<moMoldeoObject*>(m_pResourceManager->Resources().Get(idx));
                 break;
         }
 
-		if (pMOB && (pMOB->GetConfig()->SaveConfig()!=MO_CONFIG_OK) ) {
-            return MO_DIRECTOR_STATUS_ERROR;
-        } else return MO_DIRECTOR_STATUS_OK;
+		if (!pMOB) {
+		  LogError("Object not founded, maybe valueindex doesn't match. index =>"+IntToStr( idx ) );
+		  return MO_DIRECTOR_STATUS_ERROR;
+		}
+		if (pMOB->GetConfig()->SaveConfig()!=MO_CONFIG_OK ) {
+      return MO_DIRECTOR_STATUS_ERROR;
+    } else return MO_DIRECTOR_STATUS_OK;
 	}
 
 	moDirectorStatus

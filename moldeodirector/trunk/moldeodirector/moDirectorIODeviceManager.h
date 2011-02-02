@@ -25,7 +25,7 @@
 
   Authors:
   Fabricio Costa
-  Andrés Colubri
+
 
   Description:
 	based on moIODeviceManager.h, overwrite PollEvents to catch wxEvents...

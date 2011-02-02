@@ -171,7 +171,6 @@
 		</Linker>
 		<ExtraCommands>
 			<Add after='svn export &quot;../../data&quot; &quot;../../../../binaries/data&quot; --force' />
-			<Mode after="always" />
 		</ExtraCommands>
 		<Unit filename="..\..\moldeodirector\PreviewWindowSystemMem.cpp" />
 		<Unit filename="..\..\moldeodirector\PreviewWindowSystemMem.h" />

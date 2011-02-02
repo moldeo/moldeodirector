@@ -1009,7 +1009,7 @@ moDirectorFrame::OpenMob( moMobDescriptor p_MobDescriptor ) {
     }
 
     /// Nunca llega aquí si el FilesBook ya tiene este objeto abierto
-    m_pDirectorCore->OpenMob( p_MobDescriptor );
+    return m_pDirectorCore->OpenMob( p_MobDescriptor );
 }
 
 

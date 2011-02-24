@@ -9,16 +9,10 @@
 #include "moTextureItemCtrl.h"
 
 //(*Headers(moPanelTexture)
-#include <wx/treectrl.h>
 #include <wx/sizer.h>
-#include <wx/stattext.h>
 #include <wx/textctrl.h>
-#include <wx/statbox.h>
 #include <wx/panel.h>
-#include <wx/bmpbuttn.h>
-#include <wx/statbmp.h>
 #include <wx/button.h>
-#include <wx/notebook.h>
 //*)
 
 class moPanelTexture: public wxPanel, public moIDirectorActions
@@ -55,7 +49,6 @@ class moPanelTexture: public wxPanel, public moIDirectorActions
         moValueDescriptor   m_ValueDescriptor;
 
 		//(*Handlers(moPanelTexture)
-		void OnListbook1PageChanged(wxNotebookEvent& event);
 		void OnButtonImportClick(wxCommandEvent& event);
 		void OnTextCtrlMediaText(wxCommandEvent& event);
 		void OnTextCtrlShaderCfgText(wxCommandEvent& event);

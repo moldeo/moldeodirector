@@ -44,6 +44,18 @@ moResourceDescriptor::IsValid() {
 }
 
 bool
+moSoundDescriptor::IsValid() {
+
+    bool bValid = false;
+
+    bValid = moResourceDescriptor::IsValid();
+
+    return bValid;
+
+}
+
+
+bool
 moTextureDescriptor::IsValid() {
 
     bool bValid = false;

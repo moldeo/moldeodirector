@@ -1661,6 +1661,26 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                             //Value = NewValue;
                         }
                         break;
+                    case MO_PARAM_SOUND:
+                      if ( Param.GetParamDefinition().GetType() == MO_PARAM_SOUND ) {
+
+                            if ( NewValue.GetSubValue(0).Text()!=Value.GetSubValue(0).Text() ) {
+
+                              ///referenciamos el valor actual del config para modificarlo
+                              moValueBase& valuebase( Value.GetSubValue(0) );
+
+                              moSound* pSound = m_pResourceManager->GetSoundMan()->GetSound( NewValue.GetSubValue(0).Text() );
+                              if (pSound) {
+                                valuebase.SetText(NewValue.GetSubValue(0).Text());
+                                valuebase.SetSound( pSound );
+                                Log( moText("moDirectorConsole::SetValue() Assigned new sound.") + Param.GetParamDefinition().GetName() + " Sound: " + valuebase.Text() );
+                              } else {
+                                LogError( moText("moDirectorConsole::SetValue() Couldn't found or create new sound: ") + valuebase.Text() );
+                              }
+
+                            }
+                      }
+                      break;
                     case MO_PARAM_FILTER:
                         ///A implementar...
                         //Value.GetSubValue(0).SetText(  );

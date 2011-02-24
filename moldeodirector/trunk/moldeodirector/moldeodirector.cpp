@@ -57,7 +57,7 @@ bool moDirectorApp::OnInit()
 	wxFileName exename(StdPaths.GetExecutablePath());
 	exename.MakeAbsolute();
 
-    wxMessageBox(wxString("appdir:")+wxString(exename.GetPath()));
+    //wxMessageBox(wxString("appdir:")+wxString(exename.GetPath()));
     wxSetWorkingDirectory( wxString(exename.GetPath()) );
 
     //** EVERYTHING OK!!!**//
@@ -137,10 +137,13 @@ bool moDirectorApp::OnInit()
 	m_pDirectorCore->SetUserInterface( m_pDirectorFrame );
 
 
-    //wxMessageBox("appdir:"+StdPaths.GetAppDir());
+///*
+    wxMessageBox("appdir:"+wxGetCwd());
     wxMessageBox("userdir:"+StdPaths.GetUserDataDir() );
     wxMessageBox( wxString("datadir:") + wxString(wxT(MOLDEODATADIR)) );
     wxMessageBox( wxString("modulesdir:")+wxString(wxT(MODULESDIR)) );
+//*/
+
 
 	//wxFileName userdatadir( StdPaths.GetUserDataDir() );
 

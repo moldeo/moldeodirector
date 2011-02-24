@@ -376,6 +376,7 @@ class moResourceDefinition {
         friend class moTextureDescriptor;
         friend class mo3dModelDescriptor;
         friend class moShaderDescriptor;
+        friend class moSoundDescriptor;
 };
 
 class moResourceDescriptor : public moDescriptor {
@@ -475,11 +476,49 @@ class moResourceDescriptor : public moDescriptor {
         friend class moTextureDescriptor;
         friend class mo3dModelDescriptor;
         friend class moShaderDescriptor;
+        friend class moSoundDescriptor;
 
 };
 
 moDeclareDynamicArray( moResourceDescriptor, moResourceDescriptors );
 
+
+class moSoundDescriptor : public moResourceDescriptor {
+
+  public:
+
+      moSoundDescriptor() : moResourceDescriptor() {
+
+        m_ResourceDefinition = moResourceDefinition( MO_RESOURCETYPE_SOUND,
+                                                    "",
+                                                    "",
+                                                    0,
+                                                    0 /** ToDO : SUBTYPE????*/,
+                                                    "" );
+      }
+      moSoundDescriptor( moText p_Name, moText p_SoundFileName = "", int p_SoundSize = 0, int p_SoundType = 0, moText p_SoundExtensionName  = "") {
+
+            m_ResourceDefinition = moResourceDefinition( MO_RESOURCETYPE_SOUND,
+                              p_Name,
+                              p_SoundFileName,
+                              p_SoundSize,
+                              p_SoundType,
+                              p_SoundExtensionName );
+        }
+
+      virtual ~moSoundDescriptor() {}
+
+      moSoundDescriptor( const moResourceDescriptor &pResourceDescriptor ) {
+         m_ResourceDefinition = pResourceDescriptor.m_ResourceDefinition;
+      }
+
+      moSoundDescriptor& operator= ( const moResourceDescriptor &pResourceDescriptor ) {
+         m_ResourceDefinition = pResourceDescriptor.m_ResourceDefinition;
+         return (*this);
+      }
+
+      virtual bool IsValid();
+};
 
 class moTextureDescriptor : public moResourceDescriptor {
 
@@ -534,7 +573,6 @@ class moTextureDescriptor : public moResourceDescriptor {
         }
 
         virtual bool IsValid();
-
 
 };
 

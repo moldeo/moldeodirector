@@ -553,17 +553,20 @@ moDirectorFrame::CreateInspector() {
     m_pScriptPanel = new moScriptPanel( m_pInspectorNotebook, wxID_ANY );
     m_pScriptPanel->SetNextActionHandler( this );
 
-	m_pInspectorNotebook->AddPage( m_pPanelTexture, wxT("Texture") );
-	m_pInspectorNotebook->AddPage( m_pColorMotion , wxT("Color") );
-	m_pInspectorNotebook->AddPage( m_pObjectMotion, wxT("Motion") );
-	m_pInspectorNotebook->AddPage( m_pFunctionPanel, wxT("Function") );
-	m_pInspectorNotebook->AddPage( m_p3dModelPanel , wxT("3d Model") );
-	m_pInspectorNotebook->AddPage( m_pShadersPanel , wxT("Shader") );
+    m_pSoundPanel = new moSoundPanel(m_pInspectorNotebook, wxID_ANY);
+    m_pSoundPanel->SetNextActionHandler( this );
 
-	m_pInspectorNotebook->AddPage( new wxPanel(m_pInspectorNotebook,wxID_ANY) , wxT("Sound") );
-	m_pInspectorNotebook->AddPage( new wxPanel(m_pInspectorNotebook,wxID_ANY) , wxT("Font") );
-	m_pInspectorNotebook->AddPage( m_pScriptPanel, wxT("Script") );
-	m_pInspectorNotebook->AddPage( new wxTextCtrl(m_pInspectorNotebook,wxID_ANY) , wxT("Text") );
+	m_pInspectorNotebook->AddPage( m_pScriptPanel, wxT("Script") ); //0
+	m_pInspectorNotebook->AddPage( m_pPanelTexture, wxT("Texture") ); //1
+	m_pInspectorNotebook->AddPage( m_pColorMotion , wxT("Color") ); //2
+	m_pInspectorNotebook->AddPage( m_pObjectMotion, wxT("Motion") ); //3
+	m_pInspectorNotebook->AddPage( m_pSoundPanel, wxT("Sound") ); //4
+	m_pInspectorNotebook->AddPage( m_pFunctionPanel, wxT("Function") ); //5
+	m_pInspectorNotebook->AddPage( m_p3dModelPanel , wxT("3d Model") ); //6
+	m_pInspectorNotebook->AddPage( m_pShadersPanel , wxT("Shader") ); //7
+
+	m_pInspectorNotebook->AddPage( new wxPanel(m_pInspectorNotebook,wxID_ANY) , wxT("Font") ); //8
+	m_pInspectorNotebook->AddPage( new wxTextCtrl(m_pInspectorNotebook,wxID_ANY) , wxT("Text") ); //9
 
 
 }
@@ -583,7 +586,7 @@ moDirectorFrame::Inspect( moValueDescriptor  p_ValueDescriptor, bool setselectio
             case MO_PARAM_NUMERIC:
                 // to the function inspector....
                 m_pFunctionPanel->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(3);
+                if (setselection) m_pInspectorNotebook->SetSelection(5);
                 break;
             case MO_PARAM_ROTATEX:
             case MO_PARAM_ROTATEY:
@@ -595,45 +598,45 @@ moDirectorFrame::Inspect( moValueDescriptor  p_ValueDescriptor, bool setselectio
             case MO_PARAM_SCALEY:
             case MO_PARAM_SCALEZ:
                 m_pObjectMotion->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(2);
+                if (setselection) m_pInspectorNotebook->SetSelection(3);
                 break;
 
             case MO_PARAM_COLOR:
                 m_pColorMotion->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(1);
+                if (setselection) m_pInspectorNotebook->SetSelection(2);
                 break;
 
             case MO_PARAM_TEXTURE:
             case MO_PARAM_VIDEO:
                 m_pPanelTexture->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(0);
+                if (setselection) m_pInspectorNotebook->SetSelection(1);
                 break;
             case MO_PARAM_OBJECT:
             case MO_PARAM_3DMODEL:
                 m_p3dModelPanel->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(4);
+                if (setselection) m_pInspectorNotebook->SetSelection(6);
                 break;
             case MO_PARAM_FILTER:
                 m_pShadersPanel->Inspect( p_ValueDescriptor );
                 if (setselection) {
-                  m_pInspectorNotebook->SetSelection(5);
+                  m_pInspectorNotebook->SetSelection(7);
                 }
                 break;
             case MO_PARAM_SCRIPT:
                 m_pScriptPanel->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(8);
+                if (setselection) m_pInspectorNotebook->SetSelection(0);
                 break;
             case MO_PARAM_FONT:
-                ///m_p->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(7);
+                ///
+                if (setselection) m_pInspectorNotebook->SetSelection(8);
                 break;
             case MO_PARAM_TEXT:
                 ///m_p->Inspect( p_ValueDescriptor );
                 if (setselection) m_pInspectorNotebook->SetSelection(9);
                 break;
             case MO_PARAM_SOUND:
-                ///m_p->Inspect( p_ValueDescriptor );
-                if (setselection) m_pInspectorNotebook->SetSelection(6);
+                m_pSoundPanel->Inspect( p_ValueDescriptor );
+                if (setselection) m_pInspectorNotebook->SetSelection(4);
                 break;
             case MO_PARAM_UNDEFINED:
               break;

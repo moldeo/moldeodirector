@@ -52,6 +52,7 @@
 #include "moPreviewFrame.h"
 #include "moShadersPanel.h"
 #include "mo3dModelPanel.h"
+#include "moSoundPanel.h"
 
 #include "moScriptPanel.h"
 
@@ -266,6 +267,7 @@ private:
         moShadersPanel*         m_pShadersPanel;
         mo3dModelPanel*         m_p3dModelPanel;
         moScriptPanel*          m_pScriptPanel;
+        moSoundPanel*           m_pSoundPanel;
 
         /**
         * Libro de sub-ventana de parametros

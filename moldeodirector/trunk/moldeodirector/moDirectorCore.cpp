@@ -272,19 +272,28 @@ moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath,
 
                 FileNameEnd = pFile->GetFileName();
                 PluginName = pFile->GetFileName();
+
                 FileNameEnd.Right(2);
                 bDebug = ( FileNameEnd==moText("_d") );
-                #ifndef MO_WIN32
-                ///extract the "libmod_" part
-                PluginName.Right( PluginName.Length() - 7 );
-                #endif
                 if (bDebug) PluginName.Left( PluginName.Length() - 3 );
 
-
-                if ( ( pFile->GetExtension()==moText(".dll") || pFile->GetExtension()==moText(".so") ) && !bDebug ) {
-                    rPluginDefs.Add( moPluginDefinition( PluginName, pFile->GetCompletePath(), mobjecttype ) );
+                ///LINUX VERSION
+                if (!bDebug) {
+                    if (pFile->GetExtension()==moText(".so")) {
+                        #ifndef MO_WIN32
+                            ///extract the "libmod_" part
+                            PluginName.Right( PluginName.Length() - 7 );
+                            rPluginDefs.Add( moPluginDefinition( PluginName, pFile->GetCompletePath(), mobjecttype ) );
+                            Log( pFile->GetFileName() );
+                        #endif
+                    } else if (pFile->GetExtension()==moText(".dll")) {
+                        #ifdef MO_WIN32
+                            rPluginDefs.Add( moPluginDefinition( PluginName, pFile->GetCompletePath(), mobjecttype ) );
+                            Log( pFile->GetFileName() );
+                        #endif
+                    }
                 }
-                Log( pFile->GetFileName() );
+
                 pFile = DirEffects.FindNext();
             }
         } else LogError( moText("Directory doesn´t exists:")+(moText)plugindir );

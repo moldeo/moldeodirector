@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="..\..\bin\mingw\moldeodirectord" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\bin\mingw" />
-				<Option object_output="wobjd\Debug" />
+				<Option output="../../bin/mingw/moldeodirectord" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../bin/mingw" />
+				<Option object_output="wobjd/Debug" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -33,14 +33,14 @@
 					<Add library="agg" />
 					<Add library="kbool" />
 					<Add library="freetype" />
-					<Add directory="..\..\contrib\src\tinyxml\Debug" />
-					<Add directory="..\..\contrib\src\wxMoldeoControls\Debug" />
+					<Add directory="../../contrib/src/tinyxml/Debug" />
+					<Add directory="../../contrib/src/wxMoldeoControls/Debug" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="..\..\bin\mingw\moldeodirector" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\..\bin\mingw" />
-				<Option object_output="wobj\Release" />
+				<Option output="../../bin/mingw/moldeodirector" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../bin/mingw" />
+				<Option object_output="wobj/Release" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -65,8 +65,8 @@
 					<Add library="agg" />
 					<Add library="kbool" />
 					<Add library="freetype" />
-					<Add directory="..\..\contrib\src\tinyxml\Release" />
-					<Add directory="..\..\contrib\src\wxMoldeoControls\Release" />
+					<Add directory="../../contrib/src/tinyxml/Release" />
+					<Add directory="../../contrib/src/wxMoldeoControls/Release" />
 				</Linker>
 			</Target>
 		</Build>
@@ -84,38 +84,38 @@
 			<Add option="-D_CRT_NONSTDC_NO_DEPRECATE" />
 			<Add directory="." />
 			<Add directory=".." />
-			<Add directory=".\vdtc" />
-			<Add directory=".\treemultictrl" />
-			<Add directory="..\..\inc" />
-			<Add directory="..\..\inc\openal" />
-			<Add directory="..\..\inc\3ds" />
-			<Add directory="..\..\..\..\externlibs\SDL\include" />
-			<Add directory="..\..\..\..\externlibs\SDL_net\include" />
-			<Add directory="..\..\..\..\externlibs\SDL_image\include" />
-			<Add directory="..\..\..\..\externlibs\opengl\include" />
-			<Add directory="..\..\..\..\externlibs\cg\include" />
-			<Add directory="..\..\..\..\externlibs\lua\include" />
-			<Add directory="..\..\..\..\externlibs\glew\include" />
-			<Add directory="..\..\..\..\externlibs\openal\include" />
-			<Add directory="..\..\..\..\externlibs\freetype\include" />
-			<Add directory="..\..\..\..\externlibs\freeimage\include" />
-			<Add directory="..\..\..\..\externlibs\wxwidgets\include" />
-			<Add directory="..\..\..\..\externlibs\wxwidgets\contrib\include" />
-			<Add directory="..\..\..\..\externlibs\gstreamer\include" />
-			<Add directory="..\..\..\..\externlibs\gstreamer\include\glib-2.0" />
-			<Add directory="..\..\..\..\externlibs\gstreamer\lib\glib-2.0\include" />
-			<Add directory="..\..\..\..\externlibs\wxWidgets\lib\mingw_lib\wx\include\msw-ansi-release-static-2.8" />
-			<Add directory="..\..\..\..\externlibs\wxArt2D\include" />
-			<Add directory="..\..\..\..\externlibs\wxArt2D\include\thirdparty" />
-			<Add directory="..\..\..\..\externlibs\wxArt2D\modules" />
-			<Add directory="..\..\..\..\externlibs\wxWidgets\src\expat\lib" />
-			<Add directory="..\..\..\..\externlibs\wxArt2D\thirdparty\agg2\include" />
-			<Add directory="..\..\..\..\externlibs\wxArt2D\thirdparty\kbool\include" />
-			<Add directory="..\..\contrib\src\wxMoldeoControls" />
+			<Add directory="./vdtc" />
+			<Add directory="./treemultictrl" />
+			<Add directory="../../inc" />
+			<Add directory="../../inc/openal" />
+			<Add directory="../../inc/3ds" />
+			<Add directory="../../../../externlibs/SDL/include" />
+			<Add directory="../../../../externlibs/SDL_net/include" />
+			<Add directory="../../../../externlibs/SDL_image/include" />
+			<Add directory="../../../../externlibs/opengl/include" />
+			<Add directory="../../../../externlibs/cg/include" />
+			<Add directory="../../../../externlibs/lua/include" />
+			<Add directory="../../../../externlibs/glew/include" />
+			<Add directory="../../../../externlibs/openal/include" />
+			<Add directory="../../../../externlibs/freetype/include" />
+			<Add directory="../../../../externlibs/freeimage/include" />
+			<Add directory="../../../../externlibs/wxwidgets/include" />
+			<Add directory="../../../../externlibs/wxwidgets/contrib/include" />
+			<Add directory="../../../../externlibs/gstreamer/include" />
+			<Add directory="../../../../externlibs/gstreamer/include/glib-2.0" />
+			<Add directory="../../../../externlibs/gstreamer/lib/glib-2.0/include" />
+			<Add directory="../../../../externlibs/wxWidgets/lib/mingw_lib/wx/include/msw-ansi-release-static-2.8" />
+			<Add directory="../../../../externlibs/wxArt2D/include" />
+			<Add directory="../../../../externlibs/wxArt2D/include/thirdparty" />
+			<Add directory="../../../../externlibs/wxArt2D/modules" />
+			<Add directory="../../../../externlibs/wxWidgets/src/expat/lib" />
+			<Add directory="../../../../externlibs/wxArt2D/thirdparty/agg2/include" />
+			<Add directory="../../../../externlibs/wxArt2D/thirdparty/kbool/include" />
+			<Add directory="../../contrib/src/wxMoldeoControls" />
 		</Compiler>
 		<ResourceCompiler>
-			<Add directory="..\..\..\..\externlibs\wxWidgets\include" />
-			<Add directory="..\..\art" />
+			<Add directory="../../../../externlibs/wxWidgets/include" />
+			<Add directory="../../art" />
 		</ResourceCompiler>
 		<Linker>
 			<Add library="liblua" />
@@ -150,22 +150,22 @@
 			<Add library="glaux" />
 			<Add library="gdi32" />
 			<Add library="moldeocontrols" />
-			<Add directory="..\..\..\..\externlibs\gstreamer\lib\glib-2.0\include" />
-			<Add directory="..\..\..\..\externlibs\tinyxml\lib" />
-			<Add directory="..\..\..\..\externlibs\SDL\lib" />
-			<Add directory="..\..\..\..\externlibs\glew\lib" />
-			<Add directory="..\..\..\..\externlibs\lua\lib" />
-			<Add directory="..\..\..\..\externlibs\muparser\lib" />
-			<Add directory="..\..\..\..\externlibs\freetype\lib" />
-			<Add directory="..\..\..\..\externlibs\cg\lib" />
-			<Add directory="..\..\..\..\externlibs\openal\libs\win32" />
-			<Add directory="..\..\..\..\externlibs\opengl\lib" />
-			<Add directory="..\..\..\..\externlibs\freeimage\lib" />
-			<Add directory="..\..\..\..\externlibs\gstreamer\lib" />
-			<Add directory="..\..\..\..\externlibs\wxwidgets\lib\mingw_lib" />
-			<Add directory="..\..\lib\mingw" />
-			<Add directory="..\..\..\..\externlibs\wxArt2D\lib" />
-			<Add directory="..\..\contrib\src\wxMoldeoControls\Release" />
+			<Add directory="../../../../externlibs/gstreamer/lib/glib-2.0/include" />
+			<Add directory="../../../../externlibs/tinyxml/lib" />
+			<Add directory="../../../../externlibs/SDL/lib" />
+			<Add directory="../../../../externlibs/glew/lib" />
+			<Add directory="../../../../externlibs/lua/lib" />
+			<Add directory="../../../../externlibs/muparser/lib" />
+			<Add directory="../../../../externlibs/freetype/lib" />
+			<Add directory="../../../../externlibs/cg/lib" />
+			<Add directory="../../../../externlibs/openal/libs/win32" />
+			<Add directory="../../../../externlibs/opengl/lib" />
+			<Add directory="../../../../externlibs/freeimage/lib" />
+			<Add directory="../../../../externlibs/gstreamer/lib" />
+			<Add directory="../../../../externlibs/wxwidgets/lib/mingw_lib" />
+			<Add directory="../../lib/mingw" />
+			<Add directory="../../../../externlibs/wxArt2D/lib" />
+			<Add directory="../../contrib/src/wxMoldeoControls/Release" />
 		</Linker>
 		<Unit filename="mo3dModelPanel.cpp" />
 		<Unit filename="mo3dModelPanel.h" />
@@ -230,6 +230,8 @@
 		<Unit filename="moShaderCtrl.h" />
 		<Unit filename="moShadersPanel.cpp" />
 		<Unit filename="moShadersPanel.h" />
+		<Unit filename="moSoundPanel.cpp" />
+		<Unit filename="moSoundPanel.h" />
 		<Unit filename="moTextureItemCtrl.cpp" />
 		<Unit filename="moTextureItemCtrl.h" />
 		<Unit filename="moTimelineRuler.cpp" />
@@ -243,19 +245,19 @@
 		<Unit filename="moldeodirector.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
-		<Unit filename="treemultictrl\TreeMultiItemBase.cpp" />
-		<Unit filename="treemultictrl\TreeMultiItemBase.h" />
-		<Unit filename="treemultictrl\TreeMultiItemNode.cpp" />
-		<Unit filename="treemultictrl\TreeMultiItemNode.h" />
-		<Unit filename="treemultictrl\TreeMultiItemRoot.cpp" />
-		<Unit filename="treemultictrl\TreeMultiItemRoot.h" />
-		<Unit filename="treemultictrl\TreeMultiItemWindow.cpp" />
-		<Unit filename="treemultictrl\TreeMultiItemWindow.h" />
-		<Unit filename="treemultictrl\tmcimages.h" />
-		<Unit filename="treemultictrl\wxTreeMultiCtrl.cpp" />
-		<Unit filename="treemultictrl\wxTreeMultiCtrl.h" />
-		<Unit filename="vdtc\virtualdirtreectrl.cpp" />
-		<Unit filename="vdtc\virtualdirtreectrl.h" />
+		<Unit filename="treemultictrl/TreeMultiItemBase.cpp" />
+		<Unit filename="treemultictrl/TreeMultiItemBase.h" />
+		<Unit filename="treemultictrl/TreeMultiItemNode.cpp" />
+		<Unit filename="treemultictrl/TreeMultiItemNode.h" />
+		<Unit filename="treemultictrl/TreeMultiItemRoot.cpp" />
+		<Unit filename="treemultictrl/TreeMultiItemRoot.h" />
+		<Unit filename="treemultictrl/TreeMultiItemWindow.cpp" />
+		<Unit filename="treemultictrl/TreeMultiItemWindow.h" />
+		<Unit filename="treemultictrl/tmcimages.h" />
+		<Unit filename="treemultictrl/wxTreeMultiCtrl.cpp" />
+		<Unit filename="treemultictrl/wxTreeMultiCtrl.h" />
+		<Unit filename="vdtc/virtualdirtreectrl.cpp" />
+		<Unit filename="vdtc/virtualdirtreectrl.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

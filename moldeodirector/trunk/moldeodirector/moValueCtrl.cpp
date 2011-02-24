@@ -87,6 +87,7 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 		case MO_PARAM_ROTATEY:
 		case MO_PARAM_ROTATEZ:
 		case MO_PARAM_TEXT:
+		case MO_PARAM_SOUND:
 		case MO_PARAM_OBJECT:
 		case MO_PARAM_3DMODEL:
 			ValueStr =moText2Wx( pValue.GetSubValue(0).Text());
@@ -245,6 +246,7 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
 		case MO_PARAM_ROTATEY:
 		case MO_PARAM_ROTATEZ:
 		case MO_PARAM_TEXT:
+		case MO_PARAM_SOUND:
 			ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
 			if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
 			//Connect(
@@ -459,6 +461,7 @@ moValueCtrl::OnTextUpdated( wxCommandEvent& event) {
             case MO_PARAM_ROTATEY:
             case MO_PARAM_ROTATEZ:
             case MO_PARAM_TEXT:
+            case MO_PARAM_SOUND:
                 if (m_pTextCtrl) rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)m_pTextCtrl->GetValue().c_str() ) );
                 break;
             case MO_PARAM_NUMERIC:

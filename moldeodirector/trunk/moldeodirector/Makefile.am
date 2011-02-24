@@ -50,6 +50,7 @@ moldeodirector_SOURCES = \
 	moPreviewWindow.h \
 	moProjectTreeCtrl.h \
 	moResourcesTreeCtrl.h \
+	moSoundPanel.h \
 	moScriptPanel.h \
 	moShaderCtrl.h \
 	moShadersPanel.h \
@@ -94,6 +95,7 @@ moldeodirector_SOURCES = \
 	moProjectTreeCtrl.cpp \
 	moResourcesTreeCtrl.cpp \
 	moScriptPanel.cpp \
+	moSoundPanel.cpp \
 	moShaderCtrl.cpp \
 	moShadersPanel.cpp \
 	moTextureItemCtrl.cpp \
@@ -139,7 +141,7 @@ moldeodirector_CPPFLAGS = \
 	`pkg-config --cflags gtk+-2.0` \
 	${MOLDEOCONTROLS_CFLAGS} \
 	${LIBMOLDEO_CFLAGS} \
-	${WX_CFLAGS} 
+	${WX_CFLAGS}
 
 moldeodirector_LDADD = \
 	-lwx_gtk2_gl-2.8 \

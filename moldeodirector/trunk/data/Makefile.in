@@ -38,11 +38,12 @@ subdir = data
 DIST_COMMON = $(dist_cameras_DATA) $(dist_camerascircular_DATA) \
 	$(dist_cursors_DATA) $(dist_fonts_DATA) $(dist_icons_DATA) \
 	$(dist_livedrawing_DATA) $(dist_particlesbounce_DATA) \
-	$(dist_particlesinteractive_DATA) $(dist_shaderexample_DATA) \
-	$(dist_shaderexampleshaders_DATA) $(dist_simpleproject_DATA) \
-	$(dist_testsimple_DATA) $(dist_videobuffers_DATA) \
-	$(dist_videobuffersbuf_DATA) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+	$(dist_particlesinteractive_DATA) \
+	$(dist_particlesinteractiveshader_DATA) \
+	$(dist_shaderexample_DATA) $(dist_shaderexampleshaders_DATA) \
+	$(dist_simpleproject_DATA) $(dist_testsimple_DATA) \
+	$(dist_videobuffers_DATA) $(dist_videobuffersbuf_DATA) \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.ac
@@ -81,6 +82,7 @@ am__installdirs = "$(DESTDIR)$(camerasdir)" \
 	"$(DESTDIR)$(livedrawingdir)" \
 	"$(DESTDIR)$(particlesbouncedir)" \
 	"$(DESTDIR)$(particlesinteractivedir)" \
+	"$(DESTDIR)$(particlesinteractiveshaderdir)" \
 	"$(DESTDIR)$(shaderexampledir)" \
 	"$(DESTDIR)$(shaderexampleshadersdir)" \
 	"$(DESTDIR)$(simpleprojectdir)" "$(DESTDIR)$(testsimpledir)" \
@@ -89,10 +91,11 @@ am__installdirs = "$(DESTDIR)$(camerasdir)" \
 DATA = $(dist_cameras_DATA) $(dist_camerascircular_DATA) \
 	$(dist_cursors_DATA) $(dist_fonts_DATA) $(dist_icons_DATA) \
 	$(dist_livedrawing_DATA) $(dist_particlesbounce_DATA) \
-	$(dist_particlesinteractive_DATA) $(dist_shaderexample_DATA) \
-	$(dist_shaderexampleshaders_DATA) $(dist_simpleproject_DATA) \
-	$(dist_testsimple_DATA) $(dist_videobuffers_DATA) \
-	$(dist_videobuffersbuf_DATA)
+	$(dist_particlesinteractive_DATA) \
+	$(dist_particlesinteractiveshader_DATA) \
+	$(dist_shaderexample_DATA) $(dist_shaderexampleshaders_DATA) \
+	$(dist_simpleproject_DATA) $(dist_testsimple_DATA) \
+	$(dist_videobuffers_DATA) $(dist_videobuffersbuf_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -261,6 +264,7 @@ camerascirculardir = ${datadir}/samples/CamerasCircular
 livedrawingdir = ${datadir}/samples/LiveDrawing
 particlesbouncedir = ${datadir}/samples/ParticlesBounce
 particlesinteractivedir = ${datadir}/samples/ParticlesInteractive
+particlesinteractiveshaderdir = ${datadir}/samples/ParticlesInteractive/shaders
 shaderexampledir = ${datadir}/samples/ShaderExample
 shaderexampleshadersdir = ${datadir}/samples/ShaderExample/shaders
 videobuffersdir = ${datadir}/samples/VideoBuffers
@@ -568,6 +572,65 @@ dist_particlesinteractive_DATA = samples/ParticlesInteractive/particles_interact
 		samples/ParticlesInteractive/interactiveparticles.lua\
 		samples/ParticlesInteractive/trackerklt.cfg\
 		samples/ParticlesInteractive/videomanager.cfg
+
+dist_particlesinteractiveshader_DATA = samples/ParticlesInteractive/shaders/BilinearFilter.cfg\
+		samples/ParticlesInteractive/shaders/BilinearFilter.glsl\
+		samples/ParticlesInteractive/shaders/Blur.cfg\
+		samples/ParticlesInteractive/shaders/Blur.glsl\
+		samples/ParticlesInteractive/shaders/ColorMatrix.cfg\
+		samples/ParticlesInteractive/shaders/ColorMatrix.glsl\
+		samples/ParticlesInteractive/shaders/ColorPart.cfg\
+		samples/ParticlesInteractive/shaders/Copy.cfg\
+		samples/ParticlesInteractive/shaders/Copy.glsl\
+		samples/ParticlesInteractive/shaders/CopyRGB.cfg\
+		samples/ParticlesInteractive/shaders/CopyRGB.glsl\
+		samples/ParticlesInteractive/shaders/DynEmboss.cfg\
+		samples/ParticlesInteractive/shaders/DynEmboss.glsl\
+		samples/ParticlesInteractive/shaders/DynSaturate.cfg\
+		samples/ParticlesInteractive/shaders/DynSaturate.glsl\
+		samples/ParticlesInteractive/shaders/Edges.cfg\
+		samples/ParticlesInteractive/shaders/Edges.glsl\
+		samples/ParticlesInteractive/shaders/Edgesxml.cfg\
+		samples/ParticlesInteractive/shaders/Emboss.cfg\
+		samples/ParticlesInteractive/shaders/EmbossEdges.cfg\
+		samples/ParticlesInteractive/shaders/EmbossEdges.glsl\
+		samples/ParticlesInteractive/shaders/EmbossEdgesVertex.glsl\
+		samples/ParticlesInteractive/shaders/Emboss.glsl\
+		samples/ParticlesInteractive/shaders/EmbossRelief.cfg\
+		samples/ParticlesInteractive/shaders/EmbossRelief.glsl\
+		samples/ParticlesInteractive/shaders/GridEmboss.cfg\
+		samples/ParticlesInteractive/shaders/Laser.cfg\
+		samples/ParticlesInteractive/shaders/Laser.glsl\
+		samples/ParticlesInteractive/shaders/LaserTag.glsl\
+		samples/ParticlesInteractive/shaders/Max.glsl\
+		samples/ParticlesInteractive/shaders/Maxxml.cfg\
+		samples/ParticlesInteractive/shaders/Mixer.cfg\
+		samples/ParticlesInteractive/shaders/Mixer.glsl\
+		samples/ParticlesInteractive/shaders/MovePart.cfg\
+		samples/ParticlesInteractive/shaders/Pixelate.cfg\
+		samples/ParticlesInteractive/shaders/PixelateDyn2.glsl\
+		samples/ParticlesInteractive/shaders/PixelateDyn.glsl\
+		samples/ParticlesInteractive/shaders/Pixelate.glsl\
+		samples/ParticlesInteractive/shaders/Posterize.cfg\
+		samples/ParticlesInteractive/shaders/Posterize.glsl\
+		samples/ParticlesInteractive/shaders/PulseEmboss.cfg\
+		samples/ParticlesInteractive/shaders/PulseGrid.glsl\
+		samples/ParticlesInteractive/shaders/Recorte.cfg\
+		samples/ParticlesInteractive/shaders/Recorte.glsl\
+		samples/ParticlesInteractive/shaders/RenderAveGrad.cfg\
+		samples/ParticlesInteractive/shaders/RenderBrushes.cfg\
+		samples/ParticlesInteractive/shaders/RenderGrad2fp.cfg\
+		samples/ParticlesInteractive/shaders/Saturate.cfg\
+		samples/ParticlesInteractive/shaders/Saturate.glsl\
+		samples/ParticlesInteractive/shaders/Sharpen.cfg\
+		samples/ParticlesInteractive/shaders/Sharpen.glsl\
+		samples/ParticlesInteractive/shaders/Sobel.cfg\
+		samples/ParticlesInteractive/shaders/Sobel.glsl\
+		samples/ParticlesInteractive/shaders/StaticEmboss.glsl\
+		samples/ParticlesInteractive/shaders/TexInterpolator.cfg\
+		samples/ParticlesInteractive/shaders/TexInterpolator.glsl\
+		samples/ParticlesInteractive/shaders/ToonShading.frag\
+		samples/ParticlesInteractive/shaders/ToonShading.vert
 
 dist_shaderexample_DATA = samples/ShaderExample/shader_example.mol\
 		samples/ShaderExample/debug.cfg\
@@ -1126,9 +1189,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu data/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign data/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu data/Makefile
+	  $(AUTOMAKE) --foreign data/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -1313,6 +1376,26 @@ uninstall-dist_particlesinteractiveDATA:
 	test -n "$$files" || exit 0; \
 	echo " ( cd '$(DESTDIR)$(particlesinteractivedir)' && rm -f" $$files ")"; \
 	cd "$(DESTDIR)$(particlesinteractivedir)" && rm -f $$files
+install-dist_particlesinteractiveshaderDATA: $(dist_particlesinteractiveshader_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(particlesinteractiveshaderdir)" || $(MKDIR_P) "$(DESTDIR)$(particlesinteractiveshaderdir)"
+	@list='$(dist_particlesinteractiveshader_DATA)'; test -n "$(particlesinteractiveshaderdir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(particlesinteractiveshaderdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(particlesinteractiveshaderdir)" || exit $$?; \
+	done
+
+uninstall-dist_particlesinteractiveshaderDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_particlesinteractiveshader_DATA)'; test -n "$(particlesinteractiveshaderdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(particlesinteractiveshaderdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(particlesinteractiveshaderdir)" && rm -f $$files
 install-dist_shaderexampleDATA: $(dist_shaderexample_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(shaderexampledir)" || $(MKDIR_P) "$(DESTDIR)$(shaderexampledir)"
@@ -1474,7 +1557,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(camerasdir)" "$(DESTDIR)$(camerascirculardir)" "$(DESTDIR)$(cursorsdir)" "$(DESTDIR)$(fontsdir)" "$(DESTDIR)$(iconsdir)" "$(DESTDIR)$(livedrawingdir)" "$(DESTDIR)$(particlesbouncedir)" "$(DESTDIR)$(particlesinteractivedir)" "$(DESTDIR)$(shaderexampledir)" "$(DESTDIR)$(shaderexampleshadersdir)" "$(DESTDIR)$(simpleprojectdir)" "$(DESTDIR)$(testsimpledir)" "$(DESTDIR)$(videobuffersdir)" "$(DESTDIR)$(videobuffersbufdir)"; do \
+	for dir in "$(DESTDIR)$(camerasdir)" "$(DESTDIR)$(camerascirculardir)" "$(DESTDIR)$(cursorsdir)" "$(DESTDIR)$(fontsdir)" "$(DESTDIR)$(iconsdir)" "$(DESTDIR)$(livedrawingdir)" "$(DESTDIR)$(particlesbouncedir)" "$(DESTDIR)$(particlesinteractivedir)" "$(DESTDIR)$(particlesinteractiveshaderdir)" "$(DESTDIR)$(shaderexampledir)" "$(DESTDIR)$(shaderexampleshadersdir)" "$(DESTDIR)$(simpleprojectdir)" "$(DESTDIR)$(testsimpledir)" "$(DESTDIR)$(videobuffersdir)" "$(DESTDIR)$(videobuffersbufdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1527,6 +1610,7 @@ install-data-am: install-dist_camerasDATA \
 	install-dist_fontsDATA install-dist_iconsDATA \
 	install-dist_livedrawingDATA install-dist_particlesbounceDATA \
 	install-dist_particlesinteractiveDATA \
+	install-dist_particlesinteractiveshaderDATA \
 	install-dist_shaderexampleDATA \
 	install-dist_shaderexampleshadersDATA \
 	install-dist_simpleprojectDATA install-dist_testsimpleDATA \
@@ -1580,6 +1664,7 @@ uninstall-am: uninstall-dist_camerasDATA \
 	uninstall-dist_livedrawingDATA \
 	uninstall-dist_particlesbounceDATA \
 	uninstall-dist_particlesinteractiveDATA \
+	uninstall-dist_particlesinteractiveshaderDATA \
 	uninstall-dist_shaderexampleDATA \
 	uninstall-dist_shaderexampleshadersDATA \
 	uninstall-dist_simpleprojectDATA uninstall-dist_testsimpleDATA \
@@ -1596,6 +1681,7 @@ uninstall-am: uninstall-dist_camerasDATA \
 	install-dist_fontsDATA install-dist_iconsDATA \
 	install-dist_livedrawingDATA install-dist_particlesbounceDATA \
 	install-dist_particlesinteractiveDATA \
+	install-dist_particlesinteractiveshaderDATA \
 	install-dist_shaderexampleDATA \
 	install-dist_shaderexampleshadersDATA \
 	install-dist_simpleprojectDATA install-dist_testsimpleDATA \
@@ -1612,6 +1698,7 @@ uninstall-am: uninstall-dist_camerasDATA \
 	uninstall-dist_livedrawingDATA \
 	uninstall-dist_particlesbounceDATA \
 	uninstall-dist_particlesinteractiveDATA \
+	uninstall-dist_particlesinteractiveshaderDATA \
 	uninstall-dist_shaderexampleDATA \
 	uninstall-dist_shaderexampleshadersDATA \
 	uninstall-dist_simpleprojectDATA uninstall-dist_testsimpleDATA \

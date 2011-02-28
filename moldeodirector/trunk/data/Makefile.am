@@ -12,6 +12,7 @@ camerascirculardir = ${datadir}/samples/CamerasCircular
 livedrawingdir = ${datadir}/samples/LiveDrawing
 particlesbouncedir = ${datadir}/samples/ParticlesBounce
 particlesinteractivedir = ${datadir}/samples/ParticlesInteractive
+particlesinteractiveshaderdir = ${datadir}/samples/ParticlesInteractive/shaders
 shaderexampledir = ${datadir}/samples/ShaderExample
 shaderexampleshadersdir = ${datadir}/samples/ShaderExample/shaders
 videobuffersdir = ${datadir}/samples/VideoBuffers
@@ -322,6 +323,66 @@ dist_particlesinteractive_DATA = 		samples/ParticlesInteractive/particles_intera
 		samples/ParticlesInteractive/interactiveparticles.lua\
 		samples/ParticlesInteractive/trackerklt.cfg\
 		samples/ParticlesInteractive/videomanager.cfg
+
+dist_particlesinteractiveshader_DATA = samples/ParticlesInteractive/shaders/BilinearFilter.cfg\
+		samples/ParticlesInteractive/shaders/BilinearFilter.glsl\
+		samples/ParticlesInteractive/shaders/Blur.cfg\
+		samples/ParticlesInteractive/shaders/Blur.glsl\
+		samples/ParticlesInteractive/shaders/ColorMatrix.cfg\
+		samples/ParticlesInteractive/shaders/ColorMatrix.glsl\
+		samples/ParticlesInteractive/shaders/ColorPart.cfg\
+		samples/ParticlesInteractive/shaders/Copy.cfg\
+		samples/ParticlesInteractive/shaders/Copy.glsl\
+		samples/ParticlesInteractive/shaders/CopyRGB.cfg\
+		samples/ParticlesInteractive/shaders/CopyRGB.glsl\
+		samples/ParticlesInteractive/shaders/DynEmboss.cfg\
+		samples/ParticlesInteractive/shaders/DynEmboss.glsl\
+		samples/ParticlesInteractive/shaders/DynSaturate.cfg\
+		samples/ParticlesInteractive/shaders/DynSaturate.glsl\
+		samples/ParticlesInteractive/shaders/Edges.cfg\
+		samples/ParticlesInteractive/shaders/Edges.glsl\
+		samples/ParticlesInteractive/shaders/Edgesxml.cfg\
+		samples/ParticlesInteractive/shaders/Emboss.cfg\
+		samples/ParticlesInteractive/shaders/EmbossEdges.cfg\
+		samples/ParticlesInteractive/shaders/EmbossEdges.glsl\
+		samples/ParticlesInteractive/shaders/EmbossEdgesVertex.glsl\
+		samples/ParticlesInteractive/shaders/Emboss.glsl\
+		samples/ParticlesInteractive/shaders/EmbossRelief.cfg\
+		samples/ParticlesInteractive/shaders/EmbossRelief.glsl\
+		samples/ParticlesInteractive/shaders/GridEmboss.cfg\
+		samples/ParticlesInteractive/shaders/Laser.cfg\
+		samples/ParticlesInteractive/shaders/Laser.glsl\
+		samples/ParticlesInteractive/shaders/LaserTag.glsl\
+		samples/ParticlesInteractive/shaders/Max.glsl\
+		samples/ParticlesInteractive/shaders/Maxxml.cfg\
+		samples/ParticlesInteractive/shaders/Mixer.cfg\
+		samples/ParticlesInteractive/shaders/Mixer.glsl\
+		samples/ParticlesInteractive/shaders/MovePart.cfg\
+		samples/ParticlesInteractive/shaders/Pixelate.cfg\
+		samples/ParticlesInteractive/shaders/PixelateDyn2.glsl\
+		samples/ParticlesInteractive/shaders/PixelateDyn.glsl\
+		samples/ParticlesInteractive/shaders/Pixelate.glsl\
+		samples/ParticlesInteractive/shaders/Posterize.cfg\
+		samples/ParticlesInteractive/shaders/Posterize.glsl\
+		samples/ParticlesInteractive/shaders/PulseEmboss.cfg\
+		samples/ParticlesInteractive/shaders/PulseGrid.glsl\
+		samples/ParticlesInteractive/shaders/Recorte.cfg\
+		samples/ParticlesInteractive/shaders/Recorte.glsl\
+		samples/ParticlesInteractive/shaders/RenderAveGrad.cfg\
+		samples/ParticlesInteractive/shaders/RenderBrushes.cfg\
+		samples/ParticlesInteractive/shaders/RenderGrad2fp.cfg\
+		samples/ParticlesInteractive/shaders/Saturate.cfg\
+		samples/ParticlesInteractive/shaders/Saturate.glsl\
+		samples/ParticlesInteractive/shaders/Sharpen.cfg\
+		samples/ParticlesInteractive/shaders/Sharpen.glsl\
+		samples/ParticlesInteractive/shaders/Sobel.cfg\
+		samples/ParticlesInteractive/shaders/Sobel.glsl\
+		samples/ParticlesInteractive/shaders/StaticEmboss.glsl\
+		samples/ParticlesInteractive/shaders/TexInterpolator.cfg\
+		samples/ParticlesInteractive/shaders/TexInterpolator.glsl\
+		samples/ParticlesInteractive/shaders/ToonShading.frag\
+		samples/ParticlesInteractive/shaders/ToonShading.vert
+
 
 dist_shaderexample_DATA = 		samples/ShaderExample/shader_example.mol\
 		samples/ShaderExample/debug.cfg\

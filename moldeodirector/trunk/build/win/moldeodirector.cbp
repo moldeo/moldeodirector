@@ -246,6 +246,8 @@
 		<Unit filename="..\..\moldeodirector\moShaderCtrl.h" />
 		<Unit filename="..\..\moldeodirector\moShadersPanel.cpp" />
 		<Unit filename="..\..\moldeodirector\moShadersPanel.h" />
+		<Unit filename="..\..\moldeodirector\moSoundPanel.cpp" />
+		<Unit filename="..\..\moldeodirector\moSoundPanel.h" />
 		<Unit filename="..\..\moldeodirector\moTextureItemCtrl.cpp" />
 		<Unit filename="..\..\moldeodirector\moTextureItemCtrl.h" />
 		<Unit filename="..\..\moldeodirector\moTimelineRuler.cpp" />
@@ -312,6 +314,7 @@
 					<wxFrame wxs="../../moldeodirector/wxsmith/moConfigurationAdvancedOutput.wxs" src="../../moldeodirector/moConfigurationAdvancedOutput.cpp" hdr="../../moldeodirector/moConfigurationAdvancedOutput.h" name="moConfigurationAdvancedOutput" language="CPP" />
 					<wxPanel wxs="../../moldeodirector/wxsmith/moScriptPanel.wxs" src="../../moldeodirector/moScriptPanel.cpp" hdr="../../moldeodirector/moScriptPanel.h" name="moScriptPanel" language="CPP" />
 					<wxPanel wxs="../../moldeodirector/wxsmith/PreviewWindowSystemMem.wxs" src="../../moldeodirector/PreviewWindowSystemMem.cpp" hdr="../../moldeodirector/PreviewWindowSystemMem.h" name="PreviewWindowSystemMem" language="CPP" />
+					<wxPanel wxs="../../moldeodirector/wxsmith/moSoundPanel.wxs" src="../../moldeodirector/moSoundPanel.cpp" hdr="../../moldeodirector/moSoundPanel.h" name="moSoundPanel" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

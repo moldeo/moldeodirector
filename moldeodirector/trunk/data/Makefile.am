@@ -3,6 +3,8 @@ datadir = ${prefix}/share/moldeodirector
 fontsdir = ${datadir}/fonts
 cursorsdir = ${datadir}/cursors
 iconsdir = ${datadir}/icons
+desktopdir = ${prefix}/share/applications
+pixmapsdir = ${prefix}/share/pixmaps
 testdir = ${datadir}/test
 testsimpledir = ${testdir}
 samplesdir = ${datadir}/samples
@@ -16,7 +18,15 @@ particlesinteractiveshaderdir = ${datadir}/samples/ParticlesInteractive/shaders
 shaderexampledir = ${datadir}/samples/ShaderExample
 shaderexampleshadersdir = ${datadir}/samples/ShaderExample/shaders
 videobuffersdir = ${datadir}/samples/VideoBuffers
+videobuffersshadersdir = ${datadir}/samples/VideoBuffers/shaders
 videobuffersbufdir = ${datadir}/samples/VideoBuffers/vbuffer_sub
+
+dist_pixmaps_DATA = icons/moldeologo.xpm \
+		    icons/moldeologo48x48.png\
+		    icons/moldeodirector.png\
+		    icons/moldeodirector.xpm
+
+dist_desktop_DATA = desktop/moldeodirector.desktop
 
 dist_fonts_DATA = fonts/Tuffy.ttf
 dist_cursors_DATA = cursors/copy_cur.cur \
@@ -24,7 +34,11 @@ dist_cursors_DATA = cursors/copy_cur.cur \
 		    cursors/edit_cur.cur \
 		    cursors/move_cur.cur
 
-dist_icons_DATA = icons/add.png \
+dist_icons_DATA = icons/moldeologo.xpm \
+icons/moldeologo48x48.png\
+icons/moldeodirector.png\
+icons/moldeodirector.xpm\
+icons/add.png \
 icons/api_16.png \
 icons/arrow_sans_down_16.png \
 icons/arrow_sans_right_16.png \
@@ -457,6 +471,11 @@ dist_videobuffers_DATA = 		samples/VideoBuffers/video_buffers.mol\
 		samples/VideoBuffers/erase.cfg\
 		samples/VideoBuffers/icon.cfg\
 		samples/VideoBuffers/videomanager_videobuffer.cfg
+		
+dist_videobuffersshaders_DATA = 		samples/VideoBuffers/shaders/Copy.cfg\
+		samples/VideoBuffers/shaders/Copy.glsl\
+		samples/VideoBuffers/shaders/TexInterpolator.cfg\
+		samples/VideoBuffers/shaders/TexInterpolator.glsl
 
 dist_videobuffersbuf_DATA = samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0118.jpg\
 samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0121.jpg\
@@ -928,5 +947,4 @@ samples/VideoBuffers/vbuffer_sub/contact_intro_hd_1516.jpg\
 samples/VideoBuffers/vbuffer_sub/contact_intro_hd_1519.jpg\
 samples/VideoBuffers/vbuffer_sub/contact_intro_hd_1522.jpg\
 samples/VideoBuffers/vbuffer_sub/contact_intro_hd_1525.jpg
-
 

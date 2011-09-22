@@ -281,8 +281,8 @@ moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath,
                 if (!bDebug) {
                     if (pFile->GetExtension()==moText(".so")) {
                         #ifndef MO_WIN32
-                            ///extract the "libmod_" part
-                            PluginName.Right( PluginName.Length() - 7 );
+                            ///extract the "libmoldeo_" part
+                            PluginName.Right( PluginName.Length() - 10 );
                             rPluginDefs.Add( moPluginDefinition( PluginName, pFile->GetCompletePath(), mobjecttype ) );
                             Log( pFile->GetFileName() );
                         #endif

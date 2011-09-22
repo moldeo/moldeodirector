@@ -5,6 +5,8 @@ BEGIN_EVENT_TABLE( moDirectorConsole, wxEvtHandler)
   EVT_TIMER( TICKS_ID, moDirectorConsole::OnTimer)
 END_EVENT_TABLE()
 
+#define FRAME_MILIS 8
+
 moDirectorConsole::moDirectorConsole() : moConsole() {
 
 	m_pDirectorCore = NULL;
@@ -32,7 +34,7 @@ moDirectorConsole::SetDirectorCore( moDirectorCore* p_pDirectorCore ) {
 	m_pDirectorCore = p_pDirectorCore;
 	SetNextActionHandler((moIDirectorActions*)m_pDirectorCore);
     m_timer.SetOwner( this, TICKS_ID);
-	m_timer.Start(16);
+	m_timer.Start(FRAME_MILIS);
 }
 
 moMoldeoObject*
@@ -734,7 +736,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
             LogError( moText("moDirectorConsole::NewMob Couldn't create effect: " ) + pMobDef.GetName() );
         }
 
-        m_timer.Start(16);
+        m_timer.Start(FRAME_MILIS);
 
         return MO_DIRECTOR_STATUS_ERROR;
 
@@ -1114,7 +1116,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 ///we've finished, update project
                 ProjectUpdated( GetProject() );
 
-                m_timer.Start( 16 );
+                m_timer.Start( FRAME_MILIS );
 
             }
         }

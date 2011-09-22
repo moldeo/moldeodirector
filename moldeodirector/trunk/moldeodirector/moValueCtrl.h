@@ -59,6 +59,7 @@ class moValueCtrl : public wxPanel, public moIDirectorActions {
         void OnTextUpdated( wxCommandEvent& event);
         void OnSpinUpdated( wxSpinEvent& event);
         void OnComboUpdated( wxCommandEvent& event);
+        void OnFocus( wxFocusEvent& event);
 
         void ParamToggleOff();
         void ParamToggleOn();

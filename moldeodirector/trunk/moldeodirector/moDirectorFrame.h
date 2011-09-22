@@ -111,19 +111,7 @@ public:
         void OnCloseProject( wxCommandEvent& event );
         void OnSaveProject( wxCommandEvent& event );
 
-        // Examples submenu
-        void OnExampleSimple( wxCommandEvent& event );
-        void OnExampleCamera( wxCommandEvent& event );
-        void OnExampleInteractiveCamera( wxCommandEvent& event );
-        void OnExampleInteractiveCameraGPU( wxCommandEvent& event );
-        void OnExampleInteractiveCameraGPUKLT2( wxCommandEvent& event );
-        void OnExampleCameraCircularBuffer( wxCommandEvent& event );
-
         void OnExample( wxCommandEvent& event);
-        void OnExampleVideoBuffer( wxCommandEvent& event );
-        void OnExampleParticles( wxCommandEvent& event );
-        void OnExampleParticlesBounce( wxCommandEvent& event );
-        void OnExampleParticlesInteractive( wxCommandEvent& event );
 
         // End examples submenu
         void OnProjectPreview( wxCommandEvent& event );

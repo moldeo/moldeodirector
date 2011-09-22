@@ -232,6 +232,8 @@ void moDirectorIODeviceManager::OnKeyDown( wxKeyEvent &event ) {
 	SDLKey sym = SDLK_UNKNOWN;
 	SDLMod mod = KMOD_NONE;
 
+	//wxMessageBox( moText2Wx( IntToStr(event.GetKeyCode()) ) ) ;
+
 	if(event.ShiftDown())
 		mod =(SDLMod)((int)mod | KMOD_SHIFT );
 	if(event.ControlDown())

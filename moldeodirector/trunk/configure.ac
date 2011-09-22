@@ -1,4 +1,4 @@
-AC_INIT([Moldeo Director], [0.7.9], [info@moldeointeractive.com.ar], [moldeodirector])
+AC_INIT([Moldeo Director], [0.7.9.4], [info@moldeointeractive.com.ar], [moldeodirector])
 
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
@@ -106,8 +106,13 @@ AC_CHECK_LIB(CgGL, cgGLBindProgram,
 AC_LANG_POP(C++)
 
 dnl Check wx-Widgets
+AC_ARG_ENABLE([unicode],[AC_HELP_STRING([--disable-unicode],[internally use ansi])], 
+	[AS_IF([test "x$enableval" = "xno"],[wx_config_args="--unicode=no"])
+	AS_IF([test "x$enableval" = "xyes"],[wx_config_args="--unicode=yes"])],
+	[wx_config_args="--unicode=no"]
+)
 AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG(2.6.0, wxWin=1)
+AM_PATH_WXCONFIG(2.8.0, wxWin=1)
         if test "$wxWin" != 1; then
         AC_MSG_ERROR([
                 wxWidgets must be installed on your system.
@@ -116,7 +121,7 @@ AM_PATH_WXCONFIG(2.6.0, wxWin=1)
                 where wxWidgets libraries are installed (returned by
                 'wx-config --libs' or 'wx-config --static --libs' command)
                 is in LD_LIBRARY_PATH or equivalent variable and
-                wxWindows version is 2.6.0 or above.
+                wxWindows version is 2.8.0 or above.
                 ])
         fi
 

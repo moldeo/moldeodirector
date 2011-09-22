@@ -68,7 +68,7 @@ bool moDirectorApp::OnInit()
 	moDirectorCore*			m_pDirectorCore = NULL;
 	moDirectorFrame*		m_pDirectorFrame = NULL;
 
-	SetAppName(wxT("Moldeo Director"));
+	SetAppName(wxString(_("Moldeo Director "))  + moText2Wx(moGetVersionStr()) );
 
 // Check only one instance running
 
@@ -119,7 +119,7 @@ bool moDirectorApp::OnInit()
     // create the main application window
 
     cout << "Director Frame..." << endl;
-		m_pDirectorFrame = new moDirectorFrame(_T("Moldeo Director"));
+		m_pDirectorFrame = new moDirectorFrame(wxString(_("Moldeo Director "))  + moText2Wx(moGetVersionStr()));
 		if (m_pDirectorFrame) {
 			m_pDirectorFrame->SetIcon( wxIcon( wxIconLocation(wxT(MOLDEODATADIR "/icons/Moldeo32.ico")) ) );
     	m_pDirectorFrame->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_CAPTIONTEXT));
@@ -137,12 +137,12 @@ bool moDirectorApp::OnInit()
 	m_pDirectorCore->SetUserInterface( m_pDirectorFrame );
 
 
-///*
-    wxMessageBox("appdir:"+wxGetCwd());
-    wxMessageBox("userdir:"+StdPaths.GetUserDataDir() );
-    wxMessageBox( wxString("datadir:") + wxString(wxT(MOLDEODATADIR)) );
-    wxMessageBox( wxString("modulesdir:")+wxString(wxT(MODULESDIR)) );
-//*/
+/*
+    wxMessageBox(wxT("appdir:")+wxGetCwd());
+    wxMessageBox(wxT("userdir:")+StdPaths.GetUserDataDir() );
+    wxMessageBox( wxT("datadir:") + wxString(wxT(MOLDEODATADIR)) );
+    wxMessageBox( wxT("modulesdir:")+wxString(wxT(MODULESDIR)) );
+*/
 
 
 	//wxFileName userdatadir( StdPaths.GetUserDataDir() );
@@ -175,18 +175,21 @@ bool moDirectorApp::OnInit()
 		if( argv[argc-1] &&(strcmp((const char *)argv[argc-1], "-mol") == 0) ) {
 			config = (const char*)argv[argc];
 			--argc;
+        } else if ( argv[argc-1] && (strcmp((const char *)argv[argc-1], "--help") == 0) ) {
+            printf( "Usage: %s [-mol]\n", argv[0]);
 		} else {
 			printf( "Usage: %s [-mol]\n", argv[0]);
 
-			wxMessageBox(   wxString(wxT("Error opening:")) +
+			/*wxMessageBox(   wxString(wxT("Error opening:")) +
                             wxString(wxT(" argc:")) + // wxString(IntToStr(argc)) +
                             wxString(wxT(" argv[argc-1]:")) + argv[argc-1] +
                             wxString(wxT(" argv[0]:")) + wxString(argv[0]) +
                             wxString(wxT(" argv[1]:")) + wxString(argv[1]) +
                             wxString(wxT(" argv[2]:")) + wxString(argv[2]) );
+            */
 
 
-			exit(0);
+			//exit(0);
 		}
     }
 

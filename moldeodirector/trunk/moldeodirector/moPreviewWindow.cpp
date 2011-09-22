@@ -98,7 +98,7 @@ void moPreviewWindow::Init( moIDirectorActions* pActionsHandler, wxGLContext* p_
         WX_GL_MIN_GREEN, 8,
         WX_GL_MIN_BLUE, 8,
         WX_GL_MIN_ALPHA, 8,
-        WX_GL_DEPTH_SIZE, 24,
+        WX_GL_DEPTH_SIZE, 16,
         WX_GL_STENCIL_SIZE, 8,
         /*WX_GL_LEVEL, 0,
         WX_GL_AUX_BUFFERS, 0*/

@@ -20,6 +20,8 @@ moValueCtrl::moValueCtrl(wxWindow *parent,
     m_pBlendingCtrl = NULL;
     m_pParamToggle = NULL;
     block = false;
+
+    Connect(wxEVT_SET_FOCUS,(wxObjectEventFunction)&moValueCtrl::OnFocus,0,this);
 }
 
 void
@@ -70,7 +72,6 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 	m_pParamToggle = new wxRadioButton( this, ParamToggleId, wxT(""), wxPoint(xpos,0), wxSize(20,20),  stylewnd);
 	xpos+= m_pParamToggle->GetSize().x;
 	Connect( ParamToggleId, wxEVT_COMMAND_RADIOBUTTON_SELECTED , (wxObjectEventFunction)&moValueCtrl::OnParamToggleClick );
-
 
 	switch( PType ) {
 		case MO_PARAM_ALPHA:
@@ -214,6 +215,11 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 	m_pDeleteButton = new wxButton( this, DeleteId, wxT("x"), wxPoint(xpos,0),wxSize(20,20) );
 	xpos+=m_pDeleteButton->GetSize().x;
     Connect( DeleteId, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&moValueCtrl::OnDeleteClick );
+
+    if (m_pTextCtrl) {
+        m_pTextCtrl->SetToolTip(_("tooltip"));
+        m_pTextCtrl->SetHelpText(_("help text"));
+    }
 
     m_bInit = true;
 }
@@ -617,4 +623,13 @@ moValueCtrl::OnComboUpdated( wxCommandEvent& event) {
     }
 
 }
+
+
+void
+moValueCtrl::OnFocus( wxFocusEvent& event) {
+
+    ShowMessage("focus on text control");
+
+}
+
 

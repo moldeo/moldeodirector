@@ -117,7 +117,13 @@ moDirectorChildFrame::InspectAll() {
 
         for( int i=0; i<(int)m_ParamTreeItemList.Count(); i++) {
             moParamTreeItem& ParamItem( m_ParamTreeItemList.Get(i) );
-            ParameterUpdated( ParamItem.GetParamDescriptor() );
+            /**
+            * TODO: Optimize this!!! Changing tab selection on FilesBook freezes all
+            */
+            /**/
+            /** Opcion activar unicamente el color y textura?? */
+            //ParameterUpdated( ParamItem.GetParamDescriptor() );
+            /** */
         }
 
         if ( m_ValueDescriptor.GetParamDescriptor().GetParamDefinition().IsValid() ) {
@@ -161,19 +167,24 @@ moDirectorChildFrame::ParameterUpdated( moParameterDescriptor p_ParameterDesc ) 
     if (ParamItem.GetParamDescriptor().GetParamDefinition().GetName() == p_ParameterDesc.GetParamDefinition().GetName() ) {
 
         moValueTreeItem ValueTreeItem;
-
+/*
+OPTIMIZE, why check every single value???
+*/
         for( int i=0; i<(int)ParamItem.GetValueTreeItemList().Count(); i++) {
 
+            //int i = p_ParameterDesc.GetIndexValue();
             ValueTreeItem = ParamItem.GetValueTreeItemList().Get(i);
 
             moValueCtrl* pValueCtrl = dynamic_cast<moValueCtrl*>(ValueTreeItem.GetWindow());
 
             if (pValueCtrl) {
+                /** Only inspect the value selected....*/
                 if ( p_ParameterDesc.GetIndexValue() == i) {
                     pValueCtrl->ParamToggleOn();
                     ParamItem.GetParamDescriptor().SetIndexValue(i);
                     Inspect( pValueCtrl->GetValueDescriptor(), false );
                 } else {
+                    /*toggling off is important...*/
                     pValueCtrl->ParamToggleOff();
                 }
             }

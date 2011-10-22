@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Moldeo Director
+GenericName=Interactive Multimedia Editor
+Version=0.7.9.2
+Comment=Mix and animate videos, images, colors, 3d effects. Play and compose Moldeo's multimedia interactive projects.
+Exec=moldeodirector -mol %f
+Icon=/usr/share/moldeodirector/icons/moldeodirector.png
+Terminal=false
+Type=Application
+Categories=GTK;GNOME;AudioVideo;Video;Graphics;Player
+StartupNotify=true

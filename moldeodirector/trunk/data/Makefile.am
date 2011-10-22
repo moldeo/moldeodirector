@@ -630,5 +630,5 @@ samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0565.jpg\
 samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0568.jpg\
 samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0571.jpg\
 samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0574.jpg\
-samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0577.jpg\
+samples/VideoBuffers/vbuffer_sub/contact_intro_hd_0577.jpg
 

@@ -1,0 +1,15 @@
+Source: moldeodirector
+Section: Applications/Graphics
+Priority: extra
+Maintainer: Fabricio Costa <fabricio.costa@moldeointeractive.com.ar>
+Build-Depends: debhelper (>= 7.0.50~), autotools-dev
+Standards-Version: 3.8.4
+Homepage: http://www.moldeo.org
+#Vcs-Git: git://git.debian.org/collab-maint/moldeodirector.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/moldeodirector.git;a=summary
+
+Package: moldeodirector
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Moldeo Director, Interactive Multimedia Composer
+ Moldeo Director is a real time player and composer for Moldeo style projects.

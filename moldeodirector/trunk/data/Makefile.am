@@ -108,7 +108,6 @@ icons/sitemap_16.png \
 icons/skip.jpg \
 icons/stop32.png \
 icons/stop.jpg \
-icons/Thumbs.db \
 icons/translate.png \
 icons/video_16.png \
 icons/video_run_16.png \

@@ -27,7 +27,7 @@ AC_CHECK_LIB(SDL_net, SDLNet_Init, AC_SUBST([SDL_NET_LIBS], [-lSDL_net]), AC_MSG
 
 #dnl check for glew
 AC_CHECK_HEADER(GL/glew.h, , AC_MSG_ERROR([glew header not found.]))
-AC_CHECK_LIB(GLEW, glEnd, AC_SUBST([GLEW_LIBS], [-lGLEW]), AC_MSG_ERROR([glew not found.]), )
+AC_CHECK_LIB(GLEW, glewInit, AC_SUBST([GLEW_LIBS], [-lGLEW]), AC_MSG_ERROR([glew not found.]), )
 
 #dnl check for glut
 AC_CHECK_HEADER(GL/glut.h, , AC_MSG_ERROR([glut header not found.]))

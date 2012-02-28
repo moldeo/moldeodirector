@@ -47,7 +47,7 @@
 			<handler function="OnCheckBoxOnOffClick" entry="EVT_CHECKBOX" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONDELETE" variable="BitmapButtonDelete" member="yes">
-			<bitmap>../../doc/icons/delete.png</bitmap>
+			<bitmap>../../data/icons/delete.png</bitmap>
 			<default>1</default>
 			<pos>240,12</pos>
 			<size>13,13</size>

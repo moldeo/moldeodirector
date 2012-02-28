@@ -131,7 +131,7 @@
 						<pos>8,8</pos>
 						<size>44,44</size>
 						<object class="wxStaticBitmap" name="ID_STATICBITMAP1" variable="StaticBitmap1" member="yes">
-							<bitmap>../../doc/icons/translate.png</bitmap>
+							<bitmap>../../data/icons/translate.png</bitmap>
 							<pos>0,0</pos>
 						</object>
 					</object>
@@ -159,7 +159,7 @@
 						<pos>8,132</pos>
 						<size>44,44</size>
 						<object class="wxStaticBitmap" name="ID_STATICBITMAP3" variable="StaticBitmap3" member="yes">
-							<bitmap>../../doc/icons/scale.png</bitmap>
+							<bitmap>../../data/icons/scale.png</bitmap>
 							<pos>0,0</pos>
 						</object>
 					</object>
@@ -179,35 +179,35 @@
 						<pos>112,56</pos>
 						<size>144,64</size>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSCIRCULAR" variable="BitmapButtonPosCircular" member="yes">
-							<bitmap>../../doc/icons/motioncircular.png</bitmap>
+							<bitmap>../../data/icons/motioncircular.png</bitmap>
 							<default>1</default>
 							<pos>0,0</pos>
 							<size>32,32</size>
 							<handler function="OnButton1Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSHOR" variable="BitmapButtonPosHor" member="yes">
-							<bitmap>../../doc/icons/motionhorizontal.png</bitmap>
+							<bitmap>../../data/icons/motionhorizontal.png</bitmap>
 							<default>1</default>
 							<pos>32,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton3Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSVERT" variable="BitmapButtonPosVer" member="yes">
-							<bitmap>../../doc/icons/motionvertical.png</bitmap>
+							<bitmap>../../data/icons/motionvertical.png</bitmap>
 							<default>1</default>
 							<pos>64,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton4Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTON8" variable="BitmapButton8" member="yes">
-							<bitmap>../../doc/icons/motiondiagonal.png</bitmap>
+							<bitmap>../../data/icons/motiondiagonal.png</bitmap>
 							<default>1</default>
 							<pos>96,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton2Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONPOSRAND" variable="BitmapButtonPosRand" member="yes">
-							<bitmap>../../doc/icons/motionrandom.png</bitmap>
+							<bitmap>../../data/icons/motionrandom.png</bitmap>
 							<default>1</default>
 							<pos>0,32</pos>
 							<size>32,32</size>
@@ -218,35 +218,35 @@
 						<pos>112,304</pos>
 						<size>144,64</size>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTCIRCULAR" variable="BitmapButtonRotCircular" member="yes">
-							<bitmap>../../doc/icons/motioncircular.png</bitmap>
+							<bitmap>../../data/icons/motioncircular.png</bitmap>
 							<default>1</default>
 							<pos>0,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButtonRotCircularClick" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTHOR" variable="BitmapButtonRotHor" member="yes">
-							<bitmap>../../doc/icons/motionhorizontal.png</bitmap>
+							<bitmap>../../data/icons/motionhorizontal.png</bitmap>
 							<default>1</default>
 							<pos>32,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton3Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTVER" variable="BitmapButtonRotVer" member="yes">
-							<bitmap>../../doc/icons/motionvertical.png</bitmap>
+							<bitmap>../../data/icons/motionvertical.png</bitmap>
 							<default>1</default>
 							<pos>64,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton4Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTDIAG" variable="BitmapButtonRotDiag" member="yes">
-							<bitmap>../../doc/icons/motiondiagonal.png</bitmap>
+							<bitmap>../../data/icons/motiondiagonal.png</bitmap>
 							<default>1</default>
 							<pos>96,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton2Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONROTRAND" variable="BitmapButtonRotRand" member="yes">
-							<bitmap>../../doc/icons/motionrandom.png</bitmap>
+							<bitmap>../../data/icons/motionrandom.png</bitmap>
 							<default>1</default>
 							<pos>0,32</pos>
 							<size>32,32</size>
@@ -257,35 +257,35 @@
 						<pos>112,180</pos>
 						<size>144,64</size>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCACIRCULAR" variable="BitmapButtonScaCircular" member="yes">
-							<bitmap>../../doc/icons/motioncircular.png</bitmap>
+							<bitmap>../../data/icons/motioncircular.png</bitmap>
 							<default>1</default>
 							<pos>0,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButtonScaCircularClick" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCAHOR" variable="BitmapButtonScaHor" member="yes">
-							<bitmap>../../doc/icons/motionhorizontal.png</bitmap>
+							<bitmap>../../data/icons/motionhorizontal.png</bitmap>
 							<default>1</default>
 							<pos>32,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton3Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCAVER" variable="BitmapButtonScaVer" member="yes">
-							<bitmap>../../doc/icons/motionvertical.png</bitmap>
+							<bitmap>../../data/icons/motionvertical.png</bitmap>
 							<default>1</default>
 							<pos>64,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton4Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCADIAG" variable="BitmapButtonScaDiag" member="yes">
-							<bitmap>../../doc/icons/motiondiagonal.png</bitmap>
+							<bitmap>../../data/icons/motiondiagonal.png</bitmap>
 							<default>1</default>
 							<pos>96,0</pos>
 							<size>32,32</size>
 							<handler function="OnBitmapButton2Click" entry="EVT_BUTTON" />
 						</object>
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCARAND" variable="BitmapButtonScaRand" member="yes">
-							<bitmap>../../doc/icons/motionrandom.png</bitmap>
+							<bitmap>../../data/icons/motionrandom.png</bitmap>
 							<default>1</default>
 							<pos>0,32</pos>
 							<size>32,32</size>

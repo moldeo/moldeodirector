@@ -15,7 +15,7 @@
 			<size>144,144</size>
 			<bg>wxSYS_COLOUR_SCROLLBAR</bg>
 			<object class="wxStaticBitmap" name="ID_STATICBITMAP1" variable="StaticBitmap1" member="yes">
-				<bitmap>../../doc/icons/functiontest.png</bitmap>
+				<bitmap>../../data/icons/functiontest.png</bitmap>
 				<pos>0,8</pos>
 				<size>136,72</size>
 			</object>
@@ -25,7 +25,7 @@
 			<pos>8,8</pos>
 			<fg>#FFFFFF</fg>
 		</object>
-		<object class="wxSlider" name="ID_SLIDERNUMBER" variable="SliderNumber" member="yes">
+		<object class="wxSlider" name="ID_SLIDERNUMBER" subclass="wxMoLevelCtrl" variable="SliderNumber" member="yes">
 			<pos>0,24</pos>
 			<size>152,24</size>
 		</object>

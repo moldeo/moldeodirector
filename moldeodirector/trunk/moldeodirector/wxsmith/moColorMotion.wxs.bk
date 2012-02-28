@@ -53,7 +53,7 @@
 						<handler function="OnSliderAlphaCmdScroll" entry="EVT_COMMAND_SCROLL_CHANGED" />
 					</object>
 					<object class="wxBitmapButton" name="ID_BITMAPBUTTON1" variable="BitmapButton1" member="yes">
-						<bitmap>../../doc/icons/pickcolor.png</bitmap>
+						<bitmap>../../data/icons/pickcolor.png</bitmap>
 						<default>1</default>
 						<pos>128,8</pos>
 						<handler function="OnButtonPickColorClick" entry="EVT_BUTTON" />

@@ -19,7 +19,7 @@
 			<handler function="OnTextCtrlFontText" entry="EVT_TEXT" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONIMPORT" variable="BitmapButtonImport" member="yes">
-			<bitmap>../../doc/icons/import.png</bitmap>
+			<bitmap>../../data/icons/import.png</bitmap>
 			<default>1</default>
 			<pos>160,16</pos>
 			<size>13,13</size>

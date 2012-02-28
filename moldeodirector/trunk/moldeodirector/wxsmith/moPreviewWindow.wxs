@@ -7,7 +7,7 @@
 		<pos_arg>1</pos_arg>
 		<size_arg>1</size_arg>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONPLAY" variable="BitmapButtonPlay" member="yes">
-			<bitmap>../../doc/icons/play32.png</bitmap>
+			<bitmap>../../data/icons/play32.png</bitmap>
 			<default>1</default>
 			<pos>0,300</pos>
 			<size>32,32</size>
@@ -16,7 +16,7 @@
 			<handler function="OnBitmapButtonPlayClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONPAUSE" variable="BitmapButtonPause" member="yes">
-			<bitmap>../../doc/icons/pause32.png</bitmap>
+			<bitmap>../../data/icons/pause32.png</bitmap>
 			<default>1</default>
 			<pos>32,300</pos>
 			<size>32,32</size>
@@ -25,7 +25,7 @@
 			<handler function="OnBitmapButtonPauseClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONFULLSCREEN" variable="ButtonFullSCreen" member="yes">
-			<bitmap>../../doc/icons/fullscreen32.png</bitmap>
+			<bitmap>../../data/icons/fullscreen32.png</bitmap>
 			<default>1</default>
 			<pos>272,300</pos>
 			<size>32,32</size>
@@ -34,7 +34,7 @@
 			<handler function="OnButtonFullSCreenClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONSCREENSHOT" variable="BitmapButtonScreenshot" member="yes">
-			<bitmap>../../doc/icons/screenshot32.png</bitmap>
+			<bitmap>../../data/icons/screenshot32.png</bitmap>
 			<default>1</default>
 			<pos>312,300</pos>
 			<size>32,32</size>
@@ -43,7 +43,7 @@
 			<handler function="OnBitmapButtonFocusAndActivate" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONSAVEVIDEO" variable="BitmapButtonSaveVideo" member="yes">
-			<bitmap>../../doc/icons/savevideo32.png</bitmap>
+			<bitmap>../../data/icons/savevideo32.png</bitmap>
 			<default>1</default>
 			<pos>344,300</pos>
 			<size>32,32</size>
@@ -51,7 +51,7 @@
 			<help>Movie</help>
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONSAVESESSION" variable="BitmapButtonSaveSession" member="yes">
-			<bitmap>../../doc/icons/savesession32.png</bitmap>
+			<bitmap>../../data/icons/savesession32.png</bitmap>
 			<pos>64,300</pos>
 			<size>32,32</size>
 			<tooltip>Record</tooltip>

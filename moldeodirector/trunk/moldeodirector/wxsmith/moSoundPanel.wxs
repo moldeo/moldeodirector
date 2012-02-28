@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="moSoundPanel">
+		<size>254,97</size>
+		<fg>#FFFFFF</fg>
+		<bg>#000000</bg>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<object class="wxTextCtrl" name="ID_TEXTCTRLSOUND" variable="TextCtrlSound" member="yes">
+			<pos>104,8</pos>
+			<size>208,21</size>
+			<handler function="OnTextCtrlSoundText" entry="EVT_TEXT" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXTDETAILS" variable="m_pTextDetails" member="yes">
+			<label>Details:</label>
+			<pos>8,40</pos>
+			<size>256,112</size>
+			<fg>#FFFFFF</fg>
+			<bg>#000000</bg>
+		</object>
+		<object class="wxButton" name="ID_BUTTONIMPORT" variable="ButtonImport" member="yes">
+			<label>Import Sound</label>
+			<pos>8,8</pos>
+			<fg>#FFFFFF</fg>
+			<bg>#000000</bg>
+			<handler function="OnButtonImportClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

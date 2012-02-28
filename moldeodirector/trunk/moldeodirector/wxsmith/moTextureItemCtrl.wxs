@@ -14,7 +14,7 @@
 			<bg>#000000</bg>
 			<handler function="OnMouseEnter" entry="EVT_LEFT_DOWN" />
 			<object class="wxStaticBitmap" name="ID_STATICBITMAPTHUMB" variable="StaticBitmapThumb" member="yes">
-				<bitmap>../../doc/icons/imageempty.png</bitmap>
+				<bitmap>../../data/icons/imageempty.png</bitmap>
 				<pos>0,0</pos>
 				<size>64,44</size>
 			</object>

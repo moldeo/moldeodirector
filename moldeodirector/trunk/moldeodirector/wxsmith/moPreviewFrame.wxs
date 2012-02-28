@@ -12,21 +12,21 @@
 			<bitmapsize>32,32</bitmapsize>
 			<object class="tool" name="TOOLPLAY" variable="ToolBarItem1" member="yes">
 				<label>Play</label>
-				<bitmap>../../doc/icons/play32.bmp</bitmap>
-				<bitmap2>../../doc/icons/play32dis.bmp</bitmap2>
+				<bitmap>../../data/icons/play32.bmp</bitmap>
+				<bitmap2>../../data/icons/play32dis.bmp</bitmap2>
 				<tooltip>Play syncro</tooltip>
 				<longhelp>Help text</longhelp>
 			</object>
 			<object class="tool" name="TOOLPAUSE" variable="ToolBarItem2" member="yes">
 				<label>Pause</label>
-				<bitmap>../../doc/icons/pause32.bmp</bitmap>
-				<bitmap2>../../doc/icons/pause32.bmp</bitmap2>
+				<bitmap>../../data/icons/pause32.bmp</bitmap>
+				<bitmap2>../../data/icons/pause32.bmp</bitmap2>
 				<tooltip>Pause</tooltip>
 				<longhelp>Pause</longhelp>
 			</object>
 			<object class="tool" name="TOOLFULLSCREEN" variable="ToolBarItem3" member="yes">
 				<label>Fullscreen</label>
-				<bitmap>../../doc/icons/onofficon32.bmp</bitmap>
+				<bitmap>../../data/icons/onofficon32.bmp</bitmap>
 				<tooltip>Fullscreen</tooltip>
 				<longhelp>Fullscreen</longhelp>
 			</object>

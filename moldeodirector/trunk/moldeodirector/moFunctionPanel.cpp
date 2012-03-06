@@ -41,12 +41,12 @@ moFunctionPanel::moFunctionPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	FunctionTextCtrl = new wxTextCtrl(this, ID_FUNCTIONTEXTCTRL, wxEmptyString, wxPoint(8,56), wxSize(144,32), 0, wxDefaultValidator, _T("ID_FUNCTIONTEXTCTRL"));
 	PanelPlot2d = new wxPanel(this, ID_PANELPLOT2D, wxPoint(8,120), wxSize(144,144), wxTAB_TRAVERSAL, _T("ID_PANELPLOT2D"));
 	PanelPlot2d->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_SCROLLBAR));
-	StaticBitmap1 = new wxStaticBitmap(PanelPlot2d, ID_STATICBITMAP1, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/functiontest.png")).Rescale(wxSize(136,72).GetWidth(),wxSize(136,72).GetHeight())), wxPoint(0,8), wxSize(136,72), 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(PanelPlot2d, ID_STATICBITMAP1, wxBitmap(wxImage(_T("../../data/icons/functiontest.png")).Rescale(wxSize(136,72).GetWidth(),wxSize(136,72).GetHeight())), wxPoint(0,8), wxSize(136,72), 0, _T("ID_STATICBITMAP1"));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Type: Function"), wxPoint(8,8), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	StaticText1->SetForegroundColour(wxColour(255,255,255));
-	SliderNumber = new wxSlider(this, ID_SLIDERNUMBER, 0, 0, 100, wxPoint(0,24), wxSize(152,24), 0, wxDefaultValidator, _T("ID_SLIDERNUMBER"));
+	SliderNumber = new wxMoLevelCtrl(this, ID_SLIDERNUMBER, 0, 0, 100, wxPoint(0,24), wxSize(152,24), 0, wxDefaultValidator, _T("ID_SLIDERNUMBER"));
 	TextCtrlMin = new wxTextCtrl(this, ID_TEXTCTRL1, _("0"), wxPoint(152,24), wxSize(40,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-	TextCtrlMax = new wxTextCtrl(this, ID_TEXTCTRLMAX, _("100"), wxPoint(200,24), wxSize(40,21), 0, wxDefaultValidator, _T("ID_TEXTCTRLMAX"));
+	TextCtrlMax = new wxTextCtrl(this, ID_TEXTCTRLMAX, _("1"), wxPoint(200,24), wxSize(40,21), 0, wxDefaultValidator, _T("ID_TEXTCTRLMAX"));
 	Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(160,56), wxSize(88,164), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
 	ButtonCos = new wxButton(Panel1, ID_BUTTON5, _("cos"), wxPoint(0,0), wxSize(32,23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
 	ButtonSin = new wxButton(Panel1, ID_BUTTON1, _("sin"), wxPoint(32,0), wxSize(32,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
@@ -61,7 +61,26 @@ moFunctionPanel::moFunctionPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 	Connect(ID_FUNCTIONTEXTCTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moFunctionPanel::OnFunctionTextCtrlText);
 	//*)
 
+  Connect( ID_SLIDERNUMBER, wxEVT_MOLEVELCTRL, (wxObjectEventFunction)&moFunctionPanel::OnLevelNumber );
+
+
 }
+
+
+ void moFunctionPanel::OnLevelNumber(wxCommandEvent& event) {
+
+    float maximo;
+    float minimo;
+    float delta;
+
+    minimo = atof( TextCtrlMin->GetValue().c_str() );
+    maximo = atof( TextCtrlMax->GetValue().c_str() );
+
+    delta = maximo - minimo;
+
+    FunctionTextCtrl->SetValue( moText2Wx( FloatToStr( minimo + (float)SliderNumber->GetValue() * delta  / 100.0 ) ) );
+ }
+
 
 moFunctionPanel::~moFunctionPanel()
 {
@@ -75,10 +94,22 @@ moFunctionPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
     //SIEMPRE GENERAR UN SWITCH CASE DEL TIPO, PARA EVITAR MAL USOS DEL INSPECT CON VALORES
     //QUE NO CORRESPONDEN
 
+    float maximo;
+    float minimo;
+    float delta;
+
+    minimo = atof( TextCtrlMin->GetValue().c_str() );
+    maximo = atof( TextCtrlMax->GetValue().c_str() );
+    delta = maximo - minimo;
+    float sl_value = (p_ValueDescriptor.GetValue().GetSubValue(0).Float() - minimo)*100 / delta;
+
+    StaticText1->SetLabel( moText2Wx( p_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetName() ) );
+
     switch(p_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetType()) {
 
         case MO_PARAM_NUMERIC:
             FunctionTextCtrl->ChangeValue( moText2Wx(p_ValueDescriptor.GetValue().GetSubValue(0).ToText() ) );
+            SliderNumber->ChangeValue( (int)sl_value );
             break;
 
         case MO_PARAM_ALPHA:
@@ -87,6 +118,7 @@ moFunctionPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
         case MO_PARAM_FUNCTION:
             // Linea gustavo
             FunctionTextCtrl->ChangeValue( moText2Wx(p_ValueDescriptor.GetValue().GetSubValue(0).Text() ) );
+            SliderNumber->ChangeValue( (int)sl_value );
             break;
         default:
             return;

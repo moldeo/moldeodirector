@@ -13,6 +13,7 @@
 //*)
 
 #include "moIDirectorActions.h"
+#include "wxMoldeoControls.h"
 
 class moFunctionPanel: public wxPanel, public moIDirectorActions
 {
@@ -24,10 +25,10 @@ class moFunctionPanel: public wxPanel, public moIDirectorActions
 
 		//(*Declarations(moFunctionPanel)
 		wxButton* ButtonCosSin;
-		wxSlider* SliderNumber;
 		wxButton* ButtonLog;
 		wxButton* ButtonSin;
 		wxStaticBitmap* StaticBitmap1;
+		wxMoLevelCtrl* SliderNumber;
 		wxButton* ButtonExp;
 		wxPanel* Panel1;
 		wxTextCtrl* TextCtrlMin;
@@ -69,6 +70,9 @@ class moFunctionPanel: public wxPanel, public moIDirectorActions
 		//(*Handlers(moFunctionPanel)
 		void OnFunctionTextCtrlText(wxCommandEvent& event);
 		//*)
+
+        void OnLevelNumber(wxCommandEvent& event);
+
 
         moValueDescriptor m_ValueDescriptor;
 

@@ -3,7 +3,6 @@
 //(*InternalHeaders(moScriptPanel)
 #include <wx/intl.h>
 #include <wx/string.h>
-#include <wx/filedlg.h>
 //*)
 
 //(*IdInit(moScriptPanel)
@@ -28,7 +27,7 @@ moScriptPanel::moScriptPanel(wxWindow* parent,wxWindowID id)
 	ScriptFileTextCtrl = new wxTextCtrl(this, ID_FILETEXTCTRL, _("file..."), wxPoint(200,0), wxSize(216,21), 0, wxDefaultValidator, _T("ID_FILETEXTCTRL"));
 	BrowseScript = new wxButton(this, ID_BROWSESCRIPT, _("..."), wxPoint(416,0), wxSize(24,23), 0, wxDefaultValidator, _T("ID_BROWSESCRIPT"));
 	SaveButton = new wxButton(this, ID_SAVEBUTTON, _("Save"), wxPoint(0,0), wxDefaultSize, 0, wxDefaultValidator, _T("ID_SAVEBUTTON"));
-
+	
 	Connect(ID_COMPILEANDRUN,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moScriptPanel::OnCompileButtonClick);
 	Connect(ID_FILETEXTCTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moScriptPanel::OnScriptFileTextCtrlText);
 	Connect(ID_BROWSESCRIPT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moScriptPanel::OnBrowseScriptClick);

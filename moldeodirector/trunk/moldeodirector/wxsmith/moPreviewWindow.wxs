@@ -59,7 +59,7 @@
 			<handler function="OnBitmapButtonSaveSessionClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONSTOP" variable="BitmapButtonStop" member="yes">
-			<bitmap>..\..\art\icons\stop32.png</bitmap>
+			<bitmap>../../data/icons/stop32.png</bitmap>
 			<default>1</default>
 			<pos>96,300</pos>
 			<size>32,32</size>

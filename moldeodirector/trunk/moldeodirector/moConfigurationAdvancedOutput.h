@@ -25,11 +25,11 @@ class moConfigurationAdvancedOutput: public wxFrame
 		wxStaticText* StaticText2;
 		wxPanel* Panel4;
 		wxChoice* Choice3;
-		wxButton* ButtonOne;
+		wxButton* Button1;
 		wxPanel* Panel1;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText3;
-		wxButton* ButtonTwo;
+		wxButton* Button2;
 		wxPanel* Panel3;
 		wxChoice* Choice4;
 		wxPanel* Panel2;

@@ -233,6 +233,7 @@ void moDirectorIODeviceManager::OnKeyDown( wxKeyEvent &event ) {
 	SDLMod mod = KMOD_NONE;
 
 	//wxMessageBox( moText2Wx( IntToStr(event.GetKeyCode()) ) ) ;
+    cout << event.GetKeyCode() << endl;
 
 	if(event.ShiftDown())
 		mod =(SDLMod)((int)mod | KMOD_SHIFT );

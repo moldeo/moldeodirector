@@ -65,7 +65,7 @@ moObjectMotion::moObjectMotion(wxWindow* parent,wxWindowID id,const wxPoint& pos
 {
 	//(*Initialize(moObjectMotion)
 	wxFlexGridSizer* FlexGridSizer1;
-
+	
 	Create(parent, wxID_ANY, wxDefaultPosition, wxSize(240,298), wxTAB_TRAVERSAL, _T("wxID_ANY"));
 	SetBackgroundColour(wxColour(0,0,0));
 	FlexGridSizer1 = new wxFlexGridSizer(0, 3, 0, 0);
@@ -94,52 +94,52 @@ moObjectMotion::moObjectMotion(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	PanelPosition = new wxPanel(Panel2, ID_PANELPOSITION, wxPoint(8,304), wxSize(104,64), wxTAB_TRAVERSAL, _T("ID_PANELPOSITION"));
 	PanelPosition->SetBackgroundColour(wxColour(255,255,255));
 	PanelTranslateCoords = new wxPanel(Panel2, ID_PANEL5, wxPoint(8,8), wxSize(44,44), wxTAB_TRAVERSAL, _T("ID_PANEL5"));
-	StaticBitmap1 = new wxStaticBitmap(PanelTranslateCoords, ID_STATICBITMAP1, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/translate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(PanelTranslateCoords, ID_STATICBITMAP1, wxBitmap(wxImage(_T("../../data/icons/translate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
 	TextCtrlSz = new wxTextCtrl(Panel2, ID_TEXTCTRLSZ, wxEmptyString, wxPoint(112,164), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLSZ"));
 	PanelScalesTxt = new wxPanel(Panel2, ID_PANEL7, wxPoint(8,256), wxSize(44,44), wxTAB_TRAVERSAL, _T("ID_PANEL7"));
-	StaticBitmap5 = new wxStaticBitmap(PanelScalesTxt, ID_STATICBITMAP5, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/rotate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP5"));
+	StaticBitmap5 = new wxStaticBitmap(PanelScalesTxt, ID_STATICBITMAP5, wxBitmap(wxImage(_T("../../data/icons/rotate.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP5"));
 	TextCtrlSy = new wxTextCtrl(Panel2, ID_TEXTCTRLSY, wxEmptyString, wxPoint(112,148), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLSY"));
 	PanelScales = new wxPanel(Panel2, ID_PANEL4, wxPoint(8,132), wxSize(44,44), wxTAB_TRAVERSAL, _T("ID_PANEL4"));
-	StaticBitmap3 = new wxStaticBitmap(PanelScales, ID_STATICBITMAP3, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/scale.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP3"));
+	StaticBitmap3 = new wxStaticBitmap(PanelScales, ID_STATICBITMAP3, wxBitmap(wxImage(_T("../../data/icons/scale.png"))), wxPoint(0,0), wxDefaultSize, 0, _T("ID_STATICBITMAP3"));
 	TextCtrlSx = new wxTextCtrl(Panel2, ID_TEXTCTRLSX, wxEmptyString, wxPoint(112,132), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLSX"));
 	TextCtrlRz = new wxTextCtrl(Panel2, ID_TEXTCTRLRZ, wxEmptyString, wxPoint(112,288), wxSize(144,14), wxSIMPLE_BORDER, wxDefaultValidator, _T("ID_TEXTCTRLRZ"));
 	Panel1 = new wxPanel(Panel2, ID_PANEL1, wxPoint(112,56), wxSize(144,64), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
-	BitmapButtonPosCircular = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSCIRCULAR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSCIRCULAR"));
+	BitmapButtonPosCircular = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSCIRCULAR, wxBitmap(wxImage(_T("../../data/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSCIRCULAR"));
 	BitmapButtonPosCircular->SetDefault();
-	BitmapButtonPosHor = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSHOR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSHOR"));
+	BitmapButtonPosHor = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSHOR, wxBitmap(wxImage(_T("../../data/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSHOR"));
 	BitmapButtonPosHor->SetDefault();
-	BitmapButtonPosVer = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSVERT, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSVERT"));
+	BitmapButtonPosVer = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSVERT, wxBitmap(wxImage(_T("../../data/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSVERT"));
 	BitmapButtonPosVer->SetDefault();
-	BitmapButton8 = new wxBitmapButton(Panel1, ID_BITMAPBUTTON8, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON8"));
+	BitmapButton8 = new wxBitmapButton(Panel1, ID_BITMAPBUTTON8, wxBitmap(wxImage(_T("../../data/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON8"));
 	BitmapButton8->SetDefault();
-	BitmapButtonPosRand = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSRAND, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSRAND"));
+	BitmapButtonPosRand = new wxBitmapButton(Panel1, ID_BITMAPBUTTONPOSRAND, wxBitmap(wxImage(_T("../../data/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPOSRAND"));
 	BitmapButtonPosRand->SetDefault();
 	Panel3 = new wxPanel(Panel2, ID_PANEL2, wxPoint(112,304), wxSize(144,64), wxTAB_TRAVERSAL, _T("ID_PANEL2"));
-	BitmapButtonRotCircular = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTCIRCULAR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTCIRCULAR"));
+	BitmapButtonRotCircular = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTCIRCULAR, wxBitmap(wxImage(_T("../../data/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTCIRCULAR"));
 	BitmapButtonRotCircular->SetDefault();
-	BitmapButtonRotHor = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTHOR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTHOR"));
+	BitmapButtonRotHor = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTHOR, wxBitmap(wxImage(_T("../../data/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTHOR"));
 	BitmapButtonRotHor->SetDefault();
-	BitmapButtonRotVer = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTVER, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTVER"));
+	BitmapButtonRotVer = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTVER, wxBitmap(wxImage(_T("../../data/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTVER"));
 	BitmapButtonRotVer->SetDefault();
-	BitmapButtonRotDiag = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTDIAG, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTDIAG"));
+	BitmapButtonRotDiag = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTDIAG, wxBitmap(wxImage(_T("../../data/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTDIAG"));
 	BitmapButtonRotDiag->SetDefault();
-	BitmapButtonRotRand = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTRAND, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTRAND"));
+	BitmapButtonRotRand = new wxBitmapButton(Panel3, ID_BITMAPBUTTONROTRAND, wxBitmap(wxImage(_T("../../data/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONROTRAND"));
 	BitmapButtonRotRand->SetDefault();
 	Panel7 = new wxPanel(Panel2, ID_PANEL10, wxPoint(112,180), wxSize(144,64), wxTAB_TRAVERSAL, _T("ID_PANEL10"));
-	BitmapButtonScaCircular = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCACIRCULAR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCACIRCULAR"));
+	BitmapButtonScaCircular = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCACIRCULAR, wxBitmap(wxImage(_T("../../data/icons/motioncircular.png"))), wxPoint(0,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCACIRCULAR"));
 	BitmapButtonScaCircular->SetDefault();
-	BitmapButtonScaHor = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAHOR, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAHOR"));
+	BitmapButtonScaHor = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAHOR, wxBitmap(wxImage(_T("../../data/icons/motionhorizontal.png"))), wxPoint(32,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAHOR"));
 	BitmapButtonScaHor->SetDefault();
-	BitmapButtonScaVer = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAVER, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAVER"));
+	BitmapButtonScaVer = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCAVER, wxBitmap(wxImage(_T("../../data/icons/motionvertical.png"))), wxPoint(64,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCAVER"));
 	BitmapButtonScaVer->SetDefault();
-	BitmapButtonScaDiag = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCADIAG, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCADIAG"));
+	BitmapButtonScaDiag = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCADIAG, wxBitmap(wxImage(_T("../../data/icons/motiondiagonal.png"))), wxPoint(96,0), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCADIAG"));
 	BitmapButtonScaDiag->SetDefault();
-	BitmapButtonScaRand = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCARAND, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCARAND"));
+	BitmapButtonScaRand = new wxBitmapButton(Panel7, ID_BITMAPBUTTONSCARAND, wxBitmap(wxImage(_T("../../data/icons/motionrandom.png"))), wxPoint(0,32), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCARAND"));
 	BitmapButtonScaRand->SetDefault();
 	FlexGridSizer1->Add(Panel2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	SetSizer(FlexGridSizer1);
 	FlexGridSizer1->SetSizeHints(this);
-
+	
 	Connect(ID_SLIDERTX,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&moObjectMotion::OnSliderTxCmdScrollThumbTrack);
 	Connect(ID_SLIDERTX,wxEVT_SCROLL_CHANGED,(wxObjectEventFunction)&moObjectMotion::OnSliderTxCmdScrollThumbTrack);
 	Connect(ID_SLIDERTZ,wxEVT_SCROLL_THUMBTRACK,(wxObjectEventFunction)&moObjectMotion::OnSliderTzCmdScrollThumbTrack);

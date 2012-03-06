@@ -35,7 +35,7 @@
 			<size>40,21</size>
 		</object>
 		<object class="wxTextCtrl" name="ID_TEXTCTRLMAX" variable="TextCtrlMax" member="yes">
-			<value>100</value>
+			<value>1</value>
 			<pos>200,24</pos>
 			<size>40,21</size>
 		</object>

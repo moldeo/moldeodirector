@@ -1,0 +1,90 @@
+
+// --------------------------------------------------------------------------
+/*! \file chan.cg
+* \brief Fragment Shader Code
+*
+* GpuUrban Library Code:
+*/
+
+//----------------------------------------------------------------------
+//
+// Date: Feb 01, 2006. UNC. (c) Sudipta N. Sinha @ Urbanscape
+//
+// Work: GpuUrban Library Src Code
+//
+// Copyright Notice:
+//
+//   This code and attached libraries cannot be modified, reproduced or copied in any 
+//   form without the expressed consent of Dept. of Computer Science, UNC Chapel Hill.
+// 
+//   Copyright Dept. of Computer Science, UNC Chapel Hill.
+//   All rights reserved.
+//
+//----------------------------------------------------------------------
+
+
+
+fragout main(vf30 IN,
+			 uniform sampler2D texture,
+			 uniform int channel)
+{
+  fragout OUT;
+  
+  if (channel==0)
+  {
+	float4 col   = tex2D(texture, IN.TEX0.xy);
+	OUT.col      = float4(col.xyz,1.0);
+  }
+  // Display Greyscale Pyramid
+  else if (channel==1)
+  {
+	float4 col   = tex2D(texture, IN.TEX0.xy);
+	OUT.col      = float4(col.xxx,1.0);
+  }
+
+  // Display Derivative_x Scale Space Pyramid
+  else if (channel ==2)
+  {
+	float4 col   = tex2D(texture, IN.TEX0.xy); 
+	col          = 0.5 +  4 *( col - 0.5 );
+	OUT.col      = float4(col.yyy,1.0); 
+  }
+
+  // Display Derivative_y Scale Space Pyramid
+  else if (channel==3)
+  { 
+	  float4 col = tex2D(texture, IN.TEX0.xy); 
+	  col        = 0.5 +  4 *( col - 0.5 );
+	  OUT.col    = float4(col.zzz,1.0);
+  }
+  
+  // Display Cornerness Value 
+  else if (channel==4)
+  {
+	  float4 col = tex2D(texture,IN.TEX0.xy);
+	  float shade= saturate(col.x);
+	  OUT.col    = float4(shade,shade,shade, 1.0);
+  }
+  else if (channel==5)
+  {
+	float4 col   = tex2D(texture, IN.TEX0.xy);
+	OUT.col      = float4(col.xxx,1.0);
+  }
+  else if (channel==6)
+  {
+	float4 col   = tex2D(texture, IN.TEX0.xy);
+	OUT.col      = float4(col.yyy,1.0);
+  }
+  else if (channel==7)
+  {
+	float4 col   = tex2D(texture, IN.TEX0.xy);
+	OUT.col      = float4(col.zzz,1.0);
+  }
+  else if (channel==8)
+  {
+	float4 col   = tex2D(texture, IN.TEX0.xy);
+	OUT.col      = float4(col.www,1.0);
+  }
+
+  return OUT;
+}

@@ -22,14 +22,14 @@ class moConfigurationAdvancedOutput: public wxFrame
 
 		//(*Declarations(moConfigurationAdvancedOutput)
 		wxChoice* Display1;
+		wxButton* ButtonDeleteClip;
 		wxStaticText* StaticText2;
 		wxPanel* Panel4;
 		wxChoice* Choice3;
-		wxButton* Button1;
 		wxPanel* Panel1;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText3;
-		wxButton* Button2;
+		wxButton* ButtonAddClip;
 		wxPanel* Panel3;
 		wxChoice* Choice4;
 		wxPanel* Panel2;
@@ -41,8 +41,8 @@ class moConfigurationAdvancedOutput: public wxFrame
 	protected:
 
 		//(*Identifiers(moConfigurationAdvancedOutput)
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
+		static const long ID_BUTTON_ADDCLIP;
+		static const long ID_BUTTON_DELETECLIP;
 		static const long ID_CHOICE5;
 		static const long ID_PANEL1;
 		static const long ID_PANEL2;

@@ -6,8 +6,8 @@
 //*)
 
 //(*IdInit(moConfigurationAdvancedOutput)
-const long moConfigurationAdvancedOutput::ID_BUTTON1 = wxNewId();
-const long moConfigurationAdvancedOutput::ID_BUTTON2 = wxNewId();
+const long moConfigurationAdvancedOutput::ID_BUTTON_ADDCLIP = wxNewId();
+const long moConfigurationAdvancedOutput::ID_BUTTON_DELETECLIP = wxNewId();
 const long moConfigurationAdvancedOutput::ID_CHOICE5 = wxNewId();
 const long moConfigurationAdvancedOutput::ID_PANEL1 = wxNewId();
 const long moConfigurationAdvancedOutput::ID_PANEL2 = wxNewId();
@@ -39,8 +39,8 @@ moConfigurationAdvancedOutput::moConfigurationAdvancedOutput(wxWindow* parent,wx
 	FlexGridSizer1->AddGrowableCol(0);
 	FlexGridSizer1->AddGrowableRow(1);
 	Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxSize(490,33), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
-	Button1 = new wxButton(Panel1, ID_BUTTON1, _("Add Clip"), wxPoint(8,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	Button2 = new wxButton(Panel1, ID_BUTTON2, _("Delete Clip"), wxPoint(88,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	ButtonAddClip = new wxButton(Panel1, ID_BUTTON_ADDCLIP, _("Add Clip"), wxPoint(8,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_ADDCLIP"));
+	ButtonDeleteClip = new wxButton(Panel1, ID_BUTTON_DELETECLIP, _("Delete Clip"), wxPoint(88,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON_DELETECLIP"));
 	Choice4 = new wxChoice(Panel1, ID_CHOICE5, wxPoint(176,8), wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE5"));
 	Choice4->SetSelection( Choice4->Append(_("Choose resolution")) );
 	Choice4->Append(_("640x480"));

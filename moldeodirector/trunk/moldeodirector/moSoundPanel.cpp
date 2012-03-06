@@ -29,7 +29,7 @@ moSoundPanel::moSoundPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	ButtonImport = new wxButton(this, ID_BUTTONIMPORT, _("Import Sound"), wxPoint(8,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONIMPORT"));
 	ButtonImport->SetForegroundColour(wxColour(255,255,255));
 	ButtonImport->SetBackgroundColour(wxColour(0,0,0));
-
+	
 	Connect(ID_TEXTCTRLSOUND,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moSoundPanel::OnTextCtrlSoundText);
 	Connect(ID_BUTTONIMPORT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moSoundPanel::OnButtonImportClick);
 	//*)

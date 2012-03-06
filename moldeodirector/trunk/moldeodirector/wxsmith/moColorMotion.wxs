@@ -55,7 +55,7 @@
 						<size>96,16</size>
 					</object>
 					<object class="wxBitmapButton" name="ID_BITMAPBUTTONPICKCOLOR" variable="BitmapButtonPickColor" member="yes">
-						<bitmap>/icons/pickcolor.png</bitmap>
+						<bitmap>../../data/icons/pickcolor.png</bitmap>
 						<default>1</default>
 						<pos>160,172</pos>
 						<size>32,32</size>

@@ -59,7 +59,7 @@
 			<handler function="OnCheckBoxOnOffClick" entry="EVT_CHECKBOX" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONVIEW" variable="BitmapButtonView" member="yes">
-			<bitmap>..\..\art\icons\view_16.png</bitmap>
+			<bitmap>../../data/icons/view_16.png</bitmap>
 			<pos>0,2</pos>
 			<size>24,24</size>
 			<bg>#000000</bg>

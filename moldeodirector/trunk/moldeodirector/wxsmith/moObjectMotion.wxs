@@ -145,7 +145,7 @@
 						<pos>8,256</pos>
 						<size>44,44</size>
 						<object class="wxStaticBitmap" name="ID_STATICBITMAP5" variable="StaticBitmap5" member="yes">
-							<bitmap>..\..\doc\icons\rotate.png</bitmap>
+							<bitmap>../../data/icons/rotate.png</bitmap>
 							<pos>0,0</pos>
 						</object>
 					</object>

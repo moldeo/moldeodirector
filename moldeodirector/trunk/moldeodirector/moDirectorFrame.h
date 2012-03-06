@@ -64,6 +64,7 @@
 #include "moLogNotebook.h"
 #include "PreviewWindowSystemMem.h"
 
+
 #include <wx/aui/auibook.h>
 
 class moFilesbook;

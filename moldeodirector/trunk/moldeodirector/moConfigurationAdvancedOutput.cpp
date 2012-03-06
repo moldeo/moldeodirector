@@ -32,15 +32,15 @@ moConfigurationAdvancedOutput::moConfigurationAdvancedOutput(wxWindow* parent,wx
 {
 	//(*Initialize(moConfigurationAdvancedOutput)
 	wxFlexGridSizer* FlexGridSizer1;
-
+	
 	Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
 	SetClientSize(wxSize(606,373));
 	FlexGridSizer1 = new wxFlexGridSizer(2, 2, 0, 0);
 	FlexGridSizer1->AddGrowableCol(0);
 	FlexGridSizer1->AddGrowableRow(1);
 	Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxSize(490,33), wxTAB_TRAVERSAL, _T("ID_PANEL1"));
-	ButtonOne = new wxButton(Panel1, ID_BUTTON1, _("Add Clip"), wxPoint(8,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	ButtonTwo = new wxButton(Panel1, ID_BUTTON2, _("Delete Clip"), wxPoint(88,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	Button1 = new wxButton(Panel1, ID_BUTTON1, _("Add Clip"), wxPoint(8,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button2 = new wxButton(Panel1, ID_BUTTON2, _("Delete Clip"), wxPoint(88,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	Choice4 = new wxChoice(Panel1, ID_CHOICE5, wxPoint(176,8), wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE5"));
 	Choice4->SetSelection( Choice4->Append(_("Choose resolution")) );
 	Choice4->Append(_("640x480"));
@@ -79,9 +79,9 @@ moConfigurationAdvancedOutput::moConfigurationAdvancedOutput(wxWindow* parent,wx
 	FlexGridSizer1->Add(Panel4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
 	SetSizer(FlexGridSizer1);
 	FlexGridSizer1->SetSizeHints(this);
-
-	Panel1->Connect(ID_PANEL1,wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel1Paint,0,this);
-	Panel2->Connect(ID_PANEL2,wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel2Paint,0,this);
+	
+	Panel1->Connect(wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel1Paint,0,this);
+	Panel2->Connect(wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel2Paint,0,this);
 	//*)
 }
 

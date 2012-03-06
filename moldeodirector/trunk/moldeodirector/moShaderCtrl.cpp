@@ -5,7 +5,6 @@
 #include <wx/intl.h>
 #include <wx/image.h>
 #include <wx/string.h>
-#include <wx/filedlg.h>
 //*)
 
 //(*IdInit(moShaderCtrl)
@@ -29,24 +28,22 @@ moShaderCtrl::moShaderCtrl(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	//(*Initialize(moShaderCtrl)
 	Create(parent, id, wxDefaultPosition, wxDefaultSize, wxNO_BORDER, _T("id"));
 	SetFocus();
-	SetForegroundColour(wxColour(0,0,0));
-	SetBackgroundColour(wxColour(255,255,255));
+	SetBackgroundColour(wxColour(144,144,144));
 	TextCtrlShaderCfg = new wxTextCtrl(this, ID_TEXTCTRLSHADERCFG, wxEmptyString, wxPoint(16,0), wxSize(80,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLSHADERCFG"));
 	TextCtrlDestination = new wxTextCtrl(this, ID_TEXTCTRLDESTINATION, wxEmptyString, wxPoint(208,0), wxSize(80,16), 0, wxDefaultValidator, _T("ID_TEXTCTRLDESTINATION"));
 	CheckBoxOnOff = new wxCheckBox(this, ID_CHECKBOXSHADERONOFF, wxEmptyString, wxPoint(0,0), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOXSHADERONOFF"));
 	CheckBoxOnOff->SetValue(false);
-	BitmapButtonShaderSelect = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERSELECT, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/select.png"))), wxPoint(120,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERSELECT"));
+	BitmapButtonShaderSelect = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERSELECT, wxBitmap(wxImage(_T("../../data/icons/select.png"))), wxPoint(120,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERSELECT"));
 	BitmapButtonShaderSelect->SetDefault();
-	BitmapButtonShaderImport = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERIMPORT, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/import.png"))), wxPoint(104,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERIMPORT"));
+	BitmapButtonShaderImport = new wxBitmapButton(this, ID_BITMAPBUTTONSHADERIMPORT, wxBitmap(wxImage(_T("../../data/icons/import.png"))), wxPoint(104,0), wxSize(13,13), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSHADERIMPORT"));
 	BitmapButtonShaderImport->SetDefault();
 	SliderShaderAlpha = new wxSlider(this, ID_SLIDERSHADERALPHA, 0, 0, 100, wxPoint(136,0), wxSize(64,13), 0, wxDefaultValidator, _T("ID_SLIDERSHADERALPHA"));
-
+	
 	Connect(ID_TEXTCTRLSHADERCFG,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moShaderCtrl::OnTextCtrlShaderCfgText);
 	Connect(ID_TEXTCTRLDESTINATION,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moShaderCtrl::OnTextCtrlDestinationText);
 	Connect(ID_CHECKBOXSHADERONOFF,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&moShaderCtrl::OnCheckBoxOnOffClick);
 	Connect(ID_BITMAPBUTTONSHADERSELECT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moShaderCtrl::OnBitmapButtonShaderSelectClick);
 	Connect(ID_BITMAPBUTTONSHADERIMPORT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moShaderCtrl::OnBitmapButtonShaderImportClick);
-	Connect(wxID_ANY,wxEVT_ERASE_BACKGROUND,(wxObjectEventFunction)&moShaderCtrl::OnEraseBackground);
 	//*)
 	SetSize(pos.x, pos.y, size.x, size.y );
 

@@ -17,9 +17,9 @@ PreviewWindowSystemMem::PreviewWindowSystemMem(wxWindow* parent,wxWindowID id,co
 {
 	//(*Initialize(PreviewWindowSystemMem)
 	Create(parent, id, wxDefaultPosition, wxSize(322,244), wxTAB_TRAVERSAL, _T("id"));
-
-	Connect(wxID_ANY,wxEVT_PAINT,(wxObjectEventFunction)&PreviewWindowSystemMem::OnPaint);
-	Connect(wxID_ANY,wxEVT_ERASE_BACKGROUND,(wxObjectEventFunction)&PreviewWindowSystemMem::OnEraseBackground);
+	
+	Connect(wxEVT_PAINT,(wxObjectEventFunction)&PreviewWindowSystemMem::OnPaint);
+	Connect(wxEVT_ERASE_BACKGROUND,(wxObjectEventFunction)&PreviewWindowSystemMem::OnEraseBackground);
 	//*)
 	pImage = NULL;
 }

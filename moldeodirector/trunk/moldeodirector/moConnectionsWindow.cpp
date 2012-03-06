@@ -1196,8 +1196,8 @@ moConnectionsWindow::moConnectionsWindow(wxWindow* parent,wxWindowID id,const wx
 	Create(parent, id, wxDefaultPosition, wxSize(503,317), wxTAB_TRAVERSAL, _T("id"));
 	SetBackgroundColour(wxColour(210,253,255));
 	
-	Connect(wxID_ANY,wxEVT_PAINT,(wxObjectEventFunction)&moConnectionsWindow::OnPaint);
-	Connect(wxID_ANY,wxEVT_ERASE_BACKGROUND,(wxObjectEventFunction)&moConnectionsWindow::OnEraseBackground);
+	Connect(wxEVT_PAINT,(wxObjectEventFunction)&moConnectionsWindow::OnPaint);
+	Connect(wxEVT_ERASE_BACKGROUND,(wxObjectEventFunction)&moConnectionsWindow::OnEraseBackground);
 	//*)
 
     SetForegroundColour(wxColour(0,0,0));

@@ -32,12 +32,12 @@ moPreviewFrame::moPreviewFrame(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	SetBackgroundColour(wxColour(0,0,0));
 	ToolBar1 = new wxToolBar(this, ID_TOOLBAR1, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL|wxNO_BORDER, _T("ID_TOOLBAR1"));
 	ToolBar1->SetToolBitmapSize(wxSize(32,32));
-	ToolBarItem1 = ToolBar1->AddTool(TOOLPLAY, _("Play"), wxBitmap(wxImage(_T("../../data/icons/play32.png"))), wxBitmap(wxImage(_T("../../data/icons/play32dis.png"))), wxITEM_NORMAL, _("Play syncro"), _("Help text"));
-	ToolBarItem2 = ToolBar1->AddTool(TOOLPAUSE, _("Pause"), wxBitmap(wxImage(_T("../../data/icons/pause32.png"))), wxBitmap(wxImage(_T("..\\..\\data\\icons\\pause32.png"))), wxITEM_NORMAL, _("Pause"), _("Pause"));
-	ToolBarItem3 = ToolBar1->AddTool(TOOLFULLSCREEN, _("Fullscreen"), wxBitmap(wxImage(_T("../../data/icons/onofficon32.png"))), wxNullBitmap, wxITEM_NORMAL, _("Fullscreen"), _("Fullscreen"));
+	ToolBarItem1 = ToolBar1->AddTool(TOOLPLAY, _("Play"), wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/play32.png"))), wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/play32dis.png"))), wxITEM_NORMAL, _("Play syncro"), _("Help text"));
+	ToolBarItem2 = ToolBar1->AddTool(TOOLPAUSE, _("Pause"), wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/pause32.png"))), wxBitmap(wxImage(_T("..\\..\\data\\icons\\pause32.png"))), wxITEM_NORMAL, _("Pause"), _("Pause"));
+	ToolBarItem3 = ToolBar1->AddTool(TOOLFULLSCREEN, _("Fullscreen"), wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/onofficon32.png"))), wxNullBitmap, wxITEM_NORMAL, _("Fullscreen"), _("Fullscreen"));
 	ToolBar1->Realize();
 	SetToolBar(ToolBar1);
-	
+
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&moPreviewFrame::OnClose);
 	//*)
 	m_pGLCanvas = NULL;

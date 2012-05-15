@@ -18,12 +18,13 @@ moDirectorConsole::moDirectorConsole() : moConsole() {
 
 moDirectorConsole::~moDirectorConsole() {
 
-	m_timer.Stop();
+    Finish();
 
 }
 
 MOboolean moDirectorConsole::Finish() {
 
+	m_timer.Stop();
 	return moConsole::Finish();
 
 }

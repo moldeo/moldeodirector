@@ -1,4 +1,4 @@
-AC_INIT([Moldeo Director], [0.7.9.4], [info@moldeointeractive.com.ar], [moldeodirector])
+AC_INIT([Moldeo Director], [0.7.9.5], [info@moldeointeractive.com.ar], [moldeodirector])
 
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])

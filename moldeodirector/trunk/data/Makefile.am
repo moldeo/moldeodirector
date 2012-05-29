@@ -20,6 +20,57 @@ shaderexampleshadersdir = ${datadir}/samples/ShaderExample/shaders
 videobuffersdir = ${datadir}/samples/VideoBuffers
 videobuffersshadersdir = ${datadir}/samples/VideoBuffers/shaders
 videobuffersbufdir = ${datadir}/samples/VideoBuffers/vbuffer_sub
+channelcontroldir = ${datadir}/samples/ChannelControl
+dibujoconluzdir = ${datadir}/samples/Dibujo_con_luz
+rainparticlesdir = ${datadir}/samples/Rain_Particles
+rainparticlesshadersdir = ${datadir}/samples/Rain_Particles/shaders
+snowparticlesdir = ${datadir}/samples/Snow_Particles
+snowparticlesshadersdir = ${datadir}/samples/Snow_Particles/shaders
+
+dist_dibujoconluz_DATA = samples/Dibujo_con_luz/camara.cfg\
+			samples/Dibujo_con_luz/camara_espejada.cfg\
+			samples/Dibujo_con_luz/cuadblanco.png\
+			samples/Dibujo_con_luz/cuadnegro.png\
+			samples/Dibujo_con_luz/debug.cfg\
+			samples/Dibujo_con_luz/dibujo_con_luz.mol\
+			samples/Dibujo_con_luz/erase.cfg\
+			samples/Dibujo_con_luz/icam.cfg\
+			samples/Dibujo_con_luz/mascara.cfg\
+			samples/Dibujo_con_luz/mezcla.cfg\
+			samples/Dibujo_con_luz/movie.cfg\
+			samples/Dibujo_con_luz/musica.cfg\
+			samples/Dibujo_con_luz/videomanager.cfg
+
+dist_rainparticles_DATA = samples/Rain_Particles/blur.cfg\
+			samples/Rain_Particles/lluvia11.cfg\
+			samples/Rain_Particles/lluvia.cfg\
+			samples/Rain_Particles/postfx.cfg\
+			samples/Rain_Particles/Rain.wav\
+			samples/Rain_Particles/sonido.cfg\
+			samples/Rain_Particles/erase.cfg\
+			samples/Rain_Particles/lluvia1.cfg\
+			samples/Rain_Particles/pfx.cfg\
+			samples/Rain_Particles/Rain_Particles.mol\
+			samples/Rain_Particles/star.tga
+
+dist_rainparticlesshaders_DATA = samples/Rain_Particles/shaders/Sobel.cfg\
+				samples/Rain_Particles/shaders/Sobel.glsl
+
+dist_snowparticles_DATA = samples/Snow_Particles/blur.cfg\
+			samples/Snow_Particles/snow11.cfg\
+			samples/Snow_Particles/snow1.cfg\
+			samples/Snow_Particles/snow.cfg\
+			samples/Snow_Particles/postfx.cfg\
+			samples/Snow_Particles/Blizzard.wav\
+			samples/Snow_Particles/sonido.cfg\
+			samples/Snow_Particles/erase.cfg\
+			samples/Snow_Particles/pfx.cfg\
+			samples/Snow_Particles/Snow_Particles.mol\
+			samples/Snow_Particles/star.tga
+
+dist_snowparticlesshaders_DATA = samples/Snow_Particles/shaders/Sobel.cfg\
+				samples/Snow_Particles/shaders/Sobel.glsl
+
 
 dist_pixmaps_DATA = icons/moldeologo.xpm \
 		    icons/moldeologo48x48.png\

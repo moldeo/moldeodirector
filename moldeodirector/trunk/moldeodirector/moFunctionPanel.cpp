@@ -69,16 +69,19 @@ moFunctionPanel::moFunctionPanel(wxWindow* parent,wxWindowID id,const wxPoint& p
 
  void moFunctionPanel::OnLevelNumber(wxCommandEvent& event) {
 
-    float maximo;
-    float minimo;
-    float delta;
+    double maximo;
+    double minimo;
+    double delta;
 
-    minimo = atof( TextCtrlMin->GetValue().c_str() );
-    maximo = atof( TextCtrlMax->GetValue().c_str() );
+    TextCtrlMin->GetValue().ToDouble(&minimo);
+    TextCtrlMax->GetValue().ToDouble(&maximo);
 
     delta = maximo - minimo;
 
-    FunctionTextCtrl->SetValue( moText2Wx( FloatToStr( minimo + (float)SliderNumber->GetValue() * delta  / 100.0 ) ) );
+    wxString texto;
+    texto += wxString::Format( wxT("%d"), minimo + (double)SliderNumber->GetValue() * delta  / 100.0 );
+
+    FunctionTextCtrl->SetValue( texto );
  }
 
 
@@ -94,13 +97,15 @@ moFunctionPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
     //SIEMPRE GENERAR UN SWITCH CASE DEL TIPO, PARA EVITAR MAL USOS DEL INSPECT CON VALORES
     //QUE NO CORRESPONDEN
 
-    float maximo;
-    float minimo;
-    float delta;
+    double maximo;
+    double minimo;
+    double delta;
 
-    minimo = atof( TextCtrlMin->GetValue().c_str() );
-    maximo = atof( TextCtrlMax->GetValue().c_str() );
+    TextCtrlMin->GetValue().ToDouble(&minimo);
+    TextCtrlMax->GetValue().ToDouble(&maximo);
+
     delta = maximo - minimo;
+
     float sl_value = (p_ValueDescriptor.GetValue().GetSubValue(0).Float() - minimo)*100 / delta;
 
     StaticText1->SetLabel( moText2Wx( p_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetName() ) );
@@ -108,7 +113,7 @@ moFunctionPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
     switch(p_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetType()) {
 
         case MO_PARAM_NUMERIC:
-            FunctionTextCtrl->ChangeValue( moText2Wx(p_ValueDescriptor.GetValue().GetSubValue(0).ToText() ) );
+            FunctionTextCtrl->ChangeValue( moText2Wx( p_ValueDescriptor.GetValue().GetSubValue(0).ToText() ) );
             SliderNumber->ChangeValue( (int)sl_value );
             break;
 
@@ -134,11 +139,16 @@ moFunctionPanel::Inspect( moValueDescriptor p_ValueDescriptor ) {
 void moFunctionPanel::OnFunctionTextCtrlText(wxCommandEvent& event)
 {
     int ii;
+    double ff;
 
     switch(m_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetType()) {
 
         case MO_PARAM_NUMERIC:
-            ii = atoi( (const char*)FunctionTextCtrl->GetValue().c_str() );
+            if ( FunctionTextCtrl->GetValue().ToDouble(&ff) ) {
+                ii = (int)ff;
+            } else {
+                exit(1);
+            }
             m_ValueDescriptor.GetValue().GetSubValue(0).SetInt(ii);
             break;
 
@@ -146,7 +156,7 @@ void moFunctionPanel::OnFunctionTextCtrlText(wxCommandEvent& event)
         case MO_PARAM_SYNC:
         case MO_PARAM_PHASE:
         case MO_PARAM_FUNCTION:
-            m_ValueDescriptor.GetValue().GetSubValue(0).SetText( (char*)(wxChar*) FunctionTextCtrl->GetValue().c_str() );
+            m_ValueDescriptor.GetValue().GetSubValue(0).SetText( moWx2Text( FunctionTextCtrl->GetValue() ) );
             break;
         default:
             return;

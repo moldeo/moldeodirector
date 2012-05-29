@@ -267,7 +267,7 @@ void moObjectMotion::OnTextCtrlTxText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorTx.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlTx->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlTx->GetValue() ) );
 
     SetValue( m_ValueDescriptorTx );
 }
@@ -276,7 +276,7 @@ void moObjectMotion::OnTextCtrlTyText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorTy.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlTy->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlTy->GetValue() ) );
 
     SetValue( m_ValueDescriptorTy );
 }
@@ -285,7 +285,7 @@ void moObjectMotion::OnTextCtrlTzText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorTz.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlTz->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlTz->GetValue() ) );
 
     SetValue( m_ValueDescriptorTz );
 }
@@ -295,7 +295,7 @@ void moObjectMotion::OnTextCtrlSxText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorSx.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlSx->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlSx->GetValue() ) );
 
     SetValue( m_ValueDescriptorSx );
 }
@@ -304,7 +304,7 @@ void moObjectMotion::OnTextCtrlSyText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorSy.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlSy->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlSy->GetValue() ) );
 
     SetValue( m_ValueDescriptorSy );
 }
@@ -313,7 +313,7 @@ void moObjectMotion::OnTextCtrlSzText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorSz.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlSz->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlSz->GetValue() ) );
 
     SetValue( m_ValueDescriptorSz );
 }
@@ -322,7 +322,7 @@ void moObjectMotion::OnTextCtrlRxText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorRx.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlRx->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlRx->GetValue() ) );
 
     SetValue( m_ValueDescriptorRx );
 }
@@ -331,7 +331,7 @@ void moObjectMotion::OnTextCtrlRyText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorRy.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlRy->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlRy->GetValue() ) );
 
     SetValue( m_ValueDescriptorRy );
 }
@@ -340,7 +340,7 @@ void moObjectMotion::OnTextCtrlRzText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptorRz.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlRz->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlRz->GetValue() ) );
 
     SetValue( m_ValueDescriptorRz );
 }

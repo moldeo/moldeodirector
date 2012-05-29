@@ -137,15 +137,6 @@ bool moDirectorApp::OnInit()
 	m_pDirectorCore->SetUserInterface( m_pDirectorFrame );
 
 
-/*
-    wxMessageBox(wxT("appdir:")+wxGetCwd());
-    wxMessageBox(wxT("userdir:")+StdPaths.GetUserDataDir() );
-    wxMessageBox( wxT("datadir:") + wxString(wxT(MOLDEODATADIR)) );
-    wxMessageBox( wxT("modulesdir:")+wxString(wxT(MODULESDIR)) );
-*/
-
-
-	//wxFileName userdatadir( StdPaths.GetUserDataDir() );
 
 	m_pDirectorCore->SetPaths(  moWx2Text(exename.GetPath()),
                                 moWx2Text(StdPaths.GetUserDataDir()),
@@ -157,7 +148,10 @@ bool moDirectorApp::OnInit()
 
 
    //wxList   ImageHandlerList = wxImage::GetHandlers();
-
+   cout << wxT("appdir:") << wxGetCwd() << endl;
+   cout << wxT("userdir:") << StdPaths.GetUserDataDir() << endl;
+   cout << wxT("datadir:") << wxString(wxT(MOLDEODATADIR)) << endl;
+   cout << wxT("modulesdir:") << wxString(wxT(MODULESDIR)) << endl;
 
    cout << "Showing Frame..." << endl;
    m_pDirectorFrame->Show(true);

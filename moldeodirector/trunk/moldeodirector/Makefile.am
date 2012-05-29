@@ -144,7 +144,7 @@ moldeodirector_CPPFLAGS = \
 	${WX_CFLAGS}
 
 moldeodirector_LDADD = \
-	-lwx_gtk2_gl-2.8 \
+	${WX_LIB_GL} \
 	${MOLDEOCONTROLS_LIBS} \
 	${LIBMOLDEO_LIBS} \
 	${FREEIMAGE_LIBS} \

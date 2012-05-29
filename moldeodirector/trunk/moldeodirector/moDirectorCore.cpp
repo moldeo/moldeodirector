@@ -52,18 +52,29 @@ moDirectorCore::Init() {
   cout << "Getting DirectorCore Definition Config ..." << endl;
   GetDefinition();
 
+    moText director_userdir = m_ApplicationDescriptor.GetConfigurationPath();
+    moText director_cfg = m_ApplicationDescriptor.GetConfigurationPath() + moSlash + moText("director.gmo");
 
-    if ( !moFileManager::FileExists( "director.gmo" ) ) {
+    if ( !moFileManager::DirectoryExists(director_userdir) ) {
+        cout << "directory doesn't exists" << director_userdir << endl;
+        if (moFileManager::CreateDirectory(director_userdir)) {
+            cout << "directory creation success." << endl;
+        } else {
+            LogError( moText("moDirectorCore::Init > Error Creating user directory ") + director_userdir );
+            cout << "directory creation error." << endl;
+        }
+    }
+
+    if ( !moFileManager::FileExists( director_cfg ) ) {
 
         Log("moDirectorCore::Init > Creating default config for director core");
-        cout << "moDirectorCore > director.gmo doesn't exists, creating default config for director core " << endl;
+        cout << "moDirectorCore > " << director_cfg << " doesn't exists, creating default config for director core " << endl;
 
-        if (!m_Config.CreateDefault( "director.gmo" )) {
+        if (!m_Config.CreateDefault( director_cfg ) ) {
 
-            LogError("moDirectorCore::Init > Error CreateDefault director.gmo");
-            cout << "moDirectorCore > Error CreateDefault director.gmo " << endl;
+            LogError( moText("moDirectorCore::Init > Error CreateDefault ") + director_cfg );
+            cout << "moDirectorCore > Error CreateDefault " << director_cfg << endl;
             return false;
-
         }
         cout << "moDirectorCore > Setting installation path " << endl;
         m_Config.GetParam(moText("installationpath")).GetValue(0).GetSubValue(0).SetText( m_ApplicationDescriptor.GetInstallationFullPath() );
@@ -76,9 +87,9 @@ moDirectorCore::Init() {
 
         //conffilename.
         cout << "moDirectorCore > Loading Config ..." << endl;
-        if ( m_Config.LoadConfig( "director.gmo" ) != MO_CONFIG_OK ) {
+        if ( m_Config.LoadConfig( director_cfg ) != MO_CONFIG_OK ) {
               LogError("moDirectorCore::Init > LoadConfig failed");
-              cout << "moDirectorCore > LoadConfig failed " << endl;
+              cout << "moDirectorCore > LoadConfig failed " << director_cfg << endl;
         } else {
             Log("moDirectorCore::Init > LoadConfig OK");
         }

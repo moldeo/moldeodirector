@@ -29,7 +29,7 @@ moSoundPanel::moSoundPanel(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	ButtonImport = new wxButton(this, ID_BUTTONIMPORT, _("Import Sound"), wxPoint(8,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONIMPORT"));
 	ButtonImport->SetForegroundColour(wxColour(255,255,255));
 	ButtonImport->SetBackgroundColour(wxColour(0,0,0));
-	
+
 	Connect(ID_TEXTCTRLSOUND,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moSoundPanel::OnTextCtrlSoundText);
 	Connect(ID_BUTTONIMPORT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moSoundPanel::OnButtonImportClick);
 	//*)
@@ -203,8 +203,7 @@ void moSoundPanel::OnButtonImportClick(wxCommandEvent& event)
 			    ///ok it is on a branch so we just assign the path
 
                 wxString pathrel = FileName.GetFullPath();
-                const char *cnamerelative = (char*)pathrel.c_str();
-
+                //const char *cnamerelative = (char*)pathrel.c_str();
                 //ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
                 TextCtrlSound->SetValue( pathrel );
 
@@ -242,7 +241,7 @@ void moSoundPanel::OnTextCtrlSoundText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlSound->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlSound->GetValue() ) );
 
     //fija los nuevos valores en la consola...
     SetValue( m_ValueDescriptor );

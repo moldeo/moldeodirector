@@ -40,7 +40,7 @@ moNewEffectDialog::moNewEffectDialog(wxWindow* parent,wxWindowID id,const wxPoin
 	Choice1->Append(_("Post-Effects"));
 	TreeCtrl = new wxTreeCtrl(this, ID_TREECTRL, wxPoint(16,152), wxSize(320,152), wxTR_DEFAULT_STYLE, wxDefaultValidator, _T("ID_TREECTRL"));
 	StaticTextConfigFilename = new wxStaticText(this, ID_STATICTEXT3, _("Config file name"), wxPoint(16,64), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-	
+
 	Connect(ID_LABELNAMECTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moNewEffectDialog::OnLabelNameCtrlText);
 	Connect(ID_FILENAMECTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moNewEffectDialog::OnConfigFilenameCtrlText);
 	Connect(ID_OKBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moNewEffectDialog::OnOkButtonClick);
@@ -83,19 +83,19 @@ moNewEffectDialog::Init( moDirectorFrame*  pFrame ) {
 
             switch( pDefinition.GetType() ) {
                 case MO_OBJECT_PREEFFECT:
-                    TreeCtrl->AppendItem( preid, (wxChar *)(char *)pDefinition.GetName() ,-1, -1, new moPluginItemData(pDefinition) );
+                    TreeCtrl->AppendItem( preid, moText2Wx(pDefinition.GetName()) ,-1, -1, new moPluginItemData(pDefinition) );
                     break;
                 case MO_OBJECT_EFFECT:
-                    TreeCtrl->AppendItem( eid, (wxChar *)(char *)pDefinition.GetName(), -1, -1, new moPluginItemData(pDefinition));
+                    TreeCtrl->AppendItem( eid, moText2Wx(pDefinition.GetName()), -1, -1, new moPluginItemData(pDefinition));
                     break;
                 case MO_OBJECT_POSTEFFECT:
-                    TreeCtrl->AppendItem( postid, (wxChar *)(char *)pDefinition.GetName(),-1, -1, new moPluginItemData(pDefinition));
+                    TreeCtrl->AppendItem( postid, moText2Wx(pDefinition.GetName()),-1, -1, new moPluginItemData(pDefinition));
                     break;
                 case MO_OBJECT_IODEVICE:
-                    TreeCtrl->AppendItem( ioid, (wxChar *)(char *)pDefinition.GetName(),-1, -1, new moPluginItemData(pDefinition));
+                    TreeCtrl->AppendItem( ioid, moText2Wx(pDefinition.GetName()),-1, -1, new moPluginItemData(pDefinition));
                     break;
                 case MO_OBJECT_RESOURCE:
-                    TreeCtrl->AppendItem( resid, (wxChar *)(char *)pDefinition.GetName(),-1, -1, new moPluginItemData(pDefinition));
+                    TreeCtrl->AppendItem( resid, moText2Wx(pDefinition.GetName()),-1, -1, new moPluginItemData(pDefinition));
                     break;
                 default:
                     break;

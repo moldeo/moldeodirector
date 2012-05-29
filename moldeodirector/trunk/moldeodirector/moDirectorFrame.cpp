@@ -788,12 +788,15 @@ void moDirectorFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 void moDirectorFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxString msg;
-    msg.Printf( _T("This is the About dialog of Moldeo Director.\n")
-                _T("\n\nWelcome to %s \n\nMoldeo Director Version: %s \n\nMoldeo Core Version: %s"),
-                wxVERSION_STRING, _T(MOLDEO_DIRECTOR_VERSION),
-                moText2Wx(moGetVersionStr()) );
+    wxString libmoldeoversion;
+    libmoldeoversion = moText2Wx((moText)moGetVersionStr());
+    msg = wxT("This is the About dialog of Moldeo Director.\n\n\nWelcome to ");
+    msg+= wxVERSION_STRING;
+    msg+= wxT("\n\nMoldeo Director Version %s \n\nMoldeo Core Version");
+    msg+= wxT(MOLDEO_DIRECTOR_VERSION);
+    msg+= libmoldeoversion;
 
-    wxMessageBox(msg, _T("About Moldeo Director"), wxOK | wxICON_INFORMATION, this);
+    wxMessageBox(msg, wxT("About Moldeo Director"), wxOK | wxICON_INFORMATION, this);
 }
 
 
@@ -834,15 +837,13 @@ moDirectorFrame::OnOpenProject(wxCommandEvent& event) {
 
                 wxString path = FileName.GetPath();
                 #ifdef MO_WIN32
-                    path+= "\\";
+                    path+= _T("\\");
                 #else
                     path+= _T("/");
                 #endif
                 wxString name = FileName.GetFullName();
-                const char *cfilepath = (char*)path.c_str();
-                const char *cfilename = (char*)name.c_str();
 
-                ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
+                ProjectDescriptor.Set( moWx2Text(path), moWx2Text(name) );
 
                 mStatus = OpenProject( ProjectDescriptor );
 
@@ -858,15 +859,13 @@ moDirectorFrame::OnOpenProject(wxCommandEvent& event) {
 
         wxString path = FileName.GetPath();
         #ifdef MO_WIN32
-            path+= "\\";
+            path+= _T("\\");
         #else
             path+= _T("/");
         #endif
         wxString name = FileName.GetFullName();
-        const char *cfilepath = (char*)path.c_str();
-        const char *cfilename = (char*)name.c_str();
 
-        ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
+        ProjectDescriptor.Set( moWx2Text(path), moWx2Text(name) );
 
         mStatus = OpenProject( ProjectDescriptor );
         SetTitle(wxString(name)+wxString(_(" - Moldeo Director "))  + moText2Wx(moGetVersionStr()) );
@@ -884,7 +883,9 @@ moDirectorFrame::OnSaveProject(wxCommandEvent& event) {
 void
 moDirectorFrame::OnCloseProject(wxCommandEvent& event) {
 
-    wxString tName = moText2Wx( GetProject().GetFullConfigName() );
+    wxString tName;
+
+   tName = moText2Wx( (moText)GetProject().GetFullConfigName() );
 
     int result = wxMessageBox(_T("Save project before close \"")+tName+_T("\" ?"), _T("Please confirm"),
                       wxICON_QUESTION | wxYES_NO | wxCANCEL );
@@ -1552,7 +1553,7 @@ moDirectorFrame::ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor 
   ///actualiza el nombre del proyecto
   /**if (p_ProjectDescriptor.IsValid())*/
 
-  wxString ProjectName = wxString( moText2Wx( p_ProjectDescriptor.GetConfigName() ) );
+  wxString ProjectName = moText2Wx( p_ProjectDescriptor.GetConfigName() );
   FrameManager.GetPane( wxT("explorer")).Caption(wxT("Explorer : ") + ProjectName );
 
   if (m_pExplorerNotebook) {

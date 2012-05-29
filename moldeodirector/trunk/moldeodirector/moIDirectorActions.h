@@ -134,8 +134,14 @@ class   moApplicationDescriptor : public moDescriptor {
         moText GetInstallationFullPath() {
                 return m_InstallationFullPath;
         }
+        moText GetConfigurationPath() {
+                return m_ConfigurationPath;
+        }
         moText GetPluginsFullPath() {
                 return m_PluginsFullPath;
+        }
+        moText GetDataPath() {
+                return m_DataPath;
         }
 
         bool IsValid();
@@ -184,17 +190,6 @@ public:
 
       moProjectDescriptor( const moText& p_fullconfigname ) {
         //atencion falta sacar el p_configname y el p_configpath del p_fullconfigname
-        /*
-        const char *aux = p_fullconfigname;
-        wxString fcname((wxChar*)aux);
-        wxFileName FileName(fcname);
-        wxString name = FileName.GetFullName();
-        wxString path = FileName.GetPath() + wxT("\\");
-        const char *cfilepath = (char*)path.c_str();
-        const char *cfilename = (char*)name.c_str();
-        m_configname = moText((char*)cfilename);
-        m_configpath = moText((char*)cfilepath);
-        */
         moFile FileName(p_fullconfigname);
         m_configname = FileName.GetFileName();
         m_configpath = FileName.GetPath();

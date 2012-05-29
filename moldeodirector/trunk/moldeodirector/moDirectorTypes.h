@@ -68,9 +68,13 @@ class moSessionProject;
 
 #include "moConsole.h"
 
-#define moText2Wx(X) (wxChar*)(char*)moText(X)
-#define moWx2Text(X) moText((char*)(wxChar*)X.c_str())
-
+#ifdef wxUSE_UNICODE
+	#define moText2Wx(X) wxString::FromAscii((char*)(moText)X)
+	#define moWx2Text(X) moText(X.ToAscii())
+#else
+	#define moText2Wx(X) (wxChar*)(char*)moText(X)
+	#define moWx2Text(X) moText((char*)(wxChar*)X.c_str())
+#endif
 
 // IDs for the controls and the menu commands
 enum

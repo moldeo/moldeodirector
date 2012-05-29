@@ -120,6 +120,9 @@ moDirectorConsole::NewProject( const moProjectDescriptor& p_ProjectDes )  {//cre
 }
 
 
+#include <gtk/gtk.h>
+#include <gdk/gdkx.h>
+
 moDirectorStatus
 moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//load a console.cfg file with their effects.cfg
 	//es importante reinicializar
@@ -137,6 +140,20 @@ moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//lo
 
   wxString wxAppPath =wxGetCwd();
 
+  MO_HANDLE pHandle;
+  MO_DISPLAY pDisplay;
+
+  pHandle = NULL;
+  pDisplay = NULL;
+
+  pHandle = GetHandle();
+
+  #ifdef MO_LINUX
+    GtkWidget* gtkwidget = (GtkWidget*) pHandle;
+    Display* dpy = GDK_WINDOW_XDISPLAY( gtkwidget->window );
+    pDisplay = (MO_DISPLAY)dpy;
+  #endif
+
   m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_OPENING );
 
  	if( Init(   moWx2Text(wxAppPath),
@@ -152,7 +169,10 @@ moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//lo
               400,300,400,300,
               /*MO_DEF_SCREEN_WIDTH, MO_DEF_SCREEN_HEIGHT,
               MO_DEF_RENDER_WIDTH, MO_DEF_RENDER_HEIGHT,*/
-              GetHandle())) {
+              pHandle,
+              pDisplay
+
+           )) {
 
 
         m_ProjectDescriptor.Set(

@@ -26,7 +26,7 @@ moPanelTexture::moPanelTexture(wxWindow* parent,wxWindowID id,const wxPoint& pos
 {
 	//(*Initialize(moPanelTexture)
 	wxFlexGridSizer* FlexGridSizer1;
-	
+
 	Create(parent, wxID_ANY, wxDefaultPosition, wxSize(378,224), wxTAB_TRAVERSAL|wxCLIP_CHILDREN, _T("wxID_ANY"));
 	SetBackgroundColour(wxColour(0,0,0));
 	FlexGridSizer1 = new wxFlexGridSizer(3, 1, 1, 1);
@@ -45,7 +45,7 @@ moPanelTexture::moPanelTexture(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	FlexGridSizer1->Add(ImagePanel, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
 	SetSizer(FlexGridSizer1);
 	FlexGridSizer1->SetSizeHints(this);
-	
+
 	Connect(ID_TEXTCTRLMEDIA,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moPanelTexture::OnTextCtrlMediaText);
 	Connect(ID_BUTTONIMPORT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPanelTexture::OnButtonImportClick);
 	//*)
@@ -432,8 +432,7 @@ void moPanelTexture::OnButtonImportClick(wxCommandEvent& event)
 			    ///ok it is on a branch so we just assign the path
 
                 wxString pathrel = FileName.GetFullPath();
-                const char *cnamerelative = (char*)pathrel.c_str();
-
+                //const char *cnamerelative = (char*)pathrel.c_str();
                 //ProjectDescriptor.Set( moText((char*)cfilepath), moText((char*)cfilename) );
                 TextCtrlMedia->SetValue( pathrel );
                 if(m_pShaderCtrl)
@@ -472,7 +471,7 @@ void moPanelTexture::OnTextCtrlMediaText(wxCommandEvent& event)
 {
     moValue& rValue( m_ValueDescriptor.GetValue() );
 
-    rValue.GetSubValue(0).SetText( moText((char*)(wxChar*)TextCtrlMedia->GetValue().c_str() ) );
+    rValue.GetSubValue(0).SetText( moWx2Text( TextCtrlMedia->GetValue() ) ) ;
 
     //fija los nuevos valores en la consola...
     SetValue( m_ValueDescriptor );

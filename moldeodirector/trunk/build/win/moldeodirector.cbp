@@ -172,6 +172,7 @@
 		<ExtraCommands>
 			<Add after='svn export &quot;../../data&quot; &quot;../../../../binaries/data&quot; --force' />
 		</ExtraCommands>
+		<Unit filename="..\..\config.h" />
 		<Unit filename="..\..\moldeodirector\PreviewWindowSystemMem.cpp" />
 		<Unit filename="..\..\moldeodirector\PreviewWindowSystemMem.h" />
 		<Unit filename="..\..\moldeodirector\mo3dModelPanel.cpp" />

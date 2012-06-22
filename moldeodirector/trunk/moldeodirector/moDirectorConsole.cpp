@@ -119,9 +119,10 @@ moDirectorConsole::NewProject( const moProjectDescriptor& p_ProjectDes )  {//cre
 
 }
 
-
-#include <gtk/gtk.h>
-#include <gdk/gdkx.h>
+#ifdef MO_LINUX
+    #include <gtk/gtk.h>
+    #include <gdk/gdkx.h>
+#endif
 
 moDirectorStatus
 moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//load a console.cfg file with their effects.cfg

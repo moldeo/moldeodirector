@@ -53,8 +53,12 @@ class moLayerEffectCtrl: public wxPanel, public moItemLayerCtrl
 		wxCheckBox* CheckBoxOnOff;
 		wxBitmapButton* BitmapButtonView;
 		wxMoColourLevelCtrl* m_pLevelAlphaCtrl;
+		wxBitmapButton* BitmapButtonPlay;
 		wxTextCtrl* TextCtrlLabel;
+		wxBitmapButton* BitmapButtonStop;
 		wxMoColourLevelCtrl* SliderHue;
+		wxBitmapButton* BitmapButtonPause;
+		wxTextCtrl* TextCtrlTimecode;
 		wxMoColourLevelCtrl* m_pLevelTintCtrl;
 		wxMoColourLevelCtrl* SliderSaturation;
 		//*)
@@ -72,7 +76,8 @@ class moLayerEffectCtrl: public wxPanel, public moItemLayerCtrl
 	protected:
 
 		//(*Identifiers(moLayerEffectCtrl)
-		static const long ID_TEXTCTRL1;
+		static const long ID_TEXTCTRL_LABEL;
+		static const long ID_TEXTCTRL_TIMECODE;
 		static const long ID_SLIDERHUE;
 		static const long ID_SLIDERSATURATION;
 		static const long ID_SLIDERALPHA;
@@ -82,6 +87,9 @@ class moLayerEffectCtrl: public wxPanel, public moItemLayerCtrl
 		static const long ID_BITMAPBUTTONVIEW;
 		static const long ID_COLOURPANELFINAL;
 		static const long ID_COLOURPANEL;
+		static const long ID_BITMAPBUTTON_FXPLAY;
+		static const long ID_BITMAPBUTTON_FXSTOP;
+		static const long ID_BITMAPBUTTON_FXPAUSE;
 		//*)
 
 		static const long ID_LEVELALPHA;
@@ -98,6 +106,9 @@ class moLayerEffectCtrl: public wxPanel, public moItemLayerCtrl
 		void OnBitmapButtonVisibilityClick(wxCommandEvent& event);
 		void OnBitmapButtonDeleteClick(wxCommandEvent& event);
 		void OnPaint(wxPaintEvent& event);
+		void OnBitmapButtonPlay(wxCommandEvent& event);
+		void OnBitmapButtonPauseClick(wxCommandEvent& event);
+		void OnBitmapButtonStopClick(wxCommandEvent& event);
 		//*)
 
 		void OnLevelAlpha(wxCommandEvent& event);
@@ -109,7 +120,7 @@ class moLayerEffectCtrl: public wxPanel, public moItemLayerCtrl
 
     void OnMouseEvent( wxMouseEvent& event );
 
-    void Update( moEffectState );
+    void Update( const moEffectState& effect_state );
 
     wxBitmap  m_BitmapViewOn;
     wxBitmap  m_BitmapViewOff;

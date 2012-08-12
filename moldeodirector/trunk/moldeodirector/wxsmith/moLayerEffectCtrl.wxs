@@ -2,16 +2,34 @@
 <wxsmith>
 	<object class="wxPanel" name="moLayerEffectCtrl">
 		<pos>0,0</pos>
-		<size>379,44</size>
+		<size>388,44</size>
 		<fg>#FFFFFF</fg>
 		<minsize>-1,-1</minsize>
 		<maxsize>-1,-1</maxsize>
 		<id_arg>0</id_arg>
 		<style>0</style>
-		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrlLabel" member="yes">
+		<object class="wxTextCtrl" name="ID_TEXTCTRL_LABEL" variable="TextCtrlLabel" member="yes">
 			<value>Text</value>
 			<pos>0,32</pos>
 			<size>144,12</size>
+			<hidden>1</hidden>
+			<fg>#FFFFFF</fg>
+			<bg>#000000</bg>
+			<font>
+				<size>6</size>
+				<style>normal</style>
+				<weight>bold</weight>
+				<underlined>0</underlined>
+				<family>swiss</family>
+				<face>Terminal</face>
+			</font>
+			<extra_code>TextCtrlLabel-&gt;SetEditable( false );</extra_code>
+			<style>wxNO_BORDER|wxTRANSPARENT_WINDOW</style>
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL_TIMECODE" variable="TextCtrlTimecode" member="yes">
+			<value>Timecode</value>
+			<pos>312,24</pos>
+			<size>72,20</size>
 			<hidden>1</hidden>
 			<fg>#FFFFFF</fg>
 			<bg>#000000</bg>
@@ -53,7 +71,7 @@
 			<extra_code>Connect(ID__SLIDERTEMPO,wxEVT__MOROTARYCTRL, (wxObjectEventFunction)&amp;moLayerEffectCtrl::OnLevelSpeed );</extra_code>
 		</object>
 		<object class="wxCheckBox" name="ID_CHECKBOXONOFF" variable="CheckBoxOnOff" member="yes">
-			<pos>336,0</pos>
+			<pos>280,24</pos>
 			<size>16,21</size>
 			<hidden>1</hidden>
 			<handler function="OnCheckBoxOnOffClick" entry="EVT_CHECKBOX" />
@@ -74,6 +92,27 @@
 		<object class="wxPanel" name="ID_COLOURPANEL" subclass="wxMoColourPanel" variable="ColourPanel" member="yes">
 			<pos>56,2</pos>
 			<size>24,24</size>
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTON_FXPLAY" variable="BitmapButtonPlay" member="yes">
+			<bitmap>../../data/icons/play32.png</bitmap>
+			<pos>312,0</pos>
+			<size>24,24</size>
+			<tooltip>Play</tooltip>
+			<handler function="OnBitmapButtonPlay" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTON_FXSTOP" variable="BitmapButtonStop" member="yes">
+			<bitmap>../../data/icons/stop32.png</bitmap>
+			<pos>360,0</pos>
+			<size>24,24</size>
+			<tooltip>Stop</tooltip>
+			<handler function="OnBitmapButtonStopClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTON_FXPAUSE" variable="BitmapButtonPause" member="yes">
+			<bitmap>../../data/icons/pause32.png</bitmap>
+			<pos>336,0</pos>
+			<size>24,24</size>
+			<tooltip>Pause</tooltip>
+			<handler function="OnBitmapButtonPauseClick" entry="EVT_BUTTON" />
 		</object>
 	</object>
 </wxsmith>

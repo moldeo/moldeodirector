@@ -11,7 +11,8 @@
 #include <wx/dcbuffer.h>
 
 //(*IdInit(moLayerEffectCtrl)
-const long moLayerEffectCtrl::ID_TEXTCTRL1 = wxNewId();
+const long moLayerEffectCtrl::ID_TEXTCTRL_LABEL = wxNewId();
+const long moLayerEffectCtrl::ID_TEXTCTRL_TIMECODE = wxNewId();
 const long moLayerEffectCtrl::ID_SLIDERHUE = wxNewId();
 const long moLayerEffectCtrl::ID_SLIDERSATURATION = wxNewId();
 const long moLayerEffectCtrl::ID_SLIDERALPHA = wxNewId();
@@ -21,6 +22,9 @@ const long moLayerEffectCtrl::ID_CHECKBOXONOFF = wxNewId();
 const long moLayerEffectCtrl::ID_BITMAPBUTTONVIEW = wxNewId();
 const long moLayerEffectCtrl::ID_COLOURPANELFINAL = wxNewId();
 const long moLayerEffectCtrl::ID_COLOURPANEL = wxNewId();
+const long moLayerEffectCtrl::ID_BITMAPBUTTON_FXPLAY = wxNewId();
+const long moLayerEffectCtrl::ID_BITMAPBUTTON_FXSTOP = wxNewId();
+const long moLayerEffectCtrl::ID_BITMAPBUTTON_FXPAUSE = wxNewId();
 //*)
 
 const long moLayerEffectCtrl::ID_LEVELALPHA = wxNewId();
@@ -36,16 +40,23 @@ END_EVENT_TABLE()
 moLayerEffectCtrl::moLayerEffectCtrl(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
 	//(*Initialize(moLayerEffectCtrl)
-	Create(parent, wxID_ANY, wxPoint(0,0), wxSize(379,44), 0, _T("wxID_ANY"));
+	Create(parent, wxID_ANY, wxPoint(0,0), wxSize(388,44), 0, _T("wxID_ANY"));
 	SetMinSize(wxSize(-1,-1));
 	SetMaxSize(wxSize(-1,-1));
 	SetForegroundColour(wxColour(255,255,255));
-	TextCtrlLabel = new wxTextCtrl(this, ID_TEXTCTRL1, _("Text"), wxPoint(0,32), wxSize(144,12), wxNO_BORDER|wxTRANSPARENT_WINDOW, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	TextCtrlLabel = new wxTextCtrl(this, ID_TEXTCTRL_LABEL, _("Text"), wxPoint(0,32), wxSize(144,12), wxNO_BORDER|wxTRANSPARENT_WINDOW, wxDefaultValidator, _T("ID_TEXTCTRL_LABEL"));
 	TextCtrlLabel->Hide();
 	TextCtrlLabel->SetForegroundColour(wxColour(255,255,255));
 	TextCtrlLabel->SetBackgroundColour(wxColour(0,0,0));
 	wxFont TextCtrlLabelFont(6,wxSWISS,wxFONTSTYLE_NORMAL,wxBOLD,false,_T("Terminal"),wxFONTENCODING_DEFAULT);
 	TextCtrlLabel->SetFont(TextCtrlLabelFont);
+	TextCtrlLabel->SetEditable( false );
+	TextCtrlTimecode = new wxTextCtrl(this, ID_TEXTCTRL_TIMECODE, _("Timecode"), wxPoint(312,24), wxSize(72,20), wxNO_BORDER|wxTRANSPARENT_WINDOW, wxDefaultValidator, _T("ID_TEXTCTRL_TIMECODE"));
+	TextCtrlTimecode->Hide();
+	TextCtrlTimecode->SetForegroundColour(wxColour(255,255,255));
+	TextCtrlTimecode->SetBackgroundColour(wxColour(0,0,0));
+	wxFont TextCtrlTimecodeFont(6,wxSWISS,wxFONTSTYLE_NORMAL,wxBOLD,false,_T("Terminal"),wxFONTENCODING_DEFAULT);
+	TextCtrlTimecode->SetFont(TextCtrlTimecodeFont);
 	TextCtrlLabel->SetEditable( false );
 	SliderHue = new wxMoColourLevelCtrl(this, ID_SLIDERHUE, 0, 0, 100, wxPoint(176,4), wxSize(88,8), 0, wxDefaultValidator, _T("ID_SLIDERHUE"));
 	Connect(ID_SLIDERHUE, wxEVT_MOLEVELCTRL, (wxObjectEventFunction)&moLayerEffectCtrl::OnLevelHue );
@@ -62,17 +73,26 @@ moLayerEffectCtrl::moLayerEffectCtrl(wxWindow* parent,wxWindowID id,const wxPoin
 	m_pLevelSpeedCtrl = new wxMoRotaryCtrl(this, ID_SLIDERTEMPO, 0, 0, 100, wxPoint(280,0), wxSize(24,24), 0, wxDefaultValidator, _T("ID_SLIDERTEMPO"));
 	m_pLevelSpeedCtrl->SetBackgroundColour(wxColour(0,0,0));
 	Connect(ID_SLIDERTEMPO,wxEVT_MOROTARYCTRL, (wxObjectEventFunction)&moLayerEffectCtrl::OnLevelSpeed );
-	CheckBoxOnOff = new wxCheckBox(this, ID_CHECKBOXONOFF, wxEmptyString, wxPoint(336,0), wxSize(16,21), 0, wxDefaultValidator, _T("ID_CHECKBOXONOFF"));
+	CheckBoxOnOff = new wxCheckBox(this, ID_CHECKBOXONOFF, wxEmptyString, wxPoint(280,24), wxSize(16,21), 0, wxDefaultValidator, _T("ID_CHECKBOXONOFF"));
 	CheckBoxOnOff->SetValue(false);
 	CheckBoxOnOff->Hide();
-	BitmapButtonView = new wxBitmapButton(this, ID_BITMAPBUTTONVIEW, wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/view_16.png"))), wxPoint(0,2), wxSize(24,24), wxNO_BORDER, wxDefaultValidator, _T("ID_BITMAPBUTTONVIEW"));
+	BitmapButtonView = new wxBitmapButton(this, ID_BITMAPBUTTONVIEW, wxBitmap(wxImage(_T("../../data/icons/view_16.png"))), wxPoint(0,2), wxSize(24,24), wxNO_BORDER, wxDefaultValidator, _T("ID_BITMAPBUTTONVIEW"));
 	BitmapButtonView->SetBackgroundColour(wxColour(0,0,0));
 	BitmapButtonView->SetToolTip(_("on/off"));
 	ColourPanelFinal = new wxMoColourPanel(this, ID_COLOURPANELFINAL, wxPoint(28,2), wxSize(24,24), wxTAB_TRAVERSAL, _T("ID_COLOURPANELFINAL"));
 	ColourPanel = new wxMoColourPanel(this, ID_COLOURPANEL, wxPoint(56,2), wxSize(24,24), wxTAB_TRAVERSAL, _T("ID_COLOURPANEL"));
+	BitmapButtonPlay = new wxBitmapButton(this, ID_BITMAPBUTTON_FXPLAY, wxBitmap(wxImage(_T("../../data/icons/play32.png"))), wxPoint(312,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXPLAY"));
+	BitmapButtonPlay->SetToolTip(_("Play"));
+	BitmapButtonStop = new wxBitmapButton(this, ID_BITMAPBUTTON_FXSTOP, wxBitmap(wxImage(_T("../../data/icons/stop32.png"))), wxPoint(360,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXSTOP"));
+	BitmapButtonStop->SetToolTip(_("Stop"));
+	BitmapButtonPause = new wxBitmapButton(this, ID_BITMAPBUTTON_FXPAUSE, wxBitmap(wxImage(_T("../../data/icons/pause32.png"))), wxPoint(336,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXPAUSE"));
+	BitmapButtonPause->SetToolTip(_("Pause"));
 
 	Connect(ID_CHECKBOXONOFF,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&moLayerEffectCtrl::OnCheckBoxOnOffClick);
 	Connect(ID_BITMAPBUTTONVIEW,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moLayerEffectCtrl::OnBitmapButtonVisibilityClick);
+	Connect(ID_BITMAPBUTTON_FXPLAY,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moLayerEffectCtrl::OnBitmapButtonPlay);
+	Connect(ID_BITMAPBUTTON_FXPAUSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moLayerEffectCtrl::OnBitmapButtonPauseClick);
+	Connect(ID_BITMAPBUTTON_FXSTOP,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moLayerEffectCtrl::OnBitmapButtonStopClick);
 	//*)
 
 	m_pLevelAlphaCtrl->SetHSVColorComponents( SliderHue, SliderSaturation, m_pLevelTintCtrl );
@@ -101,7 +121,7 @@ moLayerEffectCtrl::~moLayerEffectCtrl()
 }
 
 ///ACTIVE!!!! propaga los cambios al CORE
-void moLayerEffectCtrl::Update( moEffectState effect_state ) {
+void moLayerEffectCtrl::Update( const moEffectState& effect_state ) {
 
     moMobDescriptor p_MobDescriptor = m_MobDescriptor;
 
@@ -111,18 +131,16 @@ void moLayerEffectCtrl::Update( moEffectState effect_state ) {
     moMobDefinition &MobDefinition( p_MobDescriptor.GetMobDefinition() );
     moEffectState &EffectState( p_MobDescriptor.GetState().GetEffectState() );
 
-    ///efecto on u off
-    EffectState.on = effect_state.on;
-
-    ///valores
-    EffectState.alpha = effect_state.alpha;
-    EffectState.tint = effect_state.tint;
-    EffectState.tints = effect_state.tints;
-    EffectState.tintc = effect_state.tintc;
-    EffectState.synchronized = effect_state.synchronized;
-    EffectState.tempo.delta = effect_state.tempo.delta;
-
-
+    EffectState = effect_state;
+    EffectState.CSV2RGB();
+/*
+    ShowMessage( "moLayerEffectCtrl::Update sync: " + IntToStr((int)effect_state.synchronized)
+                +" tempo.on: " + IntToStr( (int)effect_state.tempo.Started() )
+                +" tempo.pause_on: " + IntToStr( (int)effect_state.tempo.Paused())
+                + " tempo.ticks: " + IntToStr( effect_state.tempo.ticks )
+                + " tempo.ang: " + FloatToStr( effect_state.tempo.ang )
+    );
+*/
     ///enviamos el valor al CORE
     SetMob( p_MobDescriptor );
 
@@ -268,7 +286,7 @@ void moLayerEffectCtrl::OnBitmapButtonVisibilityClick(wxCommandEvent& event)
     moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
 
     ///lo modificamos
-    EffectState.synchronized = MO_DEACTIVATED;
+    //EffectState.synchronized = MO_DEACTIVATED;
     EffectState.on*= -1;
 
     //ShowMessage( moText("visibility checked") );
@@ -844,4 +862,35 @@ moItemLayerWindow::SetMob( moMobDescriptor p_MobDesc ) {
   else
     return MO_DIRECTOR_STATUS_NO_HANDLER;
 
+}
+
+void moLayerEffectCtrl::OnBitmapButtonPlay(wxCommandEvent& event)
+{
+    moEffectState& EffectState( m_MobDescriptor.GetState().GetEffectState() );
+
+    EffectState.synchronized = MO_DEACTIVATED;
+    EffectState.tempo.Start();
+
+    Update( EffectState );
+
+}
+
+void moLayerEffectCtrl::OnBitmapButtonPauseClick(wxCommandEvent& event)
+{
+    moEffectState& EffectState( m_MobDescriptor.GetState().GetEffectState() );
+
+    EffectState.synchronized = MO_DEACTIVATED;
+    EffectState.tempo.Pause();
+
+    Update( EffectState );
+}
+
+void moLayerEffectCtrl::OnBitmapButtonStopClick(wxCommandEvent& event)
+{
+    moEffectState& EffectState( m_MobDescriptor.GetState().GetEffectState() );
+
+    EffectState.synchronized = MO_DEACTIVATED;
+    EffectState.tempo.Stop();
+
+    Update( EffectState );
 }

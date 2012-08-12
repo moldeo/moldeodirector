@@ -1197,6 +1197,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                   Effect = dynamic_cast<moEffect*>( pMOB );
 
                   if (Effect) {
+
                     Effect->state.on = p_MobDesc.GetState().GetEffectState().on;
                     Effect->state.alpha = p_MobDesc.GetState().GetEffectState().alpha;
                     Effect->state.tint = p_MobDesc.GetState().GetEffectState().tint;
@@ -1209,6 +1210,31 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                     p_MobDesc.GetState().GetEffectState().tintg = Effect->state.tintg;
                     p_MobDesc.GetState().GetEffectState().tintb = Effect->state.tintb;
 
+                    //Effect->state = p_MobDesc.GetState().GetEffectState();
+
+                    switch(p_MobDesc.GetState().GetEffectState().tempo.State()) {
+                        case MO_TIMERSTATE_PAUSED:
+                            Effect->state.tempo.Pause();
+                            break;
+                        case MO_TIMERSTATE_PLAYING:
+                            if (!Effect->state.tempo.Started()) {
+                                Effect->state.tempo.Start();
+                            } else {
+                                Effect->state.tempo.Continue();
+                            }
+                            break;
+                        case MO_TIMERSTATE_STOPPED:
+                            Effect->state.tempo.Stop();
+                            break;
+                    }
+
+                    /*
+                    MODebug2->Push( "moDirectorConsole::SetMob sync: " + IntToStr((int)Effect->state.synchronized)
+                                    +" tempo.on: " + IntToStr( (int)Effect->state.tempo.Started() )
+                                    +" tempo.pause_on: " + IntToStr( (int)Effect->state.tempo.Paused())
+                                    + " tempo.ticks: " + IntToStr( Effect->state.tempo.ticks )
+                                    + " tempo.ang: " + FloatToStr( Effect->state.tempo.ang ) );
+                    */
 
                     MobUpdated( p_MobDesc );
                   }
@@ -1959,7 +1985,7 @@ moDirectorStatus moDirectorConsole::Stop() {
 
 moDirectorStatus moDirectorConsole::Seek( MOulong p_timecode ) {
 
-    moTimeManager::MoldeoTimer->SetDuration( p_timecode );
+    moSetDuration( p_timecode );
 
     return MO_DIRECTOR_STATUS_OK;
 }

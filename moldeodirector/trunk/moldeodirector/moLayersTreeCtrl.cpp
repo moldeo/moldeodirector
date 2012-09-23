@@ -273,10 +273,10 @@ moLayersTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor
     moMobDescriptors pMobDescriptors = GetMobDescriptors();
 
     ///Ahora creamos los items correspondientes a cada mob
-    for( int i=0;  i < pMobDescriptors.Count(); i++) {
+    for( MOuint i=0;  i < pMobDescriptors.Count(); i++) {
 
       moMobDescriptor pMobDescriptor = pMobDescriptors[i];
-      moMobDefinition& MobDef( pMobDescriptor.GetMobDefinition() );
+      moMobDefinition MobDef = pMobDescriptor.GetMobDefinition();
 
       if ( MO_OBJECT_UNDEFINED<MobDef.GetType() && MobDef.GetType() <= MO_OBJECT_MASTEREFFECT ) {
         ///TEST SIN NADA

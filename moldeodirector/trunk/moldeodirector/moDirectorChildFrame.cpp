@@ -116,7 +116,7 @@ moDirectorChildFrame::InspectAll() {
         moDirectorFrame* pDirectorFrame = (moDirectorFrame*)m_pDirectorFrame;
 
         for( int i=0; i<(int)m_ParamTreeItemList.Count(); i++) {
-            moParamTreeItem& ParamItem( m_ParamTreeItemList.Get(i) );
+            moParamTreeItem& ParamItem( m_ParamTreeItemList[i] );
             /**
             * TODO: Optimize this!!! Changing tab selection on FilesBook freezes all
             */
@@ -162,7 +162,7 @@ moDirectorChildFrame::Save() {
 moDirectorStatus
 moDirectorChildFrame::ParameterUpdated( moParameterDescriptor p_ParameterDesc ) {
 
-    moParamTreeItem& ParamItem( m_ParamTreeItemList.Get( p_ParameterDesc.GetParamDefinition().GetIndex() ) );
+    moParamTreeItem& ParamItem( m_ParamTreeItemList[ p_ParameterDesc.GetParamDefinition().GetIndex()] );
 
     if (ParamItem.GetParamDescriptor().GetParamDefinition().GetName() == p_ParameterDesc.GetParamDefinition().GetName() ) {
 
@@ -173,7 +173,7 @@ OPTIMIZE, why check every single value???
         for( int i=0; i<(int)ParamItem.GetValueTreeItemList().Count(); i++) {
 
             //int i = p_ParameterDesc.GetIndexValue();
-            ValueTreeItem = ParamItem.GetValueTreeItemList().Get(i);
+            ValueTreeItem = ParamItem.GetValueTreeItemList().GetRef(i);
 
             moValueCtrl* pValueCtrl = dynamic_cast<moValueCtrl*>(ValueTreeItem.GetWindow());
 
@@ -203,7 +203,7 @@ moDirectorChildFrame::DeleteValue( moValueDescriptor p_ValueDesc ) {
     if ( m_pDirectorFrame->DeleteValue(p_ValueDesc) == MO_DIRECTOR_STATUS_OK ) {
 
         //m_ParamTreeItemList.Remove( p_ValueDesc.GetValueIndex().m_ValueIndex );
-        moParamTreeItem& ParamItem( m_ParamTreeItemList.Get( p_ValueDesc.GetParamDescriptor().GetParamDefinition().GetIndex() ) );
+        moParamTreeItem& ParamItem( m_ParamTreeItemList[ p_ValueDesc.GetParamDescriptor().GetParamDefinition().GetIndex()] );
 
         moValueTreeItem ValueTreeItem = ParamItem.GetValueTreeItemList().Get( p_ValueDesc.GetValueIndex().m_ValueIndex );
 
@@ -293,7 +293,7 @@ moDirectorChildFrame::EditValue( moValueDescriptor p_ValueDesc ) {
     moParameterDescriptor ParamDesc;
     ParamDesc = p_ValueDesc.GetParamDescriptor();
 
-    moParamTreeItem& ParamItem( m_ParamTreeItemList.Get( ParamDesc.GetParamDefinition().GetIndex() ) );
+    moParamTreeItem& ParamItem( m_ParamTreeItemList[ ParamDesc.GetParamDefinition().GetIndex() ] );
 
     if (ParamItem.GetParamDescriptor().GetParamDefinition().GetName() == ParamDesc.GetParamDefinition().GetName() ) {
         wxTreeMultiItem vItem = m_pParameterTree->AppendWindow( ParamItem.GetItem(), pValueCtrl , wxT(""), wndinfo);
@@ -310,11 +310,13 @@ moDirectorChildFrame::ValueUpdated( moValueDescriptor p_ValueDesc ) {
 
     ParamDesc = p_ValueDesc.GetParamDescriptor();
 
-    moParamTreeItem& ParamItem( m_ParamTreeItemList.Get( ParamDesc.GetParamDefinition().GetIndex() ) );
+    moParamTreeItem& ParamItem( m_ParamTreeItemList[ ParamDesc.GetParamDefinition().GetIndex() ] );
 
     if (ParamItem.GetParamDescriptor().GetParamDefinition().GetName() == ParamDesc.GetParamDefinition().GetName() ) {
 
-        moValueTreeItem& mValueTreeItem( ParamItem.GetValueTreeItemList().Get( p_ValueDesc.GetValueIndex().m_ValueIndex ));
+        moValueTreeItemList& VT( ParamItem.GetValueTreeItemList() );
+
+        moValueTreeItem& mValueTreeItem( VT[ p_ValueDesc.GetValueIndex().m_ValueIndex] );
 
         moValueCtrl* pValueCtrl = dynamic_cast<moValueCtrl*>( mValueTreeItem.GetWindow() );
         if (pValueCtrl) {
@@ -358,7 +360,7 @@ void moDirectorChildFrame::OnFocus(wxFocusEvent& event) {
     //UpdateMob(); ???
     if ( event.GetWindow() != this && event.GetWindow()->GetParent() != this && event.GetWindow()->GetParent()->GetParent() != this) {
         for( int i=0; i<(int)m_ParamTreeItemList.Count(); i++) {
-            moParamTreeItem& ParamItem( m_ParamTreeItemList.Get(i) );
+            moParamTreeItem& ParamItem( m_ParamTreeItemList[i] );
             ParameterUpdated( ParamItem.GetParamDescriptor() );
         }
     }

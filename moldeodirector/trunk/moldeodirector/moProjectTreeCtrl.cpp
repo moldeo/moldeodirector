@@ -259,7 +259,7 @@ moProjectTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescripto
 
     ///Ahora creamos los items correspondientes a cada mob
 
-    for( int i=0;  i < pMobDescriptors.Count(); i++) {
+    for( MOuint i=0;  i < pMobDescriptors.Count(); i++) {
 
       moMobDescriptor pMobDescriptor = pMobDescriptors[i];
       moMobDefinition& MobDef( pMobDescriptor.GetMobDefinition() );

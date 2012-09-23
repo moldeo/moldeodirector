@@ -237,16 +237,20 @@ void moDirectorIODeviceManager::OnKeyDown( wxKeyEvent &event ) {
 
 	if(event.ShiftDown())
 		mod =(SDLMod)((int)mod | KMOD_SHIFT );
-	if(event.ControlDown())
+	if(event.ControlDown()) {
 		mod =(SDLMod)((int)mod | KMOD_CTRL );
+		MODebug2->Push( "keycode: " + IntToStr(event.GetKeyCode()) );
+		MODebug2->Push( "event.ControlDown(): OK" );
+	}
 
 	//event.key.keysym.sym
 	if( event.GetKeyCode() == WXK_SHIFT ) {
 		sym = SDLK_LSHIFT;
 		GetEvents()->Add( MO_IODEVICE_KEYBOARD, SDL_KEYDOWN, sym , mod ,0,0);
 	} else
-	if( event.GetKeyCode() == WXK_CONTROL ) {
-		sym = SDLK_RCTRL;
+	if( event.GetKeyCode() == 308 ) {
+		sym = SDLK_LCTRL;
+		MODebug2->Push( "sym: SDLK_LCTRL"+IntToStr(sym) );
 		GetEvents()->Add( MO_IODEVICE_KEYBOARD, SDL_KEYDOWN, sym , mod ,0,0);
 	} else
 	if((int)(SDLK_BACKSPACE)  <= event.GetKeyCode() && event.GetKeyCode() <=(int)(SDLK_DELETE) ) {
@@ -335,16 +339,19 @@ void moDirectorIODeviceManager::OnKeyUp( wxKeyEvent &event ) {
 
 	if(event.ShiftDown())
 		mod =(SDLMod)((int)mod | KMOD_SHIFT );
-	if(event.ControlDown())
+	if(event.ControlDown()) {
 		mod =(SDLMod)((int)mod | KMOD_CTRL );
+		MODebug2->Push( "keycode UP: " + IntToStr(event.GetKeyCode()) );
+		MODebug2->Push( "event.ControlDown(): Still Down" );
+	}
 
 	//event.key.keysym.sym
 	if( event.GetKeyCode() == WXK_SHIFT ) {
 		sym = SDLK_LSHIFT;
 		GetEvents()->Add( MO_IODEVICE_KEYBOARD, SDL_KEYUP, sym , mod ,0,0);
 	} else
-	if( event.GetKeyCode() == WXK_CONTROL ) {
-		sym = SDLK_RCTRL;
+	if( event.GetKeyCode() == 308 ) {
+		sym = SDLK_LCTRL;
 		GetEvents()->Add( MO_IODEVICE_KEYBOARD, SDL_KEYUP, sym , mod ,0,0);
 	} else
 	if((int)(SDLK_BACKSPACE)  <= event.GetKeyCode() && event.GetKeyCode() <=(int)(SDLK_DELETE) ) {

@@ -84,7 +84,7 @@ moExplorerNotebook::ProjectUpdated( const moProjectDescriptor& p_ProjectDescript
 
   int layer_height = 64;
   wxString cPath;
-  moDirectorStatus status;
+  moDirectorStatus status = MO_DIRECTOR_STATUS_FALSE;
 
   ///pedimos todos los descriptores:
   cPath = moText2Wx( p_ProjectDescriptor.GetConfigPath() );

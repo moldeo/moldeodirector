@@ -246,7 +246,7 @@ public:
 
 };
 
-
+/*
 class moMobState {
 
     public:
@@ -281,9 +281,8 @@ class moMobState {
         //bool drawing;
         //bool initializing;
         //bool etc....
-
-
 };
+*/
 
 class moResourceDefinition {
 
@@ -650,6 +649,7 @@ public:
         m_MobDefinition = mbd.m_MobDefinition;
         m_ProjectDescriptor = mbd.m_ProjectDescriptor;
         m_MobState = mbd.m_MobState;
+        m_EffectState = mbd.m_EffectState;
 
         return(*this);
     }
@@ -660,8 +660,21 @@ public:
     void SetState( const moMobState& p_MobState ) {
         m_MobState = p_MobState;
     }
+    void SetState( const moEffectState& p_MobState ) {
+        m_MobState = p_MobState;
+        m_EffectState = p_MobState;
+    }
     moMobState& GetState( ) {
         return m_MobState;
+    }
+
+    moEffectState& GetEffectState( ) {
+        return m_EffectState;
+    }
+
+    void SetEffectState( const moEffectState& p_MobState ) {
+        m_MobState = p_MobState;
+        m_EffectState = p_MobState;
     }
 
     const moProjectDescriptor& GetProjectDescriptor() {
@@ -690,6 +703,7 @@ private:
     moProjectDescriptor m_ProjectDescriptor;
 
     moMobState  m_MobState;
+    moEffectState  m_EffectState;
 
 };
 

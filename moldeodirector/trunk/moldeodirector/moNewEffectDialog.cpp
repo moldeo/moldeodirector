@@ -77,7 +77,7 @@ moNewEffectDialog::Init( moDirectorFrame*  pFrame ) {
         wxTreeItemId ioid = TreeCtrl->AppendItem( rootid, wxT("iodevices"));
         wxTreeItemId resid = TreeCtrl->AppendItem( rootid, wxT("resources"));
 
-        for(int i = 0; i<rPlugins.Count(); i++) {
+        for( MOuint i = 0; i<rPlugins.Count(); i++) {
 
             moPluginDefinition  pDefinition = rPlugins[i];
 

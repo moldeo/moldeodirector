@@ -413,7 +413,7 @@ void moPanelTexture::OnButtonImportClick(wxCommandEvent& event)
                 intoconfigpath = true;
 
                 ///check if it is on a branch of the config folder
-                for(int d=0; d<dirsfile.Count(); d++) {
+                for( MOuint d=0; d<dirsfile.Count(); d++) {
                     if ( dirsfile[d] == _T("..") ) {
                         ///it is below our configpath...
                         intoconfigpath = false;

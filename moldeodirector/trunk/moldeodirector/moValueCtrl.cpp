@@ -97,7 +97,7 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 			//Connect(
 			break;
         case MO_PARAM_NUMERIC:
-            if (pValue.GetSubValue(0).Type()==MO_VALUE_NUM_FLOAT || pValue.GetSubValue(0).Type()==MO_VALUE_NUM_DOUBLE ) {
+            if (pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_FLOAT || pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_DOUBLE ) {
                 ValueFloat = pValue.GetSubValue(0).Float();
                 ValueStr = moText2Wx( FloatToStr(ValueFloat) );
             } else {
@@ -258,7 +258,7 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
 			//Connect(
 			break;
     case MO_PARAM_NUMERIC:
-        if (pValue.GetSubValue(0).Type()==MO_VALUE_NUM_FLOAT || pValue.GetSubValue(0).Type()==MO_VALUE_NUM_DOUBLE ) {
+        if (pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_FLOAT || pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_DOUBLE ) {
             ValueFloat = pValue.GetSubValue(0).Float();
             ValueStr = moText2Wx( FloatToStr(ValueFloat) );
         } else {
@@ -472,8 +472,8 @@ moValueCtrl::OnTextUpdated( wxCommandEvent& event) {
                 break;
             case MO_PARAM_NUMERIC:
                 if (m_pTextCtrl) {
-                    if ( rValue.GetSubValue(0).Type()==MO_VALUE_NUM_FLOAT ||
-                        rValue.GetSubValue(0).Type()==MO_VALUE_NUM_DOUBLE) {
+                    if ( rValue.GetSubValue(0).Type()==MO_DATA_NUMBER_FLOAT ||
+                        rValue.GetSubValue(0).Type()==MO_DATA_NUMBER_DOUBLE) {
                         double ff;
                         m_pTextCtrl->GetValue().ToDouble(&ff);
                         rValue.GetSubValue(0).SetFloat( ff );

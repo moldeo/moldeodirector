@@ -128,8 +128,8 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
 		m_SamplesDirectory.Open( samplefullpath );
 		if (m_SamplesDirectory.HasSubdirs()) {
 
-		  for( int s=0; s<m_SamplesDirectory.GetSubDirs().Count(); s++ ) {
-		    moDirectory* pSubDir = m_SamplesDirectory.GetSubDirs().Get( s );
+		  for( MOuint s=0; s<m_SamplesDirectory.GetSubDirs().Count(); s++ ) {
+		    moDirectory* pSubDir = m_SamplesDirectory.GetSubDirs().GetRef( s );
 		    if (pSubDir) {
 		      if (pSubDir->Exists()) {
 		        moFile* pFile = pSubDir->FindFirst();
@@ -146,8 +146,8 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
 		}
 
 
-		for( int m = 0 ; m < m_SampleProjects.Count(); m++ ) {
-			moFile* pFile = m_SampleProjects.Get( m );
+		for( MOuint m = 0 ; m < m_SampleProjects.Count(); m++ ) {
+			moFile* pFile = m_SampleProjects.GetRef( m );
 			if (pFile) {
 		    examplesMenu->Append( MODIRECTOR_EXAMPLE_START + m, moText2Wx( pFile->GetFolderName() ) , moText2Wx( pFile->GetFileName()));
 			}
@@ -1007,7 +1007,7 @@ moDirectorFrame::OpenMob( moMobDescriptor p_MobDescriptor ) {
                       /// verificar la selección actual
                       /// seleccionar la pagina correcta y volver
 
-                    if (m_pFilesBook->GetSelection()!=i) {
+                    if ( (size_t)m_pFilesBook->GetSelection()!=i) {
                         m_pFilesBook->SetSelection(i);
                     }
 
@@ -1221,10 +1221,10 @@ moDirectorChildFrame* moDirectorFrame::CreateChildFrame( moMobDescriptor p_MobDe
 moDirectorStatus
 moDirectorFrame::FocusOutput() {
 
-    int outputwidth;
-    int outputheight;
-    int outputleft;
-    int outputtop;
+    int outputwidth = 0;
+    int outputheight = 0;
+    int outputleft = 0;
+    int outputtop = 0;
 
     {
         wxDisplay thisDisplay(0);
@@ -1740,7 +1740,7 @@ void moDirectorFrame::OnExample( wxCommandEvent& event ) {
 
   //ShowMessage( IntToStr(  event.GetId() ) );
   int id_file = event.GetId() - MODIRECTOR_EXAMPLE_START;
-  moFile* pFile = m_SampleProjects.Get(id_file);
+  moFile* pFile = m_SampleProjects.GetRef(id_file);
 
   if (pFile) {
     if ( this->CloseProject() == MO_DIRECTOR_STATUS_OK ) {

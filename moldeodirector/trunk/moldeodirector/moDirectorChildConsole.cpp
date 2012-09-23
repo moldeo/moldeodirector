@@ -56,7 +56,7 @@ moDirectorChildConsole::Init(
 					   MOint p_render_width, MOint p_render_height ) {
 
 	moText text;
-	int i,verif;
+	int i=-1,verif;
 	//int a,b;
 
 	idebug = -1;
@@ -81,7 +81,7 @@ moDirectorChildConsole::Init(
 	m_EffectManager.Init();
 
 	//INITIALIZING FIXED COMPONENTS
-	state.Init();
+	m_ConsoleState.Init();
 
 	verif = m_Config.LoadConfig( p_consoleconfig ) ;//este parametro debe pasarse desde fuera
 	if(verif != MO_CONFIG_OK) {
@@ -120,7 +120,7 @@ moDirectorChildConsole::Init(
 				iborrado = i;
 				printf("erase");
 				ppreeffect->Init();
-				ppreeffect->state.on = MO_ON;
+				ppreeffect->Activate();
 		}
 	} else return false;
 
@@ -134,7 +134,7 @@ moDirectorChildConsole::Init(
 		peffect->SetResourceManager( m_pResourceManager );
 	} else return false;
 
-	state.m_nAllEffects = m_EffectManager.AllEffects().Count();
+	m_ConsoleState.m_nAllEffects = m_EffectManager.AllEffects().Count();
 
 	InitializeAllEffects();
 

@@ -66,7 +66,7 @@ moShadersPanel::InitShadersTree() {
 
         m_ValueDescriptors = GetValueDescriptors( m_ParamDescriptor );
 
-        for( int i = 0; i < m_ValueDescriptors.Count(); i++) {
+        for( MOuint i = 0; i < m_ValueDescriptors.Count(); i++) {
 
                 moValueDescriptor pVal =  m_ValueDescriptors[i];
 

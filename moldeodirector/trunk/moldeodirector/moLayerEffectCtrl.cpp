@@ -125,23 +125,11 @@ void moLayerEffectCtrl::Update( const moEffectState& effect_state ) {
 
     moMobDescriptor p_MobDescriptor = m_MobDescriptor;
 
-    ///GENERAMOS UNA COPIA...
-    ///wxMessageBox( "test" );
-
-    moMobDefinition &MobDefinition( p_MobDescriptor.GetMobDefinition() );
-    moEffectState &EffectState( p_MobDescriptor.GetState().GetEffectState() );
-
-    EffectState = effect_state;
+    moEffectState EffectState = effect_state;
     EffectState.CSV2RGB();
-/*
-    ShowMessage( "moLayerEffectCtrl::Update sync: " + IntToStr((int)effect_state.synchronized)
-                +" tempo.on: " + IntToStr( (int)effect_state.tempo.Started() )
-                +" tempo.pause_on: " + IntToStr( (int)effect_state.tempo.Paused())
-                + " tempo.ticks: " + IntToStr( effect_state.tempo.ticks )
-                + " tempo.ang: " + FloatToStr( effect_state.tempo.ang )
-    );
-*/
-    ///enviamos el valor al CORE
+    p_MobDescriptor.SetEffectState( EffectState );
+
+    /// enviamos el valor al CORE
     SetMob( p_MobDescriptor );
 
 }
@@ -194,10 +182,10 @@ void moLayerEffectCtrl::Inspect( moMobDescriptor p_MobDesc ) {
 void moLayerEffectCtrl::OnCheckBoxOnOffClick(wxCommandEvent& event)
 {
     ///copiamos el estado...
-    moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     ///lo modificamos
-    EffectState.on*= -1;
+    (EffectState.Activated())? EffectState.Deactivate() : EffectState.Activate();
 
     ///tratamos de actualizar el valor
     Update( EffectState );
@@ -207,7 +195,7 @@ void moLayerEffectCtrl::OnCheckBoxOnOffClick(wxCommandEvent& event)
 void moLayerEffectCtrl::OnLevelAlpha(wxCommandEvent& event) {
 
     ///copiamos el estado...
-    moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     ///lo modificamos
     EffectState.alpha = (float) event.GetInt() / (float)255.0;
@@ -220,7 +208,7 @@ void moLayerEffectCtrl::OnLevelAlpha(wxCommandEvent& event) {
 void moLayerEffectCtrl::OnLevelTint(wxCommandEvent& event) {
 
     ///copiamos el estado...
-    moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     ///lo modificamos
     EffectState.tint = (float) event.GetInt() / (float)255.0;
@@ -233,7 +221,7 @@ void moLayerEffectCtrl::OnLevelTint(wxCommandEvent& event) {
 void moLayerEffectCtrl::OnLevelHue(wxCommandEvent& event) {
 
     ///copiamos el estado...
-    moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     ///lo modificamos
     EffectState.tintc = (float) event.GetInt() / (float)360.0;
@@ -245,7 +233,7 @@ void moLayerEffectCtrl::OnLevelHue(wxCommandEvent& event) {
 void moLayerEffectCtrl::OnLevelSaturation(wxCommandEvent& event) {
 
     ///copiamos el estado...
-    moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     ///lo modificamos
     EffectState.tints = (float) event.GetInt() / (float)255.0;
@@ -258,7 +246,7 @@ void moLayerEffectCtrl::OnLevelSaturation(wxCommandEvent& event) {
 void moLayerEffectCtrl::OnLevelSpeed(wxCommandEvent& event) {
 
     ///copiamos el estado...
-    moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     ///lo modificamos
     EffectState.synchronized = MO_DEACTIVATED;
@@ -283,13 +271,10 @@ void moLayerEffectCtrl::OnPanelVisibilityMouseMove(wxMouseEvent& event)
 void moLayerEffectCtrl::OnBitmapButtonVisibilityClick(wxCommandEvent& event)
 {
     ///copiamos el estado...
-    moEffectState EffectState = m_MobDescriptor.GetState().GetEffectState();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     ///lo modificamos
-    //EffectState.synchronized = MO_DEACTIVATED;
-    EffectState.on*= -1;
-
-    //ShowMessage( moText("visibility checked") );
+    ( EffectState.Activated() ) ? EffectState.Deactivate() : EffectState.Activate();
 
     ///tratamos de actualizar el valor
     Update( EffectState );
@@ -473,20 +458,20 @@ moLayerEffectCtrl::MobUpdated( moMobDescriptor p_MobDesc ) {
     m_MobDescriptor = p_MobDesc;
 
     ///actualizamos los controles de esta ventana
-    moMobDefinition &MobDefinition( m_MobDescriptor.GetMobDefinition() );
-    moEffectState &EffectState( m_MobDescriptor.GetState().GetEffectState() );
+    moMobDefinition MobDefinition = m_MobDescriptor.GetMobDefinition();
+    moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
     if (TextCtrlLabel)
       TextCtrlLabel->SetLabel( moText2Wx( MobDefinition.GetLabelName() ) );
 
     if (BitmapButtonView)
-    switch( EffectState.on ) {
-              case MO_OFF:
+    switch( EffectState.Activated() ) {
+              case false:
                   ///CheckBoxOnOff->SetValue(false);
                   BitmapButtonView->SetBitmapLabel( m_BitmapViewOff );
 
                   break;
-              case MO_ON:
+              case true:
                   ///CheckBoxOnOff->SetValue(true);
                   BitmapButtonView->SetBitmapLabel( m_BitmapViewOn );
                   break;
@@ -604,7 +589,7 @@ void moEffectLayerTimelineCtrl::OnPaint( wxPaintEvent& event ) {
     dc.SetBrush( BackBrush );
     dc.SetPen( wxPen( wxColour(75,75,75), 1, wxSOLID) );
 
-    int linedelta = m_MobDescriptor.GetState().GetEffectState().tempo.delta;
+    int linedelta = m_MobDescriptor.GetEffectState().tempo.delta;
 
     for(int i =0; i<GetSize().x; i+= ( (GetSize().x / 40 ) * linedelta )) {
         dc.DrawLine( i, 0, i, GetSize().y );
@@ -866,7 +851,7 @@ moItemLayerWindow::SetMob( moMobDescriptor p_MobDesc ) {
 
 void moLayerEffectCtrl::OnBitmapButtonPlay(wxCommandEvent& event)
 {
-    moEffectState& EffectState( m_MobDescriptor.GetState().GetEffectState() );
+    moEffectState& EffectState( m_MobDescriptor.GetEffectState() );
 
     EffectState.synchronized = MO_DEACTIVATED;
     EffectState.tempo.Start();
@@ -877,7 +862,7 @@ void moLayerEffectCtrl::OnBitmapButtonPlay(wxCommandEvent& event)
 
 void moLayerEffectCtrl::OnBitmapButtonPauseClick(wxCommandEvent& event)
 {
-    moEffectState& EffectState( m_MobDescriptor.GetState().GetEffectState() );
+    moEffectState& EffectState( m_MobDescriptor.GetEffectState() );
 
     EffectState.synchronized = MO_DEACTIVATED;
     EffectState.tempo.Pause();
@@ -887,7 +872,7 @@ void moLayerEffectCtrl::OnBitmapButtonPauseClick(wxCommandEvent& event)
 
 void moLayerEffectCtrl::OnBitmapButtonStopClick(wxCommandEvent& event)
 {
-    moEffectState& EffectState( m_MobDescriptor.GetState().GetEffectState() );
+    moEffectState& EffectState( m_MobDescriptor.GetEffectState() );
 
     EffectState.synchronized = MO_DEACTIVATED;
     EffectState.tempo.Stop();

@@ -805,10 +805,11 @@ moDirectorCore::LoadDefinition() {
 	//GetDefinition();
 
 	moParamDefinitions *pdefinitions = m_Config.GetConfigDefinition()->GetParamDefinitions();
+    moParamDefinitions& PD( *pdefinitions );
 
 	if  (pdefinitions)
         for( MOuint i=0; i < pdefinitions->Count(); i++ ) {
-            pdefinitions->Get(i).SetIndex( m_Config.GetParamIndex( pdefinitions->Get(i).GetName() ));
+            PD[i].SetIndex( m_Config.GetParamIndex( pdefinitions->Get(i).GetName() ));
         }
 
 }

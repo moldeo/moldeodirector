@@ -46,19 +46,19 @@ moDirectorConsole::GetObject( moMobDescriptor p_MobDesc ) {
     MOint idx = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
     switch( p_MobDesc.GetMobDefinition().GetType() ) {
         case MO_OBJECT_PREEFFECT:
-            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.PreEffects().Get(idx);
+            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.PreEffects().GetRef(idx);
             break;
         case MO_OBJECT_EFFECT:
-            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.Effects().Get(idx);
+            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.Effects().GetRef(idx);
             break;
         case MO_OBJECT_POSTEFFECT:
-            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.PostEffects().Get(idx);
+            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.PostEffects().GetRef(idx);
             break;
         case MO_OBJECT_MASTEREFFECT:
-            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.MasterEffects().Get(idx);
+            if (idx>-1) pMOB = (moMoldeoObject*) m_EffectManager.MasterEffects().GetRef(idx);
             break;
         case MO_OBJECT_IODEVICE:
-            if (idx>-1) pMOB = (moMoldeoObject*) m_pIODeviceManager->IODevices().Get(idx);
+            if (idx>-1) pMOB = (moMoldeoObject*) m_pIODeviceManager->IODevices().GetRef(idx);
             break;
         case MO_OBJECT_RESOURCE:
             idx = m_pResourceManager->GetResourceIndex( p_MobDesc.GetMobDefinition().GetLabelName() );
@@ -193,7 +193,7 @@ moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//lo
 
         moMobDescriptors mMobs = GetMobDescriptors();
 
-        for( int i=0; i < mMobs.Count(); i++ ) {
+        for( MOuint i=0; i < mMobs.Count(); i++ ) {
 
             moMobDescriptor mMob = mMobs[i];
 
@@ -311,7 +311,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
     moMobDescriptors    mMobDescriptors;
 
     for( int i=0;  i < (int) m_MoldeoObjects.Count(); i++) {
-        moMoldeoObject* pMOB = m_MoldeoObjects.Get(i);
+        moMoldeoObject* pMOB = m_MoldeoObjects.GetRef(i);
         if (pMOB) {
             moEffect* pEffect = NULL;
             switch(pMOB->GetType()) {
@@ -332,8 +332,9 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
             moMobDescriptor mMobDescriptor( m_ProjectDescriptor, pMOB->GetMobDefinition() );
 
+
             if (pEffect)
-                mMobDescriptor.SetState( moMobState(pEffect->state) );
+                mMobDescriptor.SetState( pEffect->GetEffectState() );
 
             mMobDescriptors.Add( mMobDescriptor );
         }
@@ -437,7 +438,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
                     moTexture*  tex;
 
-                    for( int i = 0; i< pTM->GetTextureCount(); i++) {
+                    for( MOuint i = 0; i< pTM->GetTextureCount(); i++) {
 
                         tex = pTM->GetTexture(i);
                         if (tex) {
@@ -501,7 +502,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 	    moConfig CheckConfig;
 	    moMobDescriptor MobDescriptor;
         moProjectDescriptor ProjectDescriptor;
-        moDirectorStatus	mStatus;
+        moDirectorStatus	mStatus = MO_DIRECTOR_STATUS_ERROR;
 
         ProjectDescriptor = GetProject();
         int result;
@@ -516,7 +517,8 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 	        moText oclass = CheckConfig.GetObjectClass();
 	        moFile fname(CheckConfig.GetName());
 	        moText oconfigname = fname.GetFileName();
-	        moMoldeoObjectType otype = moMobDefinition::GetStrType( oclass );
+	        moMoldeoObjectType otype = moGetStrType( oclass );
+
 
 	        Log( moText("importing:") + moText(" name:") + (moText)oname + moText(" class:") + (moText)oclass + moText(" confname:") + (moText)oconfigname );
 
@@ -614,52 +616,51 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
 	    p_MobDesc.SetProjectDescriptor( GetProject() );
 
-	    moMobDefinition& pMobDef( p_MobDesc.GetMobDefinition() );
+	    moMobDefinition pMobDef = p_MobDesc.GetMobDefinition();
 
 	    moEffect* pEffect = NULL;
 	    moResource* pResource = NULL;
 	    MOint rid = -1;
         moMoldeoObject* pMOB = NULL;
-        moMobIndex& MobIndex( p_MobDesc.GetMobDefinition().GetMobIndex() );
 
 	    switch( (int) pMobDef.GetType()) {
 	        case MO_OBJECT_PREEFFECT:
-                MobIndex.SetParamIndex( m_Config.GetParamIndex("preeffect") );
-                MobIndex.SetValueIndex( m_EffectManager.PreEffects().Count() );
+                pMobDef.SetConsoleParamIndex( m_Config.GetParamIndex("preeffect") );
+                pMobDef.SetConsoleValueIndex( m_EffectManager.PreEffects().Count() );
                 pMOB = (moMoldeoObject*)m_EffectManager.New( pMobDef );
                 pEffect = (moEffect*) pMOB;
                 if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "preeffect" );
                 break;
             case MO_OBJECT_EFFECT:
-                MobIndex.SetParamIndex( m_Config.GetParamIndex("effect") );
-                MobIndex.SetValueIndex( m_EffectManager.Effects().Count() );
+                pMobDef.SetConsoleParamIndex( m_Config.GetParamIndex("effect") );
+                pMobDef.SetConsoleValueIndex( m_EffectManager.Effects().Count() );
                 pMOB = (moMoldeoObject*)m_EffectManager.New( pMobDef );
                 pEffect = (moEffect*) pMOB;
                 if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "effect" );
                 break;
             case MO_OBJECT_POSTEFFECT:
-                MobIndex.SetParamIndex( m_Config.GetParamIndex("posteffect") );
-                MobIndex.SetValueIndex( m_EffectManager.PostEffects().Count() );
+                pMobDef.SetConsoleParamIndex( m_Config.GetParamIndex("posteffect") );
+                pMobDef.SetConsoleValueIndex( m_EffectManager.PostEffects().Count() );
                 pMOB = (moMoldeoObject*)m_EffectManager.New( pMobDef );
                 pEffect = (moEffect*) pMOB;
                 if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "posteffect" );
                 break;
             case MO_OBJECT_MASTEREFFECT:
-                MobIndex.SetParamIndex( m_Config.GetParamIndex("mastereffect") );
-                MobIndex.SetValueIndex( m_EffectManager.MasterEffects().Count() );
+                pMobDef.SetConsoleParamIndex( m_Config.GetParamIndex("mastereffect") );
+                pMobDef.SetConsoleValueIndex( m_EffectManager.MasterEffects().Count() );
                 pMOB = (moMoldeoObject*)m_EffectManager.New( pMobDef );
                 pEffect = (moEffect*) pMOB;
                 if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "mastereffect" );
                 break;
             case MO_OBJECT_IODEVICE:
-                MobIndex.SetParamIndex( m_Config.GetParamIndex("devices") );
-                MobIndex.SetValueIndex( m_pIODeviceManager->IODevices().Count() );
-                pMOB = (moMoldeoObject*) m_pIODeviceManager->NewIODevice( pMobDef.GetName(), pMobDef.GetConfigName(), pMobDef.GetLabelName(), MO_OBJECT_IODEVICE, MobIndex.GetParamIndex(), MobIndex.GetValueIndex() );
+                pMobDef.SetConsoleParamIndex( m_Config.GetParamIndex("devices") );
+                pMobDef.SetConsoleValueIndex( m_pIODeviceManager->IODevices().Count() );
+                pMOB = (moMoldeoObject*) m_pIODeviceManager->NewIODevice( pMobDef.GetName(), pMobDef.GetConfigName(), pMobDef.GetLabelName(), MO_OBJECT_IODEVICE, pMobDef.GetMobIndex().GetParamIndex(), pMobDef.GetMobIndex().GetValueIndex() );
                 if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "iodevice" );
                 break;
             case MO_OBJECT_RESOURCE:
-                MobIndex.SetParamIndex( m_Config.GetParamIndex("resources") );
-                MobIndex.SetValueIndex( m_Config.GetParam("resources").GetValuesCount() );
+                pMobDef.SetConsoleParamIndex( m_Config.GetParamIndex("resources") );
+                pMobDef.SetConsoleValueIndex( m_Config.GetParam("resources").GetValuesCount() );
                 rid = m_pResourceManager->GetResourceIndex( pMobDef.GetLabelName() );
                 if(rid>-1) pResource = m_pResourceManager->GetResource(rid);
 
@@ -681,7 +682,9 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                     }
                 }
                 pMOB = (moMoldeoObject*) pResource;
-                pMOB->GetMobDefinition() = p_MobDesc.GetMobDefinition();
+
+                pMOB->SetMobDefinition( pMobDef );
+
                 if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "resource" );
                 break;
             default:
@@ -726,13 +729,13 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                     if (res) {
                         if (pEffect) {
                             pEffect->LoadCodes( m_pIODeviceManager );
-                            pEffect->state.on = MO_ON;
+                            pEffect->Activate();
                         }
                     } else {
                         LogError( moText("moDirectorConsole::NewMob Couldn't initialized effect" ) );
                     }
 
-                    //pEffect->Draw( &state.tempo );
+                    //pEffect->Draw( &m_EffectState.tempo );
                     moValue effectvalue( pMOB->GetName(), "TXT" );
                     effectvalue.AddSubValue( pMOB->GetConfigName() , "TXT" );
                     effectvalue.AddSubValue( pMOB->GetLabelName() , "TXT" );
@@ -775,7 +778,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
     moMoldeoObjectType MobType = p_MobDesc.GetMobDefinition().GetType();
     int index_object = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
 
-    pObj = m_MoldeoObjects.Get(
+    pObj = m_MoldeoObjects.GetRef(
                               RelativeToGeneralIndex( index_object, MobType )
                                );
 
@@ -815,12 +818,12 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
             ///hace un switch entre el objeto q estaba ahi y este...
             //p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex()
-            //moEffect* pObjFx = m_EffectManager.Effects().Get(index_object);
-            moMobIndex mindex = p_MobDesc.GetMobDefinition().GetMobIndex();
-            int paramindex = mindex.GetParamIndex();
+            //moEffect* pObjFx = m_EffectManager.Effects().GetRef(index_object);
+            int paramindex = p_MobDesc.GetMobDefinition().GetMobIndex().GetParamIndex();
+            int valueindex = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
 
-            int preconf1 = m_Config.GetValue( paramindex, mindex.GetValueIndex() ).GetSubValue(3).Int();
-            int active1 = m_Config.GetValue( paramindex, mindex.GetValueIndex() ).GetSubValue(4).Int();
+            int preconf1 = m_Config.GetValue( paramindex, valueindex ).GetSubValue(3).Int();
+            int active1 = m_Config.GetValue( paramindex, valueindex ).GetSubValue(4).Int();
 
             ///intercambiamos los objetos dentro del array del effectmanager
 
@@ -836,7 +839,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
               for( int o = index_object; o < (position); o++ ) {
 
                 ///intercambiamos los objetos... en el array
-                pObjAux = m_MoldeoObjects.Get( RelativeToGeneralIndex( o+1, MobType ) );
+                pObjAux = m_MoldeoObjects.GetRef( RelativeToGeneralIndex( o+1, MobType ) );
 
                 if ( MO_OBJECT_EFFECT<=MobType && MobType<=MO_OBJECT_PREEFFECT) m_EffectManager.Set( o, pObjAux );
                 else if (MobType==MO_OBJECT_IODEVICE) m_pIODeviceManager->IODevices().Set( o, (moIODevice*)pObjAux );
@@ -854,7 +857,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(2).SetText( pObjAux->GetLabelName() );
                 m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(3).SetInt( preconf2 );
                 m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(4).SetInt( active2 );
-                pObjAux->GetMobDefinition().GetMobIndex().SetValueIndex( o );
+                pObjAux->SetConsoleValueIndex( o );
 
               }
               ///al fin...
@@ -866,7 +869,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
               m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(2).SetText( pObj->GetLabelName() );
               m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(3).SetInt( preconf1 );
               m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(4).SetInt( active1 );
-              pObj->GetMobDefinition().GetMobIndex().SetValueIndex( position );
+              pObj->SetConsoleValueIndex( position );
               int mobsindx = RelativeToGeneralIndex( position, MobType );
               m_MoldeoObjects.Set( mobsindx, pObj );
 
@@ -877,7 +880,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
               /// arrancando desde el position hasta el index_object
               for( int o = index_object ; o >= (position+1)  ; o-- ) {
 
-               pObjAux = m_MoldeoObjects.Get( RelativeToGeneralIndex( o-1, MobType ) );
+               pObjAux = m_MoldeoObjects.GetRef( RelativeToGeneralIndex( o-1, MobType ) );
 
                 if ( MO_OBJECT_EFFECT<=MobType && MobType<=MO_OBJECT_PREEFFECT) m_EffectManager.Set( o, pObjAux );
                 else if (MobType==MO_OBJECT_IODEVICE) m_pIODeviceManager->IODevices().Set( o, (moIODevice*)pObjAux );
@@ -894,7 +897,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(3).SetInt( preconf2 );
                 m_Config.GetParam( paramindex ).GetValue( o ).GetSubValue(4).SetInt( active2 );
 
-                pObjAux->GetMobDefinition().GetMobIndex().SetValueIndex( o );
+                pObjAux->SetConsoleValueIndex( o );
 
               }
               ///al fin...
@@ -906,7 +909,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
               m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(2).SetText( pObj->GetLabelName() );
               m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(3).SetInt( preconf1 );
               m_Config.GetParam( paramindex ).GetValue( position ).GetSubValue(4).SetInt( active1 );
-              pObj->GetMobDefinition().GetMobIndex().SetValueIndex( position );
+              pObj->SetConsoleValueIndex( position );
               int mobsindx = RelativeToGeneralIndex( position, MobType );
               m_MoldeoObjects.Set( mobsindx, pObj );
             }
@@ -1049,24 +1052,24 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 		//for ( int idx=0; idx < (int)m_MoldeoObjects.Count(); idx++ ) {
         switch( (int) p_MobDesc.GetMobDefinition().GetType() ) {
             case MO_OBJECT_PREEFFECT:
-                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.PreEffects().Get(idx) );
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.PreEffects().GetRef(idx) );
                 break;
             case MO_OBJECT_EFFECT:
-                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.Effects().Get(idx));
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.Effects().GetRef(idx));
                 break;
             case MO_OBJECT_POSTEFFECT:
-                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.PostEffects().Get(idx));
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.PostEffects().GetRef(idx));
                 break;
             case MO_OBJECT_MASTEREFFECT:
-                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.MasterEffects().Get(idx));
+                pMOB = dynamic_cast<moMoldeoObject*>(m_EffectManager.MasterEffects().GetRef(idx));
                 break;
             case MO_OBJECT_IODEVICE:
-                pMOB = dynamic_cast<moMoldeoObject*>(m_pIODeviceManager->IODevices().Get(idx));
+                pMOB = dynamic_cast<moMoldeoObject*>(m_pIODeviceManager->IODevices().GetRef(idx));
                 break;
             case MO_OBJECT_RESOURCE:
                 idx = m_pResourceManager->GetResourceIndex( p_MobDesc.GetMobDefinition().GetLabelName());
                 if (idx!=-1)
-                  pMOB = dynamic_cast<moMoldeoObject*>(m_pResourceManager->Resources().Get(idx));
+                  pMOB = dynamic_cast<moMoldeoObject*>(m_pResourceManager->Resources().GetRef(idx));
                 break;
         }
 
@@ -1161,6 +1164,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 case MO_OBJECT_IODEVICE:
                 case MO_OBJECT_RESOURCE:
                 case MO_OBJECT_CONSOLE:
+                    p_MobDesc.SetState( pMOB->GetState() );
                     break;
                 case MO_OBJECT_PREEFFECT:
                 case MO_OBJECT_EFFECT:
@@ -1168,10 +1172,11 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                 case MO_OBJECT_MASTEREFFECT:
                     moEffect* pEffect = dynamic_cast<moEffect*>(pMOB);
                     if (pEffect) {
-                      p_MobDesc.SetState( moMobState(pEffect->state) );
+                      p_MobDesc.SetState( pEffect->GetEffectState() );
                     }
                     break;
             }
+
             return p_MobDesc;
         }
 
@@ -1186,7 +1191,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
         if (pMOB) {
 
-            //wxMessageBox( moText2Wx( p_MobDesc.GetMobDefinition().GetLabelName() ) + IntToStr(p_MobDesc.GetState().GetEffectState().on) );
+            //wxMessageBox( moText2Wx( p_MobDesc.GetMobDefinition().GetLabelName() ) + IntToStr(p_MobDesc.GetEffectState().on) );
             switch(pMOB->GetType()) {
 
               case MO_OBJECT_PREEFFECT:
@@ -1198,42 +1203,65 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
                   if (Effect) {
 
-                    Effect->state.on = p_MobDesc.GetState().GetEffectState().on;
-                    Effect->state.alpha = p_MobDesc.GetState().GetEffectState().alpha;
-                    Effect->state.tint = p_MobDesc.GetState().GetEffectState().tint;
-                    Effect->state.tintc = p_MobDesc.GetState().GetEffectState().tintc;
-                    Effect->state.tints = p_MobDesc.GetState().GetEffectState().tints;
-                    Effect->state.tempo.delta = p_MobDesc.GetState().GetEffectState().tempo.delta;
-                    Effect->state.synchronized= p_MobDesc.GetState().GetEffectState().synchronized;
-                    Effect->state.CSV2RGB();
-                    p_MobDesc.GetState().GetEffectState().tintr = Effect->state.tintr;
-                    p_MobDesc.GetState().GetEffectState().tintg = Effect->state.tintg;
-                    p_MobDesc.GetState().GetEffectState().tintb = Effect->state.tintb;
+                    moEffectState fxstate = p_MobDesc.GetEffectState();
+                    moEffectState old_fxstate = Effect->GetEffectState();
 
-                    //Effect->state = p_MobDesc.GetState().GetEffectState();
+                    fxstate.CSV2RGB();
 
-                    switch(p_MobDesc.GetState().GetEffectState().tempo.State()) {
-                        case MO_TIMERSTATE_PAUSED:
-                            Effect->state.tempo.Pause();
-                            break;
-                        case MO_TIMERSTATE_PLAYING:
-                            if (!Effect->state.tempo.Started()) {
-                                Effect->state.tempo.Start();
-                            } else {
-                                Effect->state.tempo.Continue();
-                            }
-                            break;
-                        case MO_TIMERSTATE_STOPPED:
-                            Effect->state.tempo.Stop();
-                            break;
+                    Effect->SetEffectState( fxstate );
+
+                    if (fxstate.tempo.delta!=old_fxstate.tempo.delta) {
+                       Effect->Unsynchronize();
                     }
 
                     /*
+                    Effect->state.on = p_MobDesc.GetEffectState().on;
+                    Effect->state.alpha = p_MobDesc.GetEffectState().alpha;
+                    Effect->state.tint = p_MobDesc.GetEffectState().tint;
+                    Effect->state.tintc = p_MobDesc.GetEffectState().tintc;
+                    Effect->state.tints = p_MobDesc.GetEffectState().tints;
+                    Effect->m_EffectState.tempo.delta = p_MobDesc.GetEffectState().tempo.delta;
+                    Effect->state.synchronized= p_MobDesc.GetEffectState().synchronized;
+                    */
+
+
+                    /*
+                    p_MobDesc.GetEffectState().tintr = Effect->state.tintr;
+                    p_MobDesc.GetEffectState().tintg = Effect->state.tintg;
+                    p_MobDesc.GetEffectState().tintb = Effect->state.tintb;
+                    p_MobDesc.SetEffectState(Effect->GetEffectState());
+                    */
+
+                    //Effect->state = p_MobDesc.GetEffectState();
+
+                    ///Traduce codigo en accion
+                    switch( Effect->State()) {
+                        case MO_TIMERSTATE_PAUSED:
+                            Effect->Pause();
+                            break;
+                        case MO_TIMERSTATE_PLAYING:
+                            if (Effect->State()==MO_TIMERSTATE_PAUSED) {
+                                Effect->Play();
+                            } else {
+                                Effect->Continue();
+                            }
+                            break;
+                        case MO_TIMERSTATE_STOPPED:
+                            Effect->Stop();
+                            break;
+                    }
+
+
+                    ///Una vez actualizado el efecto,
+                    /// Devolvemos al Core el MobDescriptor con el ultimo estado del efecto (moEffectState).
+                    p_MobDesc.SetEffectState( Effect->GetEffectState() );
+
+                    /*
                     MODebug2->Push( "moDirectorConsole::SetMob sync: " + IntToStr((int)Effect->state.synchronized)
-                                    +" tempo.on: " + IntToStr( (int)Effect->state.tempo.Started() )
-                                    +" tempo.pause_on: " + IntToStr( (int)Effect->state.tempo.Paused())
-                                    + " tempo.ticks: " + IntToStr( Effect->state.tempo.ticks )
-                                    + " tempo.ang: " + FloatToStr( Effect->state.tempo.ang ) );
+                                    +" tempo.on: " + IntToStr( (int)Effect->m_EffectState.tempo.Started() )
+                                    +" tempo.pause_on: " + IntToStr( (int)Effect->m_EffectState.tempo.Paused())
+                                    + " tempo.ticks: " + IntToStr( Effect->m_EffectState.tempo.ticks )
+                                    + " tempo.ang: " + FloatToStr( Effect->m_EffectState.tempo.ang ) );
                     */
 
                     MobUpdated( p_MobDesc );

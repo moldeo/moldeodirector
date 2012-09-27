@@ -76,16 +76,16 @@ moLayerEffectCtrl::moLayerEffectCtrl(wxWindow* parent,wxWindowID id,const wxPoin
 	CheckBoxOnOff = new wxCheckBox(this, ID_CHECKBOXONOFF, wxEmptyString, wxPoint(280,24), wxSize(16,21), 0, wxDefaultValidator, _T("ID_CHECKBOXONOFF"));
 	CheckBoxOnOff->SetValue(false);
 	CheckBoxOnOff->Hide();
-	BitmapButtonView = new wxBitmapButton(this, ID_BITMAPBUTTONVIEW, wxBitmap(wxImage(_T("../../data/icons/view_16.png"))), wxPoint(0,2), wxSize(24,24), wxNO_BORDER, wxDefaultValidator, _T("ID_BITMAPBUTTONVIEW"));
+	BitmapButtonView = new wxBitmapButton(this, ID_BITMAPBUTTONVIEW, wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/view_16.png"))), wxPoint(0,2), wxSize(24,24), wxNO_BORDER, wxDefaultValidator, _T("ID_BITMAPBUTTONVIEW"));
 	BitmapButtonView->SetBackgroundColour(wxColour(0,0,0));
 	BitmapButtonView->SetToolTip(_("on/off"));
 	ColourPanelFinal = new wxMoColourPanel(this, ID_COLOURPANELFINAL, wxPoint(28,2), wxSize(24,24), wxTAB_TRAVERSAL, _T("ID_COLOURPANELFINAL"));
 	ColourPanel = new wxMoColourPanel(this, ID_COLOURPANEL, wxPoint(56,2), wxSize(24,24), wxTAB_TRAVERSAL, _T("ID_COLOURPANEL"));
-	BitmapButtonPlay = new wxBitmapButton(this, ID_BITMAPBUTTON_FXPLAY, wxBitmap(wxImage(_T("../../data/icons/play32.png"))), wxPoint(312,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXPLAY"));
+	BitmapButtonPlay = new wxBitmapButton(this, ID_BITMAPBUTTON_FXPLAY, wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/play32.png"))), wxPoint(312,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXPLAY"));
 	BitmapButtonPlay->SetToolTip(_("Play"));
-	BitmapButtonStop = new wxBitmapButton(this, ID_BITMAPBUTTON_FXSTOP, wxBitmap(wxImage(_T("../../data/icons/stop32.png"))), wxPoint(360,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXSTOP"));
+	BitmapButtonStop = new wxBitmapButton(this, ID_BITMAPBUTTON_FXSTOP, wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/stop32.png"))), wxPoint(360,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXSTOP"));
 	BitmapButtonStop->SetToolTip(_("Stop"));
-	BitmapButtonPause = new wxBitmapButton(this, ID_BITMAPBUTTON_FXPAUSE, wxBitmap(wxImage(_T("../../data/icons/pause32.png"))), wxPoint(336,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXPAUSE"));
+	BitmapButtonPause = new wxBitmapButton(this, ID_BITMAPBUTTON_FXPAUSE, wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/pause32.png"))), wxPoint(336,0), wxSize(24,24), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON_FXPAUSE"));
 	BitmapButtonPause->SetToolTip(_("Pause"));
 
 	Connect(ID_CHECKBOXONOFF,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&moLayerEffectCtrl::OnCheckBoxOnOffClick);

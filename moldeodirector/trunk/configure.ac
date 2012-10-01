@@ -1,4 +1,4 @@
-AC_INIT([Moldeo Director], [0.7.9.6], [info@moldeointeractive.com.ar], [moldeodirector])
+AC_INIT([Moldeo Director], [0.7.9.7], [info@moldeointeractive.com.ar], [moldeodirector])
 
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
@@ -109,13 +109,17 @@ dnl Check wx-Widgets
 AC_ARG_ENABLE([unicode],[AC_HELP_STRING([--disable-unicode],[internally use ansi])], 
 	[AS_IF([test "x$enableval" = "xno"],[wx_config_args="--unicode=no"])
 	AS_IF([test "x$enableval" = "xyes"],[wx_config_args="--unicode=yes"])],
-	[wx_config_args="--unicode=no"]
-)
+	[wx_config_args="--unicode=yes"])
 AM_OPTIONS_WXCONFIG
 AM_PATH_WXCONFIG(2.8.0, wxWin=1)
         if test "$wxWin" != 1; then
-        AC_MSG_ERROR([
-                wxWidgets must be installed on your system.
+        AC_MSG_ERROR([ 
+		Using $wx_config_args
+		This wxWidget option is NOT AVAILABLE in this system 
+		or must be installed, try modifiyng "configure.ac" and change wx_config_args="--unicode=xxx" line
+		then rerun autonconf and ./configure
+                OR 
+		maybe wxWidgets must be installed on your system.
 
                 Please check that wx-config is in path, the directory
                 where wxWidgets libraries are installed (returned by
@@ -125,11 +129,14 @@ AM_PATH_WXCONFIG(2.8.0, wxWin=1)
                 ])
         fi
 
+WX_LIB_GL="-lwx_gtk2u_gl-2.8"
+
 CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
 CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
 LIBS="$LIBS $WX_LIBS"
 
+AC_SUBST(WX_LIB_GL)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(CXXFLAGS)
 AC_SUBST(CFLAGS)

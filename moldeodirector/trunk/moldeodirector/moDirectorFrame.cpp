@@ -922,8 +922,8 @@ moDirectorFrame::OnNewEffect( wxCommandEvent& event ) {
     if( ret == wxID_OK ) {
 
         moMobDefinition pMobDefinition = pNewEffectDialog->GetMobDefinition();
-
-        NewMob( moMobDescriptor( pMobDefinition ) );
+        moMobDescriptor pMobDesc( pMobDefinition );
+        NewMob( pMobDesc );
 
     }
 

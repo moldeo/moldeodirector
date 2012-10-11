@@ -671,7 +671,7 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                         pResource->SetLabelName( pMobDef.GetLabelName() );
                     } else LogError( moText("Resource already loaded: ") + (moText)pResource->GetLabelName() );
                 } else
-                if (m_pResourceManager->NewResource( pMobDef.GetName() )) {
+                if (m_pResourceManager->NewResource( pMobDef.GetName(), pMobDef.GetConfigName(), pMobDef.GetLabelName() )) {
                     rid = m_pResourceManager->GetResourceIndex( pMobDef.GetLabelName() );
                     if (rid>=0) {
                         pResource = m_pResourceManager->GetResource(rid);

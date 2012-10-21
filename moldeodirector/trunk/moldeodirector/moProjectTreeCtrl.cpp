@@ -264,8 +264,13 @@ moProjectTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescripto
       moMobDescriptor pMobDescriptor = pMobDescriptors[i];
       moMobDefinition& MobDef( pMobDescriptor.GetMobDefinition() );
 
-      xitemname = wxString( moText2Wx( MobDef.GetName() )) + wxT(" > ");
-      xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) );
+      //xitemname = wxString( moText2Wx( MobDef.GetName() )) + wxT(" > ");
+      //xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) );
+
+      xitemname = wxString( moText2Wx( MobDef.GetLabelName() )) + wxT(" (");
+      xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) ) + wxT(".cfg [");
+      xitemname+= wxString( moText2Wx( MobDef.GetName() )) + wxT("])");
+
 
       ///agregamos el item
       exid = AppendItem( mob_ids[ MobDef.GetType() ], xitemname , 1 );

@@ -469,6 +469,7 @@ moValueCtrl::OnTextUpdated( wxCommandEvent& event) {
             case MO_PARAM_TEXT:
             case MO_PARAM_SOUND:
                 if (m_pTextCtrl) rValue.GetSubValue(0).SetText( moWx2Text( m_pTextCtrl->GetValue() ) );
+                //wxMessageBox(  moText2Wx(  rValue.GetSubValue(0).Text()  ) );
                 break;
             case MO_PARAM_NUMERIC:
                 if (m_pTextCtrl) {
@@ -540,7 +541,7 @@ moValueCtrl::OnTextUpdated( wxCommandEvent& event) {
                                 break;
                             }
                         }
-                        rValue.GetSubValue(0).SetInt( isel );
+                        rValue.GetSubValue(1).SetInt( isel );
                     }
                     if (m_pTextCtrlR) {
                         double ff;

@@ -1515,6 +1515,7 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                         ///directo, no chequeamos errores aqui, no sabríamos que chequear... cadena invalida?
 
                         Value = NewValue;
+                        MODebug2->Push( moText("texto:") + Value.GetSubValue(0).Text() );
                         break;
                     case MO_PARAM_3DMODEL:
                     case MO_PARAM_OBJECT:
@@ -1542,7 +1543,7 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
 
                                 ///correcto: asignamos el valor
                                 Value = NewValue;
-                            }
+                            } else return MO_DIRECTOR_STATUS_ERROR;
                         } else return MO_DIRECTOR_STATUS_ERROR;
                         break;
 

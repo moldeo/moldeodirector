@@ -40,3 +40,4 @@ class PreviewWindowSystemMem: public wxPanel
 };
 
 #endif
+

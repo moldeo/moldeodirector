@@ -145,3 +145,4 @@ moDirectorChildConsole::Init(
 	return true;
 
 }
+

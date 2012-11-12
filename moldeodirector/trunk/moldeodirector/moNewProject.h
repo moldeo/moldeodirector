@@ -59,3 +59,4 @@ class moNewProject: public wxDialog
 };
 
 #endif
+

@@ -54,3 +54,4 @@ class moLayersPanelCtrl : public wxPanel, public moIDirectorActions {
 };
 
 #endif // MOLAYERSTREEPANEL_H_INCLUDED
+

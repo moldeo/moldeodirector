@@ -43,3 +43,4 @@ class moExplorerNotebook : public wxAuiNotebook, public moIDirectorActions  {
 
 
 #endif // MOEXPLORERNOTEBOOK_H_INCLUDED
+

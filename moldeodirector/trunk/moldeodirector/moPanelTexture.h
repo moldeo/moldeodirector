@@ -76,3 +76,4 @@ class moPanelTexture: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

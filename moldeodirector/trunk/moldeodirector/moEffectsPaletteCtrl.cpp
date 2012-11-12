@@ -24,3 +24,4 @@ moEffectsPaletteCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescri
   return MO_DIRECTOR_STATUS_OK;
 
 }
+

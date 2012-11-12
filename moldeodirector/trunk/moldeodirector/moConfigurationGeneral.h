@@ -39,3 +39,4 @@ class moConfigurationGeneral: public wxPanel
 };
 
 #endif
+

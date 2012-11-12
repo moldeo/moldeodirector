@@ -173,3 +173,4 @@ class moObjectMotion: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

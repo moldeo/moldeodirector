@@ -433,3 +433,4 @@ void moObjectMotion::OnBitmapButtonRotCircularClick(wxCommandEvent& event)
     TextCtrlRy->SetValue( TextCtrlRy->GetValue() +_("*(0.5+0.25*sin(t))") );
     TextCtrlRz->SetValue( TextCtrlRz->GetValue() +_("*(0.5+0.25*tan(t))") );
 }
+

@@ -59,3 +59,4 @@ class moPreviewFrame: public wxFrame, public moIDirectorActions
 
 
 #endif
+

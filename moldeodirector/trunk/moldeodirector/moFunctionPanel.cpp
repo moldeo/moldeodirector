@@ -165,3 +165,4 @@ void moFunctionPanel::OnFunctionTextCtrlText(wxCommandEvent& event)
 
     SetValue( m_ValueDescriptor );
 }
+

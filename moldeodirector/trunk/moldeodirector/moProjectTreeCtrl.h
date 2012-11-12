@@ -110,3 +110,4 @@ class moProjectTreeCtrl : public moIDirectorActions, public wxTreeCtrl {
 };
 
 #endif
+

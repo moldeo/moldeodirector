@@ -49,5 +49,3 @@ moFilesbook::OnPageChange( wxAuiNotebookEvent &event ) {
 	event.Skip();
 }
 
-
-

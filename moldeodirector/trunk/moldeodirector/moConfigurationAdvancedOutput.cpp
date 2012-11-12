@@ -32,7 +32,7 @@ moConfigurationAdvancedOutput::moConfigurationAdvancedOutput(wxWindow* parent,wx
 {
 	//(*Initialize(moConfigurationAdvancedOutput)
 	wxFlexGridSizer* FlexGridSizer1;
-	
+
 	Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
 	SetClientSize(wxSize(606,373));
 	FlexGridSizer1 = new wxFlexGridSizer(2, 2, 0, 0);
@@ -79,7 +79,7 @@ moConfigurationAdvancedOutput::moConfigurationAdvancedOutput(wxWindow* parent,wx
 	FlexGridSizer1->Add(Panel4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
 	SetSizer(FlexGridSizer1);
 	FlexGridSizer1->SetSizeHints(this);
-	
+
 	Panel1->Connect(wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel1Paint,0,this);
 	Panel2->Connect(wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel2Paint,0,this);
 	//*)
@@ -99,3 +99,4 @@ void moConfigurationAdvancedOutput::OnPanel2Paint(wxPaintEvent& event)
 void moConfigurationAdvancedOutput::OnPanel1Paint(wxPaintEvent& event)
 {
 }
+

@@ -285,7 +285,7 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
         if ( 0<=ValueInt && ValueInt<MO_FONT_TYPES && m_pFontTypeCtrl)
           m_pFontTypeCtrl->SetValue( fonttypes[ValueInt] );
 
-        ValueStr =moText2Wx( pValue.GetSubValue(2).Text() );
+        ValueStr =moText2Wx( pValue.GetSubValue(2).ToText() );
         if (m_pTextCtrlR) m_pTextCtrlR->ChangeValue( ValueStr );
         break;
     case MO_PARAM_TEXTURE:
@@ -637,5 +637,3 @@ moValueCtrl::OnFocus( wxFocusEvent& event) {
     ShowMessage("focus on text control");
 
 }
-
-

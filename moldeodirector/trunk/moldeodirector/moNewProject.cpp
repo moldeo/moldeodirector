@@ -109,3 +109,4 @@ void moNewProject::OnProjectNameTextCtrlText(wxCommandEvent& event)
         OkButton->Enable(true);
     }
 }
+

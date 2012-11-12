@@ -69,3 +69,4 @@ class moConfigurationAdvancedOutput: public wxFrame
 };
 
 #endif
+

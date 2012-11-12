@@ -63,3 +63,4 @@ class moFilesbook : public wxAuiNotebook, public moIDirectorActions {
 
 
 #endif
+

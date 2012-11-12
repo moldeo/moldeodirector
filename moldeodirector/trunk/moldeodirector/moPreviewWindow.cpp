@@ -162,3 +162,4 @@ void moPreviewWindow::OnBitmapButtonStopClick(wxCommandEvent& event)
 {
     this->Stop();
 }
+

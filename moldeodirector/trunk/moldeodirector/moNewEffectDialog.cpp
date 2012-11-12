@@ -168,3 +168,4 @@ void moNewEffectDialog::OnConfigFilenameCtrlText(wxCommandEvent& event)
 {
     CheckData();
 }
+

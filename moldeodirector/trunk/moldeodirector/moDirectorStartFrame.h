@@ -86,3 +86,4 @@ class moDirectorStartFrame : public wxScrolledWindow , public moIDirectorActions
 };
 
 #endif
+

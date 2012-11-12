@@ -65,3 +65,4 @@ class moShaderCtrl: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

@@ -139,3 +139,4 @@ bool moMobConfig::Finish() {
 
 	return UnloadConfig();
 }
+

@@ -813,5 +813,3 @@ moDirectorCore::LoadDefinition() {
         }
 
 }
-
-

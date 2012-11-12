@@ -49,3 +49,4 @@ class moSoundPanel: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

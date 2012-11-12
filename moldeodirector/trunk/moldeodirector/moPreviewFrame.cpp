@@ -144,3 +144,4 @@ void moPreviewFrame::OnSize(wxSizeEvent& event)
     wxMessageBox("Frame On Size");
 }
 */
+

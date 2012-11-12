@@ -124,3 +124,4 @@ class moColorMotion: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

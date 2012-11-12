@@ -404,3 +404,4 @@ bool moDirectorChildFrame::Close() {
     return false;
 
 }
+

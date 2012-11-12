@@ -110,3 +110,4 @@ moExplorerNotebook::ProjectUpdated( const moProjectDescriptor& p_ProjectDescript
   return status;
 }
 
+

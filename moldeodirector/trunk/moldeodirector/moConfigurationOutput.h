@@ -60,3 +60,4 @@ class moConfigurationOutput: public wxPanel
 };
 
 #endif
+

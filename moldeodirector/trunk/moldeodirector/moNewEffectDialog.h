@@ -85,3 +85,4 @@ class moNewEffectDialog: public wxDialog
 };
 
 #endif
+

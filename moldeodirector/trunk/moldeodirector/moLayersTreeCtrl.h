@@ -89,3 +89,4 @@ class moLayersTreeCtrl : public wxTreeMultiCtrl, public moIDirectorActions {
 };
 
 #endif
+

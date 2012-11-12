@@ -100,3 +100,5 @@ class moValueCtrl : public wxPanel, public moIDirectorActions {
 
 #endif
 
+
+

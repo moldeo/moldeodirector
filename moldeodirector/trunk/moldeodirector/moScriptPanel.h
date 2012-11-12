@@ -57,3 +57,4 @@ class moScriptPanel: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

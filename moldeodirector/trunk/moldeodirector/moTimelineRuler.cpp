@@ -310,3 +310,4 @@ void moTimelineRuler::SetRenderOut( int value ) {
 int moTimelineRuler::GetRenderOut() {
     return m_render_out;
 }
+

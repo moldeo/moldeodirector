@@ -415,3 +415,4 @@ void moColorMotion::OnTextHtmlColourCtrlText(wxCommandEvent& event)
       UpdateColour( newColour );
     }
 }
+

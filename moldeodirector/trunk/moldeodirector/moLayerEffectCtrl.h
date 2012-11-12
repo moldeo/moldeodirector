@@ -203,3 +203,4 @@ class moItemLayerWindow: public moItemLayerCtrl, public wxPanel
 
 
 #endif
+

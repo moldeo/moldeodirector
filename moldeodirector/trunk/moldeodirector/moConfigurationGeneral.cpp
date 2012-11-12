@@ -34,3 +34,4 @@ moConfigurationGeneral::~moConfigurationGeneral()
 	//*)
 }
 
+

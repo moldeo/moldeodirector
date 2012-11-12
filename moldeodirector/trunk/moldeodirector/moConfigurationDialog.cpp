@@ -18,7 +18,7 @@ moConfigurationDialog::moConfigurationDialog(wxWindow* parent,wxWindowID id)
 {
 	//(*Initialize(moConfigurationDialog)
 	wxFlexGridSizer* FlexGridSizer1;
-	
+
 	Create(parent, id, _("Moldeo Director Configuration"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxSYSTEM_MENU|wxRESIZE_BORDER|wxCLOSE_BOX, _T("id"));
 	SetClientSize(wxSize(263,232));
 	FlexGridSizer1 = new wxFlexGridSizer(1, 1, 0, 0);
@@ -41,4 +41,5 @@ moConfigurationDialog::~moConfigurationDialog()
 	//(*Destroy(moConfigurationDialog)
 	//*)
 }
+
 

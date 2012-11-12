@@ -63,3 +63,4 @@ class moPreviewWindow: public wxPanel, public moIDirectorActions
 #include "moGLCanvas.h"
 
 #endif
+

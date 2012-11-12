@@ -879,3 +879,4 @@ void moLayerEffectCtrl::OnBitmapButtonStopClick(wxCommandEvent& event)
 
     Update( EffectState );
 }
+

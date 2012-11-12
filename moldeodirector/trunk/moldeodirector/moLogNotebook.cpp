@@ -117,3 +117,4 @@ void moLogNotebook::LogError( moText p_message ) {
         SetSelection(GetPageIndex(m_pLogError));
 
 }
+

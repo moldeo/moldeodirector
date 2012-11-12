@@ -282,6 +282,3 @@ moProjectTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescripto
 
   return MO_DIRECTOR_STATUS_OK;
 }
-
-
-

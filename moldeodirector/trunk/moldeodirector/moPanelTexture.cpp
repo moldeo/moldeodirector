@@ -492,3 +492,4 @@ void moPanelTexture::OnBitmapButton1Click(wxCommandEvent& event)
 void moPanelTexture::OnPanelDetailsPaint(wxPaintEvent& event)
 {
 }
+

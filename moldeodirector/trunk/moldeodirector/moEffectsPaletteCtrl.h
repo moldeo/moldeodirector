@@ -27,3 +27,4 @@ class moEffectsPaletteCtrl : public moIDirectorActions, public wxGrid  {
 
 
 #endif // MOEFFECTSPALETTECTRL_H_INCLUDED
+

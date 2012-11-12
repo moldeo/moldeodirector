@@ -80,3 +80,4 @@ class moFunctionPanel: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

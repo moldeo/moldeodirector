@@ -310,4 +310,3 @@ DECLARE_EVENT_TYPE(wxEVT_MY_EVENT, -1)
 #include "moFilesbook.h"
 
 #endif
-

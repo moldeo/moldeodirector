@@ -47,7 +47,7 @@ moConfigurationOutput::moConfigurationOutput(wxWindow* parent,wxWindowID id,cons
 	ComboBox2->Append(_("Display 2"));
 	ComboBox2->Append(_("Display 3"));
 	ButtonAdvancedOutput = new wxButton(this, ID_BUTTON1, _("Advanced Ouput"), wxPoint(40,216), wxSize(112,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	
+
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moConfigurationOutput::OnButtonAdvancedOutputClick);
 	//*)
 
@@ -69,3 +69,4 @@ void moConfigurationOutput::OnButtonAdvancedOutputClick(wxCommandEvent& event)
     m_pAdvancedOutput->Show();
 
 }
+

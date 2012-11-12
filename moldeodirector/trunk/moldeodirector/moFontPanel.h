@@ -37,3 +37,4 @@ class moFontPanel: public wxPanel
 };
 
 #endif
+

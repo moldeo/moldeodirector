@@ -89,3 +89,4 @@ class moTimelineRuler : public wxControl {
 
 
 #endif
+

@@ -226,3 +226,4 @@ void moShaderCtrl::OnEraseBackground(wxEraseEvent& event)
 {
   //nada
 }
+

@@ -46,3 +46,4 @@ class mo3dModelPanel: public wxPanel, public moIDirectorActions
 };
 
 #endif
+

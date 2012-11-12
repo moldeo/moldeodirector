@@ -44,3 +44,4 @@ class moConfigurationDialog: public wxDialog
 };
 
 #endif
+

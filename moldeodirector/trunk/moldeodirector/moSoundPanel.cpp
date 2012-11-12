@@ -250,3 +250,4 @@ void moSoundPanel::OnTextCtrlSoundText(wxCommandEvent& event)
     LoadSound();
 }
 
+

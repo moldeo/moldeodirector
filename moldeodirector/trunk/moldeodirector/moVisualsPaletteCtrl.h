@@ -26,3 +26,4 @@ class moVisualsPaletteCtrl : public moIDirectorActions, public wxGrid  {
 };
 
 #endif // MOVISUALSPALETTECTRL_H_INCLUDED
+

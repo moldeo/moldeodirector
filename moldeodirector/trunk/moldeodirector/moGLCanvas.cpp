@@ -79,7 +79,7 @@ moGLCanvas::Activate( wxEvtHandler* p_pHandler ) {
         m_pHandler = p_pHandler;
         m_active = true;
         SetFocus();
-        Log("...Activated");
+        Log("moGLCanvas::Activate > ...Activated");
     }
 
 }
@@ -90,12 +90,13 @@ moGLCanvas::Finish() {
 	block = true;
 	m_init = false;
 	m_active = false;
-	Log("GL Canvas Finalized");
+	Log("moGLCanvas::Activate > GL Canvas Finalized");
 	return true;
 }
 
 void
 moGLCanvas::Reset() {
+    Log("moGLCanvas::Reset > m_init set to false...");
 	m_init = false;
 	//Refresh();
 }
@@ -132,8 +133,8 @@ void moGLCanvas::OnPaint( wxPaintEvent& WXUNUSED(event) )
 
     if( GetContext() )
     if (!m_init && !block) {
+        Log("moGLCanvas::OnPaint > GL Canvas SetView called...");
         SetView(0,0,w,h);
-        Log("GL Canvas Initialized");
         m_init = true;
     }
 
@@ -236,12 +237,13 @@ void moGLCanvas::OnSize(wxSizeEvent& event)
 
     int w, h;
     GetClientSize(&w, &h);
+    Log(  moText( "moGLCanvas::OnSize > " ) + IntToStr(w) + moText("X") + IntToStr(h) );
+    if( GetContext() ) {
+        //if (!block) {
+            SetView( 0, 0, w, h );
+            //m_init = true;
 
-    if( GetContext() )
-    if (!block) {
-        SetView( 0, 0, w, h );
-        //m_init = true;
-
+        //}
     }
         /*
 		if (m_init) {

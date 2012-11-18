@@ -1967,16 +1967,16 @@ moDirectorConsole::SetView( int x, int y, int w, int h ) {
         Log( moText("moDirectorConsole::SetView WITH CONSOLE") );
         if (m_pResourceManager) {
             if (m_pResourceManager->Initialized()) {
-            		if (m_pResourceManager->GetRenderMan()) {
+                if (m_pResourceManager->GetRenderMan()) {
                   m_pResourceManager->GetRenderMan()->Finish();
                   m_pResourceManager->GetRenderMan()->Init( RENDERMANAGER_MODE_NORMAL, w, h, w, h);
-                  Log("moDirectorConsole::SetView Render Manager Resized");
+                  Log( moText("moDirectorConsole::SetView Render Manager Resized > ") + IntToStr(w) + moText("X") + IntToStr(h) );
                 }
 
             }
         }
     } else {
-        Log( moText("moDirectorConsole::SetView NO CONSOLE") );
+        Log( moText("moDirectorConsole::SetView NO CONSOLE YET > size:") + IntToStr(w) + moText("X") + IntToStr(h)  );
 
         glViewport( 0, 0, w, h );
         glMatrixMode( GL_PROJECTION );

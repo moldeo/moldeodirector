@@ -1300,15 +1300,14 @@ moDirectorFrame::FullScreen( bool force ) {
         ProjectPreview();
         if (m_pPreviewFrame)
             m_pPreviewFrame->FullScreen();
-    } else
-    if ( m_pPreviewFrame!=NULL && !m_pPreviewFrame->IsShown() ) {
-        ProjectPreview();
-        m_pPreviewFrame->FullScreen(true);
-    } else
-    if (m_pPreviewFrame!=NULL && m_pPreviewFrame->IsShown()) {
-        m_pPreviewFrame->FullScreen();
+    } else {
+        if ( m_pPreviewFrame->IsShown() ) {
+            m_pPreviewFrame->FullScreen();
+        } else {
+            ProjectPreview();
+            m_pPreviewFrame->FullScreen(true);
+        }
     }
-
 
 }
 
@@ -1337,6 +1336,7 @@ moDirectorFrame::ProjectPreview() {
             } else {
                 m_pGLCanvas = NULL;
                 m_pPreviewFrame->m_pGLCanvas->Finish();
+                //m_pPreviewFrame->m_pGLCanvas = NULL;
                 m_pPreviewFrame->Hide();
 
                 m_pPreviewWindow->m_pGLCanvas->Finish();//agregado...al sacarse arriba

@@ -29,8 +29,10 @@ class moPreviewFrame: public wxFrame, public moIDirectorActions
 		//*)
 
 		moGLCanvas* m_pGLCanvas;
+		wxGridSizer* m_pSizer;
 
 		void Init( moIDirectorActions* pActionsHandler, wxGLContext* p_pGLContext );
+        void ReSetGLCanvas( wxGLContext* p_pGLContext );
 
     public:
         moDirectorStatus FullScreen(bool force=false);
@@ -50,7 +52,7 @@ class moPreviewFrame: public wxFrame, public moIDirectorActions
 		void OnClose(wxCloseEvent& event);
 		//*)
 		void OnToolClick( wxCommandEvent &event);
-		//void OnSize(wxSizeEvent& event);
+		void OnSize(wxSizeEvent& event);
 
 		DECLARE_EVENT_TABLE()
 };

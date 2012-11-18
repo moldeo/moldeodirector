@@ -1309,6 +1309,11 @@ moDirectorFrame::FullScreen( bool force ) {
         }
     }
 
+    /*
+    if (m_pGLCanvas && m_pDirectorCore->GetDirectorIODeviceManager())
+        m_pGLCanvas->Activate( m_pDirectorCore->GetDirectorIODeviceManager() );
+    */
+
 }
 
 moDirectorStatus
@@ -1328,11 +1333,11 @@ moDirectorFrame::ProjectPreview() {
                     m_pPreviewFrame->Init( this, m_pGLContext );
                 }
                 m_pPreviewFrame->Init( this, m_pGLContext );
-                m_pPreviewFrame->m_pGLCanvas->SetCurrent();
+                if (m_pPreviewFrame->m_pGLCanvas)
+                    m_pPreviewFrame->m_pGLCanvas->SetCurrent();
                 m_pPreviewFrame->Show();
 
                 m_pGLCanvas = m_pPreviewFrame->m_pGLCanvas;
-
             } else {
                 m_pGLCanvas = NULL;
                 m_pPreviewFrame->m_pGLCanvas->Finish();
@@ -1341,7 +1346,8 @@ moDirectorFrame::ProjectPreview() {
 
                 m_pPreviewWindow->m_pGLCanvas->Finish();//agregado...al sacarse arriba
                 m_pPreviewWindow->Init( this, m_pGLContext );
-                m_pPreviewWindow->m_pGLCanvas->SetCurrent();
+                if (m_pPreviewWindow->m_pGLCanvas)
+                    m_pPreviewWindow->m_pGLCanvas->SetCurrent();
                 m_pPreviewWindow->Refresh();
 
                 m_pGLCanvas = m_pPreviewWindow->m_pGLCanvas;

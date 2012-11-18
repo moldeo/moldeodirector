@@ -33,6 +33,7 @@ class moPreviewFrame: public wxFrame, public moIDirectorActions
 
 		void Init( moIDirectorActions* pActionsHandler, wxGLContext* p_pGLContext );
         void ReSetGLCanvas( wxGLContext* p_pGLContext );
+        void OnKeyUp( wxKeyEvent &event );
 
     public:
         moDirectorStatus FullScreen(bool force=false);

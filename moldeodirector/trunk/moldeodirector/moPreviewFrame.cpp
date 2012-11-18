@@ -21,6 +21,7 @@ BEGIN_EVENT_TABLE(moPreviewFrame,wxFrame)
 	//*)
 	//EVT_TOOL( wxID_ANY, moPreviewFrame::OnToolClick)
 	EVT_SIZE( moPreviewFrame::OnSize )
+	EVT_KEY_UP( moPreviewFrame::OnKeyUp )
 END_EVENT_TABLE()
 
 moPreviewFrame::moPreviewFrame(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
@@ -200,5 +201,14 @@ void moPreviewFrame::OnSize(wxSizeEvent& event)
     //wxFrame::OnSize(event);
 }
 
+
+void
+moPreviewFrame::OnKeyUp( wxKeyEvent &event ) {
+    Log( "moPreviewFrame::OnKeyUp > keycode up: " + IntToStr(event.GetKeyCode()) );
+    /*fullscreen off on escape*/
+    if (event.GetKeyCode()==27) {
+        FullScreen(false);
+    }
+}
 
 

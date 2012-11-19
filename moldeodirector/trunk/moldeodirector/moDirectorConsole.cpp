@@ -228,7 +228,6 @@ moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//lo
         previewreset = false;
 
 
-		//m_timer.Start();
 		moText mode = m_Config[moR(CONSOLE_OUTPUTMODE)][MO_SELECTED][0].Text();
 
 		if (mode==moText("AUTOPLAY")) {
@@ -242,6 +241,7 @@ moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//lo
             previewreset = true;
         }
 
+        m_timer.Start(FRAME_MILIS);
 
         return MO_DIRECTOR_STATUS_OK;
 	} else {

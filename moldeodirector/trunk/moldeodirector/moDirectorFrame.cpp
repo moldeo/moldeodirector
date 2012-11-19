@@ -1248,7 +1248,8 @@ moDirectorFrame::FocusOutput() {
        //wxMessageBox(thisDisplay.GetName() + clientareastr);
        //wxMessageBox(theOtherDisplay.GetName() + clientareastr2 );
        //wxMessageBox(theOther2Display.GetName() + clientareastr3 );
-
+       Log( moWx2Text(thisDisplay.GetName()) + moWx2Text( clientareastr) );
+       Log( moWx2Text(theOtherDisplay.GetName()) + moWx2Text( clientareastr2) );
 
        if (client2.GetWidth()!=0){
 
@@ -1275,13 +1276,23 @@ moDirectorFrame::FocusOutput() {
 
 
     if(m_pGLCanvas) {
+        if (!m_pPreviewFrame) {
+            ProjectPreview();
+        }
         if (m_pPreviewFrame) {
-            if (m_pPreviewFrame->GetSize().GetWidth()!=outputwidth) m_pPreviewFrame->SetClientSize(wxSize(outputwidth,outputheight));
-            else {
+
+            if (!m_pPreviewFrame->IsShown()) {
+                ProjectPreview();
+            }
+
+            if (m_pPreviewFrame->GetClientSize().GetWidth()!=outputwidth) {
+                m_pPreviewFrame->SetClientSize(wxSize(outputwidth,outputheight));
+            } else {
               PreviewBitsW = outputwidth;
               PreviewBitsH = outputheight;
               //PreviewBits = (MOuchar*)malloc( PreviewBitsW*PreviewBitsH*3);
               m_pPreviewFrame->Move(outputleft,outputtop);
+              m_pPreviewFrame->FullScreen(true);
             }
 
 

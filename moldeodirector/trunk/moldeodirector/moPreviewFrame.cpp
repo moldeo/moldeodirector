@@ -207,7 +207,7 @@ moPreviewFrame::OnKeyUp( wxKeyEvent &event ) {
     Log( "moPreviewFrame::OnKeyUp > keycode up: " + IntToStr(event.GetKeyCode()) );
     /*fullscreen off on escape*/
     if (event.GetKeyCode()==27) {
-        FullScreen(false);
+        ShowFullScreen( false);
     }
 }
 

@@ -324,19 +324,36 @@ void moGLCanvas::OnMouse( wxMouseEvent& event )
 
 void moGLCanvas::OnKeyDown( wxKeyEvent &event ) {
     //Log("glcanvas :: kdown");
-if(m_active)
-    if(m_pHandler)		{
-        m_pHandler->ProcessEvent(event);
-    }
-	event.Skip();
+    if(m_active)
+        if(m_pHandler)		{
+            m_pHandler->ProcessEvent(event);
+        }
+
+	if (event.ShouldPropagate()) {
+        Log(moText("moGLCanvas::OnKeyDown > ShouldPropagate()") );
+	} else {
+	    event.ResumePropagation( 1 );
+	    Log(moText("moGLCanvas::OnKeyDown > should not propagate") );
+	}
+
+    event.Skip();
 }
 
 void moGLCanvas::OnKeyUp( wxKeyEvent &event ) {
     //Log("glcanvas :: kup");
-if(m_active)
-    if(m_pHandler)		{
-        m_pHandler->ProcessEvent(event);
-    }
+    if(m_active)
+        if(m_pHandler)  {
+            m_pHandler->ProcessEvent(event);
+        }
+
+	if (event.ShouldPropagate()) {
+        Log(moText("moGLCanvas::OnKeyUp > ShouldPropagate()") );
+	} else {
+	    event.ResumePropagation( 1 );
+	    Log(moText("moGLCanvas::OnKeyUp > should not propagate") );
+	}
+
+
 	event.Skip();
 }
 

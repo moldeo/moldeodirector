@@ -210,14 +210,14 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
     // now append the freshly created menu to the menu bar...
     wxMenuBar *menuBar = new wxMenuBar();
 
-    SetBackgroundStyle( wxBG_STYLE_COLOUR );
-    SetForegroundColour( m_cForeground );
-    SetBackgroundColour( m_cBackground );
+    //SetBackgroundStyle( wxBG_STYLE_COLOUR );
+    //SetForegroundColour( m_cForeground );
+    //SetBackgroundColour( m_cBackground );
 
     menuBar->SetFont( wxFont( 8,  wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL ) );
-    menuBar->SetBackgroundStyle( wxBG_STYLE_COLOUR );
-    menuBar->SetForegroundColour( m_cForeground );
-    menuBar->SetBackgroundColour( m_cBackground );
+    //menuBar->SetBackgroundStyle( wxBG_STYLE_COLOUR );
+    //menuBar->SetForegroundColour( m_cForeground );
+    //menuBar->SetBackgroundColour( m_cBackground );
 
 
     menuBar->Append(fileMenu, _T("&File"));
@@ -1309,14 +1309,18 @@ moDirectorFrame::FullScreen( bool force ) {
 
     if (m_pPreviewFrame==NULL) {
         ProjectPreview();
-        if (m_pPreviewFrame)
+        if (m_pPreviewFrame) {
             m_pPreviewFrame->FullScreen();
+            m_pPreviewFrame->SetFocus();
+        }
     } else {
         if ( m_pPreviewFrame->IsShown() ) {
             m_pPreviewFrame->FullScreen();
+            m_pPreviewFrame->SetFocus();
         } else {
             ProjectPreview();
             m_pPreviewFrame->FullScreen(true);
+            m_pPreviewFrame->SetFocus();
         }
     }
 
@@ -1347,6 +1351,7 @@ moDirectorFrame::ProjectPreview() {
                 if (m_pPreviewFrame->m_pGLCanvas)
                     m_pPreviewFrame->m_pGLCanvas->SetCurrent();
                 m_pPreviewFrame->Show();
+                m_pPreviewFrame->SetFocus();
 
                 m_pGLCanvas = m_pPreviewFrame->m_pGLCanvas;
             } else {

@@ -43,7 +43,6 @@ moLayerEffectCtrl::moLayerEffectCtrl(wxWindow* parent,wxWindowID id,const wxPoin
 	Create(parent, wxID_ANY, wxPoint(0,0), wxSize(388,44), 0, _T("wxID_ANY"));
 	SetMinSize(wxSize(-1,-1));
 	SetMaxSize(wxSize(-1,-1));
-	SetForegroundColour(wxColour(255,255,255));
 	TextCtrlLabel = new wxTextCtrl(this, ID_TEXTCTRL_LABEL, _("Text"), wxPoint(0,32), wxSize(144,12), wxNO_BORDER|wxTRANSPARENT_WINDOW, wxDefaultValidator, _T("ID_TEXTCTRL_LABEL"));
 	TextCtrlLabel->Hide();
 	TextCtrlLabel->SetForegroundColour(wxColour(255,255,255));
@@ -111,6 +110,9 @@ moLayerEffectCtrl::moLayerEffectCtrl(wxWindow* parent,wxWindowID id,const wxPoin
 
   m_BitmapViewOn = wxBitmap( wxImage( _T(MOLDEODATADIR "/icons/view_16.png") ) );
   m_BitmapViewOff = wxBitmap( wxImage( _T(MOLDEODATADIR "/icons/view_16_off.png") ) );
+
+    SetForegroundColour(wxColour(255,255,255));
+    SetBackgroundColour(wxColour(0,0,0));
 
 }
 

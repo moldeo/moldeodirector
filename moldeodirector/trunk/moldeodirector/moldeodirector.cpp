@@ -148,10 +148,10 @@ bool moDirectorApp::OnInit()
 
 
    //wxList   ImageHandlerList = wxImage::GetHandlers();
-   cout << wxT("appdir:") << wxGetCwd() << endl;
-   cout << wxT("userdir:") << StdPaths.GetUserDataDir() << endl;
-   cout << wxT("datadir:") << wxString(wxT(MOLDEODATADIR)) << endl;
-   cout << wxT("modulesdir:") << wxString(wxT(MODULESDIR)) << endl;
+   cout << "appdir:" << moWx2Text( wxGetCwd() ) << endl;
+   cout << "userdir:" << moWx2Text( StdPaths.GetUserDataDir() ) << endl;
+   cout << "datadir:" << moWx2Text(wxString(_(MOLDEODATADIR))) << endl;
+   cout << "modulesdir:" << moWx2Text(wxString(_(MODULESDIR))) << endl;
 
    cout << "Showing Frame..." << endl;
    m_pDirectorFrame->Show(true);
@@ -164,15 +164,29 @@ bool moDirectorApp::OnInit()
 
     moText config;
 
-   	while( argc > 1 ) {
+    cout << "argc: " << argc << endl;
+
+    /*minimo 2*/
+   	while( argc >= 2 ) {
 		--argc;
-		if( argv[argc-1] &&(strcmp((const char *)argv[argc-1], "-mol") == 0) ) {
-			config = (const char*)argv[argc];
+
+        wxString  arglast(argv[argc]);
+        wxString  argprev;
+
+        if (argc>0) argprev = argv[argc-1];
+
+        wxString  arg0(argv[0]);
+
+		cout <<  "Argument id" << (argc) << " : " << moWx2Text(arglast) << endl;
+
+		if( argprev == wxString( _("-mol") ) )  {
+		    config = moWx2Text( arglast );
+		    cout << "Argument -mol found! : " << config << endl;
 			--argc;
-        } else if ( argv[argc-1] && (strcmp((const char *)argv[argc-1], "--help") == 0) ) {
-            printf( "Usage: %s [-mol]\n", argv[0]);
+        } else if (  arglast == wxString(_("--help")) ) {
+            cout << "Usage: " << moWx2Text(arg0) << " [-mol]" << endl;
 		} else {
-			printf( "Usage: %s [-mol]\n", argv[0]);
+			cout << "Usage: " << moWx2Text(arg0) << " [-mol]" << endl;
 
 			/*wxMessageBox(   wxString(wxT("Error opening:")) +
                             wxString(wxT(" argc:")) + // wxString(IntToStr(argc)) +
@@ -198,7 +212,7 @@ bool moDirectorApp::OnInit()
             path+= _T("/");
         #endif
         wxString name = FileName.GetFullName();
-        ProjectDescriptor.Set( moText(path.mb_str()), moText(name.mb_str()) );
+        ProjectDescriptor.Set( moWx2Text(path), moWx2Text(name) );
         moDirectorStatus mStatus = m_pDirectorFrame->OpenProject( ProjectDescriptor );
     }
 

@@ -10,6 +10,7 @@ AC_PROG_CC
 AC_PROG_CC_STDC
 AC_C_CONST
 AC_PROG_LIBTOOL
+AM_PROG_LIBTOOL
 
 AC_PROG_CXX
 AC_PROG_CXXCPP
@@ -22,8 +23,8 @@ PKG_CHECK_MODULES([LIBMOLDEO], [libmoldeo] ,has_libmoldeo=yes)
 PKG_CHECK_MODULES([MOLDEOCONTROLS], [moldeocontrols] ,has_mnoldeocontrols=yes)
 
 #dnl check for sdl-net
-AC_CHECK_HEADER(SDL/SDL_net.h, , AC_MSG_ERROR([SDL_net header not found.]))
-AC_CHECK_LIB(SDL_net, SDLNet_Init, AC_SUBST([SDL_NET_LIBS], [-lSDL_net]), AC_MSG_ERROR([SDL_net not found.]), [${SDL_LIBS} ${WIN32_LIBS}])
+#AC_CHECK_HEADER(SDL/SDL_net.h, , AC_MSG_ERROR([SDL_net header not found.]))
+#AC_CHECK_LIB(SDL_net, SDLNet_Init, AC_SUBST([SDL_NET_LIBS], [-lSDL_net]), AC_MSG_ERROR([SDL_net not found.]), [${SDL_LIBS} ${WIN32_LIBS}])
 
 #dnl check for glew
 AC_CHECK_HEADER(GL/glew.h, , AC_MSG_ERROR([glew header not found.]))
@@ -57,53 +58,53 @@ AX_BOOST_FILESYSTEM
 AC_CHECK_LIB(pthread, pthread_attr_init, LIBS="$LIBS -lpthread")
 
 #dnl check for cg
-AC_LANG_PUSH(C++)dnl
-AC_CHECK_LIB(Cg, cgCreateContext,
-[
-	AC_CHECK_HEADERS(Cg/cg.h,
-	[
-		AC_DEFINE(HAVE_CG, 1, [define if you have libcg])
-		AC_SUBST([CG_LIBS])
-		CG_LIBS="-lCg"
-		have_cg=yes
-	],
-	[
-		AC_MSG_ERROR([cG header file missing or not in Cg/ include subdir])
-	],
-	)
-
-],
-[
-	AC_MSG_ERROR([
-	* nvidia cG toolkit is missing.
-	* You can download it from: http://developer.nvidia.com/object/cg_toolkit.html ])
-],
-)
-
-AC_CHECK_LIB(CgGL, cgGLBindProgram,
-[
-	AC_CHECK_HEADERS(Cg/cgGL.h,
-	[
-		AC_DEFINE(HAVE_CGGL, 1, [define if you have libcg])
-		AC_SUBST([CGGL_LIBS])
-		CGGL_LIBS="-lCgGL -lGL"
-		have_cggl=yes
-	],
-	[
-		AC_MSG_ERROR([cGGL header file missing or not in Cg/ include subdir])
-	])
-
-],
-[
-	AC_MSG_ERROR([
-	* Something's wrong with nvidia cG toolkit
-	* Probably bad installation
-	* You can download it from: http://developer.nvidia.com/object/cg_toolkit.html ])
-
-],
-[ -lGL ]
-)
-AC_LANG_POP(C++)
+#AC_LANG_PUSH(C++)dnl
+#AC_CHECK_LIB(Cg, cgCreateContext,
+#[
+	#AC_CHECK_HEADERS(Cg/cg.h,
+#	[
+		#AC_DEFINE(HAVE_CG, 1, [define if you have libcg])
+#		AC_SUBST([CG_LIBS])
+		#CG_LIBS="-lCg"
+#		have_cg=yes
+	#],
+#	[
+		#AC_MSG_ERROR([cG header file missing or not in Cg/ include subdir])
+#	],
+	#)
+#
+#],
+#[
+	#AC_MSG_ERROR([
+#	* nvidia cG toolkit is missing.
+	#* You can download it from: http://developer.nvidia.com/object/cg_toolkit.html ])
+#],
+#)
+#
+#AC_CHECK_LIB(CgGL, cgGLBindProgram,
+#[
+	#AC_CHECK_HEADERS(Cg/cgGL.h,
+#	[
+		#AC_DEFINE(HAVE_CGGL, 1, [define if you have libcg])
+#		AC_SUBST([CGGL_LIBS])
+		#CGGL_LIBS="-lCgGL -lGL"
+#		have_cggl=yes
+	#],
+#	[
+		#AC_MSG_ERROR([cGGL header file missing or not in Cg/ include subdir])
+#	])
+#
+#],
+#[
+	#AC_MSG_ERROR([
+#	* Something's wrong with nvidia cG toolkit
+	#* Probably bad installation
+#	* You can download it from: http://developer.nvidia.com/object/cg_toolkit.html ])
+#
+#],
+#[ -lGL ]
+#)
+#AC_LANG_POP(C++)
 
 dnl Check wx-Widgets
 AC_ARG_ENABLE([unicode],[AC_HELP_STRING([--disable-unicode],[internally use ansi])], 

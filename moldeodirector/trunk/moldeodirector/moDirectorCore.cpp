@@ -567,19 +567,6 @@ moDirectorStatus moDirectorCore::EditMob( moMobDescriptor p_MobDescriptor ) {
 
 	moDirectorStatus moDirectorCore::SetMob( moMobDescriptor p_MobDesc ) {
 
-        #ifdef _DEBUG
-   		moText fxname = p_MobDesc.GetMobDefinition().GetLabelName();
-		moText mobstext = moText(" alpha =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().alpha );
-		mobstext+= moText(" tint =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().tint );
-		mobstext+= moText(" tintr =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().tintr );
-		mobstext+= moText(" tintg =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().tintg );
-		mobstext+= moText(" tintb =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().tintb );
-		mobstext+= moText(" tintc =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().tintc );
-		mobstext+= moText(" tints =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().tints );
-		mobstext+= moText("tempo.ang =>") + (moText)FloatToStr( p_MobDesc.GetState().GetEffectState().tempo.delta );
-
-		Log( moText("For MOB: ") + (moText)fxname + moText(" setting state ::") + (moText)mobstext );
-        #endif
 	    if (m_pDirectorConsole)
             return m_pDirectorConsole->SetMob( p_MobDesc );
         return MO_DIRECTOR_STATUS_ERROR;

@@ -241,7 +241,7 @@ void moGLCanvas::OnSize(wxSizeEvent& event)
     if( GetContext() ) {
         //if (!block) {
             SetView( 0, 0, w, h );
-            //m_init = true;
+            //m_init = false;
 
         //}
     }

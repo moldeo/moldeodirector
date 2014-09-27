@@ -67,6 +67,10 @@ void moPreviewFrame::Init( moIDirectorActions* pActionsHandler, wxGLContext* p_p
 
 void moPreviewFrame::ReSetGLCanvas( wxGLContext* p_pGLContext ) {
 
+    /**
+    *   Create the wxGLCanvas in this frame with the original GLContext
+    */
+
     if (m_pGLCanvas) delete m_pGLCanvas;
     m_pGLCanvas = NULL;
 

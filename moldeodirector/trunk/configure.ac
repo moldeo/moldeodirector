@@ -1,4 +1,4 @@
-AC_INIT([Moldeo Director], [0.7.9.7], [info@moldeointeractive.com.ar], [moldeodirector])
+AC_INIT([Moldeo Director], [0.8.6.0], [info@moldeointeractive.com.ar], [moldeodirector])
 
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
@@ -107,19 +107,19 @@ AC_CHECK_LIB(pthread, pthread_attr_init, LIBS="$LIBS -lpthread")
 #AC_LANG_POP(C++)
 
 dnl Check wx-Widgets
-AC_ARG_ENABLE([unicode],[AC_HELP_STRING([--disable-unicode],[internally use ansi])], 
+AC_ARG_ENABLE([unicode],[AC_HELP_STRING([--disable-unicode],[internally use ansi])],
 	[AS_IF([test "x$enableval" = "xno"],[wx_config_args="--unicode=no"])
 	AS_IF([test "x$enableval" = "xyes"],[wx_config_args="--unicode=yes"])],
 	[wx_config_args="--unicode=yes"])
 AM_OPTIONS_WXCONFIG
 AM_PATH_WXCONFIG(2.8.0, wxWin=1)
         if test "$wxWin" != 1; then
-        AC_MSG_ERROR([ 
+        AC_MSG_ERROR([
 		Using $wx_config_args
-		This wxWidget option is NOT AVAILABLE in this system 
+		This wxWidget option is NOT AVAILABLE in this system
 		or must be installed, try modifiyng "configure.ac" and change wx_config_args="--unicode=xxx" line
 		then rerun autonconf and ./configure
-                OR 
+                OR
 		maybe wxWidgets must be installed on your system.
 
                 Please check that wx-config is in path, the directory
@@ -152,7 +152,7 @@ MACSETFILE="@true"
 
 AC_MSG_CHECKING(for wxWidgets platform)
 WX_BASENAME=`$WX_CONFIG_WITH_ARGS --basename`
-case $WX_BASENAME in 
+case $WX_BASENAME in
     *wx_gtk*)
         AC_MSG_RESULT(wxGTK)
         WX_GTK2_CFLAGS="$GTK2_CFLAGS"
@@ -168,7 +168,7 @@ case $WX_BASENAME in
         AC_CHECK_PROG(SETFILE, SetFile, SetFile, /Developer/Tools/SetFile)
         MACSETFILE="\$(SETFILE)"
     ;;
-    *) 
+    *)
         AC_MSG_RESULT(other)
     ;;
 esac
@@ -176,18 +176,34 @@ esac
 AC_SUBST(WX_GTK2_CFLAGS)
 AC_SUBST(WX_GTK2_LIBS)
 
+
+dnl check for gstreamer
+GST_VERSION_MAJOR=0
+GST_VERSION_MINOR=10
+GST_VERSION_RELEASE=19
+GSTPLUG_VERSION_RELEASE=7
+GSTREAMER_REQ=$GST_VERSION_MAJOR.$GST_VERSION_MINOR.$GST_VERSION_RELEASE
+GSTPLUGINS_REQ=$GST_VERSION_MAJOR.$GST_VERSION_MINOR.$GSTPLUG_VERSION_RELEASE
+GST_MAJORMINOR=$GST_VERSION_MAJOR.$GST_VERSION_MINOR
+
+PKG_CHECK_MODULES(GST, gstreamer-$GST_MAJORMINOR >= $GSTREAMER_REQ,
+  HAVE_GSTREAMER=yes)
+AC_SUBST(GST_CFLAGS)
+AC_SUBST(GST_LIBS)
+
+
 AC_SUBST(POSTLINK_COMMAND)
 AC_SUBST(MACSETFILE)
 
 PLUGIN_WX_LIBS=
 
 AC_MSG_CHECKING(if wxWidgets libraries are needed for plugins)
-case `uname` in 
+case `uname` in
     Darwin)
         AC_MSG_RESULT(yes)
         PLUGIN_WX_LIBS="$WX_LIBS"
     ;;
-    *) 
+    *)
         AC_MSG_RESULT(no)
     ;;
 esac

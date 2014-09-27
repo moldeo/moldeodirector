@@ -67,10 +67,8 @@ echo "extracting..."
 echo " 
 Now execute in deb folder:
  cd deb/moldeodirector-*
- dh_make -s -e fabricio.costa@moldeointeractive.com.ar
- cp ../../control.amd64 debian/control
- cp ../../rules.amd64 debian/rules
- vi debian/changelog
+ dh_make -s -e info@moldeointeractive.com.ar
+ gedit ../../debian/control debian/control debian/changelog
  dpkg-buildpackage -us -uc -rfakeroot 2>&1 | tee ../../buildpkg_logs.txt
 "
 

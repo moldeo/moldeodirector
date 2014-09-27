@@ -24,6 +24,7 @@ moDirectorConsole::~moDirectorConsole() {
 
 MOboolean moDirectorConsole::Finish() {
 
+	m_bInitialized = false; //assuring that Draw isnt called
 	m_timer.Stop();
 	return moConsole::Finish();
 
@@ -120,8 +121,8 @@ moDirectorConsole::NewProject( const moProjectDescriptor& p_ProjectDes )  {//cre
 }
 
 #ifdef MO_LINUX
-    #include <gtk/gtk.h>
-    #include <gdk/gdkx.h>
+    //#include <gtk/gtk.h>
+    //#include <gdk/gdkx.h>
 #endif
 
 moDirectorStatus
@@ -150,9 +151,9 @@ moDirectorConsole::OpenProject( const moProjectDescriptor& p_ProjectDes )  {//lo
   pHandle = GetHandle();
 
   #ifdef MO_LINUX
-    GtkWidget* gtkwidget = (GtkWidget*) pHandle;
-    Display* dpy = GDK_WINDOW_XDISPLAY( gtkwidget->window );
-    pDisplay = (MO_DISPLAY)dpy;
+    //GtkWidget* gtkwidget = (GtkWidget*) pHandle;
+    //Display* dpy = GDK_WINDOW_XDISPLAY( gtkwidget->window );
+    //pDisplay = (MO_DISPLAY)dpy;
   #endif
 
   m_ProjectDescriptor.SetState( moProjectDescriptor::STATE_OPENING );
@@ -522,7 +523,11 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
 
 	        Log( moText("importing:") + moText(" name:") + (moText)oname + moText(" class:") + (moText)oclass + moText(" confname:") + (moText)oconfigname );
 
-            moMobDefinition MobDefinition( oname, oconfigname, otype, oconfigname );
+            moMobDefinition MobDefinition;
+            MobDefinition.SetName( oname );
+            MobDefinition.SetConfigName( oconfigname );
+            MobDefinition.SetType( otype );
+            MobDefinition.SetLabelName( oconfigname );
 
             MobDescriptor.Set( ProjectDescriptor, MobDefinition );
 
@@ -745,8 +750,9 @@ moMobDescriptors moDirectorConsole::GetMobDescriptors() {
                     m_Config.GetParam( pMOB->GetMobDefinition().GetMobIndex().GetParamIndex() ).AddValue( effectvalue );
 
                     LoadConnections();
-
-                    if (!pMOB->GetMobDefinition().IsValid()) {
+                    moMobDefinition MDef = pMOB->GetMobDefinition();
+                    bool validity = MDef.IsValid();
+                    if (validity==false) {
                       LogError( moText("NewMob:: Source > MobDefinition Invalid") );
                     } else ProjectUpdated( m_ProjectDescriptor );
 
@@ -1424,6 +1430,7 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
 
         int idx;
         moFont* pFont;
+        moText tt;
 
         ///fija el valor dentro del config y chequea de actualizar el MOB
         moConfig* pConfig;
@@ -1515,7 +1522,8 @@ moDirectorConsole::SetParameter( moParameterDescriptor  p_ParameterDesc ) {
                         ///directo, no chequeamos errores aqui, no sabríamos que chequear... cadena invalida?
 
                         Value = NewValue;
-                        MODebug2->Push( moText("texto:") + Value.GetSubValue(0).Text() );
+                        tt = moText("texto:") + Value.GetSubValue(0).Text();
+                        MODebug2->Push( tt );
                         break;
                     case MO_PARAM_3DMODEL:
                     case MO_PARAM_OBJECT:
@@ -2046,7 +2054,7 @@ moDirectorStatus moDirectorConsole::SaveSession() {
 
 moDirectorStatus moDirectorConsole::ConsoleLoop() {
 
-    if (Initialized()) {
+    if ( moAbstract::Initialized()) {
         Interaction();
         Update();
         Draw();

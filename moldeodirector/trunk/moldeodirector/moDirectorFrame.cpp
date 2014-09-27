@@ -433,6 +433,7 @@ moDirectorFrame::CreateGLWindows( wxWindow* parent) {
     ///create base wxGLCanvas to create context...
     //retreive context...
     //m_pBaseGLCanvas = (wxGLCanvas*)new moGLCanvas( this, wxID_ANY, &attribList[0], wxPoint(0,0), wxSize(800,600) );
+    //m_pBaseGLCanvas->Show(true);
     //m_pGLContext = m_pBaseGLCanvas->GetContext();
     //m_pBaseGLCanvas->Destroy();
 
@@ -472,7 +473,8 @@ moDirectorFrame::CreateGLWindows( wxWindow* parent) {
         if (m_pGLCanvas) {
             cout << "CreateGLWindows() > showing frame..." << endl;
             //m_pPreviewWindow->Show();
-            Show();
+            //m_pGLCanvas->Show();
+			Show();
             cout << "CreateGLWindows() > getting implicit GL Context..." << endl;
 						m_pGLContext = m_pGLCanvas->GetContext();
 
@@ -785,6 +787,7 @@ void moDirectorFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
     Close(true);
 }
 
+#include "../config.h"
 void moDirectorFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxString msg;
@@ -792,8 +795,9 @@ void moDirectorFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     libmoldeoversion = moText2Wx((moText)moGetVersionStr());
     msg = wxT("This is the About dialog of Moldeo Director.\n\n\nWelcome to ");
     msg+= wxVERSION_STRING;
-    msg+= wxT("\n\nMoldeo Director Version %s \n\nMoldeo Core Version");
-    msg+= wxT(MOLDEO_DIRECTOR_VERSION);
+    msg+= wxT("\n\nMoldeo Director Version: ");
+    msg+= wxT(PACKAGE_VERSION);
+    msg+= wxT(" \n\nMoldeo Core Version: ");
     msg+= libmoldeoversion;
 
     wxMessageBox(msg, wxT("About Moldeo Director"), wxOK | wxICON_INFORMATION, this);
@@ -842,8 +846,10 @@ moDirectorFrame::OnOpenProject(wxCommandEvent& event) {
                     path+= _T("/");
                 #endif
                 wxString name = FileName.GetFullName();
+                moText txtpath = moWx2Text(path);
+                moText txtname = moWx2Text(name);
 
-                ProjectDescriptor.Set( moWx2Text(path), moWx2Text(name) );
+                ProjectDescriptor.Set( txtpath, txtname );
 
                 mStatus = OpenProject( ProjectDescriptor );
 
@@ -960,7 +966,7 @@ moDirectorFrame::OnImportMob( wxCommandEvent& event ) {
 
                 wxString path = FileName.GetPath();
                 #ifdef MO_WIN32
-                    path+= "\\";
+                    path+= _T("\\");
                 #else
                     path+= _T("/");
                 #endif
@@ -980,7 +986,7 @@ moDirectorFrame::OnImportMob( wxCommandEvent& event ) {
 
         wxString path = FileName.GetPath();
         #ifdef MO_WIN32
-            path+= "\\";
+            path+= _T("\\");
         #else
             path+= _T("/");
         #endif
@@ -1336,7 +1342,7 @@ moDirectorFrame::ProjectPreview() {
 
     if (m_pPreviewWindow)
         if (m_pGLCanvas)
-            if (m_pGLCanvas==m_pPreviewWindow->m_pGLCanvas) {
+            if (m_pGLCanvas==m_pPreviewWindow->m_pGLCanvas) { /*INTRA WINDOW OUTPUT ONLY > THEN OPEN FRAME OUTPUT*/
 
                 //m_pPreviewWindow->m_pGLCanvas->Finish();
 
@@ -1379,9 +1385,9 @@ void
 moDirectorFrame::ViewSwapBuffers() {
     if (m_pGLCanvas!=NULL) {
 
-        ///esto es completamente ineficiente!! buscamos a cada vez la textura :  preview_texture
+        ///TODO: esto es completamente ineficiente!! buscamos a cada vez la textura :  preview_texture
 
-        int ttid = m_pDirectorCore->GetResourceManager()->GetTextureMan()->GetTextureMOId( moText("preview_texture"), false);
+        int ttid = m_pDirectorCore->GetResourceManager()->GetTextureMan()->m_preview_texture_idx;
         moTexture* ptex = m_pDirectorCore->GetResourceManager()->GetTextureMan()->GetTexture(ttid);
         int glid = 0;
         if (ptex) {
@@ -1394,8 +1400,9 @@ moDirectorFrame::ViewSwapBuffers() {
 
         /**
         *     El contexto lo tiene el m_pGLCanvas....
+        *
+        *     Copia del output en el previewwindow (400x300) debería tener el tamaño del preview window... y este tambien deberia ser dinamico
         */
-
         if (m_pPreviewFrame && m_pGLCanvas==m_pPreviewFrame->m_pGLCanvas) {
 
             ///asignamos el contexto a nuestra vista de preview

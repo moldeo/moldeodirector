@@ -115,8 +115,10 @@ moNewEffectDialog::GetMobDefinition() {
 
 void moNewEffectDialog::OnOkButtonClick(wxCommandEvent& event)
 {
-    if (CheckData())
+    if (CheckData()) {
       EndModal( wxID_OK );
+    } else event.Skip();
+
 }
 
 void moNewEffectDialog::OnCancelButtonClick(wxCommandEvent& event)

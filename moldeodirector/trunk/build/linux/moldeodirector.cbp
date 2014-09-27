@@ -47,8 +47,9 @@
 			<Add option="`pkg-config libmoldeo --cflags`" />
 			<Add option="`pkg-config moldeocontrols --cflags`" />
 			<Add option="`pkg-config lua5.1 --cflags`" />
-			<Add option="`/usr/local/bin/wx-config --cflags`" />
-			<Add option="-I/usr/local/lib/wx/include/gtk2-ansi-release-2.8" />
+			<Add option="`pkg-config gtk+-2.0 --cflags`" />
+			<Add option="`pkg-config sdl --cflags`" />
+			<Add option="`/usr/bin/wx-config --cflags`" />
 			<Add option="-DMO_VDPAU_NO" />
 			<Add option='-DMOLDEODATADIR=\\\&quot;../../data\\\&quot;' />
 			<Add option='-DMODULESDIR=\\\&quot;../../plugins\\\&quot;' />
@@ -59,23 +60,19 @@
 		<Linker>
 			<Add option="`pkg-config moldeocontrols --libs`" />
 			<Add option="`pkg-config sdl --libs`" />
+			<Add option="`freetype-config --libs`" />
 			<Add option="`pkg-config ftgl --libs`" />
 			<Add option="`pkg-config tinyxml --libs`" />
-			<Add option="`/usr/local/bin/wx-config --libs`" />
+			<Add option="`pkg-config gtk+-2.0 --libs`" />
+			<Add option="`/usr/bin/wx-config --libs`" />
 			<Add library="glut" />
 			<Add library="GLU" />
 			<Add library="gle" />
 			<Add library="freetype" />
 			<Add library="freeimage" />
-			<Add library="openal" />
 			<Add library="alut" />
-			<Add library="Cg" />
-			<Add library="CgGL" />
-			<Add library="wx_gtk2_gl-2.8" />
-			<Add library="TUIO" />
+			<Add library="wx_gtk2u_gl-2.8" />
 			<Add directory="../../../../binaries/lib/linux" />
-			<Add directory="/usr/lib" />
-			<Add directory="/usr/local/lib" />
 		</Linker>
 		<ExtraCommands>
 			<Add after='svn export &quot;../../data&quot; &quot;../../../../binaries/data&quot; --force' />

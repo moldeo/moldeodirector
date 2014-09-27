@@ -142,6 +142,12 @@ public:
     moValueDescriptor GetValue( moValueDescriptor p_ValueDesc );
 
 	MOulong m_timerticks;
+/*
+	virtual const moText& ToJSON() {
+    return moConsole::ToJSON();
+	}
+	*/
+
 protected:
 	MOulong GetTicks();
 	void GLSwapBuffers();

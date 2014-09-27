@@ -48,8 +48,6 @@
 
 #include "moTypes.h"
 
-#define MOLDEO_DIRECTOR_VERSION "7.8.0.0"
-
 // ----------------------------------------------------------------------------
 // resources
 // ----------------------------------------------------------------------------
@@ -76,6 +74,8 @@ class moSessionProject;
 	#define moWx2Text(X) moText((char*)(wxChar*)X.c_str())
 #endif
 
+//#define gdk_x11_drawable_get_xdisplay  GDK_WINDOW_XDISPLAY
+//#define GDK_DRAWABLE_XDISPLAY
 // IDs for the controls and the menu commands
 enum
 {

@@ -13,6 +13,8 @@
 // headers
 // ----------------------------------------------------------------------------
 
+#include "gst/gst.h"
+
 #include "moldeodirector.h"
 
 
@@ -42,6 +44,7 @@ IMPLEMENT_APP(moDirectorApp)
 // 'Main program' equivalent: the program execution "starts" here
 bool moDirectorApp::OnInit()
 {
+
 	//(*AppInitialize
 	bool wxsOK = true;
 	//*)
@@ -49,6 +52,12 @@ bool moDirectorApp::OnInit()
 //  Check next line: Gustavo 05/20/2009
 //	return wxsOK;
 
+
+    guint major, minor, micro, nano;
+    cout << "Gstreamer initializing..." << endl;
+    gst_init(NULL,NULL);
+    gst_version (&major, &minor, &micro, &nano);
+    cout << "Gstreamer initialized" << " version: " << major << "." << minor << "." << micro << "." << nano << endl;
 
 
     //** SET WORKING PATH CORRECTLY **/
@@ -207,7 +216,7 @@ bool moDirectorApp::OnInit()
         wxFileName	FileName( moText2Wx(config) );
         wxString path = FileName.GetPath();
         #ifdef MO_WIN32
-            path+= "\\";
+            path+= _T("\\");
         #else
             path+= _T("/");
         #endif

@@ -138,13 +138,17 @@ moldeodirector_SOURCES = \
 moldeodirector_CPPFLAGS = \
 	-I ./treemultictrl \
 	-I ./vdtc \
-	`pkg-config --cflags gtk+-2.0` \
+    	${GST_FLAGS} \
 	${MOLDEOCONTROLS_CFLAGS} \
 	${LIBMOLDEO_CFLAGS} \
+	-lGLU \
 	${WX_CFLAGS}
+
+# pkg-config --cflags gtk+-2.0
 
 moldeodirector_LDADD = \
 	${WX_LIB_GL} \
+    	${GST_LIBS} \
 	${MOLDEOCONTROLS_LIBS} \
 	${LIBMOLDEO_LIBS} \
 	${FREEIMAGE_LIBS} \
@@ -152,10 +156,11 @@ moldeodirector_LDADD = \
 	${GLUT_LIBS} \
 	${GLE_LIBS} \
 	${CGGL_LIBS} \
+	${WX_LIBS} \
 	${BOOST_ASIO_LIB} \
 	${BOOST_THREAD_LIB} \
-	${BOOST_FILESYSTEM_LIB} \
-	${WX_LIBS}
+	${BOOST_FILESYSTEM_LIB}
+	
 
 
 

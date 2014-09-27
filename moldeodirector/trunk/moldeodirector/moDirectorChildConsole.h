@@ -71,6 +71,9 @@ public:
 
 	void FullReset() { }
 
+  virtual const moText& ToJSON() {
+    return moDirectorConsole::ToJSON();
+	}
 
 };
 

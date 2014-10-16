@@ -267,7 +267,10 @@ moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath,
         bool bDebug = true;
         moText PluginName;
 
-        //PREEFFECTS
+        ///PREEFFECTS
+
+        /// Open DIRECTORY [plugindir] and search for module libraries (plugins)
+        ///
         DirEffects.Open( plugindir, moText("/*.dll") );
         if (DirEffects.Exists()) {
 

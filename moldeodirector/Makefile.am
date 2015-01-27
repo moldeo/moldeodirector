@@ -141,20 +141,19 @@ moldeodirector_CPPFLAGS = \
     	${GST_FLAGS} \
 	${MOLDEOCONTROLS_CFLAGS} \
 	${LIBMOLDEO_CFLAGS} \
-	-lGLU \
 	${WX_CFLAGS}
 
 # pkg-config --cflags gtk+-2.0
 
 moldeodirector_LDADD = \
+	${GLEW_LIBS} \
 	${WX_LIB_GL} \
     	${GST_LIBS} \
 	${MOLDEOCONTROLS_LIBS} \
 	${LIBMOLDEO_LIBS} \
-	${FREEIMAGE_LIBS} \
-	${GLEW_LIBS} \
-	${GLUT_LIBS} \
+	${FREEIMAGE_LIBS} \	
 	${GLE_LIBS} \
+	${GLUT_LIBS} \
 	${CGGL_LIBS} \
 	${WX_LIBS} \
 	${BOOST_ASIO_LIB} \

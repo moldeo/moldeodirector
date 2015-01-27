@@ -1,4 +1,4 @@
-AC_INIT([Moldeo Director], [0.8.6.0], [info@moldeointeractive.com.ar], [moldeodirector])
+AC_INIT([Moldeo Director], [0.9.1.0], [info@moldeointeractive.com.ar], [moldeodirector])
 
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
@@ -27,8 +27,9 @@ PKG_CHECK_MODULES([MOLDEOCONTROLS], [moldeocontrols] ,has_mnoldeocontrols=yes)
 #AC_CHECK_LIB(SDL_net, SDLNet_Init, AC_SUBST([SDL_NET_LIBS], [-lSDL_net]), AC_MSG_ERROR([SDL_net not found.]), [${SDL_LIBS} ${WIN32_LIBS}])
 
 #dnl check for glew
-AC_CHECK_HEADER(GL/glew.h, , AC_MSG_ERROR([glew header not found.]))
-AC_CHECK_LIB(GLEW, glewInit, AC_SUBST([GLEW_LIBS], [-lGLEW]), AC_MSG_ERROR([glew not found.]), )
+#AC_CHECK_HEADER(GL/glew.h, , AC_MSG_ERROR([glew header not found.]))
+#AC_CHECK_LIB(GLEW, glewInit, AC_SUBST([GLEW_LIBS], [-lGLEW]), #AC_MSG_ERROR([glew not found.]), )
+PKG_CHECK_MODULES([GLEW], [glew] ,has_glew=yes)
 
 #dnl check for glut
 AC_CHECK_HEADER(GL/glut.h, , AC_MSG_ERROR([glut header not found.]))

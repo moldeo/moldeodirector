@@ -5,7 +5,7 @@ BEGIN_EVENT_TABLE( moDirectorConsole, wxEvtHandler)
   EVT_TIMER( TICKS_ID, moDirectorConsole::OnTimer)
 END_EVENT_TABLE()
 
-#define FRAME_MILIS 8
+#define FRAME_MILIS 16
 
 moDirectorConsole::moDirectorConsole() : moConsole() {
 

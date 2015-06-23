@@ -18,6 +18,7 @@ moValueCtrl::moValueCtrl(wxWindow *parent,
     m_pTextCtrlB = NULL;
     m_pSpinCtrl = NULL;
     m_pBlendingCtrl = NULL;
+    m_pOptionsCtrl = NULL;
     m_pParamToggle = NULL;
     block = false;
 
@@ -32,42 +33,46 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 	MOdouble  ValueFloat = 0.0;
 	int xpos = 0;
 
-    fonttypes[MO_FONT_OUTLINE] = wxT("Outline");
-    fonttypes[MO_FONT_TRANSLUCENT] = wxT("Translucent");
-    fonttypes[MO_FONT_TRANSLUCENTTEXTURE] = wxT("Translucent texture");
-    fonttypes[MO_FONT_GRAYSCALE] = wxT("Grayscale");
-    fonttypes[MO_FONT_MONOCHROME] = wxT("Monochrome");
-    fonttypes[MO_FONT_SOLID] = wxT("Solid");
-    fonttypes[MO_FONT_FILLED] = wxT("Filled");
-    fonttypes[MO_FONT_GLBUILD] = wxT("GLBuild");
+  fonttypes[MO_FONT_OUTLINE] = wxT("Outline");
+  fonttypes[MO_FONT_TRANSLUCENT] = wxT("Translucent");
+  fonttypes[MO_FONT_TRANSLUCENTTEXTURE] = wxT("Translucent texture");
+  fonttypes[MO_FONT_GRAYSCALE] = wxT("Grayscale");
+  fonttypes[MO_FONT_MONOCHROME] = wxT("Monochrome");
+  fonttypes[MO_FONT_SOLID] = wxT("Solid");
+  fonttypes[MO_FONT_FILLED] = wxT("Filled");
+  fonttypes[MO_FONT_GLBUILD] = wxT("GLBuild");
 
-    blendings[MO_BLENDING_TRANSPARENCY] = wxT("Transparency");
-    blendings[MO_BLENDING_ADDITIVEALPHA] = wxT("Additive w/alpha");
-    blendings[MO_BLENDING_MIXING] = wxT("Mixing");
-    blendings[MO_BLENDING_MULTIPLY] = wxT("Multiply");
-    blendings[MO_BLENDING_EXCLUSION] = wxT("Exclusion");
-    blendings[MO_BLENDING_ADDITIVE] = wxT("Additive color");
-    blendings[MO_BLENDING_OVERLAY] = wxT("Overlay");
-    blendings[MO_BLENDING_SUBSTRACTIVE] = wxT("Substractive");
-    blendings[MO_BLENDING_SATURATE] = wxT("Saturate");
+  blendings[MO_BLENDING_TRANSPARENCY] = wxT("Transparency");
+  blendings[MO_BLENDING_ADDITIVEALPHA] = wxT("Additive w/alpha");
+  blendings[MO_BLENDING_MIXING] = wxT("Mixing");
+  blendings[MO_BLENDING_MULTIPLY] = wxT("Multiply");
+  blendings[MO_BLENDING_EXCLUSION] = wxT("Exclusion");
+  blendings[MO_BLENDING_ADDITIVE] = wxT("Additive color");
+  blendings[MO_BLENDING_OVERLAY] = wxT("Overlay");
+  blendings[MO_BLENDING_SUBSTRACTIVE] = wxT("Substractive");
+  blendings[MO_BLENDING_SATURATE] = wxT("Saturate");
 
-    polygonmodes[MO_POLYGONMODE_FILL] = wxT("FILL");
-    polygonmodes[MO_POLYGONMODE_LINE] = wxT("LINE");
-    polygonmodes[MO_POLYGONMODE_POINT] = wxT("POINT");
+  polygonmodes[MO_POLYGONMODE_FILL] = wxT("FILL");
+  polygonmodes[MO_POLYGONMODE_LINE] = wxT("LINE");
+  polygonmodes[MO_POLYGONMODE_POINT] = wxT("POINT");
 
 
 	m_pDirectorChildFrame = parent;
 
 	SetNextActionHandler( parent );
 
-    m_ValueDescriptor = p_valuedescriptor;
+  m_ValueDescriptor = p_valuedescriptor;
+  moParamDefinition PDef = m_ValueDescriptor.GetParamDescriptor().GetParamDefinition();
 
-    moParamType PType = m_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetType();
-    moValue pValue( m_ValueDescriptor.GetValue() );
+  moParamType PType = PDef.GetType();
+  moTextArray pOptions(0);
 
-    //este boton permite marcar este parametro, para luego ser grabado como preconfiguracion
-    long ParamToggleId = wxNewId();
-    long stylewnd = 0;
+  pOptions = PDef.GetOptions();
+  moValue pValue( m_ValueDescriptor.GetValue() );
+
+  //este boton permite marcar este parametro, para luego ser grabado como preconfiguracion
+  long ParamToggleId = wxNewId();
+  long stylewnd = 0;
 
 	m_pParamToggle = new wxRadioButton( this, ParamToggleId, wxT(""), wxPoint(xpos,0), wxSize(20,20),  stylewnd);
 	xpos+= m_pParamToggle->GetSize().x;
@@ -92,91 +97,108 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 		case MO_PARAM_OBJECT:
 		case MO_PARAM_3DMODEL:
 			ValueStr =moText2Wx( pValue.GetSubValue(0).Text());
-			m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(20,0),wxSize(150,20));
-			xpos+=m_pTextCtrl->GetSize().x;
+			if (pOptions.Count()>0) {
+        for(int cc=0; cc<pOptions.Count(); cc++) {
+          options[cc] = moText2Wx( pOptions[cc] );
+        }
+        m_pOptionsCtrl = new wxComboBox( this, -1, ValueStr, wxPoint(20,0), wxSize(80,20), pOptions.Count(), options,wxCB_READONLY);
+        xpos+=m_pOptionsCtrl->GetSize().x;
+      } else {
+        m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(20,0),wxSize(150,20));
+        xpos+=m_pTextCtrl->GetSize().x;
+      }
 			//Connect(
 			break;
-        case MO_PARAM_NUMERIC:
-            if (pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_FLOAT || pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_DOUBLE ) {
-                ValueFloat = pValue.GetSubValue(0).Float();
-                ValueStr = moText2Wx( FloatToStr(ValueFloat) );
-            } else {
-                ValueInt = pValue.GetSubValue(0).Int();
-                ValueStr = moText2Wx( IntToStr(ValueInt) );
-            }
-
-            //m_pSpinCtrl = new wxSpinCtrl( this, -1, moText2Wx( IntToStr(ValueInt) ),wxPoint(20,0),wxSize(80,20));
-            m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(20,0),wxSize(150,20));
-            xpos+=m_pTextCtrl->GetSize().x;
-            break;
-        case MO_PARAM_BLENDING:
+    case MO_PARAM_NUMERIC:
+        if (pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_FLOAT || pValue.GetSubValue(0).Type()==MO_DATA_NUMBER_DOUBLE ) {
+            ValueFloat = pValue.GetSubValue(0).Float();
+            ValueStr = moText2Wx( FloatToStr(ValueFloat) );
+        } else {
             ValueInt = pValue.GetSubValue(0).Int();
-            m_pBlendingCtrl = new wxComboBox( this, -1, blendings[ValueInt], wxPoint(20,0), wxSize(80,20), MO_BLENDINGS, blendings,wxCB_READONLY);
-            xpos+=m_pBlendingCtrl->GetSize().x;
-            break;
-        case MO_PARAM_POLYGONMODE:
-            ValueInt = pValue.GetSubValue(0).Int();
-            m_pPolygonModeCtrl = new wxComboBox( this, -1, polygonmodes[ValueInt], wxPoint(20,0), wxSize(80,20), MO_POLYGONMODES, polygonmodes,wxCB_READONLY);
-            xpos+=m_pPolygonModeCtrl->GetSize().x;
-            break;
-        case MO_PARAM_FONT:
-            ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
-            m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-            xpos+=m_pTextCtrl->GetSize().x;
+            ValueStr = moText2Wx( IntToStr(ValueInt) );
+        }
+        //m_pSpinCtrl = new wxSpinCtrl( this, -1, moText2Wx( IntToStr(ValueInt) ),wxPoint(20,0),wxSize(80,20));
+        if (pOptions.Count()>0) {
 
-            ValueInt = pValue.GetSubValue(1).Int();
-            m_pFontTypeCtrl = new wxComboBox( this, -1, fonttypes[ValueInt], wxPoint(xpos,0), wxSize(80,20), MO_FONT_TYPES, fonttypes, wxCB_READONLY);
-            xpos+=m_pFontTypeCtrl->GetSize().x;
+          for(int cc=0; cc<pOptions.Count(); cc++) {
+            options[cc] = moText2Wx( pOptions[cc] );
+          }
+          m_pOptionsCtrl = new wxComboBox( this, -1, options[ValueInt], wxPoint(20,0), wxSize(80,20), pOptions.Count(), options,wxCB_READONLY);
+          xpos+=m_pOptionsCtrl->GetSize().x;
+        } else {
+          m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(20,0),wxSize(150,20));
+          xpos+=m_pTextCtrl->GetSize().x;
+        }
 
-            ValueStr =moText2Wx( pValue.GetSubValue(2).ToText() );
-            m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-            xpos+=m_pTextCtrlR->GetSize().x;
-            break;
+        break;
+    case MO_PARAM_BLENDING:
+        ValueInt = pValue.GetSubValue(0).Int();
+        m_pBlendingCtrl = new wxComboBox( this, -1, blendings[ValueInt], wxPoint(20,0), wxSize(80,20), MO_BLENDINGS, blendings,wxCB_READONLY);
+        xpos+=m_pBlendingCtrl->GetSize().x;
+        break;
+    case MO_PARAM_POLYGONMODE:
+        ValueInt = pValue.GetSubValue(0).Int();
+        m_pPolygonModeCtrl = new wxComboBox( this, -1, polygonmodes[ValueInt], wxPoint(20,0), wxSize(80,20), MO_POLYGONMODES, polygonmodes,wxCB_READONLY);
+        xpos+=m_pPolygonModeCtrl->GetSize().x;
+        break;
+    case MO_PARAM_FONT:
+        ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
+        m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+        xpos+=m_pTextCtrl->GetSize().x;
+
+        ValueInt = pValue.GetSubValue(1).Int();
+        m_pFontTypeCtrl = new wxComboBox( this, -1, fonttypes[ValueInt], wxPoint(xpos,0), wxSize(80,20), MO_FONT_TYPES, fonttypes, wxCB_READONLY);
+        xpos+=m_pFontTypeCtrl->GetSize().x;
+
+        ValueStr =moText2Wx( pValue.GetSubValue(2).ToText() );
+        m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+        xpos+=m_pTextCtrlR->GetSize().x;
+        break;
 		case MO_PARAM_TEXTURE:
 		case MO_PARAM_VIDEO:
-            if (pValue.GetSubValueCount()==1) {
-                ///NO FILTERS
-                ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
-                m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(150,20));
-                xpos+=m_pTextCtrl->GetSize().x;
-            } else if (pValue.GetSubValueCount()>1) {
-                /// SHADER FILTER
-                ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
-                m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-                xpos+=m_pTextCtrl->GetSize().x;
+      if (pValue.GetSubValueCount()==1) {
+          ///NO FILTERS
+          ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
+          m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(150,20));
+          xpos+=m_pTextCtrl->GetSize().x;
+      } else if (pValue.GetSubValueCount()>1) {
+          /// SHADER FILTER
+          ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
+          m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+          xpos+=m_pTextCtrl->GetSize().x;
 
-                ValueStr =moText2Wx( pValue.GetSubValue(1).Text() );
-                m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-                xpos+=m_pTextCtrlR->GetSize().x;
+          ValueStr =moText2Wx( pValue.GetSubValue(1).Text() );
+          m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+          xpos+=m_pTextCtrlR->GetSize().x;
 
-                ValueStr =moText2Wx( pValue.GetSubValue(2).Text() );
-                m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-                xpos+=m_pTextCtrlG->GetSize().x;
+          ValueStr =moText2Wx( pValue.GetSubValue(2).Text() );
+          m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+          xpos+=m_pTextCtrlG->GetSize().x;
 
-                ValueStr =moText2Wx( pValue.GetSubValue(3).Text() );
-                m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-                xpos+=m_pTextCtrlB->GetSize().x;
-            }
+          ValueStr =moText2Wx( pValue.GetSubValue(3).Text() );
+          m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+          xpos+=m_pTextCtrlB->GetSize().x;
+      }
 			//Connect(
 			break;
-        case MO_PARAM_FILTER:
-            ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
-			m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-            xpos+=m_pTextCtrl->GetSize().x;
+  case MO_PARAM_FILTER:
+      ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
+      m_pTextCtrl = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+      xpos+=m_pTextCtrl->GetSize().x;
 
-            ValueStr =moText2Wx( pValue.GetSubValue(1).Text() );
-			m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-            xpos+=m_pTextCtrlR->GetSize().x;
+      ValueStr =moText2Wx( pValue.GetSubValue(1).Text() );
+      m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+      xpos+=m_pTextCtrlR->GetSize().x;
 
-			ValueStr =moText2Wx( pValue.GetSubValue(2).Text() );
-			m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-            xpos+=m_pTextCtrlG->GetSize().x;
+      ValueStr =moText2Wx( pValue.GetSubValue(2).Text() );
+      m_pTextCtrlG = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+      xpos+=m_pTextCtrlG->GetSize().x;
 
-			ValueStr =moText2Wx( pValue.GetSubValue(3).Text() );
-			m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
-			xpos+=m_pTextCtrlB->GetSize().x;
-            break;
-		case MO_PARAM_COLOR:
+      ValueStr =moText2Wx( pValue.GetSubValue(3).Text() );
+      m_pTextCtrlB = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
+      xpos+=m_pTextCtrlB->GetSize().x;
+      break;
+  case MO_PARAM_COLOR:
 			ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
 			m_pTextCtrlR = new wxTextCtrl( this, -1, ValueStr,wxPoint(xpos,0),wxSize(70,20));
 			xpos+=m_pTextCtrlR->GetSize().x;
@@ -201,12 +223,12 @@ moValueCtrl::Init( moDirectorChildFrame* parent, moValueDescriptor p_valuedescri
 	};
 
 
-    long InspectorId = wxNewId();
+  long InspectorId = wxNewId();
 	m_pInspectorButton = new wxButton( this, InspectorId, wxT("..."), wxPoint(xpos,0),wxSize(20,20) );
 	xpos+=m_pInspectorButton->GetSize().x;
 	Connect( InspectorId, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&moValueCtrl::OnInspectorClick );
 
-    long AddId = wxNewId();
+  long AddId = wxNewId();
 	m_pAddButton = new wxButton( this, AddId, wxT("+"), wxPoint(xpos,0),wxSize(20,20) );
 	xpos+=m_pAddButton->GetSize().x;
 	Connect( AddId, wxEVT_COMMAND_BUTTON_CLICKED, (wxObjectEventFunction)&moValueCtrl::OnAddClick );
@@ -254,7 +276,14 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
 		case MO_PARAM_TEXT:
 		case MO_PARAM_SOUND:
 			ValueStr =moText2Wx( pValue.GetSubValue(0).Text() );
-			if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
+			if ( m_pOptionsCtrl ) {
+            for( int u=0;u<m_pOptionsCtrl->GetCount(); u++ ) {
+                if (m_pOptionsCtrl->GetString(u)==ValueStr) {
+                  m_pOptionsCtrl->SetSelection(u);
+                }
+            }
+			}
+			else if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
 			//Connect(
 			break;
     case MO_PARAM_NUMERIC:
@@ -265,11 +294,14 @@ moValueCtrl::Set( moValueDescriptor p_valuedescriptor ) {
             ValueInt = pValue.GetSubValue(0).Int();
             ValueStr = moText2Wx( IntToStr(ValueInt) );
         }
+        if ( m_pOptionsCtrl &&
+            0<=ValueInt && ValueInt<m_pOptionsCtrl->GetCount() )
+            m_pOptionsCtrl->SetSelection(ValueInt);
         if (m_pTextCtrl) m_pTextCtrl->ChangeValue( ValueStr );
         break;
     case MO_PARAM_BLENDING:
         ValueInt = pValue.GetSubValue(0).Int();
-        if ( 0<=ValueInt && ValueInt<MO_BLENDINGS && m_pBlendingCtrl)
+        if ( m_pBlendingCtrl && 0<=ValueInt && ValueInt<MO_BLENDINGS)
             m_pBlendingCtrl->SetValue( blendings[ValueInt] );
         break;
     case MO_PARAM_POLYGONMODE:
@@ -582,6 +614,32 @@ moValueCtrl::OnComboUpdated( wxCommandEvent& event) {
 
         moValue& rValue( m_ValueDescriptor.GetValue() );
         switch( (int)m_ValueDescriptor.GetParamDescriptor().GetParamDefinition().GetType()) {
+            case MO_PARAM_NUMERIC:
+                if (m_pOptionsCtrl) {
+                    int i,isel = 0;
+                    wxString valuestr = m_pOptionsCtrl->GetValue();
+                    for(i=0; i<m_pOptionsCtrl->GetCount(); i++) {
+                        if (m_pOptionsCtrl->GetString(i)==valuestr) {
+                            isel = i;
+                            break;
+                        }
+                    }
+                    rValue.GetSubValue(0).SetInt( isel );
+                }
+                break;
+            case MO_PARAM_TEXT:
+                if (m_pOptionsCtrl) {
+                    int i,isel = 0;
+                    wxString valuestr = m_pOptionsCtrl->GetValue();
+                    for(i=0; i<m_pOptionsCtrl->GetCount(); i++) {
+                        if (m_pOptionsCtrl->GetString(i)==valuestr) {
+                            isel = i;
+                            break;
+                        }
+                    }
+                    rValue.GetSubValue(0).SetText( moWx2Text(valuestr) );
+                }
+                break;
             case MO_PARAM_BLENDING:
                 if (m_pBlendingCtrl) {
                     int i,isel = 0;
@@ -623,6 +681,8 @@ moValueCtrl::OnComboUpdated( wxCommandEvent& event) {
                     else moIDirectorActions::ErrorMessage("moValueCtrl::OnComboUpdated: value count incorrect updating combo FontType");
                 }
                 break;
+            default:
+                break;
         };
         SetValue( m_ValueDescriptor );
         m_pDirectorChildFrame->Inspect( m_ValueDescriptor, false );
@@ -637,3 +697,7 @@ moValueCtrl::OnFocus( wxFocusEvent& event) {
     ShowMessage("focus on text control");
 
 }
+
+
+
+

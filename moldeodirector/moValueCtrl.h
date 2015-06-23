@@ -39,6 +39,7 @@
 #include "moDirectorChildFrame.h"
 #include <wx/tglbtn.h>
 
+#define MO_OPTIONS_MAX 1024
 
 class moValueCtrl : public wxPanel, public moIDirectorActions {
 
@@ -74,6 +75,7 @@ class moValueCtrl : public wxPanel, public moIDirectorActions {
         wxComboBox* m_pBlendingCtrl;
         wxComboBox* m_pPolygonModeCtrl;
         wxComboBox* m_pFontTypeCtrl;
+        wxComboBox* m_pOptionsCtrl;
 
         wxTextCtrl* m_pTextCtrl;
         wxTextCtrl*	m_pTextCtrlR;
@@ -91,6 +93,7 @@ class moValueCtrl : public wxPanel, public moIDirectorActions {
         wxString blendings[MO_BLENDINGS];
         wxString polygonmodes[MO_POLYGONMODES];
         wxString fonttypes[MO_FONT_TYPES];
+        wxString options[MO_OPTIONS_MAX];
 
         bool    m_bInit;
         bool block;

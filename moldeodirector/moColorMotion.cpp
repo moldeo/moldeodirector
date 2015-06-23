@@ -67,7 +67,7 @@ moColorMotion::moColorMotion(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	SliderGreen = new wxMoColourLevelCtrl(Panel2, ID_SLIDERGREEN, 0, 0, 255, wxPoint(56,104), wxSize(96,16), 0, wxDefaultValidator, _T("ID_SLIDERGREEN"));
 	SliderBlue = new wxMoColourLevelCtrl(Panel2, ID_SLIDERBLUE, 0, 0, 255, wxPoint(56,128), wxSize(96,16), 0, wxDefaultValidator, _T("ID_SLIDERBLUE"));
 	SliderAlpha = new wxMoColourLevelCtrl(Panel2, ID_SLIDERALPHA, 0, 0, 255, wxPoint(56,152), wxSize(96,16), 0, wxDefaultValidator, _T("ID_SLIDERALPHA"));
-	BitmapButtonPickColor = new wxBitmapButton(Panel2, ID_BITMAPBUTTONPICKCOLOR, wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/pickcolor.png"))), wxPoint(160,172), wxSize(32,32), wxNO_BORDER, wxDefaultValidator, _T("ID_BITMAPBUTTONPICKCOLOR"));
+	BitmapButtonPickColor = new wxBitmapButton(Panel2, ID_BITMAPBUTTONPICKCOLOR, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/pickcolor.png"))), wxPoint(160,172), wxSize(32,32), wxNO_BORDER, wxDefaultValidator, _T("ID_BITMAPBUTTONPICKCOLOR"));
 	BitmapButtonPickColor->SetDefault();
 	BitmapButtonPickColor->SetForegroundColour(wxColour(255,255,255));
 	BitmapButtonPickColor->SetBackgroundColour(wxColour(0,0,0));
@@ -111,7 +111,8 @@ moColorMotion::moColorMotion(wxWindow* parent,wxWindowID id,const wxPoint& pos,c
 	StaticText1->SetForegroundColour(wxColour(255,255,255));
 	FlexGridSizer1->Add(Panel2, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	SetSizer(FlexGridSizer1);
-	FlexGridSizer1->SetSizeHints(this);
+	SetSizer(FlexGridSizer1);
+	Layout();
 
 	Connect(ID_BITMAPBUTTONPICKCOLOR,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moColorMotion::OnButtonPickColorClick);
 	Connect(ID_TEXTCTRLRED,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moColorMotion::OnTextCtrlRedText);

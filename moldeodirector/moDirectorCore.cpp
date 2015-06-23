@@ -267,7 +267,10 @@ moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath,
         bool bDebug = true;
         moText PluginName;
 
-        ///PREEFFECTS
+        if (mobjecttype==MO_OBJECT_EFFECT) {
+          rPluginDefs.Add( moPluginDefinition( moText("scene"), "", mobjecttype ) );
+          rPluginDefs.Add( moPluginDefinition( moText("sequence"), "", mobjecttype ) );
+        }
 
         /// Open DIRECTORY [plugindir] and search for module libraries (plugins)
         ///
@@ -312,6 +315,7 @@ moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath,
             }
         } else LogError( moText("Directory doesn´t exists:")+(moText)plugindir );
 
+
     }
 
 	moApplicationDescriptor moDirectorCore::GetApplicationDescriptor() {
@@ -350,6 +354,7 @@ moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath,
         //RESOURCES
         LoadPlugins( rPluginDefs, pluginsfullpath + moText("/resources"), MO_OBJECT_RESOURCE);
 
+
         moApplicationDescriptor pAppDes;
         pAppDes = m_ApplicationDescriptor;
         return pAppDes;
@@ -366,7 +371,7 @@ moDirectorCore::SetPaths( moText p_installationpath, moText p_configurationpath,
 
         /*
         wxString moldeopathinstall = moText2Wx( m_ApplicationDescriptor.GetInstallationFullPath() );
-        wxString templaterelpath( _T("../../data/") );
+        wxString templaterelpath( _T(MOLDEODATADIR "/") );
 
         wxString templatepath  = moldeopathinstall + templaterelpath;
 
@@ -534,6 +539,16 @@ moDirectorCore::CloseMob( moMobDescriptor p_MobDescriptor ) {
     return MO_DIRECTOR_STATUS_ERROR;
 
 }
+
+moDirectorStatus
+moDirectorCore::AddChildMob( moMobDescriptor p_MobDesc, moMobDescriptor p_MobDescFather ) {
+
+	if (m_pDirectorConsole)
+        return m_pDirectorConsole->AddChildMob( p_MobDesc, p_MobDescFather );
+    return MO_DIRECTOR_STATUS_ERROR;
+
+}
+
 
 moDirectorStatus moDirectorCore::ReloadMob( moMobDescriptor p_MobDesc ) { return MO_DIRECTOR_STATUS_OK; }
 

@@ -266,7 +266,7 @@ moLayersTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor
     ///info para agregar al MultiItemCtrl.... (spacing,indentation, etc...)
     wxTreeMultiWindowInfo wndinfo( wxTMC_SPAN_WIDTH, 0, 0, false);
     wndinfo.SetTopSpacing(0);
-    wndinfo.SetFrontSpacing(0);
+    wndinfo.SetFrontSpacing(20);
     wndinfo.Indent(0);
 
     ///pedimos la descripción completa de los mobs
@@ -286,41 +286,31 @@ moLayersTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor
         if ((i%2)==1) t->SetBackgroundColour( wxColour(0,255,0) );
         AppendWindow( mob_ids[MobDef.GetType()], t, _(""), wndinfo);
         */
+        wxTreeMultiItem id_effect;
 
-        wxTreeMultiItem id_effect = AppendNode( mob_ids[MobDef.GetType()], moText2Wx( MobDef.GetLabelName() ), moText2Wx( MobDef.GetName() ));
+        ///NIVEL ROOT (no escenas)
+        if ( MobDef.GetMoldeoFatherId()==-1 ) {
+          id_effect = AppendNode( mob_ids[MobDef.GetType()], moText2Wx( MobDef.GetLabelName() ), moText2Wx( MobDef.GetName() ));
+          pobject = new moItemLayerWindow( this , wxID_ANY, wxPoint(0,0), wxSize(900,28) );
 
-        pobject = new moItemLayerWindow( this , wxID_ANY, wxPoint(0,0), wxSize(900,28) );
-        if ((i%2)==0) pobject->SetBackgroundColour( wxColour(50,50,50) );
-        if ((i%2)==1) pobject->SetBackgroundColour( wxColour(0,0,0) );
+          if (pobject) {
 
-        if (pobject) {
-            pobject->SetNextActionHandler(this);
-            pobject->Inspect( pMobDescriptor );
-            //AppendWindow( mob_ids[MobDef.GetType()], pobject, _(""), wndinfo);
+              if ((i%2)==0) pobject->SetBackgroundColour( wxColour(50,50,50) );
+              if ((i%2)==1) pobject->SetBackgroundColour( wxColour(0,0,0) );
+
+              pobject->m_TreeItem = id_effect;
+              pobject->SetNextActionHandler(this);
+              pobject->Inspect( pMobDescriptor );
+              AppendWindow( id_effect, pobject, _(""), wndinfo);
+          }
+
+          if ( MobDef.GetName()=="scene" ) {
+              //this->Show();
+              SceneTraversal( pMobDescriptor, pMobDescriptors, 1 );
+          }
+
         }
 
-        AppendWindow( id_effect, pobject, _(""), wndinfo);
-/**
-        wxTreeMultiItem idparams = AppendNode( id_effect, wxT("params"),
-                                                              wxT("params") );
-
-        ///info para agregar al MultiItemCtrl.... (spacing,indentation, etc...)
-
-        wxTreeMultiWindowInfo wndinfo( wxTMC_SPAN_WIDTH, 0, 0, false);
-        wndinfo.SetTopSpacing(0);
-        wndinfo.SetFrontSpacing(0);
-        wndinfo.Indent(0);
-
-        for(int j=0; j<10; j++) {
-          wxPanel* t = new wxPanel( this, wxID_ANY, wxPoint(0,0), wxSize(200,10));
-          if ((j%2)==0) t->SetBackgroundColour( wxColour(190, 120, 0 ) );
-          if ((j%2)==1) t->SetBackgroundColour( wxColour(0, 190,128) );
-          wxTreeMultiItem idparam = AppendNode( idparams, wxT("param"),
-                                                              wxT("param") );
-
-          AppendWindow( idparam, t, _(""), wndinfo);
-
-        }*/
 
         Collapse( id_effect, true );
       }
@@ -346,11 +336,88 @@ moLayersTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor
 
     }
 
+
+    /** PROCESANDO PRIMERA CAPA DE ESCENAS (es recursivo) */
+    /*
+    for( MOuint k=0;  k < pMobDescriptors.Count(); k++) {
+
+      moMobDescriptor pMobDescriptor = pMobDescriptors[k];
+      moMobDefinition MobDef = pMobDescriptor.GetMobDefinition();
+
+      if ( MO_OBJECT_UNDEFINED<MobDef.GetType() && MobDef.GetType() <= MO_OBJECT_MASTEREFFECT ) {
+        wxTreeMultiItem id_effect;
+        wxTreeMultiItem father_id_effect;
+
+        if ( MobDef.GetName()=="scene"
+            && MobDef.GetMoldeoFatherId()==-1) {
+
+            SceneTraversal( pMobDescriptor, pMobDescriptors, 0 );
+        }
+      }
+    }
+*/
     this->Show();
     return MO_DIRECTOR_STATUS_OK;
 
 }
 
+moDirectorStatus
+moLayersTreeCtrl::SceneTraversal( moMobDescriptor &pSceneMobDescriptor, moMobDescriptors &pMobDescriptors, int iteration ) {
+
+    moMobDefinition SceneDef = pSceneMobDescriptor.GetMobDefinition();
+    moItemLayerWindow* pobject = NULL;
+
+    ///info para agregar al MultiItemCtrl.... (spacing,indentation, etc...)
+    wxTreeMultiWindowInfo wndinfo( wxTMC_SPAN_WIDTH, 0, 0, false);
+    wndinfo.SetTopSpacing(0);
+    wndinfo.SetFrontSpacing(20*(iteration+1));
+    wndinfo.Indent(0);
+
+    /** PROCESANDO EFECTOS DE LA ESCENA */
+    for( MOuint i=0;  i < pMobDescriptors.Count(); i++) {
+
+      moMobDescriptor pMobDescriptorChild = pMobDescriptors[i];
+      moMobDefinition MobDefChild = pMobDescriptorChild.GetMobDefinition();
+
+      if ( MO_OBJECT_UNDEFINED<MobDefChild.GetType()
+          && MobDefChild.GetType() <= MO_OBJECT_MASTEREFFECT ) {
+
+        wxTreeMultiItem id_effect;
+        wxTreeMultiItem father_id_effect;
+
+        if ( MobDefChild.GetMoldeoFatherId()==SceneDef.GetMoldeoId() ) {
+              /// SEARCH NODE (FATHER SCENE)
+              moItemLayerWindow* pWin = FindObjectByMob( pSceneMobDescriptor );
+              if (pWin) {
+                father_id_effect = pWin->m_TreeItem;
+                /// APPEND NODE
+                id_effect = AppendNode( father_id_effect, moText2Wx( MobDefChild.GetLabelName() ), moText2Wx( MobDefChild.GetName() ));
+                pobject = new moItemLayerWindow( this , wxID_ANY, wxPoint(0,0), wxSize(900,28) );
+
+
+                if (pobject) {
+
+                    if ((i%2)==0) pobject->SetBackgroundColour( wxColour(50,50,50) );
+                    if ((i%2)==1) pobject->SetBackgroundColour( wxColour(0,0,0) );
+
+                    pobject->m_TreeItem = id_effect;
+                    pobject->SetNextActionHandler(this);
+                    pobject->Inspect( pMobDescriptorChild );
+
+                    AppendWindow( id_effect, pobject, _(""), wndinfo);
+
+                    if ( MobDefChild.GetName()=="scene" ) {
+                        //this->Show();
+                        SceneTraversal( pMobDescriptorChild, pMobDescriptors, iteration+1 );
+                    }
+                }
+              }
+          }
+
+        }
+      }
+
+}
 
 moDirectorStatus
 moLayersTreeCtrl::SetMob( moMobDescriptor p_MobDesc ) {

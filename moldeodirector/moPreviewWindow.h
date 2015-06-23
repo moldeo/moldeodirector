@@ -55,6 +55,7 @@ class moPreviewWindow: public wxPanel, public moIDirectorActions
 		void OnBitmapButtonPauseClick(wxCommandEvent& event);
 		void OnBitmapButtonSaveSessionClick(wxCommandEvent& event);
 		void OnBitmapButtonStopClick(wxCommandEvent& event);
+		void OnBitmapButtonSaveVideoClick(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

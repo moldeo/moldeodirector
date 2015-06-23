@@ -72,6 +72,7 @@ class moLayersTreeCtrl : public wxTreeMultiCtrl, public moIDirectorActions {
         virtual moDirectorStatus    MobUpdated( moMobDescriptor p_MobDesc );
         virtual moDirectorStatus    ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor );
         moDirectorStatus            SetMob( moMobDescriptor p_MobDesc );
+        moDirectorStatus            SceneTraversal( moMobDescriptor &pSceneMobDescriptor, moMobDescriptors &pMobDescriptors, int iteration=0 );
 
 
     public:

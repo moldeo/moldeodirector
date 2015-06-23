@@ -66,7 +66,7 @@ public:
 	void SetDirectorCore( moDirectorCore* p_pDirectorCore );
 
 	moMoldeoObject* GetObject( moMobDescriptor p_MobDesc );
-
+  moMoldeoObject* GetObjectByIdx( int p_object_id );
 
 //================================================================
 // Effects states
@@ -87,6 +87,7 @@ public:
 	moDirectorStatus Pause();
 	moDirectorStatus Seek( MOulong p_timecode );
 	moDirectorStatus SaveSession();
+	moDirectorStatus Render();
 
 	moDirectorStatus NewProject( const moProjectDescriptor& p_ProjectDes );
 	moDirectorStatus OpenProject( const moProjectDescriptor& p_ProjectDes );
@@ -120,6 +121,7 @@ public:
 	moDirectorStatus SaveMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus DeleteMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus MoveMob( moMobDescriptor p_MobDesc, int position );
+	moDirectorStatus AddChildMob( moMobDescriptor p_MobDesc, moMobDescriptor p_MobDescFather );
 	moDirectorStatus DuplicateMob( moMobDescriptor p_MobDesc );
 	moMobDescriptor GetMob( moMobDescriptor p_MobDesc );
 	virtual moDirectorStatus SetMob( moMobDescriptor p_MobDesc );

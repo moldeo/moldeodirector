@@ -3,19 +3,19 @@
 #include <wx/dirdlg.h>
 
 //(*InternalHeaders(moNewProject)
-#include <wx/intl.h>
-#include <wx/string.h>
-//*)
+#include <wx/intl.h>
+#include <wx/string.h>
+//*)
 
 //(*IdInit(moNewProject)
-const long moNewProject::ID_DIRTEXTCTRL = wxNewId();
-const long moNewProject::ID_STATICTEXT1 = wxNewId();
-const long moNewProject::ID_NEWPROJECT_BROWSE = wxNewId();
-const long moNewProject::ID_STATICTEXT2 = wxNewId();
-const long moNewProject::ID_NAMETEXTCTRL = wxNewId();
-const long moNewProject::ID_NEWPROJECT_OK = wxNewId();
-const long moNewProject::ID_NEWPROJECT_CANCEL = wxNewId();
-//*)
+const long moNewProject::ID_DIRTEXTCTRL = wxNewId();
+const long moNewProject::ID_STATICTEXT1 = wxNewId();
+const long moNewProject::ID_NEWPROJECT_BROWSE = wxNewId();
+const long moNewProject::ID_STATICTEXT2 = wxNewId();
+const long moNewProject::ID_NAMETEXTCTRL = wxNewId();
+const long moNewProject::ID_NEWPROJECT_OK = wxNewId();
+const long moNewProject::ID_NEWPROJECT_CANCEL = wxNewId();
+//*)
 
 BEGIN_EVENT_TABLE(moNewProject,wxDialog)
 	//(*EventTable(moNewProject)
@@ -25,22 +25,22 @@ END_EVENT_TABLE()
 moNewProject::moNewProject(wxWindow* parent,wxWindowID id)
 {
 	//(*Initialize(moNewProject)
-	Create(parent, id, _("New Project"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
-	SetClientSize(wxSize(364,181));
-	DirTextCtrl = new wxTextCtrl(this, ID_DIRTEXTCTRL, wxEmptyString, wxPoint(8,32), wxSize(256,21), 0, wxDefaultValidator, _T("ID_DIRTEXTCTRL"));
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Directory"), wxPoint(8,8), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-	ButtonBrowse = new wxButton(this, ID_NEWPROJECT_BROWSE, _("Browse..."), wxPoint(272,32), wxDefaultSize, 0, wxDefaultValidator, _T("ID_NEWPROJECT_BROWSE"));
-	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Project Name"), wxPoint(8,72), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-	ProjectNameTextCtrl = new wxTextCtrl(this, ID_NAMETEXTCTRL, wxEmptyString, wxPoint(8,96), wxSize(168,21), 0, wxDefaultValidator, _T("ID_NAMETEXTCTRL"));
-	OkButton = new wxButton(this, ID_NEWPROJECT_OK, _("OK"), wxPoint(184,144), wxDefaultSize, 0, wxDefaultValidator, _T("ID_NEWPROJECT_OK"));
-	CancelButton = new wxButton(this, ID_NEWPROJECT_CANCEL, _("Cancel"), wxPoint(272,144), wxDefaultSize, 0, wxDefaultValidator, _T("ID_NEWPROJECT_CANCEL"));
+	Create(parent, id, _("New Project"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
+	SetClientSize(wxSize(364,181));
+	DirTextCtrl = new wxTextCtrl(this, ID_DIRTEXTCTRL, wxEmptyString, wxPoint(8,32), wxSize(256,21), 0, wxDefaultValidator, _T("ID_DIRTEXTCTRL"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Directory"), wxPoint(8,8), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	ButtonBrowse = new wxButton(this, ID_NEWPROJECT_BROWSE, _("Browse..."), wxPoint(272,32), wxDefaultSize, 0, wxDefaultValidator, _T("ID_NEWPROJECT_BROWSE"));
+	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Project Name"), wxPoint(8,72), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+	ProjectNameTextCtrl = new wxTextCtrl(this, ID_NAMETEXTCTRL, wxEmptyString, wxPoint(8,96), wxSize(168,21), 0, wxDefaultValidator, _T("ID_NAMETEXTCTRL"));
+	OkButton = new wxButton(this, ID_NEWPROJECT_OK, _("OK"), wxPoint(184,144), wxDefaultSize, 0, wxDefaultValidator, _T("ID_NEWPROJECT_OK"));
+	CancelButton = new wxButton(this, ID_NEWPROJECT_CANCEL, _("Cancel"), wxPoint(272,144), wxDefaultSize, 0, wxDefaultValidator, _T("ID_NEWPROJECT_CANCEL"));
 
-	Connect(ID_DIRTEXTCTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moNewProject::OnDirTextCtrlText);
-	Connect(ID_NEWPROJECT_BROWSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moNewProject::OnBrowseClick);
-	Connect(ID_NAMETEXTCTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moNewProject::OnProjectNameTextCtrlText);
-	Connect(ID_NEWPROJECT_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moNewProject::OnOkClick);
-	Connect(ID_NEWPROJECT_CANCEL,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moNewProject::OnCancelClick);
-	//*)
+	Connect(ID_DIRTEXTCTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moNewProject::OnDirTextCtrlText);
+	Connect(ID_NEWPROJECT_BROWSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moNewProject::OnBrowseClick);
+	Connect(ID_NAMETEXTCTRL,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&moNewProject::OnProjectNameTextCtrlText);
+	Connect(ID_NEWPROJECT_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moNewProject::OnOkClick);
+	Connect(ID_NEWPROJECT_CANCEL,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moNewProject::OnCancelClick);
+	//*)
 
 	OkButton->Disable();
 

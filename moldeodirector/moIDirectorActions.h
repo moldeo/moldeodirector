@@ -39,6 +39,7 @@
 #include <wx/string.h>
 #include <wx/snglinst.h>
 #include <wx/filename.h>
+#include <wx/treebase.h>
 #include <wx/app.h>
 
 // ----------------------------------------------------------------------------
@@ -632,7 +633,9 @@ class  moMobDescriptor : public moDescriptor {
 
 public:
 
-	moMobDescriptor() {}
+	moMobDescriptor() {
+    m_TreeItemId.Unset();
+	}
 	moMobDescriptor( const moMobDescriptor &pMobDescriptor ) {
         (*this) = pMobDescriptor;
     }
@@ -650,7 +653,7 @@ public:
         m_ProjectDescriptor = mbd.m_ProjectDescriptor;
         m_MobState = mbd.m_MobState;
         m_EffectState = mbd.m_EffectState;
-
+        m_TreeItemId = mbd.m_TreeItemId;
         return(*this);
     }
 
@@ -694,6 +697,14 @@ public:
       m_MobDefinition = p_mobdefinition;
 	}
 
+	void SetTreeItemId( wxTreeItemId p_id ) {
+    m_TreeItemId = p_id;
+	}
+
+	wxTreeItemId  GetTreeItemId() {
+    return m_TreeItemId;
+	}
+
   virtual bool IsValid();
 
 private:
@@ -704,6 +715,7 @@ private:
 
     moMobState  m_MobState;
     moEffectState  m_EffectState;
+    wxTreeItemId m_TreeItemId;
 
 };
 
@@ -979,6 +991,11 @@ public:
     virtual moDirectorStatus SaveSession() { return MO_ACTIONHANDLER(SaveSession()); }
 
     /**
+    *   Salvar en disco la sesión visualizada, luego podrá ser reproducida...
+    */
+    virtual moDirectorStatus Render() { return MO_ACTIONHANDLER(Render()); }
+
+    /**
     *   Parar el loop principal
     */
     virtual moDirectorStatus Seek( MOulong p_timecode ) { return MO_ACTIONHANDLER(Seek( p_timecode )); }
@@ -1051,6 +1068,7 @@ public:
 	virtual moDirectorStatus DeleteMob( moMobDescriptor p_MobDesc ) { return MO_ACTIONHANDLER(DeleteMob(p_MobDesc)); }
 	virtual moDirectorStatus DuplicateMob( moMobDescriptor p_MobDesc ) { return MO_ACTIONHANDLER(DuplicateMob(p_MobDesc)); }
 	virtual moDirectorStatus MoveMob( moMobDescriptor p_MobDesc, int position ) { return MO_ACTIONHANDLER(MoveMob(p_MobDesc,position)); }
+	virtual moDirectorStatus AddChildMob( moMobDescriptor p_MobDesc, moMobDescriptor p_MobDescFather ) { return MO_ACTIONHANDLER( AddChildMob(p_MobDesc,p_MobDescFather) ); }
 	virtual moDirectorStatus InstanceMob( moMobDescriptor p_MobDesc ) { return MO_ACTIONHANDLER(InstanceMob(p_MobDesc)); }
 	virtual moMobDescriptor GetMob( moMobDescriptor p_MobDesc ) { return MO_ACTIONHANDLER_MOB(GetMob(p_MobDesc)); }
 	virtual moDirectorStatus SetMob( moMobDescriptor p_MobDesc ) {

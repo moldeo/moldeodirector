@@ -162,7 +162,7 @@ void moGLCanvas::OnPaint( wxPaintEvent& WXUNUSED(event) )
           moResourceManager* RM = m_pDirectorConsole->GetResourceManager();
           moConfig dummy;
           if (!RM->Initialized()) {
-              RM->Init( moText("../../data/test"),dummy,0,800,600,800,600);
+              RM->Init( moText(MOLDEODATADIR "/test"),dummy,0,800,600,800,600);
               m_3dRef.Finish();
               int result = 0;
               result = m_3dRef.Add( "objetos/iconos3d/moldeologo.3ds" , m_pDirectorConsole->GetResourceManager()->GetModelMan() );

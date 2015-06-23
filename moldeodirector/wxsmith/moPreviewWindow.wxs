@@ -49,6 +49,7 @@
 			<size>32,32</size>
 			<tooltip>Movie</tooltip>
 			<help>Movie</help>
+			<handler function="OnBitmapButtonSaveVideoClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxBitmapButton" name="ID_BITMAPBUTTONSAVESESSION" variable="BitmapButtonSaveSession" member="yes">
 			<bitmap>../../data/icons/savesession32.png</bitmap>

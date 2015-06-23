@@ -107,12 +107,13 @@ moDirectorChildConsole::Init(
 	// 2: Load MasterEffects
 	LoadMasterEffects();
 
-	moText fxname, cfname, lblname;
+	moText fxname, cfname, lblname, keyname;
 	// 3: Load PreEffects Erase
 	fxname = moText("erase");
 	cfname = moText("_erase");
 	lblname = moText("erase");
-	moPreEffect* ppreeffect = (moPreEffect*)m_EffectManager.NewEffect( fxname, cfname, lblname,  MO_OBJECT_PREEFFECT, -1, -1);
+    keyname = moText("");
+	moPreEffect* ppreeffect = (moPreEffect*)m_EffectManager.NewEffect( fxname, cfname, lblname,  keyname, MO_OBJECT_PREEFFECT, -1, -1);
 	if (ppreeffect) {
 		m_MoldeoObjects.Add( (moMoldeoObject*) ppreeffect );
 		ppreeffect->SetResourceManager( m_pResourceManager );
@@ -128,13 +129,13 @@ moDirectorChildConsole::Init(
 	fxname = m_EffectName;
 	cfname = m_EffectConfigName;
 	lblname = m_EffectConfigName;
-	moEffect* peffect = (moEffect*)m_EffectManager.NewEffect( fxname, cfname, lblname,  MO_OBJECT_EFFECT, -1, -1);
+    keyname = moText("");
+	moEffect* peffect = (moEffect*)m_EffectManager.NewEffect( fxname, cfname, lblname, keyname, MO_OBJECT_EFFECT, -1, -1);
 	if (peffect) {
 		m_MoldeoObjects.Add( (moMoldeoObject*) peffect );
 		peffect->SetResourceManager( m_pResourceManager );
 	} else return false;
 
-	m_ConsoleState.m_nAllEffects = m_EffectManager.AllEffects().Count();
 
 	InitializeAllEffects();
 

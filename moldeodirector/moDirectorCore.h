@@ -140,6 +140,10 @@ public:
 	moDirectorStatus OpenMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus CloseMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus ReloadMob( moMobDescriptor p_MobDesc );
+
+  moDirectorStatus AddChildMob( moMobDescriptor p_MobDesc, moMobDescriptor p_MobDescFather );
+
+
 	moDirectorStatus NewMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus EditMob( moMobDescriptor p_MobDesc );
 	moDirectorStatus SaveMob( moMobDescriptor p_MobDesc );

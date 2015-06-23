@@ -10,6 +10,7 @@ BEGIN_EVENT_TABLE(moProjectTreeCtrl, wxTreeCtrl)
   EVT_MENU( MODIRECTOR_DUPLICATEMOB, moProjectTreeCtrl::OnDuplicateMob )
   EVT_MENU( MODIRECTOR_MOVEUPMOB, moProjectTreeCtrl::OnMoveUpMob )
   EVT_MENU( MODIRECTOR_MOVEDOWNMOB, moProjectTreeCtrl::OnMoveDownMob )
+  EVT_MENU( MODIRECTOR_CHILDMOB, moProjectTreeCtrl::OnAddChildMob )
 END_EVENT_TABLE()
 
 
@@ -64,6 +65,7 @@ wxTreeCtrl( parent, id, pos, size, style ) {
 	m_PopMenu.Append( MODIRECTOR_DUPLICATEMOB, _T("&Duplicate\tAlt-D"), _T("Duplicate this object"));
 	m_PopMenu.Append( MODIRECTOR_MOVEUPMOB, _T("&Move Up\tAlt-U"), _T("Move up this object"));
 	m_PopMenu.Append( MODIRECTOR_MOVEDOWNMOB, _T("&Move Down\tAlt-J"), _T("Move down this object"));
+	m_PopMenu.Append( MODIRECTOR_CHILDMOB, _T("&Add Child Effect\tAlt-C"), _T("Add Child Effect"));
 
 }
 
@@ -195,6 +197,22 @@ moProjectTreeCtrl::OnMoveDownMob( wxCommandEvent& event ) {
 
 }
 
+void
+moProjectTreeCtrl::OnAddChildMob( wxCommandEvent& event ) {
+
+  if ( m_MobSelected.GetMobDefinition().GetName()=="scene" ) {
+
+
+      ///Try to add child mob
+      Log( moText("Add child mob: ") + m_MobSelected.GetMobDefinition().GetLabelName() );
+      moMobDescriptor m_MobUndefined;
+      this->AddChildMob( m_MobUndefined, m_MobSelected );
+      return;
+
+  } else LogError("moProjectTreeCtrl::OnAddChildMob Object Descriptor is NOT A SCENE. You can add child Effects only in Scene Effects");
+
+}
+
 
 void
 moProjectTreeCtrl::ResetBaseTree( wxString p_treename) {
@@ -235,6 +253,55 @@ moProjectTreeCtrl::MobUpdated( moMobDescriptor p_MobDesc ) {
   return MO_DIRECTOR_STATUS_OK;
 }
 
+void
+moProjectTreeCtrl::Branchs( moMobDescriptor& p_MobDescriptor, moMobDescriptors& p_MobDescriptors ) {
+  wxTreeItemId exid;
+  wxString xitemname;
+  moMobDefinition& p_MobDef( p_MobDescriptor.GetMobDefinition() );
+  int mfatherid = p_MobDef.GetMoldeoFatherId();
+
+  if (mfatherid!=-1) {
+
+    for( MOuint i=0;  i < p_MobDescriptors.Count(); i++) {
+
+      moMobDescriptor pMobDescriptorFather = p_MobDescriptors[i];
+      moMobDefinition& MobDefFather( pMobDescriptorFather.GetMobDefinition() );
+      ///WE FOUND THE FATHER, PUT IT AS CHILD
+      if (MobDefFather.GetMoldeoId()==mfatherid) {
+          xitemname = wxString( moText2Wx( p_MobDef.GetLabelName() )) + wxT(" (");
+          xitemname+= wxString( moText2Wx( p_MobDef.GetConfigName() ) ) + wxT(".cfg [");
+          xitemname+= wxString( moText2Wx( p_MobDef.GetName() )) + wxT("])");
+
+          wxTreeItemId treeitemid = pMobDescriptorFather.GetTreeItemId();
+          ///agregamos el item
+          exid = AppendItem( treeitemid, xitemname , 1 );
+          if (exid.IsOk()) {
+              p_MobDescriptor.SetTreeItemId( exid );
+              SetItemData( exid, new moMobItemData( p_MobDescriptor ));
+
+          }
+          exid.Unset();
+      }
+    }
+
+
+    ///RECORREMOS TODOS LOS HIJOS DE ESTE... SI HAY UN EFECTO ESCENA LO BRANCHEAMOS...
+    for( MOuint i=0;  i < p_MobDescriptors.Count(); i++) {
+
+      moMobDescriptor pMobDescriptor = p_MobDescriptors[i];
+      moMobDefinition& MobDef( pMobDescriptor.GetMobDefinition() );
+      ///father id == este id > los hijos
+      if (MobDef.GetMoldeoFatherId()==p_MobDef.GetMoldeoId()) {
+        if (MobDef.GetName()=="scene") {
+          Branchs( pMobDescriptor, p_MobDescriptors );
+          p_MobDescriptors.Set( i, pMobDescriptor);
+        }
+      }
+    }
+
+  }
+}
+
 moDirectorStatus
 moProjectTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor ) {
 
@@ -266,16 +333,32 @@ moProjectTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescripto
 
       //xitemname = wxString( moText2Wx( MobDef.GetName() )) + wxT(" > ");
       //xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) );
+      if (MobDef.GetMoldeoFatherId()==-1) {
+        xitemname = wxString( moText2Wx( MobDef.GetLabelName() )) + wxT(" (");
+        xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) ) + wxT(".cfg [");
+        xitemname+= wxString( moText2Wx( MobDef.GetName() )) + wxT("])");
 
-      xitemname = wxString( moText2Wx( MobDef.GetLabelName() )) + wxT(" (");
-      xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) ) + wxT(".cfg [");
-      xitemname+= wxString( moText2Wx( MobDef.GetName() )) + wxT("])");
+        ///agregamos el item
+        exid = AppendItem( mob_ids[ MobDef.GetType() ], xitemname , 1 );
+        if (exid.IsOk()) {
+            pMobDescriptor.SetTreeItemId( exid );
+            pMobDescriptors.Set(i, pMobDescriptor);
+            SetItemData( exid, new moMobItemData( pMobDescriptor ));
 
+        }
+        exid.Unset();
+      }
 
-      ///agregamos el item
-      exid = AppendItem( mob_ids[ MobDef.GetType() ], xitemname , 1 );
-			if (exid.IsOk()) SetItemData( exid, new moMobItemData( pMobDescriptor ));
-			exid.Unset();
+    }
+
+    for( MOuint i=0;  i < pMobDescriptors.Count(); i++) {
+
+      moMobDescriptor pMobDescriptor = pMobDescriptors[i];
+      moMobDefinition& MobDef( pMobDescriptor.GetMobDefinition() );
+      if (MobDef.GetMoldeoFatherId()!=-1) {
+        Branchs( pMobDescriptor, pMobDescriptors );
+        pMobDescriptors.Set( i, pMobDescriptor);
+      }
     }
 
     Expand(rootid);

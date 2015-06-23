@@ -154,6 +154,7 @@ public:
         virtual moDirectorStatus SetMob( moMobDescriptor p_MobDesc );
         virtual moDirectorStatus CloseMob( moMobDescriptor p_MobDescriptor );
         virtual moDirectorStatus SaveMob( moMobDescriptor p_MobDescriptor );
+        virtual moDirectorStatus AddChildMob( moMobDescriptor p_MobDesc, moMobDescriptor p_MobDescFather );
         virtual moDirectorStatus CloseAll();
         virtual moDirectorStatus SaveAll();
         virtual moDirectorStatus CloseProject();

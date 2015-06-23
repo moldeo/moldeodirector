@@ -181,8 +181,7 @@ void moLayerEffectCtrl::Inspect( moMobDescriptor p_MobDesc ) {
 }
 
 
-void moLayerEffectCtrl::OnCheckBoxOnOffClick(wxCommandEvent& event)
-{
+void moLayerEffectCtrl::OnCheckBoxOnOffClick(wxCommandEvent& event) {
     ///copiamos el estado...
     moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
@@ -259,19 +258,16 @@ void moLayerEffectCtrl::OnLevelSpeed(wxCommandEvent& event) {
 
 }
 
-void moLayerEffectCtrl::OnComboBoxPreConfigSelect(wxCommandEvent& event)
-{
+void moLayerEffectCtrl::OnComboBoxPreConfigSelect(wxCommandEvent& event) {
 }
 
 
-void moLayerEffectCtrl::OnPanelVisibilityMouseMove(wxMouseEvent& event)
-{
+void moLayerEffectCtrl::OnPanelVisibilityMouseMove(wxMouseEvent& event) {
     wxMessageBox(wxT("hi there"));
     SetCursor( wxCursor(wxCURSOR_HAND ));
 }
 
-void moLayerEffectCtrl::OnBitmapButtonVisibilityClick(wxCommandEvent& event)
-{
+void moLayerEffectCtrl::OnBitmapButtonVisibilityClick(wxCommandEvent& event) {
     ///copiamos el estado...
     moEffectState EffectState = m_MobDescriptor.GetEffectState();
 
@@ -509,8 +505,7 @@ moLayerEffectCtrl::MobUpdated( moMobDescriptor p_MobDesc ) {
 
 
 
-void moLayerEffectCtrl::OnBitmapButtonDeleteClick(wxCommandEvent& event)
-{
+void moLayerEffectCtrl::OnBitmapButtonDeleteClick(wxCommandEvent& event) {
     if( wxMessageBox(_T("Really Delete this layer ?"), _T("Please confirm"),
                           wxICON_QUESTION | wxYES_NO) == wxYES )
     {
@@ -520,8 +515,7 @@ void moLayerEffectCtrl::OnBitmapButtonDeleteClick(wxCommandEvent& event)
 
 
 
-void moLayerEffectCtrl::OnPaint(wxPaintEvent& event)
-{
+void moLayerEffectCtrl::OnPaint(wxPaintEvent& event) {
 
 
 
@@ -533,8 +527,7 @@ BEGIN_EVENT_TABLE(moEffectLayerTimelineCtrl,wxPanel)
     EVT_MOUSE_EVENTS( moEffectLayerTimelineCtrl::OnMouseEvent )
 END_EVENT_TABLE()
 
-moEffectLayerTimelineCtrl::moEffectLayerTimelineCtrl(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
-{
+moEffectLayerTimelineCtrl::moEffectLayerTimelineCtrl(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size) {
 
     Create(parent, wxID_ANY, wxPoint(0,0), wxSize(800,40), wxNO_BORDER, _T("wxID_ANY"));
     SetBackgroundColour( wxColour(0,9,117));
@@ -545,8 +538,7 @@ moEffectLayerTimelineCtrl::moEffectLayerTimelineCtrl(wxWindow* parent,wxWindowID
 
 }
 
-moEffectLayerTimelineCtrl::~moEffectLayerTimelineCtrl()
-{
+moEffectLayerTimelineCtrl::~moEffectLayerTimelineCtrl() {
 
 }
 
@@ -851,8 +843,7 @@ moItemLayerWindow::SetMob( moMobDescriptor p_MobDesc ) {
 
 }
 
-void moLayerEffectCtrl::OnBitmapButtonPlay(wxCommandEvent& event)
-{
+void moLayerEffectCtrl::OnBitmapButtonPlay(wxCommandEvent& event) {
     moEffectState& EffectState( m_MobDescriptor.GetEffectState() );
 
     EffectState.synchronized = MO_DEACTIVATED;
@@ -862,8 +853,7 @@ void moLayerEffectCtrl::OnBitmapButtonPlay(wxCommandEvent& event)
 
 }
 
-void moLayerEffectCtrl::OnBitmapButtonPauseClick(wxCommandEvent& event)
-{
+void moLayerEffectCtrl::OnBitmapButtonPauseClick(wxCommandEvent& event) {
     moEffectState& EffectState( m_MobDescriptor.GetEffectState() );
 
     EffectState.synchronized = MO_DEACTIVATED;
@@ -872,8 +862,7 @@ void moLayerEffectCtrl::OnBitmapButtonPauseClick(wxCommandEvent& event)
     Update( EffectState );
 }
 
-void moLayerEffectCtrl::OnBitmapButtonStopClick(wxCommandEvent& event)
-{
+void moLayerEffectCtrl::OnBitmapButtonStopClick(wxCommandEvent& event) {
     moEffectState& EffectState( m_MobDescriptor.GetEffectState() );
 
     EffectState.synchronized = MO_DEACTIVATED;

@@ -78,7 +78,8 @@ moConfigurationAdvancedOutput::moConfigurationAdvancedOutput(wxWindow* parent,wx
 	Choice2->Append(_("clip 4"));
 	FlexGridSizer1->Add(Panel4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
 	SetSizer(FlexGridSizer1);
-	FlexGridSizer1->SetSizeHints(this);
+	SetSizer(FlexGridSizer1);
+	Layout();
 
 	Panel1->Connect(wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel1Paint,0,this);
 	Panel2->Connect(wxEVT_PAINT,(wxObjectEventFunction)&moConfigurationAdvancedOutput::OnPanel2Paint,0,this);

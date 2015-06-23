@@ -13,7 +13,7 @@
 
 #include "moIDirectorActions.h"
 #include "wxMoldeoControls.h"
-
+#include "wxTreeMultiCtrl.h"
 /**
 *
 */
@@ -196,6 +196,7 @@ class moItemLayerWindow: public moItemLayerCtrl, public wxPanel
 
         void    SetScrollPosition( int position );
 
+      wxTreeMultiItem m_TreeItem;
 
 
     DECLARE_EVENT_TABLE()

@@ -26,13 +26,16 @@ END_EVENT_TABLE()
 
 moPreviewFrame::moPreviewFrame(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
+
+  m_pGLCanvas = NULL;
+	m_pSizer = NULL;
+  //Create(parent, wxID_ANY, _("Moldeo output"), pos, size, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
 	//(*Initialize(moPreviewFrame)
-	//Create(parent, wxID_ANY, _("Moldeo output"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER, _T("wxID_ANY"));
-	Create(parent, wxID_ANY, _("Moldeo output"), pos, size );
-	//SetClientSize(wxSize(400,300));
+  Create(parent, wxID_ANY, _("Moldeo output"), pos, size, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
+	SetClientSize(wxSize(400,300));
 	SetForegroundColour(wxColour(255,255,255));
 	SetBackgroundColour(wxColour(0,0,0));
-	/*
+/*
 	ToolBar1 = new wxToolBar(this, ID_TOOLBAR1, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL|wxNO_BORDER, _T("ID_TOOLBAR1"));
 	ToolBar1->SetToolBitmapSize(wxSize(32,32));
 	ToolBarItem1 = ToolBar1->AddTool(TOOLPLAY, _("Play"), wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/play32.png"))), wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/play32dis.png"))), wxITEM_NORMAL, _("Play syncro"), _("Help text"));
@@ -40,12 +43,11 @@ moPreviewFrame::moPreviewFrame(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	ToolBarItem3 = ToolBar1->AddTool(TOOLFULLSCREEN, _("Fullscreen"), wxBitmap(wxImage(_T(MOLDEODATADIR"/icons/onofficon32.png"))), wxNullBitmap, wxITEM_NORMAL, _("Fullscreen"), _("Fullscreen"));
 	ToolBar1->Realize();
 	SetToolBar(ToolBar1);
-	*/
+*/
 
 	Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&moPreviewFrame::OnClose);
 	//*)
-	m_pGLCanvas = NULL;
-	m_pSizer = NULL;
+
 	//ToolBar1->Hide();
 
 }
@@ -171,7 +173,7 @@ moPreviewFrame::FullScreen( bool force) {
         ShowFullScreen( true );
     } else {
         Log("moPreviewFrame restoring.");
-        ShowFullScreen( false);
+        ShowFullScreen( false, 0 );
     }
 
     return MO_DIRECTOR_STATUS_OK;
@@ -211,7 +213,8 @@ moPreviewFrame::OnKeyUp( wxKeyEvent &event ) {
     Log( "moPreviewFrame::OnKeyUp > keycode up: " + IntToStr(event.GetKeyCode()) );
     /*fullscreen off on escape*/
     if (event.GetKeyCode()==27) {
-        ShowFullScreen( false);
+        Log( "moPreviewFrame::OnKeyUp > Off fullscreen" );
+        ShowFullScreen( false, 0);
     }
 }
 

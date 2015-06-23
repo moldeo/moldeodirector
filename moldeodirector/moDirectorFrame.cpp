@@ -1031,6 +1031,37 @@ moDirectorFrame::OpenMob( moMobDescriptor p_MobDescriptor ) {
 }
 
 
+moDirectorStatus
+moDirectorFrame::AddChildMob( moMobDescriptor p_MobDesc, moMobDescriptor p_MobDescFather ) {
+
+  moNewEffectDialog*  pNewEffectDialog = new moNewEffectDialog( this, -1 );
+  moDirectorStatus dirstatus;
+
+  if (pNewEffectDialog) {
+    pNewEffectDialog->Init( this );
+
+    int ret = pNewEffectDialog->ShowModal();
+
+    if( ret == wxID_OK ) {
+
+        moMobDefinition pMobDefinition = pNewEffectDialog->GetMobDefinition();
+        moMobDescriptor pMobDesc( pMobDefinition );
+
+        dirstatus = m_pDirectorCore->AddChildMob( pMobDesc, p_MobDescFather );
+    }
+
+    pNewEffectDialog->Destroy();
+    pNewEffectDialog = NULL;
+  }
+  return dirstatus;
+}
+
+
+
+/** EVENTS > FUNCTIONS*/
+
+
+
 void
 moDirectorFrame::OnOpenMob( wxCommandEvent& event ) {
 
@@ -1227,6 +1258,9 @@ moDirectorChildFrame* moDirectorFrame::CreateChildFrame( moMobDescriptor p_MobDe
 moDirectorStatus
 moDirectorFrame::FocusOutput() {
 
+
+    Log( "FocusOutput" );
+
     int outputwidth = 0;
     int outputheight = 0;
     int outputleft = 0;
@@ -1291,15 +1325,18 @@ moDirectorFrame::FocusOutput() {
                 ProjectPreview();
             }
 
-            if (m_pPreviewFrame->GetClientSize().GetWidth()!=outputwidth) {
+            //if (m_pPreviewFrame->GetClientSize().GetWidth()!=outputwidth) {
                 m_pPreviewFrame->SetClientSize(wxSize(outputwidth,outputheight));
-            } else {
+            //} else {
               PreviewBitsW = outputwidth;
               PreviewBitsH = outputheight;
               //PreviewBits = (MOuchar*)malloc( PreviewBitsW*PreviewBitsH*3);
               m_pPreviewFrame->Move(outputleft,outputtop);
+
+              Log( "FocusOutput: Moved to: left: " + IntToStr(outputleft)+" top:" + IntToStr(outputtop)  );
+
               m_pPreviewFrame->FullScreen(true);
-            }
+            //}
 
 
         }
@@ -1367,6 +1404,7 @@ moDirectorFrame::ProjectPreview() {
                 m_pPreviewFrame->Hide();
 
                 m_pPreviewWindow->m_pGLCanvas->Finish();//agregado...al sacarse arriba
+                //m_pPreviewWindow->m_pGLCanvas=NULL;
                 m_pPreviewWindow->Init( this, m_pGLContext );
                 if (m_pPreviewWindow->m_pGLCanvas)
                     m_pPreviewWindow->m_pGLCanvas->SetCurrent();

@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS=-I m4
 
-datadir = ${prefix}/share/moldeodirector
+datadir = ${prefix}/share/moldeo/data
 modulesdir = ${libdir}/moldeo
 docdir = ${prefix}/share/doc/moldeodirector
 cursorsdir = ${datadir}/cursors

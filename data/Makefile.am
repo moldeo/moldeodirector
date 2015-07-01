@@ -1,5 +1,5 @@
 
-datadir = ${prefix}/share/moldeodirector
+datadir = ${prefix}/share/moldeo/data
 fontsdir = ${datadir}/fonts
 cursorsdir = ${datadir}/cursors
 iconsdir = ${datadir}/icons

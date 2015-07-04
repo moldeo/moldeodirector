@@ -5,17 +5,19 @@
 		<Option title="moldeodirector" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option extended_obj_names="1" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../../../binaries/bin/win/moldeodirectord" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../../../binaries/bin/win" />
+				<Option output="../../../bin/win/moldeodirectord" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../bin/win" />
 				<Option object_output="wobjd/Debug" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_libu/wx/include/msw-unicode-release-static-2.8" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_libu/wx/include/msw-unicode-release-static-2.8" />
 				</Compiler>
 				<Linker>
 					<Add library="moldeod" />
@@ -34,12 +36,12 @@
 					<Add library="wxzlib-2.8" />
 					<Add library="wx_mswu_gl-2.8" />
 					<Add library="glew_staticdd" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_libu" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_libu" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../../../../binaries/bin/win/moldeodirector" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../../../binaries/bin/win" />
+				<Option output="../../../bin/win/moldeodirector" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../bin/win" />
 				<Option object_output="wobj/Release" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -47,7 +49,7 @@
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_libu/wx/include/msw-unicode-release-static-2.8" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_libu/wx/include/msw-unicode-release-static-2.8" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -67,19 +69,19 @@
 					<Add library="wxzlib-2.8" />
 					<Add library="wx_mswu_gl-2.8" />
 					<Add library="glew_staticd" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_libu" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_libu" />
 				</Linker>
 			</Target>
 			<Target title="Release Ansi">
-				<Option output="../../../../binaries/bin/win/moldeodirector_ansi" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../../../binaries/bin/win" />
+				<Option output="../../../bin/win/moldeodirector_ansi" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../bin/win" />
 				<Option object_output="wobj/Release Ansi" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_lib/wx/include/msw-ansi-release-static-2.8" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_lib/wx/include/msw-ansi-release-static-2.8" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -99,19 +101,19 @@
 					<Add library="wxexpat-2.8" />
 					<Add library="wxzlib-2.8" />
 					<Add library="wx_msw_gl-2.8" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_lib" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug Ansi">
-				<Option output="../../../../binaries/bin/win/moldeodirectord_ansi" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../../../binaries/bin/win" />
+				<Option output="../../../bin/win/moldeodirectord_ansi" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../bin/win" />
 				<Option object_output="wobjd/Debug Ansi" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_lib/wx/include/msw-ansi-release-static-2.8" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_lib/wx/include/msw-ansi-release-static-2.8" />
 				</Compiler>
 				<Linker>
 					<Add library="moldeod_ansi" />
@@ -130,12 +132,12 @@
 					<Add library="wxzlib-2.8" />
 					<Add library="wx_msw_gl-2.8" />
 					<Add library="glew_staticdd" />
-					<Add directory="../../../../externlibs/wxWidgets/lib/mingw_lib" />
+					<Add directory="$(externlibs)/wxWidgets/lib/mingw_lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="Debug;Release;Release Ansi;Debug Ansi;" />
+			<Add alias="All" targets="Debug;Release;" />
 			<Add alias="All Ansi" targets="Release Ansi;Debug Ansi;" />
 			<Add alias="All Unicode" targets="Debug;Release;" />
 		</VirtualTargets>
@@ -158,37 +160,34 @@
 			<Add directory=".." />
 			<Add directory="./vdtc" />
 			<Add directory="./treemultictrl" />
-			<Add directory="../../../../binaries/include" />
-			<Add directory="../../../../wxMoldeoControls/trunk/wxMoldeoControls" />
-			<Add directory="../../../../externlibs/opengl/include" />
-			<Add directory="../../../../externlibs/SDL/include" />
-			<Add directory="../../../../externlibs/lua/include" />
-			<Add directory="../../../../externlibs/glew/include" />
-			<Add directory="../../../../externlibs/openal/include" />
-			<Add directory="../../../../externlibs/freetype/include" />
-			<Add directory="../../../../externlibs/freeimage/include" />
-			<Add directory="../../../../externlibs/wxWidgets/include" />
-			<Add directory="../../../../externlibs/wxWidgets/contrib/include" />
-			<Add directory="../../../../externlibs/wxArt2D/include" />
-			<Add directory="../../../../externlibs/wxArt2D/include/thirdparty" />
-			<Add directory="../../../../externlibs/wxArt2D/modules" />
-			<Add directory="../../../../externlibs/wxWidgets/src/expat/lib" />
-			<Add directory="../../../../externlibs/wxArt2D/thirdparty/agg2/include" />
-			<Add directory="../../../../externlibs/wxArt2D/thirdparty/kbool/include" />
+			<Add directory="../../../include" />
+			<Add directory="../../../include/wxMoldeoControls" />
+			<Add directory="$(externlibs)/opengl/include" />
+			<Add directory="$(externlibs)/SDL/include" />
+			<Add directory="$(externlibs)/lua/include" />
+			<Add directory="$(externlibs)/glew/include" />
+			<Add directory="$(externlibs)/openal/include" />
+			<Add directory="$(externlibs)/freetype/include" />
+			<Add directory="$(externlibs)/freeimage/include" />
+			<Add directory="$(externlibs)/wxWidgets/include" />
+			<Add directory="$(externlibs)/wxWidgets/contrib/include" />
+			<Add directory="$(externlibs)/wxArt2D/include" />
+			<Add directory="$(externlibs)/wxArt2D/include/thirdparty" />
+			<Add directory="$(externlibs)/wxArt2D/modules" />
+			<Add directory="$(externlibs)/wxWidgets/src/expat/lib" />
+			<Add directory="$(externlibs)/wxArt2D/thirdparty/agg2/include" />
+			<Add directory="$(externlibs)/wxArt2D/thirdparty/kbool/include" />
 			<Add directory="../../moldeodirector/treemultictrl" />
 			<Add directory="../../moldeodirector/vdtc" />
 			<Add directory="../../moldeodirector" />
-			<Add directory="C:/gstreamer-sdk/0.10/x86/include" />
-			<Add directory="C:/gstreamer-sdk/0.10/x86/include/glib-2.0" />
-			<Add directory="C:/gstreamer-sdk/0.10/x86/include/libxml2" />
-			<Add directory="C:/gstreamer-sdk/0.10/x86/include/gstreamer-0.10" />
-			<Add directory="C:/gstreamer-sdk/0.10/x86/lib/glib-2.0/include" />
-			<Add directory="$(OSSBUILD_GSTREAMER_SDK_DIR)/include/gstreamer-0.10" />
-			<Add directory="$(OSSBUILD_GSTREAMER_SDK_DIR)/include/glib-2.0" />
-			<Add directory="$(OSSBUILD_GSTREAMER_SDK_DIR)/include/libxml2" />
+			<Add directory="$(gstreamersdkdir)/include" />
+			<Add directory="$(gstreamersdkdir)/include/glib-2.0" />
+			<Add directory="$(gstreamersdkdir)/include/libxml2" />
+			<Add directory="$(gstreamersdkdir)/include/gstreamer-0.10" />
+			<Add directory="$(gstreamersdkdir)/lib/glib-2.0/include" />
 		</Compiler>
 		<ResourceCompiler>
-			<Add directory="../../../../externlibs/wxWidgets-2.8.12/include" />
+			<Add directory="$(externlibs)/wxWidgets-2.8.12/include" />
 			<Add directory="../../data" />
 		</ResourceCompiler>
 		<Linker>
@@ -212,23 +211,21 @@
 			<Add library="gstreamer-0.10" />
 			<Add library="glib-2.0" />
 			<Add library="gobject-2.0" />
-			<Add directory="../../../../binaries/lib/win" />
-			<Add directory="../../../../externlibs/tinyxml/lib" />
-			<Add directory="../../../../externlibs/glew/lib" />
-			<Add directory="../../../../externlibs/lua/lib" />
-			<Add directory="../../../../externlibs/muparser/lib" />
-			<Add directory="../../../../externlibs/freetype/lib" />
-			<Add directory="../../../../externlibs/openal/libs/win32" />
-			<Add directory="../../../../externlibs/opengl/lib" />
-			<Add directory="../../../../externlibs/freeimage/lib" />
+			<Add directory="../../../lib/win" />
+			<Add directory="$(externlibs)/tinyxml/lib" />
+			<Add directory="$(externlibs)/glew/lib" />
+			<Add directory="$(externlibs)/lua/lib" />
+			<Add directory="$(externlibs)/muparser/lib" />
+			<Add directory="$(externlibs)/freetype/lib" />
+			<Add directory="$(externlibs)/openal/libs/win32" />
+			<Add directory="$(externlibs)/opengl/lib" />
+			<Add directory="$(externlibs)/freeimage/lib" />
 			<Add directory="C:/msys/1.0/lib" />
-			<Add directory="C:/gstreamer-sdk/0.10/x86/lib" />
-			<Add directory="$(OSSBUILD_GSTREAMER_SDK_DIR)/lib" />
+			<Add directory="$(gstreamersdkdir)/lib" />
 		</Linker>
 		<ExtraCommands>
-			<Add after='svn export &quot;../../data&quot; &quot;../../../../binaries/data&quot; --force' />
+			<Add after="exportdata.bat" />
 		</ExtraCommands>
-		<Unit filename="../../config.h" />
 		<Unit filename="../../moldeodirector/PreviewWindowSystemMem.cpp" />
 		<Unit filename="../../moldeodirector/PreviewWindowSystemMem.h" />
 		<Unit filename="../../moldeodirector/mo3dModelPanel.cpp" />
@@ -335,8 +332,9 @@
 			<code_completion />
 			<lib_finder disable_auto="0" />
 			<debugger>
-				<search_path add="../../src/libmoldeo" />
-				<search_path add="../../" />
+				<search_path add="../../../libmoldeo/libmoldeo" />
+				<search_path add="../../../libwxmoldeocontrols/wxMoldeoControls" />
+				<search_path add="../../moldeodirector" />
 			</debugger>
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="" main="" init_handlers="necessary" language="CPP" />

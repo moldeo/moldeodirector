@@ -787,7 +787,11 @@ void moDirectorFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
     Close(true);
 }
 
-#include "../config.h"
+#ifdef MO_WIN32
+#define PACKAGE_VERSION "0.9.1.0"
+#else
+  #include "config.h"
+#endif
 void moDirectorFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxString msg;

@@ -1,0 +1,106 @@
+
+// --------------------------------------------------------------------------
+/*! \file w1.cg
+* \brief Fragment Shader Code
+*
+* GpuUrban Library Code:
+*/
+
+//----------------------------------------------------------------------
+//
+// Date: Feb 01, 2006. UNC. (c) Sudipta N. Sinha @ Urbanscape
+//
+// Work: GpuUrban Library Src Code
+//
+// Copyright Notice:
+//
+//   This code and attached libraries cannot be modified, reproduced or copied in any 
+//   form without the expressed consent of Dept. of Computer Science, UNC Chapel Hill.
+// 
+//   Copyright Dept. of Computer Science, UNC Chapel Hill.
+//   All rights reserved.
+//
+//----------------------------------------------------------------------
+fragout main(vf30 IN,
+			 uniform sampler2D texture,
+			 uniform sampler2D texture1,
+		     uniform sampler2D texture2,
+			   uniform float xoff,
+			   uniform float yoff)
+{
+
+  fragout OUT;
+  float4  p1, p2, p00, p01, p10, p11;
+
+  float2  offset_texture  = (IN.TEX1.xy + float2(1.0/14.0)) * float2(xoff,yoff) ;
+
+  float4  feature_vec4   = tex2D(texture, IN.TEX0.xy);
+  
+  float2  c1     = feature_vec4.xy +  offset_texture;
+  float2  c2     = feature_vec4.zw +  offset_texture;
+ 
+  float2 recip = float2 ( 1.0/xoff, 1.0/yoff);
+  float2 step  = float2 ( xoff, yoff);
+
+  float2  C00, C01, C10, C11, T00, T01, T10, T11;
+  float2  T1, T2, hv;
+  float   flx, fly, alpha, beta;
+  
+  hv    = float2(0.5);
+ 
+  T1    = c1 * recip;
+  T2    = T1 - hv ;
+  flx   = floor(T2.x);
+  fly   = floor(T2.y);
+  alpha = T2.x - flx ;
+  beta  = T2.y - fly ;
+  
+  C00 = float2 ( flx  , fly   );
+  C01 = float2 ( flx  , fly+1 );
+  C10 = float2 ( flx+1, fly   );
+  C11 = float2 ( flx+1, fly+1 );
+
+  T00 = step * (C00 + hv);
+  T01 = step * (C01 + hv);
+  T10 = step * (C10 + hv);
+  T11 = step * (C11 + hv);
+
+  p00			 = tex2D(texture1, T00);
+  p01			 = tex2D(texture1, T01);
+  p10			 = tex2D(texture1, T10);
+  p11			 = tex2D(texture1, T11);
+
+  p1 = alpha*beta*p11 + alpha*(1-beta)*p10 + (1-alpha)*beta*p01 + (1-alpha)*(1-beta)*p00;
+
+  T1    = c2 * recip; 
+  T2    = T1 - hv ;
+  flx   = floor(T2.x);
+  fly   = floor(T2.y);
+  alpha = T2.x - flx ;
+  beta  = T2.y - fly ;
+
+  C00 = float2 ( flx  , fly   );
+  C01 = float2 ( flx  , fly+1 );
+  C10 = float2 ( flx+1, fly   );
+  C11 = float2 ( flx+1, fly+1 );
+
+  T00 = step * (C00 + hv);
+  T01 = step * (C01 + hv);
+  T10 = step * (C10 + hv);
+  T11 = step * (C11 + hv);
+
+  p00			 = tex2D(texture2, T00);
+  p01			 = tex2D(texture2, T01);
+  p10			 = tex2D(texture2, T10);
+  p11			 = tex2D(texture2, T11);
+  
+  p2 = alpha*beta*p11 + alpha*(1-beta)*p10 + (1-alpha)*beta*p01 + (1-alpha)*(1-beta)*p00;
+
+  //ORIG WITHOUT BILINEAR INTERP p1			 = tex2D(texture1, c1);
+  //ORIG WITHOUT BILINEAR INTERP p2			 = tex2D(texture2, c2);
+  
+  OUT.col		 = p2.xxxx;
+ 
+  return OUT;
+
+  }

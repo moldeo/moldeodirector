@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MOCONFIG majorversion="0" minorversion="0">
+    <DEFINITION name="__console__" class="moConsole" />
+    <UPDATE />
+    <CONFIGPARAMS>
+        <PARAM name="inlet" type="INLET" property="" group="" />
+        <PARAM name="outlet" type="OUTLET" property="" group="" />
+        <PARAM name="script" type="SCRIPT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="devices" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT">netoscin</D>
+                <D type="TXT">soundoscin</D>
+                <D type="TXT">soundoscin</D>
+                <D type="NUM">0</D>
+                <D type="NUM">1</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="preeffect" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT">erase</D>
+                <D type="TXT">erase</D>
+                <D type="TXT">erase</D>
+                <D type="NUM">0</D>
+                <D type="NUM">1</D>
+            </VAL>
+            <VAL>
+                <D type="TXT">mirrorg</D>
+                <D type="TXT">mg</D>
+                <D type="TXT">mg</D>
+                <D type="NUM">0</D>
+                <D type="NUM">1</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="effect" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT">particlessimple</D>
+                <D type="TXT">parti_stars</D>
+                <D type="TXT">parti_stars</D>
+                <D type="NUM">0</D>
+                <D type="NUM">1</D>
+            </VAL>
+            <VAL>
+                <D type="TXT">particlessimple</D>
+                <D type="TXT">parti_stars_2</D>
+                <D type="TXT">parti_stars_2</D>
+                <D type="NUM">0</D>
+                <D type="NUM">1</D>
+            </VAL>
+            <VAL>
+                <D type="TXT">particlessimple</D>
+                <D type="TXT">parti_stars_3</D>
+                <D type="TXT">parti_stars_3</D>
+                <D type="NUM">0</D>
+                <D type="NUM">1</D>
+            </VAL>
+            <VAL>
+                <D type="TXT">icon</D>
+                <D type="TXT">icon</D>
+                <D type="TXT">icon</D>
+                <D type="NUM">0</D>
+                <D type="NUM">1</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="posteffect" type="TEXT" property="" group="" />
+        <PARAM name="mastereffect" type="TEXT" property="" group="" />
+        <PARAM name="resources" type="TEXT" property="" group="" />
+        <PARAM name="mastereffects_on" type="NUM" property="" group="">
+            <VAL>
+                <D type="NUM">0</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="fulldebug" type="NUM" property="" group="">
+            <VAL>
+                <D type="NUM">0</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="consolescript" type="SCRIPT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="outputmode" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT">AUTOPLAY</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="outputresolution" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="rendermode" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="renderresolution" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="clip1" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="clip2" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="clip3" type="TEXT" property="" group="">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="screenshots" type="NUM" property="" group="">
+            <VAL>
+                <D type="NUM">0</D>
+            </VAL>
+            <VAL>
+                <D type="NUM">15000</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="videoshots" type="NUM" property="" group="">
+            <VAL>
+                <D type="NUM">0</D>
+            </VAL>
+            <VAL>
+                <D type="NUM">2000</D>
+            </VAL>
+        </PARAM>
+    </CONFIGPARAMS>
+    <PRECONFIGS />
+</MOCONFIG>

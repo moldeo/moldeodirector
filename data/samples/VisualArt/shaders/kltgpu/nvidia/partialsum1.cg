@@ -1,0 +1,53 @@
+
+// --------------------------------------------------------------------------
+/*! \file partialsum1.cg
+* \brief Fragment Shader Code
+*
+* GpuUrban Library Code:
+*/
+
+//----------------------------------------------------------------------
+//
+// Date: Feb 01, 2006. UNC. (c) Sudipta N. Sinha @ Urbanscape
+//
+// Work: GpuUrban Library Src Code
+//
+// Copyright Notice:
+//
+//   This code and attached libraries cannot be modified, reproduced or copied in any 
+//   form without the expressed consent of Dept. of Computer Science, UNC Chapel Hill.
+// 
+//   Copyright Dept. of Computer Science, UNC Chapel Hill.
+//   All rights reserved.
+//
+//----------------------------------------------------------------------
+
+fragout main(vf30 IN,
+			 uniform samplerRECT texture)
+{
+  fragout   OUT;
+  float2    vec1,vec2,vec3,vec4,vec5,vec6,vec7;
+  float4    T1,T2,T3,T4,T5,T6,T7,Sum;
+
+  vec1    = f4texRECT(texture, IN.TEX0.xy).yz;
+  vec2    = f4texRECT(texture, IN.TEX1.xy).yz;     
+  vec3    = f4texRECT(texture, IN.TEX2.xy).yz;     
+  vec4    = f4texRECT(texture, IN.TEX3.xy).yz;     
+  vec5    = f4texRECT(texture, IN.TEX4.xy).yz;     
+  vec6    = f4texRECT(texture, IN.TEX5.xy).yz;     
+  vec7    = f4texRECT(texture, IN.TEX6.xy).yz;     
+ 
+
+  T1      = float4( vec1.x * vec1.x , vec1.x * vec1.y , vec1.y * vec1.y , 0.0);
+  T2      = float4( vec2.x * vec2.x , vec2.x * vec2.y , vec2.y * vec2.y , 0.0);
+  T3      = float4( vec3.x * vec3.x , vec3.x * vec3.y , vec3.y * vec3.y , 0.0);
+  T4      = float4( vec4.x * vec4.x , vec4.x * vec4.y , vec4.y * vec4.y , 0.0);
+  T5      = float4( vec5.x * vec5.x , vec5.x * vec5.y , vec5.y * vec5.y , 0.0);
+  T6      = float4( vec6.x * vec6.x , vec6.x * vec6.y , vec6.y * vec6.y , 0.0);
+  T7      = float4( vec7.x * vec7.x , vec7.x * vec7.y , vec7.y * vec7.y , 0.0);
+
+  Sum     = T1 + T2 + T3 + T4 + T5 + T6 + T7;
+  OUT.col = float4(Sum.x,Sum.y,Sum.z,0.0);
+
+  return OUT;
+}

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <MOCONFIG majorversion="0" minorversion="0">
     <DEFINITION name="__console__" class="moConsole" />
     <UPDATE />
@@ -25,6 +25,7 @@
                 <D type="TXT">blur</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+                <D type="TXT">L</D>
             </VAL>
         </PARAM>
         <PARAM name="effect" type="TEXT">
@@ -34,6 +35,7 @@
                 <D type="TXT">LLUVIA</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+                <D type="TXT">W</D>
             </VAL>
             <VAL>
                 <D type="TXT">particlessimple</D>
@@ -41,6 +43,7 @@
                 <D type="TXT">LLUVIA1</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+                <D type="TXT">A</D>
             </VAL>
             <VAL>
                 <D type="TXT">particlessimple</D>
@@ -48,6 +51,7 @@
                 <D type="TXT">LLUVIA11</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+                <D type="TXT">S</D>
             </VAL>
             <VAL>
                 <D type="TXT">sound</D>
@@ -55,13 +59,13 @@
                 <D type="TXT">SONIDO</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+                <D type="TXT">D</D>
             </VAL>
         </PARAM>
-        <PARAM name="posteffect" type="TEXT">
-        </PARAM>
+        <PARAM name="posteffect" type="TEXT" />
         <PARAM name="mastereffect" type="TEXT" />
         <PARAM name="resources" type="TEXT" />
-        <PARAM name="mastereffects_on" type="NUM">
+        <PARAM name="mastereffects_on" type="NUM" options="off,on">
             <VAL>
                 <D type="NUM">0</D>
             </VAL>
@@ -109,6 +113,16 @@
         <PARAM name="clip3" type="TEXT">
             <VAL>
                 <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="screenshots" type="NUM">
+            <VAL>
+                <D type="NUM">0</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="videoshots" type="NUM">
+            <VAL>
+                <D type="NUM">0</D>
             </VAL>
         </PARAM>
     </CONFIGPARAMS>

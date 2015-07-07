@@ -1,0 +1,89 @@
+
+// --------------------------------------------------------------------------
+/*! \file floatingwin.cg
+* \brief Fragment Shader Code
+*
+* GpuUrban Library Code:
+*/
+
+//----------------------------------------------------------------------
+//
+// Date: Feb 01, 2006. UNC. (c) Sudipta N. Sinha @ Urbanscape
+//
+// Work: GpuUrban Library Src Code
+//
+// Copyright Notice:
+//
+//   This code and attached libraries cannot be modified, reproduced or copied in any 
+//   form without the expressed consent of Dept. of Computer Science, UNC Chapel Hill.
+// 
+//   Copyright Dept. of Computer Science, UNC Chapel Hill.
+//   All rights reserved.
+//
+//----------------------------------------------------------------------
+
+fragout main(vf30 IN,
+			 uniform samplerRECT texture,
+			 uniform samplerRECT texture1,
+		     uniform samplerRECT texture2,
+			 uniform float xoff,
+	         uniform float yoff)
+{
+
+  fragout OUT;
+  float4  p1, p2, p00, p01, p10, p11;
+  
+  float2  imsz = float2(xoff, yoff); 
+  float2  hv    = float2(0.5);
+  float2  offset_texture  = IN.TEX1.xy;
+
+  float4  feature_vec4   = f4texRECT(texture, IN.TEX0.xy);
+ 
+  float2  c1     = (imsz * feature_vec4.xy) +  offset_texture;
+  float2  c2     = (imsz * feature_vec4.zw) +  offset_texture;
+
+  float2  C00, C01, C10, C11;
+  float   flx, fly, alpha, beta;
+  
+  flx   = floor(c1.x);
+  fly   = floor(c1.y);
+  alpha = c1.x - flx ;
+  beta  = c1.y - fly ;
+  
+  C00 = float2 ( flx  , fly   ) + hv;
+  C01 = float2 ( flx  , fly+1 ) + hv;
+  C10 = float2 ( flx+1, fly   ) + hv;
+  C11 = float2 ( flx+1, fly+1 ) + hv;
+
+  p00			 = f4texRECT(texture1, C00);
+  p01			 = f4texRECT(texture1, C01);
+  p10			 = f4texRECT(texture1, C10);
+  p11			 = f4texRECT(texture1, C11);
+
+  p1 = alpha*beta*p11 + alpha*(1-beta)*p10 + (1-alpha)*beta*p01 + (1-alpha)*(1-beta)*p00;
+
+  flx   = floor(c2.x);
+  fly   = floor(c2.y);
+  alpha = c2.x - flx ;
+  beta  = c2.y - fly ;
+
+  C00 = float2 ( flx  , fly   ) + hv;
+  C01 = float2 ( flx  , fly+1 ) + hv;
+  C10 = float2 ( flx+1, fly   ) + hv;
+  C11 = float2 ( flx+1, fly+1 ) + hv;
+
+  p00			 = f4texRECT(texture2, C00);
+  p01			 = f4texRECT(texture2, C01);
+  p10			 = f4texRECT(texture2, C10);
+  p11			 = f4texRECT(texture2, C11);
+  
+  p2 = alpha*beta*p11 + alpha*(1-beta)*p10 + (1-alpha)*beta*p01 + (1-alpha)*(1-beta)*p00;
+  
+  //p1			 = f4texRECT(texture1, c1 );
+  //p2			 = f4texRECT(texture2, c2 );
+  
+
+  OUT.col		 = float4(p1.x - p2.x, p1.y + p2.y -1.0, p1.z + p2.z -1.0, 1.0 );
+  return OUT;
+
+  }

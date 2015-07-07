@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <MOCONFIG majorversion="192" minorversion="2">
     <DEFINITION name="__console__" class="moConsole" />
     <UPDATE />
@@ -92,7 +92,7 @@
                 <D type="NUM">1</D>
             </VAL>
         </PARAM>
-        <PARAM name="mastereffects_on" type="NUM">
+        <PARAM name="mastereffects_on" type="NUM" options="off,on">
             <VAL>
                 <D type="NUM">0</D>
             </VAL>
@@ -142,6 +142,21 @@
         <PARAM name="clip3" type="TEXT">
             <VAL>
                 <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="script" type="SCRIPT">
+            <VAL>
+                <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="screenshots" type="NUM">
+            <VAL>
+                <D type="NUM">0</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="videoshots" type="NUM">
+            <VAL>
+                <D type="NUM">0</D>
             </VAL>
         </PARAM>
     </CONFIGPARAMS>

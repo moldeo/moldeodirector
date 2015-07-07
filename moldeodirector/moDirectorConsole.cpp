@@ -27,7 +27,6 @@ MOboolean moDirectorConsole::Finish() {
 	m_bInitialized = false; //assuring that Draw isnt called
 	m_timer.Stop();
 	return moConsole::Finish();
-
 }
 
 void

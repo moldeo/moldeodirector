@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
 <MOCONFIG majorversion="1" minorversion="0">
     <DEFINITION name="__console__" class="moConsole" />
     <UPDATE />
@@ -60,14 +60,14 @@
         </PARAM>
         <PARAM name="posteffect" type="TEXT" />
         <PARAM name="mastereffect" type="TEXT">
-			<VAL>
-				<D type="TXT">channel</D>
+            <VAL>
+                <D type="TXT">channel</D>
                 <D type="TXT">channel0</D>
                 <D type="TXT">channel0</D>
                 <D type="NUM">0</D>
-                <D type="NUM">1</D>			
-			</VAL>
-			<VAL>
+                <D type="NUM">1</D>
+            </VAL>
+            <VAL>
                 <D type="TXT">masterchannel</D>
                 <D type="TXT">masterchannel</D>
                 <D type="TXT">masterchannel</D>
@@ -94,10 +94,10 @@
                 <D type="TXT">ligia</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
-            </VAL>		
-		</PARAM>
+            </VAL>
+        </PARAM>
         <PARAM name="resources" type="TEXT" />
-        <PARAM name="mastereffects_on" type="NUM">
+        <PARAM name="mastereffects_on" type="NUM" options="off,on">
             <VAL>
                 <D type="NUM">0</D>
             </VAL>
@@ -119,8 +119,8 @@
         </PARAM>
         <PARAM name="outputresolution" type="TEXT">
             <VAL>
-				<D type="TXT">1024</D>
-				<D type="TXT">768</D>
+                <D type="TXT">1024</D>
+                <D type="TXT">768</D>
             </VAL>
         </PARAM>
         <PARAM name="rendermode" type="TEXT">
@@ -146,6 +146,16 @@
         <PARAM name="clip3" type="TEXT">
             <VAL>
                 <D type="TXT"></D>
+            </VAL>
+        </PARAM>
+        <PARAM name="screenshots" type="NUM">
+            <VAL>
+                <D type="NUM">0</D>
+            </VAL>
+        </PARAM>
+        <PARAM name="videoshots" type="NUM">
+            <VAL>
+                <D type="NUM">0</D>
             </VAL>
         </PARAM>
     </CONFIGPARAMS>

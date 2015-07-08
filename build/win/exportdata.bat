@@ -1,0 +1,3 @@
+cd ..
+cd ..
+exportdata.bat

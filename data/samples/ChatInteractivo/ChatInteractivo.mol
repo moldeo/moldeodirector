@@ -90,6 +90,7 @@
                 <D type="TXT">PARTICULAS</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="NUM">K</D>
             </VAL>
         </PARAM>
         <PARAM name="posteffect" type="TEXT" />

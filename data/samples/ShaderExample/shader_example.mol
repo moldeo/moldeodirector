@@ -20,6 +20,7 @@
                 <D type="TXT">mirrorg</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">L</D>
             </VAL>
         </PARAM>
         <PARAM name="effect" type="TEXT">
@@ -29,6 +30,7 @@
                 <D type="TXT">icon</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">W</D>
             </VAL>
             <VAL>
                 <D type="TXT">icon</D>
@@ -36,6 +38,7 @@
                 <D type="TXT">icon1</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">A</D>
             </VAL>
             <VAL>
                 <D type="TXT">icon</D>
@@ -43,6 +46,7 @@
                 <D type="TXT">icon2</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">S</D>
             </VAL>
             <VAL>
                 <D type="TXT">icon</D>
@@ -50,6 +54,7 @@
                 <D type="TXT">icon3</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">D</D>
             </VAL>
         </PARAM>
         <PARAM name="posteffect" type="TEXT">

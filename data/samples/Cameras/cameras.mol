@@ -22,6 +22,7 @@
                 <D type="TXT">ICAM</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">W</D>
             </VAL>
         </PARAM>
         <PARAM name="posteffect" type="TEXT">
@@ -31,6 +32,7 @@
                 <D type="TXT">debug</D>
                 <D type="NUM">0</D>
                 <D type="NUM">0</D>
+				<D type="TXT">S</D>
             </VAL>
         </PARAM>
         <PARAM name="mastereffect" type="TEXT" />

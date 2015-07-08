@@ -13,6 +13,7 @@
                 <D type="TXT">erase</D>
                 <D type="NUM">0</D>
                 <D type="NUM">0</D>
+				<D type="TXT">I</D>
             </VAL>
         </PARAM>
         <PARAM name="effect" type="TEXT">
@@ -22,6 +23,7 @@
                 <D type="TXT">CAMARA</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">W</D>
             </VAL>
             <VAL>
                 <D type="TXT">icon</D>
@@ -29,6 +31,7 @@
                 <D type="TXT">CAMARA ESPEJADA</D>
                 <D type="NUM">0</D>
                 <D type="NUM">0</D>
+				<D type="TXT">A</D>
             </VAL>
             <VAL>
                 <D type="TXT">icon</D>
@@ -36,6 +39,7 @@
                 <D type="TXT">MASCARA</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">S</D>
             </VAL>
             <VAL>
                 <D type="TXT">sound</D>
@@ -43,6 +47,7 @@
                 <D type="TXT">musica</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">D</D>
             </VAL>
         </PARAM>
         <PARAM name="posteffect" type="TEXT">

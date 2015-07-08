@@ -25,6 +25,7 @@
                 <D type="TXT">mirrorg</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">D</D>
             </VAL>
         </PARAM>
         <PARAM name="effect" type="TEXT">
@@ -34,6 +35,7 @@
                 <D type="TXT">tunel2</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">W</D>
             </VAL>
             <VAL>
                 <D type="TXT">tunel</D>
@@ -41,6 +43,7 @@
                 <D type="TXT">tunel21</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">A</D>
             </VAL>
             <VAL>
                 <D type="TXT">tunel</D>
@@ -48,6 +51,7 @@
                 <D type="TXT">tunel22</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">S</D>
             </VAL>
         </PARAM>
         <PARAM name="posteffect" type="TEXT" />

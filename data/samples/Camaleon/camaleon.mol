@@ -37,6 +37,7 @@
                 <D type="TXT">plano0111111</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">W</D>
             </VAL>
             <VAL>
                 <D type="TXT">plane</D>
@@ -44,6 +45,7 @@
                 <D type="TXT">plano01111</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">S</D>
             </VAL>
             <VAL>
                 <D type="TXT">plane</D>
@@ -51,6 +53,7 @@
                 <D type="TXT">plano011</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">A</D>
             </VAL>
             <VAL>
                 <D type="TXT">plane</D>
@@ -58,6 +61,7 @@
                 <D type="TXT">plano1</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">D</D>
             </VAL>
         </PARAM>
         <PARAM name="posteffect" type="TEXT">

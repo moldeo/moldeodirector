@@ -20,6 +20,7 @@
                 <D type="TXT">mirrorg</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">L</D>
             </VAL>
         </PARAM>
         <PARAM name="effect" type="TEXT">
@@ -29,6 +30,7 @@
                 <D type="TXT">icon</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">W</D>
             </VAL>
             <VAL>
                 <D type="TXT">particlessimple</D>
@@ -36,6 +38,7 @@
                 <D type="TXT">particulas</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">S</D>
             </VAL>
         </PARAM>
         <PARAM name="posteffect" type="TEXT">
@@ -45,6 +48,7 @@
                 <D type="TXT">debug</D>
                 <D type="NUM">0</D>
                 <D type="NUM">1</D>
+				<D type="TXT">D</D>
             </VAL>
         </PARAM>
         <PARAM name="mastereffect" type="TEXT" />

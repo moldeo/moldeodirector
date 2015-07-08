@@ -47,6 +47,7 @@
                 <D type="TXT">MIRRORG</D>
                 <D type="NUM">0</D>
                 <D type="NUM">0</D>
+				<D type="TXT">L</D>
             </VAL>
         </PARAM>
         <PARAM name="effect" type="TEXT">
@@ -99,21 +100,13 @@
                 <D type="TXT">J</D>
             </VAL>
             <VAL>
-                <D type="TXT">movie</D>
-                <D type="TXT">VIDEO</D>
-                <D type="TXT">VIDEO</D>
-                <D type="NUM">0</D>
-                <D type="NUM">0</D>
-                <D type="TXT">K</D>
-            </VAL>
-            <VAL>
                 <D type="TXT">camera</D>
                 <D type="TXT">CAMARA</D>
                 <D type="TXT">CAMARA</D>
                 <D type="NUM">0</D>
                 <D type="NUM">0</D>
-                <D type="TXT">L</D>
-            </VAL>
+                <D type="TXT">K</D>
+            </VAL>            
         </PARAM>
         <PARAM name="posteffect" type="TEXT" />
         <PARAM name="mastereffect" type="TEXT" />

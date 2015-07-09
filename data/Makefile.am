@@ -5,7 +5,6 @@ cursorsdir = ${datadir}/cursors
 iconsdir = ${datadir}/icons
 desktopdir = ${prefix}/share/applications
 pixmapsdir = ${prefix}/share/pixmaps
-samplesdir = ${datadir}/samples
 
 dist_pixmaps_DATA = icons/moldeologo.xpm \
 		    icons/moldeologo48x48.png\

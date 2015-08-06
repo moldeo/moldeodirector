@@ -146,7 +146,7 @@ moDirectorConsole::NewProject( const moProjectDescriptor& p_ProjectDes )  {//cre
 
 	if ( m_Config.CreateDefault( p_ProjectDes.GetFullConfigName() ) ) {
 
-	    if ( m_Config.SaveConfig( p_ProjectDes.GetFullConfigName() ) == MO_CONFIG_OK ) {
+	    if ( Save( p_ProjectDes.GetFullConfigName() ) == MO_CONFIG_OK ) {
 
             m_Config.UnloadConfig();
 
@@ -617,7 +617,16 @@ moDirectorConsole::ImportMob( moText p_filename ) {
                 Log( fullconfigname + moText(" copied.") );
             }
         } else {
-            ShowMessage( fullconfigname + moText(" exists already, just importing.") );
+          wxMessageDialog dlg( wxGetActiveWindow(),
+                              _T("Moldeo Object Config File already exists in your project, overwrite it ?"),
+                              _T("Warning!"),
+                              wxOK|wxCANCEL|wxCENTRE);
+          if ( dlg.ShowModal() == wxID_OK ) {
+             if (moFileManager::CopyFile( p_filename, fullconfigname )) {
+                Log( fullconfigname + moText(" copied.") );
+            }
+          }
+          ShowMessage( fullconfigname + moText(" exists already, just importing.") );
         }
 
         mStatus = NewMob( MobDescriptor );
@@ -625,7 +634,7 @@ moDirectorConsole::ImportMob( moText p_filename ) {
 
     } else if ( result == MO_CONFIGFILE_NOT_FOUND ) {
 
-        LogError( moText("Config filename ") + p_filename + moText(" not found ") );
+        LogError( moText("Config filename ") + p_filename + moText(" not found or corrupt.") );
 
         mStatus = MO_DIRECTOR_STATUS_NOT_FOUND;
     }
@@ -830,6 +839,7 @@ moDirectorConsole::NewMob( moMobDescriptor p_MobDesc ) {
                   }
 
                   //pEffect->Draw( &m_EffectState.tempo );
+                  /** TODO: convert to XML !!!*/
                   moValue effectvalue( pMOB->GetName(), "TXT" );
                   effectvalue.AddSubValue( pMOB->GetConfigName() , "TXT" );
                   effectvalue.AddSubValue( pMOB->GetLabelName() , "TXT" );

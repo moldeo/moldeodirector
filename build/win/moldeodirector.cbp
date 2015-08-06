@@ -327,6 +327,29 @@
 		<Unit filename="../../moldeodirector/treemultictrl/wxTreeMultiCtrl.h" />
 		<Unit filename="../../moldeodirector/vdtc/virtualdirtreectrl.cpp" />
 		<Unit filename="../../moldeodirector/vdtc/virtualdirtreectrl.h" />
+		<Unit filename="../../moldeodirector/wxsmith/PreviewWindowSystemMem.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/mo3dModelPanel.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moColorMotion.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moConfigurationAdvancedOutput.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moConfigurationDialog.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moConfigurationGeneral.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moConfigurationOutput.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moConnectionsWindow.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moEffectLayerCtrl.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moFontPanel.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moFunctionPanel.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moLayerEffectCtrl.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moNewEffectDialog.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moNewProject.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moObjectMotion.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moPanelTexture.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moPreviewFrame.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moPreviewWindow.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moScriptPanel.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moShaderCtrl.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moShadersPanel.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moSoundPanel.wxs" />
+		<Unit filename="../../moldeodirector/wxsmith/moTextureItemCtrl.wxs" />
 		<Extensions>
 			<envvars />
 			<code_completion />

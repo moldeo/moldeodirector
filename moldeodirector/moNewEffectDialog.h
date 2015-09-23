@@ -11,6 +11,7 @@
 #include <wx/choice.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
+#include <wx/combobox.h>
 //*)
 class moPluginItemData : public wxTreeItemData {
 
@@ -38,16 +39,21 @@ class moNewEffectDialog: public wxDialog
 		virtual ~moNewEffectDialog();
 
         void    Init( moDirectorFrame*  pFrame );
-		moMobDefinition GetMobDefinition();
+		const moMobDefinition& GetMobDefinition();
 		bool CheckData();
-
+		void EditMob( const moMobDefinition& p_MobDefinition );
+    wxTreeItemId EditMobIterationClassName( const wxTreeItemId& p_itemid, const moMobDefinition& p_MobDefinition );
 		//(*Declarations(moNewEffectDialog)
 		wxStaticText* StaticText2;
 		wxTextCtrl* LabelNameCtrl;
+		wxComboBox* ChoiceActive;
 		wxStaticText* StaticText1;
+		wxStaticText* StaticText3;
 		wxButton* OkButton;
 		wxStaticText* StaticTextConfigFilename;
 		wxTextCtrl* ConfigFilenameCtrl;
+		wxChoice* ChoiceKey;
+		wxStaticText* StaticText4;
 		wxButton* CancelButton;
 		wxChoice* Choice1;
 		wxTreeCtrl* TreeCtrl;
@@ -65,6 +71,10 @@ class moNewEffectDialog: public wxDialog
 		static const long ID_CHOICE1;
 		static const long ID_TREECTRL;
 		static const long ID_STATICTEXT3;
+		static const long ID_STATICTEXT4;
+		static const long ID_CHOICE2;
+		static const long ID_STATICTEXT5;
+		static const long ID_COMBOBOX1;
 		//*)
 
 	private:
@@ -75,6 +85,8 @@ class moNewEffectDialog: public wxDialog
 		void OnLabelNameCtrlText(wxCommandEvent& event);
 		void OnTreeCtrlSelectionChanged(wxTreeEvent& event);
 		void OnConfigFilenameCtrlText(wxCommandEvent& event);
+		void OnChoice2Select(wxCommandEvent& event);
+		void OnComboBox1Selected(wxCommandEvent& event);
 		//*)
 
         moDirectorFrame*        m_pDirectorFrame;

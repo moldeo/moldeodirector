@@ -334,6 +334,8 @@ moDirectorChildFrame::MobUpdated( moMobDescriptor p_MobDesc ) {
 
     m_MobDescriptor = p_MobDesc;
 
+    SetLabel( moText2Wx( m_MobDescriptor.GetMobDefinition().GetLabelName() ) );
+
     return MO_DIRECTOR_STATUS_OK;
 
 }
@@ -343,8 +345,8 @@ moDirectorChildFrame::MobUpdated( moMobDescriptor p_MobDesc ) {
 bool moDirectorChildFrame::IsMob( moMobDescriptor p_MobDescriptor ) {
 
 
-	if ( p_MobDescriptor.GetMobDefinition().GetConfigName()==m_MobDescriptor.GetMobDefinition().GetConfigName() &&
-		p_MobDescriptor.GetMobDefinition().GetName()==m_MobDescriptor.GetMobDefinition().GetName()) {
+	if ( p_MobDescriptor.GetMobDefinition().GetMoldeoId()==m_MobDescriptor.GetMobDefinition().GetMoldeoId() &&
+		p_MobDescriptor.GetMobDefinition().GetMoldeoFatherId()==m_MobDescriptor.GetMobDefinition().GetMoldeoFatherId()) {
 		return true;
 	} else return false;
 }

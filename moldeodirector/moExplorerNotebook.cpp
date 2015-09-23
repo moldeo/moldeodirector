@@ -75,6 +75,10 @@ moExplorerNotebook::ValueUpdated( moValueDescriptor p_ValueDesc ) {
 moDirectorStatus
 moExplorerNotebook::MobUpdated( moMobDescriptor p_MobDesc ) {
 
+  if (m_pProjectTreeCtrl) m_pProjectTreeCtrl->MobUpdated(p_MobDesc);
+  //if (m_pFilesTreeCtrl) m_pFilesTreeCtrl->MobUpdated(p_MobDesc);
+  //if (m_pEffectsPaletteCtrl) m_pEffectsPaletteCtrl->MobUpdated(p_MobDesc);
+
   return MO_DIRECTOR_STATUS_OK;
 
 }

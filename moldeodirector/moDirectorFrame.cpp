@@ -944,6 +944,40 @@ moDirectorFrame::OnNewEffect( wxCommandEvent& event ) {
 
 }
 
+
+moDirectorStatus
+moDirectorFrame::EditMob( moMobDescriptor p_MobDescriptor ) {
+
+    moDirectorStatus res;
+    moNewEffectDialog*  pNewEffectDialog = new moNewEffectDialog( this, -1 );
+
+    /*BUUUUUUG: problem on Focus while returning ShowModal
+    patch: http://trac.wxwidgets.org/attachment/ticket/10240/dialog.patch
+    http://trac.wxwidgets.org/ticket/10240
+    */
+
+
+    pNewEffectDialog->Init( this );
+    moMobDefinition pMobDefinition = p_MobDescriptor.GetMobDefinition();
+    pNewEffectDialog->EditMob( pMobDefinition );
+
+    int ret = pNewEffectDialog->ShowModal();
+
+    if( ret == wxID_OK ) {
+
+        moMobDefinition pMobDefinition = pNewEffectDialog->GetMobDefinition();
+        moMobDescriptor pMobDesc( pMobDefinition );
+        SaveMob( pMobDesc );
+
+    }
+
+    pNewEffectDialog->Destroy();
+    pNewEffectDialog = NULL;
+
+	return res;
+
+}
+
 void
 moDirectorFrame::OnImportMob( wxCommandEvent& event ) {
 
@@ -1005,7 +1039,46 @@ moDirectorFrame::OnImportMob( wxCommandEvent& event ) {
 moDirectorStatus
 moDirectorFrame::OpenMob( moMobDescriptor p_MobDescriptor ) {
 
+    moDirectorStatus res;
+    moMobDescriptor MobDescriptor;
+
     moDirectorChildFrame* pChild = NULL;
+    moDirectorChildConsole* pDirectorChildConsole = NULL;
+
+    if (m_pFilesBook) {
+      ///vemos si el child frame del objeto no fue creado ya en el moFilesbook
+      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
+          pChild =dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
+          if (pChild) {
+              if( pChild->IsMob( p_MobDescriptor ) ) {
+                  res = MO_DIRECTOR_STATUS_CONFIG_ALREADY_OPENED;
+                  break;
+              }
+          }
+      }
+    }
+
+    ///Si aun no se creo la instancia del child frame para editar el objeto
+    /// lo creamos y lo inicializamos
+    if (pChild==NULL) {
+
+      pChild = CreateChildFrame( p_MobDescriptor );
+
+      if(pChild!=NULL) {
+
+
+          //m_pChildFrameList.Append( pChild );
+          pChild->Init( this, p_MobDescriptor);
+
+          res = m_pDirectorCore->OpenMob( p_MobDescriptor );
+
+          if (res!=MO_DIRECTOR_STATUS_OK) {
+            LogError( moText("moDirectorConsole::OpenMob Couldn't Open ")+(moText)p_MobDescriptor.GetMobDefinition().GetConfigName());
+            return MO_DIRECTOR_STATUS_ERROR;
+          }
+
+      } else res = MO_DIRECTOR_STATUS_NOT_FOUND;
+    }
 
     if (m_pFilesBook) {
       for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
@@ -1030,8 +1103,7 @@ moDirectorFrame::OpenMob( moMobDescriptor p_MobDescriptor ) {
       }
     }
 
-    /// Nunca llega aquí si el FilesBook ya tiene este objeto abierto
-    return m_pDirectorCore->OpenMob( p_MobDescriptor );
+    return res;
 }
 
 
@@ -1541,47 +1613,6 @@ moDirectorFrame::SetMob( moMobDescriptor p_MobDesc ) {
 
 
 moDirectorStatus
-moDirectorFrame::EditMob( moMobDescriptor p_MobDescriptor ) {
-
-	moDirectorStatus res;
-	moMobDescriptor MobDescriptor;
-
-
-    moDirectorChildFrame* pChild = NULL;
-    moDirectorChildConsole* pDirectorChildConsole = NULL;
-
-    if (m_pFilesBook) {
-      ///vemos si el child frame del objeto no fue creado ya en el moFilesbook
-      for( size_t i=0; i<m_pFilesBook->GetPageCount(); i++ ) {
-          pChild =dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
-          if (pChild) {
-              if( pChild->IsMob( p_MobDescriptor ) ) {
-                  return MO_DIRECTOR_STATUS_CONFIG_ALREADY_OPENED;
-              }
-          }
-      }
-    }
-
-    ///Si aun no se creo la instancia del child frame para editar el objeto
-    /// lo creamos y lo inicializamos
-
-    pChild = NULL;
-    pChild = CreateChildFrame( p_MobDescriptor );
-
-    if(pChild!=NULL) {
-
-
-        //m_pChildFrameList.Append( pChild );
-        pChild->Init( this, p_MobDescriptor);
-
-        return MO_DIRECTOR_STATUS_OK;
-
-    } else return MO_DIRECTOR_STATUS_NOT_FOUND;
-
-	return res;
-}
-
-moDirectorStatus
 moDirectorFrame::CloseMob( moMobDescriptor p_MobDesc ) {
 
 	if ( m_pDirectorCore->CloseMob( p_MobDesc ) == MO_DIRECTOR_STATUS_OK ) {
@@ -1760,6 +1791,7 @@ moDirectorFrame::MobUpdated( moMobDescriptor p_MobDesc ) {
         pChild = dynamic_cast<moDirectorChildFrame*>(m_pFilesBook->GetPage(i));
         if (pChild) {
             if( pChild->IsMob( p_MobDesc ) ) {
+                m_pFilesBook->SetPageText( i, moText2Wx( p_MobDesc.GetMobDefinition().GetLabelName() ) );
                 Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, pChild->MobUpdated( p_MobDesc ));
             }
         }
@@ -1767,6 +1799,7 @@ moDirectorFrame::MobUpdated( moMobDescriptor p_MobDesc ) {
     }
 
     if (m_pLayersPanelCtrl) Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, m_pLayersPanelCtrl->MobUpdated( p_MobDesc ) );
+    if ( m_pExplorerNotebook ) Dstatus = CHECK_DIRECTOR_STATUS_ERROR( Dstatus, m_pExplorerNotebook->MobUpdated( p_MobDesc ) );
 
     return Dstatus;
 }

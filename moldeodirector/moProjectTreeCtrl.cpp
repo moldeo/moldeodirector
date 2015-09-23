@@ -6,6 +6,8 @@
 BEGIN_EVENT_TABLE(moProjectTreeCtrl, wxTreeCtrl)
   EVT_TREE_ITEM_ACTIVATED( -1, moProjectTreeCtrl::OnActivate )
   EVT_TREE_ITEM_RIGHT_CLICK( -1, moProjectTreeCtrl::OnPopMenu )
+  EVT_MENU( MODIRECTOR_OPENMOB, moProjectTreeCtrl::OnOpenMob )
+  EVT_MENU( MODIRECTOR_EDITMOB, moProjectTreeCtrl::OnEditMob )
   EVT_MENU( MODIRECTOR_DELETEMOB, moProjectTreeCtrl::OnDeleteMob )
   EVT_MENU( MODIRECTOR_DUPLICATEMOB, moProjectTreeCtrl::OnDuplicateMob )
   EVT_MENU( MODIRECTOR_MOVEUPMOB, moProjectTreeCtrl::OnMoveUpMob )
@@ -61,12 +63,13 @@ wxTreeCtrl( parent, id, pos, size, style ) {
 	this->Expand(root);
 	*/
 
-	m_PopMenu.Append( MODIRECTOR_DELETEMOB, _T("&Delete\tAlt-R"), _T("Delete this object"));
-	m_PopMenu.Append( MODIRECTOR_DUPLICATEMOB, _T("&Duplicate\tAlt-D"), _T("Duplicate this object"));
-	m_PopMenu.Append( MODIRECTOR_MOVEUPMOB, _T("&Move Up\tAlt-U"), _T("Move up this object"));
-	m_PopMenu.Append( MODIRECTOR_MOVEDOWNMOB, _T("&Move Down\tAlt-J"), _T("Move down this object"));
+  m_PopMenu.Append( MODIRECTOR_OPENMOB, _T("&Open configuration\tAlt-O"), _T("Open this object configuration file"));
+  m_PopMenu.Append( MODIRECTOR_EDITMOB, _T("&Modify properties\tAlt-M"), _T("Modify this object properties"));
+	m_PopMenu.Append( MODIRECTOR_DUPLICATEMOB, _T("&Duplicate object\tAlt-D"), _T("Duplicate this object"));
+	m_PopMenu.Append( MODIRECTOR_MOVEUPMOB, _T("&Move Up Layer\tAlt-U"), _T("Move up this object"));
+	m_PopMenu.Append( MODIRECTOR_MOVEDOWNMOB, _T("&Move Down Layer\tAlt-J"), _T("Move down this object"));
 	m_PopMenu.Append( MODIRECTOR_CHILDMOB, _T("&Add Child Effect\tAlt-C"), _T("Add Child Effect"));
-
+  m_PopMenu.Append( MODIRECTOR_DELETEMOB, _T("&Delete object\tAlt-R"), _T("Delete this object"));
 }
 
 void
@@ -93,6 +96,21 @@ moProjectTreeCtrl::OnActivate(wxTreeEvent &event) {
 
 }
 
+void
+moProjectTreeCtrl::OnOpenMob( wxCommandEvent& event ) {
+
+  if ( m_MobSelected.IsValid() ) {
+
+      ///Try to add child mob
+      //Log( moText("Add child mob: ") + m_MobSelected.GetMobDefinition().GetLabelName() );
+      //moMobDescriptor m_MobUndefined;
+      //this->AddChildMob( m_MobUndefined, m_MobSelected );
+      this->OpenMob( m_MobSelected );
+      return;
+
+  } else LogError("moProjectTreeCtrl::OnOpenMob Object Descriptor is invalid");
+
+}
 
 void
 moProjectTreeCtrl::OnPopMenu( wxTreeEvent &event ) {
@@ -122,6 +140,51 @@ moProjectTreeCtrl::OnPopMenu( wxTreeEvent &event ) {
 	return;
 
 }
+
+
+wxTreeItemId
+moProjectTreeCtrl::Search( wxTreeItemId p_ItemRoot, const moMobDescriptor& p_MobDesc ) {
+
+  wxTreeItemIdValue cookie;
+  wxTreeItemId ItemFound;
+
+  moMobItemData* MobItemData = NULL;
+
+	if( p_ItemRoot.IsOk() )
+		MobItemData = (moMobItemData*) GetItemData( p_ItemRoot );
+
+  if (MobItemData) {
+
+    moMobDefinition MobDef = MobItemData->GetMobDescriptor().GetMobDefinition();
+
+    moMobDescriptor MobDes = p_MobDesc;
+    moMobDefinition oMobDef = MobDes.GetMobDefinition();
+
+    if (MobDef.GetMoldeoId()==oMobDef.GetMoldeoId()) {
+      return p_ItemRoot;
+    }
+
+  }
+
+  if (HasChildren( p_ItemRoot )) {
+    wxTreeItemId ItemCheck = GetFirstChild( p_ItemRoot, cookie );
+
+    while(ItemCheck.IsOk()) {
+
+      ItemFound = Search( ItemCheck, p_MobDesc );
+
+      if (ItemFound.IsOk())
+        return ItemFound;
+
+      ItemCheck = GetNextChild( p_ItemRoot, cookie );
+    }
+
+  }
+  //p_MobDesc
+
+  return ItemFound;
+}
+
 
 void
 moProjectTreeCtrl::OnDeleteMob( wxCommandEvent& event ) {
@@ -213,6 +276,22 @@ moProjectTreeCtrl::OnAddChildMob( wxCommandEvent& event ) {
 
 }
 
+void
+moProjectTreeCtrl::OnEditMob( wxCommandEvent& event ) {
+
+  if ( m_MobSelected.IsValid() ) {
+
+      ///Try to add child mob
+      //Log( moText("Add child mob: ") + m_MobSelected.GetMobDefinition().GetLabelName() );
+      //moMobDescriptor m_MobUndefined;
+      //this->AddChildMob( m_MobUndefined, m_MobSelected );
+      this->EditMob( m_MobSelected );
+      return;
+
+  } else LogError("moProjectTreeCtrl::OnEditMob Object Descriptor is invalid");
+
+}
+
 
 void
 moProjectTreeCtrl::ResetBaseTree( wxString p_treename) {
@@ -246,9 +325,30 @@ moProjectTreeCtrl::ValueUpdated( moValueDescriptor p_ValueDesc ) {
   return MO_DIRECTOR_STATUS_OK;
 }
 
+moText Mob2ItemText( const moMobDefinition& p_MobDef ) {
+  moText ItemText = p_MobDef.GetLabelName() + moText(" (");
+  ItemText+= p_MobDef.GetConfigName() + moText(".cfg [class ");
+  ItemText+= p_MobDef.GetName() + moText("]->");
+  ItemText+= p_MobDef.GetKeyName() + moText(")");
+  ItemText+= moText(" [")+ IntToStr((int)p_MobDef.GetActivate()) + moText("]");
+  return ItemText;
+}
 
 moDirectorStatus
 moProjectTreeCtrl::MobUpdated( moMobDescriptor p_MobDesc ) {
+
+  wxTreeItemId ItemFound = Search( GetRootItem(), p_MobDesc );
+  if (ItemFound.IsOk()) {
+
+    moMobItemData* ItemData = (moMobItemData*) GetItemData( ItemFound );
+    if (ItemData) {
+      moMobDefinition MDef = p_MobDesc.GetMobDefinition();
+      ItemData->GetMobDescriptor().Set(MDef);
+      SetItemText( ItemFound, moText2Wx( Mob2ItemText( MDef ) ) );
+    }
+
+  }
+
 
   return MO_DIRECTOR_STATUS_OK;
 }
@@ -268,9 +368,7 @@ moProjectTreeCtrl::Branchs( moMobDescriptor& p_MobDescriptor, moMobDescriptors& 
       moMobDefinition& MobDefFather( pMobDescriptorFather.GetMobDefinition() );
       ///WE FOUND THE FATHER, PUT IT AS CHILD
       if (MobDefFather.GetMoldeoId()==mfatherid) {
-          xitemname = wxString( moText2Wx( p_MobDef.GetLabelName() )) + wxT(" (");
-          xitemname+= wxString( moText2Wx( p_MobDef.GetConfigName() ) ) + wxT(".cfg [");
-          xitemname+= wxString( moText2Wx( p_MobDef.GetName() )) + wxT("])");
+          xitemname = moText2Wx( Mob2ItemText( p_MobDef ) );
 
           wxTreeItemId treeitemid = pMobDescriptorFather.GetTreeItemId();
           ///agregamos el item
@@ -334,9 +432,7 @@ moProjectTreeCtrl::ProjectUpdated( const moProjectDescriptor& p_ProjectDescripto
       //xitemname = wxString( moText2Wx( MobDef.GetName() )) + wxT(" > ");
       //xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) );
       if (MobDef.GetMoldeoFatherId()==-1) {
-        xitemname = wxString( moText2Wx( MobDef.GetLabelName() )) + wxT(" (");
-        xitemname+= wxString( moText2Wx( MobDef.GetConfigName() ) ) + wxT(".cfg [");
-        xitemname+= wxString( moText2Wx( MobDef.GetName() )) + wxT("])");
+        xitemname = moText2Wx( Mob2ItemText( MobDef ) );
 
         ///agregamos el item
         exid = AppendItem( mob_ids[ MobDef.GetType() ], xitemname , 1 );

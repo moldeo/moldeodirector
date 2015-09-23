@@ -85,7 +85,7 @@ class moProjectTreeCtrl : public moIDirectorActions, public wxTreeCtrl {
         virtual moDirectorStatus    ProjectUpdated( const moProjectDescriptor& p_ProjectDescriptor );
 
         void Branchs( moMobDescriptor& p_MobDescriptor, moMobDescriptors& p_MobDescriptors );
-
+        wxTreeItemId Search( wxTreeItemId p_ItemRoot, const moMobDescriptor& p_MobDesc );
 
   protected:
   		void  OnActivate(wxTreeEvent &event);
@@ -96,6 +96,8 @@ class moProjectTreeCtrl : public moIDirectorActions, public wxTreeCtrl {
       void  OnMoveUpMob( wxCommandEvent& event );
       void  OnMoveDownMob( wxCommandEvent& event );
       void  OnAddChildMob( wxCommandEvent& event );
+      void  OnEditMob( wxCommandEvent& event );
+      void  OnOpenMob( wxCommandEvent& event );
 
   private:
 

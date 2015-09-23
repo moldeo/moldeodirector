@@ -65,7 +65,9 @@ moDirectorConsole::GetObject( moMobDescriptor p_MobDesc ) {
 
     MOint idx = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
     moText objectlabelname = p_MobDesc.GetMobDefinition().GetLabelName();
-    int oid = GetObjectId( objectlabelname );
+
+    int oid = p_MobDesc.GetMobDefinition().GetMoldeoId();
+    if (oid==-1) oid = GetObjectId( objectlabelname );
 
     switch( p_MobDesc.GetMobDefinition().GetType() ) {
         case MO_OBJECT_PREEFFECT:
@@ -655,8 +657,9 @@ moDirectorConsole::OpenMob( moMobDescriptor p_MobDesc ) {
       if (pMOB) {
           if (pMOB->GetConfig()) {
               if (pMOB->GetConfig()->IsConfigLoaded()) {
-
-                  return this->EditMob( p_MobDesc );
+                  moMobDefinition newMob = pMOB->GetMobDefinition();
+                  moMobDescriptor newMobDes( this->GetProject(), newMob );
+                  return this->EditMob( newMobDes );
 
               } else LogError("moDirectorConsole::OpenMob Config file isn't loaded.");
           } else LogError("moDirectorConsole::OpenMob Config object unavailable");
@@ -844,7 +847,15 @@ moDirectorConsole::NewMob( moMobDescriptor p_MobDesc ) {
                   effectvalue.AddSubValue( pMOB->GetConfigName() , "TXT" );
                   effectvalue.AddSubValue( pMOB->GetLabelName() , "TXT" );
                   effectvalue.AddSubValue( "0" , "NUM" );
-                  effectvalue.AddSubValue( "1" , "NUM" );
+                  if (pMOB->GetMobDefinition().GetActivate())
+                    effectvalue.AddSubValue( "1" , "NUM" );
+                  else
+                    effectvalue.AddSubValue( "0" , "NUM" );
+
+                  if (pMOB->GetMobDefinition().GetKeyName()!="")
+                    effectvalue.AddSubValue( pMOB->GetMobDefinition().GetKeyName() , "TXT" );
+                  else
+                    effectvalue.AddSubValue( "" , "TXT" );
 
                   if (pConfig) pConfig->GetParam( pMOB->GetMobDefinition().GetMobIndex().GetParamIndex() ).AddValue( effectvalue );
 
@@ -1102,16 +1113,17 @@ moDirectorStatus moDirectorConsole::DuplicateMob( moMobDescriptor p_MobDesc ) {
 moDirectorStatus
 moDirectorConsole::EditMob( moMobDescriptor p_MobDesc ) {
 
-      moDirectorStatus res;
+      moDirectorStatus res = MO_DIRECTOR_STATUS_OK;
 
       ///la orden de Edicion se manda al core: es un comando que implementa la interface
       /// crea el objeto correspondiente moDirectorFrameChild
-      res = m_pDirectorCore->EditMob(p_MobDesc);
+      /*
+      //res = m_pDirectorCore->EditMob(p_MobDesc);
 
       if (res!=MO_DIRECTOR_STATUS_OK) {
           LogError( moText("moDirectorConsole::EditMob Couldn't edit ")+(moText)p_MobDesc.GetMobDefinition().GetConfigName());
           return MO_DIRECTOR_STATUS_ERROR;
-      }
+      }*/
 
       ///ahora por cada parametro del objeto debemos notificar la interface para su edicion
 
@@ -1172,8 +1184,8 @@ moDirectorStatus
 moDirectorConsole::SaveMob( moMobDescriptor p_MobDesc ) {
 
   moMoldeoObject* pMOB = NULL;
-
-  MOint idx = p_MobDesc.GetMobDefinition().GetMobIndex().GetValueIndex();
+  moMobDefinition pMobDef = p_MobDesc.GetMobDefinition();
+  MOint idx = pMobDef.GetMobIndex().GetValueIndex();
 
   pMOB = GetObject( p_MobDesc );
 /*
@@ -1202,6 +1214,33 @@ moDirectorConsole::SaveMob( moMobDescriptor p_MobDesc ) {
               break;
       }
     */
+
+  if (pMOB) {
+
+    moMobDefinition original = pMOB->GetMobDefinition();
+    moMobDefinition newMDef = pMobDef;
+
+    pMOB->SetMobDefinition( newMDef );
+
+    if ( original.GetLabelName() != pMobDef.GetLabelName() ) {
+      //must update all reference to this object ??? ICON to ICONAZO... may be reference in OUTLETS -> "ICON" -> "translatex"
+
+    }
+    if ( original.GetConfigName() != pMobDef.GetConfigName() ) {
+      //TODO: rename file .cfg !!!
+      //solo cambia el config name
+      moText new_config_name  = pMobDef.GetConfigName();
+      moText old_config_class = original.GetName();
+      pMOB->GetConfig()->GetConfigDefinition()->Set( new_config_name, old_config_class );
+      pMOB->GetConfig()->SaveConfig( m_pResourceManager->GetDataMan()->GetDataPath() + moSlash + pMobDef.GetConfigName() + moText(".cfg") );
+    }
+
+    Save("");
+    moMobDescriptor newMDes( pMOB->GetMobDefinition() );
+    MobUpdated( newMDes );
+
+
+  }
 
   if (!pMOB) {
     LogError("Object not founded, maybe valueindex doesn't match. index =>"+IntToStr( idx ) );

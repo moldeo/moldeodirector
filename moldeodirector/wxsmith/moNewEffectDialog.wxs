@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxDialog" name="moNewEffectDialog">
-		<size>360,352</size>
-		<pos_arg>1</pos_arg>
-		<size_arg>1</size_arg>
+		<size>360,401</size>
+		<id_arg>0</id_arg>
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 			<label>Effect Label Name (used to reference between objects)</label>
 			<pos>16,16</pos>
 		</object>
 		<object class="wxTextCtrl" name="ID_LABELNAMECTRL" variable="LabelNameCtrl" member="yes">
 			<pos>16,32</pos>
-			<size>264,21</size>
+			<size>312,21</size>
 			<handler function="OnLabelNameCtrlText" entry="EVT_TEXT" />
 		</object>
 		<object class="wxTextCtrl" name="ID_FILENAMECTRL" variable="ConfigFilenameCtrl" member="yes">
 			<pos>16,80</pos>
-			<size>264,21</size>
+			<size>312,21</size>
 			<handler function="OnConfigFilenameCtrlText" entry="EVT_TEXT" />
 		</object>
 		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
@@ -24,12 +23,12 @@
 		</object>
 		<object class="wxButton" name="ID_OKBUTTON" variable="OkButton" member="yes">
 			<label>OK</label>
-			<pos>176,312</pos>
+			<pos>176,368</pos>
 			<handler function="OnOkButtonClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_CANCELBUTTON" variable="CancelButton" member="yes">
 			<label>Cancel</label>
-			<pos>256,312</pos>
+			<pos>264,368</pos>
 			<handler function="OnCancelButtonClick" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxChoice" name="ID_CHOICE1" variable="Choice1" member="yes">
@@ -42,6 +41,15 @@
 			<pos>208,128</pos>
 		</object>
 		<object class="wxTreeCtrl" name="ID_TREECTRL" variable="TreeCtrl" member="yes">
+			<image_list></image_list>
+			<tree_items>
+				<item>TreeCtrl</item>
+				<item></item>
+			</tree_items>
+			<items_text>
+				<item2>TreeCtrl</item2>
+				<item2></item2>
+			</items_text>
 			<pos>16,152</pos>
 			<size>320,152</size>
 			<handler function="OnTreeCtrlSelectionChanged" entry="EVT_TREE_SEL_CHANGED" />
@@ -49,6 +57,57 @@
 		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticTextConfigFilename" member="yes">
 			<label>Config file name</label>
 			<pos>16,64</pos>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText3" member="yes">
+			<label>Keyboard</label>
+			<pos>224,312</pos>
+		</object>
+		<object class="wxChoice" name="ID_CHOICE2" variable="ChoiceKey" member="yes">
+			<content>
+				<item>None</item>
+				<item>A</item>
+				<item>B</item>
+				<item>C</item>
+				<item>D</item>
+				<item>E</item>
+				<item>F</item>
+				<item>G</item>
+				<item>H</item>
+				<item>I</item>
+				<item>J</item>
+				<item>K</item>
+				<item>L</item>
+				<item>M</item>
+				<item>N</item>
+				<item>O</item>
+				<item>P</item>
+				<item>Q</item>
+				<item>R</item>
+				<item>S</item>
+				<item>T</item>
+				<item>U</item>
+				<item>V</item>
+				<item>W</item>
+				<item>X</item>
+				<item>Y</item>
+				<item>Z</item>
+			</content>
+			<selection>0</selection>
+			<pos>224,328</pos>
+			<size>63,24</size>
+			<handler function="OnChoice2Select" entry="EVT_CHOICE" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText4" member="yes">
+			<label>Active</label>
+			<pos>24,312</pos>
+		</object>
+		<object class="wxComboBox" name="ID_COMBOBOX1" variable="ChoiceActive" member="yes">
+			<content>
+				<item>No</item>
+				<item>Yes</item>
+			</content>
+			<selection>1</selection>
+			<pos>24,328</pos>
 		</object>
 	</object>
 </wxsmith>

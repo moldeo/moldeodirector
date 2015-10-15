@@ -1053,7 +1053,7 @@ moDirectorFrame::OpenMob( moMobDescriptor p_MobDescriptor ) {
               if( pChild->IsMob( p_MobDescriptor ) ) {
                   res = MO_DIRECTOR_STATUS_CONFIG_ALREADY_OPENED;
                   break;
-              }
+              } else pChild = NULL;
           }
       }
     }

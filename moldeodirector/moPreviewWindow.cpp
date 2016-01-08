@@ -15,6 +15,7 @@ const long moPreviewWindow::ID_BITMAPBUTTONSCREENSHOT = wxNewId();
 const long moPreviewWindow::ID_BITMAPBUTTONSAVEVIDEO = wxNewId();
 const long moPreviewWindow::ID_BITMAPBUTTONSAVESESSION = wxNewId();
 const long moPreviewWindow::ID_BITMAPBUTTONSTOP = wxNewId();
+const long moPreviewWindow::ID_BITMAPBUTTONCONTROL = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(moPreviewWindow,wxPanel)
@@ -29,33 +30,37 @@ moPreviewWindow::moPreviewWindow(wxWindow* parent,wxWindowID id,const wxPoint& p
 	Create(parent, id, wxDefaultPosition, wxSize(401,336), wxTAB_TRAVERSAL, _T("id"));
 	SetForegroundColour(wxColour(255,255,255));
 	SetBackgroundColour(wxColour(0,0,0));
-	BitmapButtonPlay = new wxBitmapButton(this, ID_BITMAPBUTTONPLAY, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/play32.png"))), wxPoint(0,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPLAY"));
+	BitmapButtonPlay = new wxBitmapButton(this, ID_BITMAPBUTTONPLAY, wxBitmap(wxImage(_T("../../data/icons/play32.png"))), wxPoint(0,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPLAY"));
 	BitmapButtonPlay->SetDefault();
 	BitmapButtonPlay->SetToolTip(_("Play"));
 	BitmapButtonPlay->SetHelpText(_("Play"));
-	BitmapButtonPause = new wxBitmapButton(this, ID_BITMAPBUTTONPAUSE, wxBitmap(wxImage(_T( MOLDEODATADIR "/icons/pause32.png"))), wxPoint(32,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPAUSE"));
+	BitmapButtonPause = new wxBitmapButton(this, ID_BITMAPBUTTONPAUSE, wxBitmap(wxImage(_T("../../data/icons/pause32.png"))), wxPoint(32,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONPAUSE"));
 	BitmapButtonPause->SetDefault();
 	BitmapButtonPause->SetToolTip(_("Pause"));
 	BitmapButtonPause->SetHelpText(_("Pause"));
-	ButtonFullSCreen = new wxBitmapButton(this, ID_BITMAPBUTTONFULLSCREEN, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/fullscreen32.png"))), wxPoint(272,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONFULLSCREEN"));
+	ButtonFullSCreen = new wxBitmapButton(this, ID_BITMAPBUTTONFULLSCREEN, wxBitmap(wxImage(_T("../../data/icons/fullscreen32.png"))), wxPoint(272,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONFULLSCREEN"));
 	ButtonFullSCreen->SetDefault();
 	ButtonFullSCreen->SetToolTip(_("Fullscreen"));
 	ButtonFullSCreen->SetHelpText(_("Fullscreen"));
-	BitmapButtonScreenshot = new wxBitmapButton(this, ID_BITMAPBUTTONSCREENSHOT, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/screenshot32.png"))), wxPoint(312,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCREENSHOT"));
+	BitmapButtonScreenshot = new wxBitmapButton(this, ID_BITMAPBUTTONSCREENSHOT, wxBitmap(wxImage(_T("../../data/icons/screenshot32.png"))), wxPoint(312,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSCREENSHOT"));
 	BitmapButtonScreenshot->SetDefault();
 	BitmapButtonScreenshot->SetToolTip(_("Output - Focus"));
 	BitmapButtonScreenshot->SetHelpText(_("Output - Focus"));
-	BitmapButtonSaveVideo = new wxBitmapButton(this, ID_BITMAPBUTTONSAVEVIDEO, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/savevideo32.png"))), wxPoint(344,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVEVIDEO"));
+	BitmapButtonSaveVideo = new wxBitmapButton(this, ID_BITMAPBUTTONSAVEVIDEO, wxBitmap(wxImage(_T("../../data/icons/savevideo32.png"))), wxPoint(344,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVEVIDEO"));
 	BitmapButtonSaveVideo->SetDefault();
 	BitmapButtonSaveVideo->SetToolTip(_("Movie"));
 	BitmapButtonSaveVideo->SetHelpText(_("Movie"));
-	BitmapButtonSaveSession = new wxBitmapButton(this, ID_BITMAPBUTTONSAVESESSION, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/savesession32.png"))), wxPoint(64,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVESESSION"));
+	BitmapButtonSaveSession = new wxBitmapButton(this, ID_BITMAPBUTTONSAVESESSION, wxBitmap(wxImage(_T("../../data/icons/savesession32.png"))), wxPoint(64,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSAVESESSION"));
 	BitmapButtonSaveSession->SetToolTip(_("Record"));
 	BitmapButtonSaveSession->SetHelpText(_("Record"));
-	BitmapButtonStop = new wxBitmapButton(this, ID_BITMAPBUTTONSTOP, wxBitmap(wxImage(_T(MOLDEODATADIR "/icons/stop32.png"))), wxPoint(96,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONSTOP"));
+	BitmapButtonStop = new wxBitmapButton(this, ID_BITMAPBUTTONSTOP, wxBitmap(wxImage(_T("../../data/icons/stop32.png"))), wxPoint(96,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
 	BitmapButtonStop->SetDefault();
 	BitmapButtonStop->SetToolTip(_("Stop"));
 	BitmapButtonStop->SetHelpText(_("Stop"));
+	BitmapButtonControl = new wxBitmapButton(this, ID_BITMAPBUTTONCONTROL, wxBitmap(wxImage(_T("../../data/icons/joystick32.png"))), wxPoint(128,300), wxSize(32,32), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BITMAPBUTTONCONTROL"));
+	BitmapButtonControl->SetDefault();
+	BitmapButtonControl->SetToolTip(_("Stop"));
+	BitmapButtonControl->SetHelpText(_("Stop"));
 
 	Connect(ID_BITMAPBUTTONPLAY,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPreviewWindow::OnBitmapButtonPlayClick);
 	Connect(ID_BITMAPBUTTONPAUSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPreviewWindow::OnBitmapButtonPauseClick);
@@ -64,6 +69,7 @@ moPreviewWindow::moPreviewWindow(wxWindow* parent,wxWindowID id,const wxPoint& p
 	Connect(ID_BITMAPBUTTONSAVEVIDEO,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPreviewWindow::OnBitmapButtonSaveVideoClick);
 	Connect(ID_BITMAPBUTTONSAVESESSION,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPreviewWindow::OnBitmapButtonSaveSessionClick);
 	Connect(ID_BITMAPBUTTONSTOP,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPreviewWindow::OnBitmapButtonStopClick);
+	Connect(ID_BITMAPBUTTONCONTROL,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&moPreviewWindow::OnBitmapButtonControlClick);
 	//*)
 
 	BitmapButtonPlay->SetBackgroundColour(wxColour(0,0,0));
@@ -79,6 +85,7 @@ moPreviewWindow::moPreviewWindow(wxWindow* parent,wxWindowID id,const wxPoint& p
 	BitmapButtonSaveVideo->SetBackgroundColour(wxColour(0,0,0));
 	BitmapButtonSaveSession->SetBackgroundColour(wxColour(0,0,0));
 	BitmapButtonStop->SetBackgroundColour(wxColour(0,0,0));
+	BitmapButtonControl->SetBackgroundColour(wxColour(0,0,0));
 
 
     BitmapButtonPlay->SetMargins( 0, 0 );
@@ -175,4 +182,31 @@ void moPreviewWindow::OnBitmapButtonStopClick(wxCommandEvent& event)
 void moPreviewWindow::OnBitmapButtonSaveVideoClick(wxCommandEvent& event)
 {
     this->Render();
+}
+
+#include "wx/process.h"
+
+class MoldeoControlProcess : public wxProcess {
+  public:
+      MoldeoControlProcess(wxEvtHandler *parent, const wxString& cmd)
+          : wxProcess(parent)
+      {
+          /*m_parent = parent;*/
+      }
+
+      // instead of overriding this virtual function we might as well process the
+      // event from it in the frame class - this might be more convenient in some
+      // cases
+      virtual void OnTerminate(int pid, int status) {
+
+      }
+
+  protected:
+      /*MyFrame *m_parent;
+      wxString m_cmd;*/
+};
+
+void moPreviewWindow::OnBitmapButtonControlClick(wxCommandEvent& event)
+{
+  //wxExecute( "moldeoplayersdl2", MoldeoControlProcess );
 }

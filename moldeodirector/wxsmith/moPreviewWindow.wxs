@@ -68,5 +68,14 @@
 			<help>Stop</help>
 			<handler function="OnBitmapButtonStopClick" entry="EVT_BUTTON" />
 		</object>
+		<object class="wxBitmapButton" name="ID_BITMAPBUTTONCONTROL" variable="BitmapButtonControl" member="yes">
+			<bitmap>../../data/icons/joystick32.png</bitmap>
+			<default>1</default>
+			<pos>232,300</pos>
+			<size>32,32</size>
+			<tooltip>Stop</tooltip>
+			<help>Stop</help>
+			<handler function="OnBitmapButtonControlClick" entry="EVT_BUTTON" />
+		</object>
 	</object>
 </wxsmith>

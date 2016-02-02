@@ -1627,8 +1627,7 @@ moDirectorStatus moDirectorConsole::SaveValue( moValueDescriptor p_ValueDesc ) {
       moMoldeoObject* pObject;
 
 
-      mo3dModel* pModel;
-      mo3DModelSceneNode* p3DModel;
+      moSceneNode* pModel;
 
       bool firsthaschange = false;
       bool secondhaschange = false;
@@ -1719,12 +1718,9 @@ moDirectorStatus moDirectorConsole::SaveValue( moValueDescriptor p_ValueDesc ) {
                   case MO_PARAM_OBJECT:
 
                       pModel = m_pResourceManager->GetModelMan()->Get3dModel( NewValue.GetSubValue(0).Text() );
-                      p3DModel = new mo3DModelSceneNode();
-                      if (p3DModel) p3DModel->Init(pModel);
-
                       ///igualmente, si el modelo es nulo entonces no hay modelo
                       if (pModel) {
-                          NewValue.GetSubValue(0).SetModel( (mo3DModelSceneNode*)pModel );
+                          NewValue.GetSubValue(0).SetModel( (moSceneNode*)pModel );
                           Value = NewValue;
                       } else return MO_DIRECTOR_STATUS_ERROR;
                       break;

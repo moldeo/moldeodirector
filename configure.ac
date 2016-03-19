@@ -107,11 +107,13 @@ AC_CHECK_LIB(pthread, pthread_attr_init, LIBS="$LIBS -lpthread")
 #)
 #AC_LANG_POP(C++)
 
+wxversion=2.8.0
+
 dnl Check wx-Widgets
 AC_ARG_ENABLE([unicode],[AC_HELP_STRING([--disable-unicode],[internally use ansi])],
 	[AS_IF([test "x$enableval" = "xno"],[wx_config_args="--unicode=no"])
 	AS_IF([test "x$enableval" = "xyes"],[wx_config_args="--unicode=yes"])],
-	[wx_config_args="--unicode=yes"])
+	[wx_config_args="--unicode=yes --version=2.8"])
 AM_OPTIONS_WXCONFIG
 AM_PATH_WXCONFIG(2.8.0, wxWin=1)
         if test "$wxWin" != 1; then

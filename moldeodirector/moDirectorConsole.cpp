@@ -5,7 +5,8 @@ BEGIN_EVENT_TABLE( moDirectorConsole, wxEvtHandler)
   EVT_TIMER( TICKS_ID, moDirectorConsole::OnTimer)
 END_EVENT_TABLE()
 
-#define FRAME_MILIS 40
+//#define FRAME_MILIS 40
+#define FRAME_MILIS 16
 
 moDirectorConsole::moDirectorConsole() : moConsole() {
 
@@ -1644,7 +1645,9 @@ moDirectorStatus moDirectorConsole::SaveValue( moValueDescriptor p_ValueDesc ) {
               moValue& Value( Param.GetValue( p_ValueDesc.GetValueIndex().m_ValueIndex ) );
               moValue& NewValue(p_ValueDesc.GetValue());
 
-
+              Value = NewValue;
+              pObject->ResolveValue( Param, p_ValueDesc.GetValueIndex().m_ValueIndex );
+/*
               ///=============================================
               ///COMPARAMOS CON EL ANTERIOR (JUST FOR SHADERS)
               ///=============================================
@@ -1698,10 +1701,10 @@ moDirectorStatus moDirectorConsole::SaveValue( moValueDescriptor p_ValueDesc ) {
                       break;
 
                   case MO_PARAM_NUMERIC:
-                      /*char* vtext = (char*)p_ValueDesc.GetValue().GetSubValue().Text();
-                      MOlong ivalue = strtol( "%i", &vtext, 10 );
-                      Value.GetSubValue(0).SetInt( ivalue );
-                      */
+                      //char* vtext = (char*)p_ValueDesc.GetValue().GetSubValue().Text();
+                      //MOlong ivalue = strtol( "%i", &vtext, 10 );
+                      //Value.GetSubValue(0).SetInt( ivalue );
+
                       //asigna el nuevo valor al config
                       Value = NewValue;
                       break;
@@ -1874,60 +1877,7 @@ moDirectorStatus moDirectorConsole::SaveValue( moValueDescriptor p_ValueDesc ) {
                           }
 
 
-                          ///======================================
-                          ///     PARAMETROS DE FILTRO:
-                          ///     aqui seguirian todos los parametros complementarios al filtro
-                          ///     a implementar y probar
-                          ///
-                          ///
-                          ///======================================
 
-                          /*
-                          if (NewValue.GetSubValueCount()>4) {
-                              //tenemos que usar los filtros-param
-                              moTextFilterParam*  pFilterParam = new moTextFilterParam();
-
-                              for( int i=4; i<(int)NewValue.GetSubValueCount(); i++) {
-                                  //si o si tenemos que usar los codes... o names para los subvalores...
-                                  moValueBase& vbase( NewValue.GetSubValue(i) );
-
-                                  if ( vbase.GetCodeName() == moText("float1") ) {
-                                      if ( vbase.Type() == MO_DATA_NUMBER_FLOAT ) {
-                                          pFilterParam->par_flt1 = vbase.Float();
-                                      }
-                                  } else
-                                  if ( vbase.GetCodeName() == moText("float2") ) {
-                                      if ( vbase.Type() == MO_DATA_NUMBER_FLOAT ) {
-                                          pFilterParam->par_flt2 = vbase.Float();
-                                      }
-                                  } else
-                                  if ( vbase.GetCodeName() == moText("float3") ) {
-                                      if ( vbase.Type() == MO_DATA_NUMBER_FLOAT ) {
-                                          pFilterParam->par_flt3 = vbase.Float();
-                                      }
-                                  } else
-                                  if ( vbase.GetCodeName() == moText("mat2") ) {
-                                      if ( vbase.Type() == MO_DATA_VECTOR && vbase.Size() == 4 ) {
-                                          float* vector = (float*)vbase.Pointer();
-                                          for( int i=0; i<4 , pFilterParam->par_mat2[i] = vector[i] ; i++);
-                                      }
-                                  } else
-                                  if ( vbase.GetCodeName() == moText("mat3") ) {
-                                      if ( vbase.Type() == MO_DATA_VECTOR && vbase.Size() == 9 ) {
-                                          float* vector = (float*)vbase.Pointer();
-                                          for( int i=0; i<9 , pFilterParam->par_mat3[i] = vector[i] ; i++);
-                                      }
-                                  } else
-                                  if ( vbase.GetCodeName() == moText("mat4") ) {
-                                      if ( vbase.Type() == MO_DATA_VECTOR && vbase.Size() == 16 ) {
-                                          float* vector = (float*)vbase.Pointer();
-                                          for( int i=0; i<16 , pFilterParam->par_mat4[i] = vector[i] ; i++);
-                                      }
-                                  }
-                              }
-                              Value.GetSubValue(0).SetTextureFilterParam( pFilterParam );
-                          }
-                          */
 
                           //NewValue.GetSubValue(0) = Value.GetSubValue(0);
                           //Value.GetSubValue(0) = ;
@@ -2048,9 +1998,12 @@ moDirectorStatus moDirectorConsole::SaveValue( moValueDescriptor p_ValueDesc ) {
                       Value = NewValue;
                       break;
               };
+              */
+
+
 
               ///para aquellos datos que implican cambios, lo fijamos de nuevo...
-                  // funciones, colores, texturas filtradas, objetos, fuentes, etc...
+              /// funciones, colores, texturas filtradas, objetos, fuentes, etc...
               p_ValueDesc.SetValue( Value );
 
               ///notificamos todos los modulos de la actualizacion de estos datos

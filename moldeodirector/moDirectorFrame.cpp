@@ -1524,7 +1524,7 @@ moDirectorFrame::ViewSwapBuffers() {
             m_pPreviewWindow->m_pGLCanvas->SetCurrent();
 
             ///cambiamos la vista a ortografica
-            m_pDirectorCore->GetResourceManager()->GetGLMan()->SetOrthographicView(400, 300);
+            m_pDirectorCore->GetResourceManager()->GetGLMan()->SetOrthographicView(400, 300, 0, 400, 0, 300);
 
             ///y pegamos nuestra ultima vista tomada de la vista principal
 

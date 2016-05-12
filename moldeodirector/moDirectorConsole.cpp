@@ -765,7 +765,7 @@ moDirectorConsole::NewMob( moMobDescriptor p_MobDesc ) {
           case MO_OBJECT_IODEVICE:
               pMobDef.SetConsoleParamIndex( pConfig->GetParamIndex("devices") );
               pMobDef.SetConsoleValueIndex( m_pIODeviceManager->IODevices().Count() );
-              pMOB = (moMoldeoObject*) m_pIODeviceManager->NewIODevice( pMobDef.GetName(), pMobDef.GetConfigName(), pMobDef.GetLabelName(), MO_OBJECT_IODEVICE, pMobDef.GetMobIndex().GetParamIndex(), pMobDef.GetMobIndex().GetValueIndex() );
+              pMOB = (moMoldeoObject*) m_pIODeviceManager->NewIODevice( pMobDef.GetName(), pMobDef.GetConfigName(), pMobDef.GetLabelName(), pMobDef.GetKeyName(), MO_OBJECT_IODEVICE, pMobDef.GetMobIndex().GetParamIndex(), pMobDef.GetMobIndex().GetValueIndex() );
               if (pMOB) pMOB->GetConfig()->Set( pMOB->GetName(), "iodevice" );
               break;
           case MO_OBJECT_RESOURCE:

@@ -1150,7 +1150,7 @@ configuraciones. Será modificado unicamente ese valor, generalmente un cambio de
 	/**Log internal: print on log window on UI, on stdout or file on Core...*/
 	virtual void Log( moText p_message ) { MO_ACTIONHANDLER_VOID(Log( p_message )) }
 	/**Same but specifically an error*/
-	virtual void LogError( moText p_message ) { MO_ACTIONHANDLER_VOID(LogError( p_message )) }
+	virtual void LogError( const moText& p_message ) { MO_ACTIONHANDLER_VOID(LogError( p_message )) }
 	/**Show a message window popup: implemented on UI*/
 	virtual void ShowMessage( moText p_message ) { MO_ACTIONHANDLER_VOID(ShowMessage( p_message )) }
 	/**Same as ShowMessage but with ok/cancel buttons and bool value return*/

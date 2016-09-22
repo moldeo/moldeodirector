@@ -16,6 +16,63 @@ AC_PROG_CXX
 AC_PROG_CXXCPP
 AC_PROG_CXX_C_O
 
+
+dnl Set install paths.
+if test "x$prefix" = "xNONE" ; then
+  prefix="/usr/local"
+fi
+if test "x$exec_prefix" = "xNONE" ; then
+  exec_prefix=$prefix
+fi
+
+case "$host" in
+        *-*-mingw*|*-*-cygwin*)
+                AC_DEFINE(PLATFORM_WIN32, 1, [Platform is Win32])
+                PLATFORM_STRING="Win32"
+                ;;
+        x86_64-*linux*)
+                with_boost_libdir="/usr/lib/x86_64-linux-gnu"
+                PLATFORM_STRING="Linux"
+                ;;
+        *-*-linux*)
+                AC_DEFINE(PLATFORM_LINUX, 1, [Platform is Linux])
+                PLATFORM_STRING="Linux"
+                ;;
+        *-*-darwin*)
+		AC_MSG_WARN([Hello])
+                AC_DEFINE(PLATFORM_APPLE, 1, [Platform is Apple])
+                PLATFORM_STRING="Apple"
+                ;;
+        *)
+                AC_MSG_WARN([*** Please add $host to configure.ac checks!])
+                ;;
+esac
+
+
+case "$host" in
+        i?86-* | k?-* | athlon-* | pentium*-)
+                AC_DEFINE(ARCH_X86, 1, [Architecture is x86])
+                ARCH_SPECIFIC_CFLAGS=""
+                ARCH_STRING="X86"
+                ;;
+        x86_64-*)
+                AC_DEFINE(ARCH_X86_64, 1, [Architecture is x86-64])
+                ARCH_SPECIFIC_CFLAGS="-DUSE_ADDR64"
+                ARCH_STRING="X86-64"
+                libdir=$prefix"/lib"
+                ;;
+        ppc-* | powerpc-*)
+		AC_MSG_WARN([HI THERE!])
+                AC_DEFINE(ARCH_PPC, 1, [Architecture is PowerPC])
+                ARCH_SPECIFIC_CFLAGS=""
+                ARCH_STRING="PowerPC"
+                ;;
+        *)
+                AC_MSG_ERROR([Unknown Architecture])
+                ;;
+esac
+
+
 #dnl check for libmoldeo
 PKG_CHECK_MODULES([LIBMOLDEO], [libmoldeo] ,has_libmoldeo=yes)
 
@@ -185,14 +242,54 @@ GST_VERSION_MAJOR=0
 GST_VERSION_MINOR=10
 GST_VERSION_RELEASE=19
 GSTPLUG_VERSION_RELEASE=7
+
+AC_ARG_ENABLE(gstreamer,
+[--enable-gstreamer[=gstreamer version] Specify the gstreamer version:
+			0.10: Gstreamer version 0.10 [default]
+			1.0: Gstreamer version 1.0],
+[ if test "x$enableval" = "x1.0" ; then
+    GST_VERSION_MAJOR=1
+    GST_VERSION_MINOR=0
+    GST_VERSION_RELEASE=0
+    GSTPLUG_VERSION_RELEASE=0
+    host_cflags="$host_cflags -DGSTVERSION"
+  fi
+])
+
+
+AC_SUBST([HOSTCFLAGS],$host_cflags)
+AC_SUBST([HOSTLDFLAGS],$host_ldflags)
+AC_SUBST([OPENGLESV2],$OPENGLESV2)
+
+dnl check for gstreamer
 GSTREAMER_REQ=$GST_VERSION_MAJOR.$GST_VERSION_MINOR.$GST_VERSION_RELEASE
 GSTPLUGINS_REQ=$GST_VERSION_MAJOR.$GST_VERSION_MINOR.$GSTPLUG_VERSION_RELEASE
 GST_MAJORMINOR=$GST_VERSION_MAJOR.$GST_VERSION_MINOR
 
-PKG_CHECK_MODULES(GST, gstreamer-$GST_MAJORMINOR >= $GSTREAMER_REQ,
-  HAVE_GSTREAMER=yes)
+if test "x$host_name" = "xosx" ; then
+
+AC_SUBST(GST_CFLAGS,"-I/Library/Frameworks/GStreamer.framework/Versions/1.0/Headers")
+AC_SUBST(GST_LIBS,"-framework GStreamer")
+
+else
+
+PKG_CHECK_MODULES(GST, gstreamer-$GST_MAJORMINOR >= $GSTREAMER_REQ, 
+HAVE_GSTREAMER=yes)
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
+
+if test "x$GST_VERSION_MAJOR" = "x1" ; then
+    librequires="$librequires , gstreamer-1.0, gstreamer-app-1.0"
+    PKG_CHECK_MODULES(GST_INTERFACES, gstreamer-app-$GST_MAJORMINOR >= $GSTREAMER_REQ, HAVE_GSTREAMER_INTERFACES=yes)
+elif test "x$GST_VERSION_MAJOR" = "x0" ; then
+    librequires="$librequires , gstreamer-0.10, gstreamer-interfaces-0.10, gstreamer-app-0.10"   
+    PKG_CHECK_MODULES(GST_INTERFACES, gstreamer-interfaces-$GST_MAJORMINOR >= $GSTREAMER_REQ, HAVE_GSTREAMER_INTERFACES=yes)
+fi
+
+AC_SUBST(GST_INTERFACES_CFLAGS)
+AC_SUBST(GST_INTERFACES_LIBS)
+
+fi
 
 
 AC_SUBST(POSTLINK_COMMAND)
@@ -245,6 +342,32 @@ AC_PROG_MAKE_SET
 LT_INIT
 AC_STRUCT_TM
 AC_TYPE_SIZE_T
+
+AC_ARG_ENABLE(debug,
+AS_HELP_STRING([--enable-debug],
+               [enable debugging, default: no]),
+[case "${enableval}" in
+             yes) debug=true ;;
+             no)  debug=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
+esac],
+[debug=false])
+
+AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
+
+AC_SUBST([librequires])
+
+echo "PLATFORM_STRING: $PLATFORM_STRING"
+echo "ARCH_STRING: $ARCH_STRING"
+echo "GLES: $with_gles"
+echo "OPENGLESV2: $OPENGLESV2"
+echo "GSTREAMER VERSION: $GSTREAMER_REQ"
+echo "librequires: $librequires"
+echo "HOST NAME: $host_name"
+echo "HOST: $host"
+echo "HOSTCFLAGS: $host_cflags"
+echo "HOSTLDFLAGS: $host_ldflags"
+echo "DEBUG: $debug"
 
 dnl Makefile outputs
 AC_OUTPUT([

@@ -302,7 +302,7 @@ moProjectTreeCtrl::ResetBaseTree( wxString p_treename) {
     ///volvemos a asignar las ramas...
     rootid = AddRoot( p_treename );
 
-    if (rootid>=-1) {
+    if ( rootid.IsOk()) {
       mob_ids[ MO_OBJECT_CONSOLE ] = AppendItem( rootid, wxT("Console Config"), 0);
       mob_ids[ MO_OBJECT_PREEFFECT ] = AppendItem( rootid, wxT("PreEffects"), 2);
       mob_ids[ MO_OBJECT_EFFECT ] = AppendItem( rootid, wxT("Effects"), 2);

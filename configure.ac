@@ -167,30 +167,7 @@ AC_CHECK_LIB(pthread, pthread_attr_init, LIBS="$LIBS -lpthread")
 wxversion=2.8.0
 
 dnl Check wx-Widgets
-AC_ARG_ENABLE([unicode],[AC_HELP_STRING([--disable-unicode],[internally use ansi])],
-	[AS_IF([test "x$enableval" = "xno"],[wx_config_args="--unicode=no"])
-	AS_IF([test "x$enableval" = "xyes"],[wx_config_args="--unicode=yes"])],
-	[wx_config_args="--unicode=yes --version=2.8"])
-AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG(2.8.0, wxWin=1)
-        if test "$wxWin" != 1; then
-        AC_MSG_ERROR([
-		Using $wx_config_args
-		This wxWidget option is NOT AVAILABLE in this system
-		or must be installed, try modifiyng "configure.ac" and change wx_config_args="--unicode=xxx" line
-		then rerun autonconf and ./configure
-                OR
-		maybe wxWidgets must be installed on your system.
-
-                Please check that wx-config is in path, the directory
-                where wxWidgets libraries are installed (returned by
-                'wx-config --libs' or 'wx-config --static --libs' command)
-                is in LD_LIBRARY_PATH or equivalent variable and
-                wxWindows version is 2.8.0 or above.
-                ])
-        fi
-
-WX_LIB_GL="-lwx_gtk2u_gl-2.8"
+WX_CONFIG_CHECK([2.8.0], [wxWin=1], [wxWin=0], [html,core,net,gl,aui,adv,propgrid], [--unicode])
 
 CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"

@@ -74,8 +74,10 @@ void moTextureItemCtrl::OnMouseEnter(wxMouseEvent& event)
 {
 
     if ( event.Button(wxMOUSE_BTN_LEFT) || event.ButtonDown() ) {
-
+        #ifdef WX_MAJOR_VERSION<3
         GetParent()->ProcessEvent(event);
+        #else
+        #endif
     }
     event.Skip();
 }

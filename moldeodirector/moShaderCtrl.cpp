@@ -155,7 +155,7 @@ void moShaderCtrl::OnBitmapButtonShaderImportClick(wxCommandEvent& event)
 
 
 			wxString path = FileName.GetFullPath();
-			const char *cnamerelative = (char*)path.c_str();
+			//const char *cnamerelative = (char*)path.c_str();
 
 			TextCtrlShaderCfg->SetValue( path );
 

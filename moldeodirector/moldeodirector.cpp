@@ -61,7 +61,11 @@ bool moDirectorApp::OnInit()
 
 
     //** SET WORKING PATH CORRECTLY **/
-	wxStandardPaths StdPaths;
+    #if WX_MAJOR_VERSION<3
+    wxStandardPaths StdPaths;
+    #else
+	wxStandardPaths StdPaths = wxStandardPaths::Get();
+	#endif
 
 	wxFileName exename(StdPaths.GetExecutablePath());
 	exename.MakeAbsolute();

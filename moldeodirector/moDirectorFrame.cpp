@@ -315,7 +315,7 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
     wxAuiDockArt* pFrameArt;
 
     pFrameArt = FrameManager.GetArtProvider();
-
+/*
     pFrameArt->SetMetric( wxAUI_DOCKART_SASH_SIZE, 2 );
     pFrameArt->SetMetric( wxAUI_DOCKART_CAPTION_SIZE, 10 );
     pFrameArt->SetMetric( wxAUI_DOCKART_PANE_BORDER_SIZE, 0 );
@@ -327,7 +327,7 @@ moDirectorFrame::moDirectorFrame(const wxString& title)
     pFrameArt->SetColor( wxAUI_DOCKART_INACTIVE_CAPTION_GRADIENT_COLOUR, wxColour(0,0,0) );
     pFrameArt->SetColor( wxAUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR, wxColour(175,175,175) );
 
-
+*/
     //pFrameArt->SetColor( wxAUI_DOCKART_SASH_COLOUR, wxColour(255*30/100,255*30/100,255*30/100 );
     //pFrameArt->SetColor( wxAUI_DOCKART_SASH_COLOUR, wxColour(255*30/100,255*30/100,255*30/100 );
     //pFrameArt->SetColor( wxAUI_DOCKART_SASH_COLOUR, wxColour(255*30/100,255*30/100,255*30/100 );

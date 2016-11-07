@@ -594,8 +594,8 @@ void moEffectLayerTimelineCtrl::OnPaint( wxPaintEvent& event ) {
 void moEffectLayerTimelineCtrl::OnMouseEvent( wxMouseEvent& event ) {
 
     if ( event.Button(wxMOUSE_BTN_LEFT) || event.ButtonDown() ) {
-
-        GetParent()->ProcessEvent(event);
+        /// TODO: for wx 3
+        /*GetParent()->ProcessEvent(event);*/
 
         OpenMob( m_MobDescriptor );
 

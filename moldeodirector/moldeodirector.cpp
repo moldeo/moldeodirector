@@ -61,7 +61,7 @@ bool moDirectorApp::OnInit()
 
 
     //** SET WORKING PATH CORRECTLY **/
-    #if WX_MAJOR_VERSION<3
+    #if wxMAJOR_VERSION<3
     wxStandardPaths StdPaths;
     #else
 	wxStandardPaths StdPaths = wxStandardPaths::Get();

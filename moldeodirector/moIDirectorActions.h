@@ -35,6 +35,8 @@
 #define _MO_DIRECTORACTIONS_
 
 #include "moDirectorTypes.h"
+#include <wx/version.h>
+#include <wx/versioninfo.h>
 #include <wx/platform.h>
 #include <wx/string.h>
 #include <wx/snglinst.h>
@@ -928,7 +930,7 @@ private:
 #define MO_ACTIONHANDLER_POINTER(F)  m_pNextActionHandler == NULL ? NULL : m_pNextActionHandler->F;
 
 #define MO_ACTIONHANDLER_VOID(F)  if (m_pNextActionHandler) m_pNextActionHandler->F;
-#define MO_ACTIONHANDLER_HANDLE(F)  m_pNextActionHandler == NULL ? NULL : m_pNextActionHandler->F;
+#define MO_ACTIONHANDLER_HANDLE(F)  m_pNextActionHandler == NULL ? (MO_HANDLE)NULL : (MO_HANDLE)m_pNextActionHandler->F;
 
 
 

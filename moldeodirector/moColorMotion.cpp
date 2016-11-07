@@ -185,7 +185,10 @@ void moColorMotion::OnMouseEvent( wxMouseEvent& event ) {
     //Log(  moText("mouse") );
     if ( event.Button(wxMOUSE_BTN_LEFT) || event.ButtonDown() ) {
 
-        //GetParent()->ProcessEvent(event);
+        #if WX_MAJOR_VERSION<3
+        GetParent()->ProcessEvent(event);
+        #else
+        #endif
 
         //OpenMob( m_MobDescriptor );
     }

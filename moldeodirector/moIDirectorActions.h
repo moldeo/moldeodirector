@@ -36,7 +36,7 @@
 
 #include "moDirectorTypes.h"
 #include <wx/version.h>
-#include <wx/versioninfo.h>
+//#include <wx/versioninfo.h>
 #include <wx/platform.h>
 #include <wx/string.h>
 #include <wx/snglinst.h>
